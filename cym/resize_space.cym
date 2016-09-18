@@ -1,0 +1,44 @@
+% A confined fiber
+% F. Nedelec, April 2010
+
+set simul fiber 
+{
+    time_step = 0.005
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+}
+
+new 1 fiber microtubule
+{
+    length = 12
+}
+
+run 100 simul *
+change space:geometry cell ( sphere 4.8 )
+run 100 simul *
+change space:geometry cell ( sphere 4.6 )
+run 100 simul *
+change space:geometry cell ( sphere 4.4 )
+run 100 simul *
+change space:geometry cell ( sphere 4.2 )
+run 100 simul *
+change space:geometry cell ( sphere 4 )
+
+run simul *
+{
+    nb_steps = 1000
+    nb_frames = 10
+}

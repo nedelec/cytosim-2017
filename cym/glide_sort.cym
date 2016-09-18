@@ -1,0 +1,111 @@
+% Another length sorter
+% Francois Nedelec, Sapporo (Japan) June 2011
+
+set space cell
+{
+    geometry = ( periodic 5 2.5 )
+}
+
+new space cell
+
+set simul GA
+{
+    viscosity = 0.02
+    time_step = 0.0025
+%    random_seed = 87 
+    display = {
+        tiled = 1, 1;
+        style = 2;
+        delay = 5;
+        point_size = 6
+    }
+    precondition = 0
+}
+
+set fiber microtubule
+{
+    rigidity = 5
+    segmentation = 0.3
+    display = ( line_width = 8; plus_end=24, 2; )
+}
+
+set hand kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 3
+    stall_force = 6
+    
+    activity = move
+    max_speed = 1
+    display = {
+        color = 0xE69F00FF;
+        size = 5
+    }
+}
+
+set hand anti_kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 3
+    stall_force = 6
+    
+    activity = move
+    max_speed = -1
+    display = {
+        size = 5
+        color = 0x0072B2FF;
+    }
+}
+
+set single graftedK
+{
+    hand = kinesin
+    stiffness = 200
+    activity = fixed
+}
+
+set single graftedA
+{
+    hand = anti_kinesin
+    stiffness = 200
+    activity = fixed
+}
+
+new 1 fiber microtubule
+{
+    length = 15
+}
+
+new 1 fiber microtubule
+{
+    length = 5
+}
+
+% --------------
+
+new 200  single graftedK ( arc 9 0.5 turn angle 1.65 at 0 1.25 ) 
+
+new 200  single graftedA ( arc 9 0.5 turn angle 1.65 at 0 -1.25 ) 
+
+
+new 60  single graftedK ( arc 3 1 turn angle -1  at -4.5 1.9 ) 
+
+new 60  single graftedA ( arc 3 1 turn angle -1  at -4.5 -0.6 ) 
+
+
+new 50  single graftedK ( arc 0.5 0 turn angle 1.41  at 4.4  1.05 ) 
+
+new 50  single graftedA ( arc 0.5 0 turn angle 1.41  at 4.4 -1.45 ) 
+
+run simul *
+{
+    nb_frames = 400
+    nb_steps = 40000
+}
+
+
+

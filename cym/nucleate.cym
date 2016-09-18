@@ -1,0 +1,38 @@
+% Test for Hand::activity=nucleate and Couple::trans_activated
+% F. Nedelec, April 2011
+
+set simul nucleate 
+{
+    time_step = 0.005
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+    
+    activity        = dynamic
+    unit_length     = 0.008
+    growing_speed   = 0.2
+    shrinking_speed = -0.5
+    hydrolysis_rate = 1
+    growing_force   = 1.7
+    
+    display = ( plus_end = 2 )
+}
+
+run simul *
+{
+    nb_steps = 10000
+    nb_frames = 10
+    event = 2, ( new fiber microtubule { position=(rectangle 2 5); length=0.05 } )
+}

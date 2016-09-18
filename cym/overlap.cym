@@ -1,0 +1,86 @@
+% An antiparallel bundle extending under the action of crosslinking motors
+% Francois Nedelec, July 24, 2009
+
+set simul overlap 
+{
+    time_step = 0.01
+    viscosity = 0.1
+    display = (
+        window_size = 768, 256;
+        zoom=1.4;
+        style = 2
+        point_size = 5
+        line_width = 2
+        label = (Sliding bundle -)
+    )
+}
+
+set space cell 
+{
+    geometry = ( rectangle 6 1.5 1.5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    display = ( line=3,2; speckles=1; point_size=8; end_section=0,1; end_size=5,5 )
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.06
+    unbinding_rate = 0.3
+    
+    activity = motor
+    max_speed = 0
+    stall_force = 6
+    
+    unbinding_force = 3
+    hold_growing_end = 0
+    hold_shrinking_end = 0
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    stiffness = 100
+    diffusion = 20
+    activity = bridge
+    length = 0.05
+}
+
+new 10 fiber microtubule
+{
+    length = 5
+    position = 0 -0.50
+    post_translation = 0 0.1 0
+    orientation = +1 0
+}
+    
+new 10 fiber microtubule
+{
+    length = 5
+    position = 0 -0.45
+    post_translation = 0 0.1 0 
+    orientation = -1 0
+}
+    
+new 1000 couple complex
+
+run simul * 
+{
+    nb_steps = 100
+    solve = 0
+}
+    
+change hand kinesin { max_speed = 0.1 }
+
+run 5000 simul *
+{
+    nb_frames = 100
+}

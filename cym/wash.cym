@@ -1,0 +1,82 @@
+% A confined fiber
+% F. Nedelec, April 2010
+
+set simul anchor 
+{
+    time_step = 0.01
+    viscosity = 0.02
+    steric = 1, 100
+}
+
+set space cell
+{
+    geometry = ( sphere 10 )
+}
+
+new space cell
+
+set hand strong_hand
+{
+    unbinding = 0, 1e6
+}
+
+set single pivot
+{
+    hand = strong_hand
+    stiffness = 1000
+    activity = fixed
+}
+
+set fiber tube
+{
+    rigidity = 20
+    segmentation = 1
+    confine = inside, 100
+}
+
+new 20 fiber tube
+{
+    orientation = 0.8 0.5 0 
+    position = ( -5 0 0 )
+    length = 9
+    single = pivot, minus_dir, 0.5
+    post_rotation = ( 0.8 0.25 )
+}
+
+set hand kinesin 
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.2
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 1
+    stall_force = 6
+    display = ( size=8; color=0x00FF00FF; )
+}
+
+set single grafted 
+{
+    hand = kinesin
+    stiffness = 100
+}
+
+set solid dirty
+{
+    confine = all_inside, 100
+    steric = 1
+    display = ( coloring=1; )
+}
+
+new 301 bead dirty
+{
+    single = grafted
+    radius = 0.4
+}
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 100
+}

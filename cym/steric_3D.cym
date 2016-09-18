@@ -1,0 +1,64 @@
+% A test of steric interactions between fibers and beads
+% F. Nedelec, 23 Jan 2010
+
+
+set simul steric 
+{
+    steric = 1, 100
+    precondition = 0
+    time_step = 0.005
+    kT = 0.0042
+    steric_max_range = 0.5
+    
+    display = ( style=3; point_value=0.01; window_size=1000, 800; )
+}
+
+set space cell
+{
+    geometry = ( sphere 1 )
+    display = ( color=0xFFFFFF11 )
+}
+
+new space cell
+
+set fiber tube
+{
+    rigidity = 1
+    confine = inside, 100
+    segmentation = 0.2
+    steric = 1, 0.05
+    
+    activity = tubule
+    dynamic_model = 1, 1
+    dynamic_speed1 = 0.2, -0.8,  0.2, -0.8
+    dynamic_trans1 = 0.02,   0, 0.02, 0
+    fate = rescue
+    growing_force = 1.7
+    
+    display = ( line_width=6; coloring=1; )
+}
+
+
+new 20 fiber tube
+{
+    length = 0.05
+}
+
+set bead ball
+{
+    steric = 1
+    confine = all_inside, 100
+    display = ( coloring=1; )
+}
+
+new 40 bead ball
+{
+    radius = 0.25
+}
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}
+

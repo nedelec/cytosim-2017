@@ -1,0 +1,99 @@
+% A visual test for the binding of Hands
+% F. Nedelec, April 7th 2010
+
+set simul hand_attach1
+{
+    time_step = 0.01
+}
+
+set space cell
+{
+    geometry = ( circle 15  )
+}
+
+new space cell
+
+set fiber fiber1
+{
+    segmentation    = 1
+    rigidity        = 1
+    binding_key     = 1
+}
+
+set fiber fiber2
+{
+    segmentation    = 1
+    rigidity        = 1
+    binding_key     = 2
+}
+
+set hand hand1
+{
+    binding_rate    = 1
+    binding_range   = 2
+    binding_key     = 1
+    unbinding       = 0, 3
+    display = { color=blue }
+}
+
+set hand hand2
+{
+    binding_rate    = 1
+    binding_range   = 2
+    binding_key     = 2
+    unbinding       = 0, 3
+    bind_also_end   = 1
+    display = { color=dark_green }
+}
+
+set single single1
+{
+    hand = hand1
+    activity = fixed
+    stiffness = 0
+}
+
+set single single2
+{
+    hand = hand2
+    activity = fixed
+    stiffness = 0
+}
+
+new 10000 single single1
+new 10000 single single2
+
+new fiber fiber1 
+{
+    position = ( 5 0 0 )
+    orientation = vertical
+    length = 20
+}
+
+new fiber fiber1
+{
+    position = ( -5 0 0 )
+    orientation = vertical
+    length = 20
+}
+
+new fiber fiber2
+{
+    position = ( 0 5 0 )
+    orientation = horizontal
+    length = 20
+}
+
+new fiber fiber2 
+{
+    position = ( 0 -5 0 )
+    orientation = horizontal
+    length = 20
+}
+
+run simul *
+{
+    nb_steps = 1000
+    nb_frames = 10
+    solve = 0
+}

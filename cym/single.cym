@@ -1,0 +1,55 @@
+/**
+ @example single.cym
+
+ F. Nedelec, February 2013
+*/
+
+set simul single
+{
+    time_step = 0.005
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( capsule 5 1 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 0.5
+    confine = inside, 500
+    display = { line_width=2; }
+}
+
+new 1 fiber microtubule
+{
+    length = 10
+}
+
+set hand motor
+{
+    binding_rate = 10
+    binding_range = 0.05
+    unbinding_rate = 0.2
+    unbinding_force = 3
+    display = { size=10; color=green }
+}
+
+set single protein
+{
+    hand = motor
+    diffusion = 0.1
+}
+
+new 100 single protein
+
+run simul *
+{
+    nb_steps = 40000
+    nb_frames = 50
+}
+

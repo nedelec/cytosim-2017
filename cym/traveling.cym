@@ -1,0 +1,84 @@
+% One of the oldest simulation
+% F. Nedelec
+
+set simul self 
+{
+    time_step = 0.01
+    viscosity = 0.05
+}
+
+
+set space cell
+{
+    geometry = ( circle 16 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 1.5
+    confine = inside, 100
+    display = { line_width=3; }
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 0.8
+    stall_force = 5
+    
+    hold_growing_end = 1
+    display = { size=8 }
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    stiffness = 100
+    diffusion = 10
+}
+
+new 80 fiber microtubule
+{
+    length = 14
+}
+
+new 2000 couple complex
+
+set simul:display * { traveling = 10, 1 0 0,, 0.05 }
+
+run 500 simul *
+
+set simul:display * { traveling = 10, -0.5 0.3 0, 0.95 0 0 0.05, 0 }
+
+run 500 simul *
+
+set simul:display * { traveling = 10, -0.5 -0.3 0,,0 }
+
+run 500 simul *
+
+set simul:display * { traveling = 0 }
+
+
+set simul:display *
+{
+    label = (Nedelec et al. 1998 -)
+    point_value = 0.025
+}
+
+run simul *
+{
+    nb_frames  = 100
+    nb_steps   = 4000
+}
+
+
+

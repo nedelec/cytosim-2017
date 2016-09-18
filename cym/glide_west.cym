@@ -1,0 +1,95 @@
+% A gliding assay, with stripes of two motors of opposite directionality
+% run in 2D
+
+set simul glide_west 
+{
+    viscosity = 0.01
+    time_step = 0.005
+    display = {
+        tiled = 1, 1;
+        zoom = 0.5;
+        style = 2;
+        delay = 10;
+        point_size = 6
+        window_size=1000,600
+    }
+}
+
+set space slide
+{
+    geometry = ( periodic 8.666 5 )
+}
+
+new space slide
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    display = { line_width = 10; plus_end=24, 2; }
+}
+
+set hand kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 4
+        
+    activity = move
+    max_speed = 1
+    stall_force = 6
+    display = {
+        color = 0xE69F00FF;
+        size = 5
+    }
+}
+
+set hand anti_kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 4
+    
+    activity = move
+    max_speed = -1
+    stall_force = 6
+    display = {
+        size = 5
+        color = 0x0072B2FF;
+    }
+}
+
+set single graftedK
+{
+    hand = kinesin
+    stiffness = 100
+    activity = fixed
+}
+
+set single graftedA
+{
+    hand = anti_kinesin
+    stiffness = 100
+    activity = fixed
+}
+
+
+new 1 fiber microtubule
+{
+    length = 12
+}
+
+
+%diagonal is 0.5 0.3, length is 11.6 half is 5.8  3/4 = 17.4/2=8.9
+new 145 single graftedK ( line 14.5 at -2.25 0 turn 0.866 +0.5 blur 0.0 ) 
+new  50 single graftedA ( line  5   at -7.5  0 turn 0.866 -0.5 blur 0.0 ) 
+new  95 single graftedA ( line  9.5 at  5.25 0 turn 0.866 -0.5 blur 0.0 ) 
+
+
+run simul *
+{
+    nb_steps = 100000
+    nb_frames = 100
+}

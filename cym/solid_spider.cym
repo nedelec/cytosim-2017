@@ -1,0 +1,67 @@
+% Francois Nedelec, May 2011
+
+set simul solid 
+{
+    time_step = 0.01
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( sphere 4 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+}
+
+set hand nucleator
+{
+    binding_rate = 10
+    binding_range = 0.05
+    unbinding_rate = 0
+    unbinding_force = 3
+    activity = nucleate
+    nucleate = 1, microtubule, ( fiber_length=0.5 )
+    display = { size=8; color=green; }
+}
+
+set single handle
+{
+    hand = nucleator
+    stiffness = 100
+}
+
+set solid blob
+{
+    confine = all_inside, 100
+    steric = 1
+    display = { style=7 }
+}
+
+new 1 solid blob
+{
+    nb_points = 10
+    point0 =  0   0.5  0, 1
+    point1 =  0  -1.8  0, 2
+    point2 = -0.9  0 0  ,, handle
+    point3 = -0.96 0.2 0,, handle
+    point4 = -1    0.4 0,, handle
+    point5 = -1    0.6 0,, handle
+    point6 =  0.9  0   0,, handle
+    point7 =  0.96 0.2 0,, handle
+    point8 =  1    0.4 0,, handle
+    point9 =  1    0.6 0,, handle
+}
+    
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}

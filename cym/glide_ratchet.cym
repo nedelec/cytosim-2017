@@ -1,0 +1,88 @@
+% Directional ratchet found by G.A.
+% run in 2D
+
+set simul glide
+{
+    viscosity = 0.001
+    time_step = 0.005
+    precondition = 0
+    display = ( tiled=2, 1 )
+}
+
+set space slide
+{
+    geometry = ( periodic 5 5 )
+}
+
+new space slide
+
+set fiber microtubule
+{
+    surface_effect = 1, 0.015
+    rigidity = 10
+    segmentation = 0.5
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 2.5
+    
+    activity = move
+    stall_force = 6
+    max_speed = 1
+}
+
+set hand anti_kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 2.5
+    
+    activity = move
+    stall_force = 6
+    max_speed = -0.6
+}
+
+set single graftedK
+{
+    hand = kinesin
+    stiffness = 100
+    activity = fixed
+}
+
+set single graftedA
+{
+    hand = anti_kinesin
+    stiffness = 100
+    activity = fixed
+}
+
+
+
+% --------------
+
+new fiber microtubule
+{
+    initial_length = 10
+}
+
+%new 500  single graftedA ( newsegment 0.201  9.918 0 5.220 at -1.359 -2.820 ) 
+%new 500  single graftedK ( newsegment 0.323 13.360 0 1.610 at  2.862  2.195 ) 
+
+new 500  single graftedA ( arc 12 0.5 turn angle  1.32 at  2.5 -2.5 ) 
+new 500  single graftedK ( arc 12 0.5 turn angle -1.32 at -2.5  2.5 ) 
+
+% --------------
+
+include ../setup  { required=0 }
+
+run simul *
+{
+    nb_frames = 400
+    nb_steps = 80000
+}
+

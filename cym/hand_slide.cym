@@ -1,0 +1,62 @@
+/**
+ @example hand_slide.cym
+ We create a Slider with `hand:activity=slide`
+
+ F. Nedelec, June 2011
+*/
+
+set simul hand_slide 
+{
+    time_step = 0.005
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( sphere 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 500
+    display = { line_width=3; minus_end=4, 8; }
+}
+
+new 1 fiber microtubule
+{
+    length = 19
+    position = ( 0 0 0 )
+}
+
+set hand slider
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 10
+    
+    activity = slide
+    mobility = 1
+    stiffness = 100
+    display = { width=3; size=6; color=green }
+}
+
+set single protein
+{
+    hand = slider
+    activity = fixed
+    stiffness = 100
+}
+
+new 100 single protein
+
+run simul *
+{
+    nb_steps = 40000
+    nb_frames = 50
+}
+

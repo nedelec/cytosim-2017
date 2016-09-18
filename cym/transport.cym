@@ -1,0 +1,66 @@
+% Francois Nedelec, April 23, 2013
+
+set simul transport 
+{
+    time_step = 0.001
+    display = ( style=2; point_size=1; window_size = 1200, 600; )
+}
+
+set space cell
+{
+    geometry = ( capsule 4 2 )
+    display = ( visible=0 )
+}
+
+new space cell
+
+set hand motor
+{
+    binding = 10, 0.1
+    unbinding = 1, 3
+    activity = move;
+    max_speed = 10;
+    stall_force = 1;
+    display = ( size=2; color=green )
+}
+
+set single protein
+{
+    hand = motor
+    diffusion = 1
+}
+
+new 100000 single protein
+
+set fiber tube
+{
+    rigidity = 20
+    segmentation = 0.5
+        
+    display = ( color=0xFFFFFFAA; line_width=4; end_size=4,4 )
+}
+    
+new 4 fiber tube
+{
+    length = 8
+    position = 0 -0.7 0
+    post_translation = 0 0.5 0
+    orientation = 1 0 0
+}
+
+new 4 fiber tube
+{
+    length = 8
+    position = 0 0.7 0
+    post_translation = 0 -0.5 0
+    orientation = -1 0 0
+}
+
+run simul *
+{
+    nb_steps  = 500
+    nb_frames = 100
+    solve = 0
+}
+
+

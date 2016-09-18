@@ -1,0 +1,68 @@
+% A confined aster with cortical pulling motors
+% F. Nedelec, April 2010
+
+set simul aster_pull 
+{
+    time_step = 0.005
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( sphere 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 0.5
+}
+
+set solid core
+{
+    display = ( style=3 )
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster centrosome
+{
+    radius = 1
+    nb_fibers = 32
+    length = 10
+}
+
+set hand dynein
+{
+    binding_rate = 5
+    binding_range = 0.01
+    unbinding_rate = 0.2
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = -1
+    stall_force = 5
+}
+
+set single grafted
+{
+    hand = dynein
+    stiffness = 100
+    activity = fixed
+}
+
+new 2000 single grafted
+
+
+run simul * 
+{
+    nb_steps = 20000
+    nb_frames = 100
+}

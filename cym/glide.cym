@@ -1,0 +1,73 @@
+% Gliding assay with realistic Kinesin and Microtubule parameters, 
+% cf. Bourdieu et al. PRL Vol 75/N 1/Page 176-179
+% the parameters for motor density are also taken from there
+
+set simul glide 
+{
+    time_step = 0.005
+    viscosity = 0.1
+    precondition = 0
+    display = ( style=2 )
+}
+
+set space cell
+{
+    geometry = ( periodic 2 2 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.25
+    display = {
+        line_width = 2
+        line_style = 1
+        point_size = 8
+        point_style = 2
+    }
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 2.5
+    
+    activity = move
+    max_speed = 0.4
+    stall_force = 6
+}
+
+set single grafted
+{
+    hand = kinesin
+    stiffness = 200
+    activity = fixed
+}
+
+new fiber microtubule
+{
+    length = 5
+    orientation = horizontal
+}
+
+new 16000 single grafted
+
+set simul:display gliding
+{
+    label = (Gliding assay -)
+    
+    delay = 10
+    %tiled = 1
+    point_size = 6
+    style = 2
+}
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 50
+}

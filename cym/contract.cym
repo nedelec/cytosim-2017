@@ -1,0 +1,79 @@
+% A contractile actin gel
+% F. Nedelec Dec. 2010
+
+set simul contract 
+{
+    time_step = 0.001
+    viscosity = 0.05
+}
+
+
+set space cell
+{
+    geometry = ( circle 8 )
+}
+
+new space cell
+
+set fiber actin
+{
+    rigidity = 0.1
+    segmentation = 0.25
+    confine = inside, 100
+    display = ( line=2,2; )
+}
+
+set hand myosin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.01
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 1
+    stall_force = 5
+    display = ( size = 4; color=green )
+}
+
+set hand binder
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.01
+    unbinding_force = 3
+    display = ( size = 2; color=blue )
+}
+
+
+set couple motor
+{
+    hand1 = myosin
+    hand2 = myosin
+    stiffness = 250
+    diffusion = 10
+    fast_diffusion = 1
+}
+
+set couple crosslinker
+{
+    hand1 = binder
+    hand2 = binder
+    stiffness = 250
+    diffusion = 10
+    fast_diffusion = 1
+}
+
+new 150 fiber actin
+{
+    length = 5
+}
+
+new 5000 couple motor
+new 5000 couple crosslinker
+
+run simul *
+{   
+    nb_frames = 100
+    nb_steps = 10000
+}

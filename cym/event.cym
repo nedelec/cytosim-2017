@@ -1,0 +1,73 @@
+% test stochastic events in function 'run simul *'
+% F. Nedelec, 8 Feb 2011
+
+
+set simul event 
+{
+    steric = 1, 100
+    steric_max_range = 0.5
+    
+    time_step = 0.001
+    viscosity = 0.1
+    precondition = 0
+}
+
+set space cell
+{
+    geometry = ( sphere 3 )
+}
+
+new space cell
+    
+set solid ball
+{
+    confine = all_inside, 1000
+    steric = 1
+    display = ( style=4; coloring=1; )
+}
+
+new 100 bead ball
+{
+    radius = 0.1
+    position = ( 0 0 0 )
+    mark = 1
+}
+
+new 100 bead ball
+{
+    radius = 0.1
+    position = ( 0 0 0 )
+    mark = 2
+}
+
+run 200 simul *
+
+delete bead *
+{   
+    mark = 2
+}
+
+run simul * 
+{
+    nb_steps = 2000
+    event = 100, ( new 1 bead ball { radius=0.15; position=(0 0 0); } )
+}
+
+delete bead *
+{   
+    mark = 1
+}
+
+run simul * 
+{
+    nb_steps = 1000
+    event = 50, ( new 1 bead ball { radius=0.20; position=(0 0 0); } )
+}
+
+run simul *
+{
+    nb_steps = 1000
+    nb_frames = 10
+    event = 5, ( new 1 bead ball { radius=0.25; position=(0 0 0); } )
+}
+

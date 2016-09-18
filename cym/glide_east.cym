@@ -1,0 +1,102 @@
+% A length sorter
+% run in 2D
+% Beat Rupp, May 2011
+
+set space cell
+{
+    geometry = ( periodic 5 5 )
+}
+
+new space cell
+
+set simul GA
+{
+    viscosity = 0.025
+    time_step = 0.005
+%    random_seed = 87 
+    display = {
+        tiled = 1, 1;
+        zoom = 0.75;
+        style = 2;
+        delay = 10;
+        point_size = 6
+    }
+    precondition = 0
+}
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    display = { line_width = 10; plus_end=24, 2; }
+}
+
+set hand kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 3
+    stall_force = 6
+    
+    activity = move
+    max_speed = 1
+    display = {
+        color = 0xE69F00FF;
+        size = 5
+    }
+}
+
+set hand anti_kinesin
+{
+    binding_rate = 8
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 3
+    stall_force = 6
+    
+    activity = move
+    max_speed = -1.5
+    display = {
+        size = 5
+        color = 0x0072B2FF;
+    }
+}
+
+set single graftedK
+{
+    hand = kinesin
+    stiffness = 200
+    activity = fixed
+}
+
+set single graftedA
+{
+    hand = anti_kinesin
+    stiffness = 200
+    activity = fixed
+}
+
+new 1 fiber microtubule
+{
+    length = 10
+    position = ( 0 0 0 )
+    orientation = ( 1 0 0 )
+}
+
+% --------------
+
+new 300  single graftedA ( arc 9 0.5 turn angle 1.7 at 0 3.33 ) 
+
+new 300  single graftedK ( arc 9 0.5 turn angle 1.7 at 0 0 ) 
+
+new 300  single graftedA ( arc 9 0.5 turn angle 1.7 at 0 -3.33 ) 
+
+run simul *
+{
+    nb_frames = 400
+    nb_steps = 20000
+}
+
+
+

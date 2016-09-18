@@ -1,0 +1,51 @@
+% A test for steric interaction
+% run in 2D
+% F. Nedelec, 23 Jan 2010
+
+
+set simul steric_fiber1.cym
+{
+    time_step = 0.005
+    kT = 0.0042
+    steric = 1, 500
+    
+    display = { point_value=0.01; window_size=1000, 800; }
+}
+
+set space cell
+{
+    geometry = ( sphere 1 )
+}
+
+new space cell
+
+set fiber tube
+{
+    rigidity = 1
+    confine = inside, 100
+    segmentation = 0.2
+    steric = 1, 0.05
+    display = { line_width=6; rainbow=0.1 }
+}
+
+new 1 fiber tube
+{
+    length = 1
+    position = 0 0 0
+    orientation = horizontal
+}
+new 1 fiber tube
+{
+    length = 1
+    position = 0 0 0
+    orientation = vertical
+}
+
+
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}
+

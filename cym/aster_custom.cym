@@ -1,0 +1,61 @@
+% A Spindle Pole Body in a membrane
+% F. Nedelec, August 2012
+
+set simul aster 
+{
+    time_step = 0.005
+    viscosity = 0.01
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 1
+    confine = inside, 100
+
+    display = { line_width=3; }
+}
+
+set solid core
+{
+    display = ( style=3 )
+    confine = surface, 100
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+
+new 1 aster centrosome
+{
+    position = ( -5 0 0 )
+    orientation = identity
+    
+    nb_points = 3
+    point0 = 0 -0.2 0, 0.2
+    point1 = 0  0   0
+    point2 = 0 +0.2 0, 0.2
+
+    fiber_length = 5
+    nb_fibers = 3
+    anchor0 = point0,  0.5 -0.2 0
+    anchor1 = point1,  0.5  0   0
+    anchor2 = point2,  0.5 +0.2 0
+}
+
+run simul *
+{
+    nb_steps = 2000
+    nb_frames = 100
+}

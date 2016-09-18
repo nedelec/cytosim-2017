@@ -1,0 +1,62 @@
+/**
+ @example hand_move.cym
+ We create a Motor with `hand:activity=move`
+
+ F. Nedelec, April 2010
+*/
+
+set simul hand_move
+{
+    time_step = 0.005
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( sphere 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 0.5
+    confine = inside, 500
+    display = { line_width=2; minus_end=4, 8; }
+}
+
+new 1 fiber microtubule
+{
+    length = 19
+    position = ( 0 0 0 )
+}
+
+set hand motor
+{
+    binding_rate = 10
+    binding_range = 0.05
+    unbinding_rate = 0.2
+    unbinding_force = 3
+    hold_growing_end = 1
+    
+    activity = move
+    max_speed = 1
+    stall_force = 5
+    display = { width=3; size=12; color=green }
+}
+
+set single protein
+{
+    hand = motor
+    diffusion = 0.1
+}
+
+new 100 single protein
+
+run simul *
+{
+    nb_steps = 40000
+    nb_frames = 50
+}
+

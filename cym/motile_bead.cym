@@ -1,0 +1,72 @@
+% F. Nedelec, April 2010
+
+set simul motile_bead 
+{
+    time_step = 0.02
+    viscosity = 0.2
+    kT  = 0.0042
+    steric = 1, 100
+}
+
+set space cell
+{
+    geometry = ( square 10 10 10 )
+}
+
+new space cell
+
+set fiber actin
+{
+    rigidity = 5
+    segmentation = 0.5
+    steric = 1, 0.02
+    
+    activity        = treadmill
+    growing_speed   =   0.1, 0
+    shrinking_speed = -0.05, -0.01
+    growing_force   =     2,  2
+    
+    display = { color=white; point_size=5; speckles=1; line_style=1; line_width=1 }
+}
+
+set hand formin
+{
+    binding = 0, 0.02
+    unbinding = 0, 3
+    
+    activity = nucleate
+    nucleate = 1, actin
+    hold_growing_end = 1
+    hold_shrinking_end = 0
+    track_end = plus_end
+    nucleation_spec = ( length=0.01; end_state=1, 4 )
+}
+
+set single grafted
+{
+    hand = formin
+    stiffness = 100
+}
+
+set sphere bead
+{
+    point_mobility = 1
+    steric = 1
+    display = { color=0xFFFF0055; style=8; size=8 }
+}
+
+new sphere bead
+{
+    radius = 1
+    nb_points = 10
+    attach = 100 grafted
+    position = ( 0 0 0 )
+}
+
+set simul:display * { track_fibers=1 }
+
+run simul *
+{
+    nb_steps = 2500
+    nb_frames = 50
+}

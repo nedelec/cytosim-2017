@@ -1,0 +1,86 @@
+% A confined fiber
+% F. Nedelec, April 2011
+
+set simul fiber 
+{
+    time_step = 0.01
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+}
+
+new 50 fiber microtubule
+{
+    length = 12
+    orientation = horizontal
+}
+
+set fiber glucan
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+}
+
+new 50 fiber glucan
+{
+    length = 12
+    orientation = horizontal
+}
+
+run simul * 
+{
+    nb_steps = 100
+    nb_frames = 2
+}
+
+
+% make a red flash!
+change simul:display * { back_color=red }
+
+cut fiber glucan
+{
+    plane = 1 0 0, 0
+}
+
+run 10 simul *
+
+change simul:display * { back_color=black }
+
+
+run 100 simul *
+{
+    nb_frames = 2
+}
+
+% make a blue flash!
+change simul:display * { back_color=blue }
+
+cut fiber *
+{
+    plane = 0 1 0, -2
+}
+
+run 10 simul * 
+
+change simul:display * { back_color=black }
+
+
+run simul *
+{
+    nb_steps = 100
+    nb_frames = 2
+}
+

@@ -1,0 +1,53 @@
+% A test for steric interaction with attraction
+% run in 2D
+% F. Nedelec, 23 Jan 2010
+
+
+set simul steric_fiber_glue 
+{
+    steric = 1, 500
+    precondition = 0
+    time_step = 0.005
+    kT = 0.0042
+    
+    display = ( delay=8; period=8; point_value=0.01; zoom=0.6; )
+}
+
+set space cell
+{
+    geometry = ( sphere 3 )
+}
+
+new space cell
+
+set fiber tube
+{
+    rigidity = 1
+    confine = inside, 100
+    segmentation = 0.2
+    steric = 1, 0.05, 0.025
+
+    activity         = classic
+    growing_speed    = 0.2
+    shrinking_speed  = -0.5
+    catastrophe_rate = 0.05
+    rescue_rate      = 0
+    growing_force    = 1.67
+    min_length       = 0.01
+    
+    display = ( line_width=6; plus_end=12 )
+}
+
+
+new 5 fiber tube
+{
+    length = 0.05
+}
+
+run simul *
+{
+    nb_steps  = 40000
+    nb_frames = 100
+    event = 0.5, ( new fiber tube { length=0.012 } )
+}
+

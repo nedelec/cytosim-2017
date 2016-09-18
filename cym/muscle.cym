@@ -1,0 +1,167 @@
+% Francois Nedelec, July 28 2011 
+
+
+set simul striated_muscle 
+{
+    viscosity = 1
+    time_step = 0.001
+    display = ( window_size=1200, 300; )
+}
+
+set space cell
+{
+    geometry = ( square 4 1 )
+}
+
+new space cell
+
+
+set fiber actin
+{
+    rigidity = 5
+    segmentation = 0.1
+    binding_key = 1
+    display = { color=blue; interval=1.0; line_width=4; }
+}
+
+set solid core
+{
+    display = ( style=3 )
+}
+
+set aster actin_brush
+{
+    solid = core
+    fibers = actin
+    stiffness = 1000, 500
+}
+
+new 3 aster actin_brush
+{
+    position = ( -3 0 )
+    post_translation = ( 3 0 )
+    radius = 0.2
+    nb_fibers = 4
+    anchor0 = 0  0.05 0, -0.18  0.05 0
+    anchor1 = 0 -0.05 0, -0.18 -0.05 0
+    anchor2 = #1,  0.18  0.05 0
+    anchor3 = #3,  0.18 -0.05 0
+    orientation = horizontal
+}
+
+
+set fiber myosin_filament
+{
+    rigidity = 5
+    segmentation = 0.2
+    binding_key = 2
+    display = { color=orange; interval=1.0; line_width=1; }
+}
+
+set bundle thick_filament
+{
+    fibers = myosin_filament
+    nb_fibers = 2
+    overlap   = 0.1
+    stiffness = 200
+}
+
+new 3 bundle thick_filament
+{
+    position = ( 1.5 -0.1 )
+    post_translation = ( 0 0.1 )
+    orientation = horizontal
+}
+
+new 3 bundle thick_filament
+{
+    position = ( -1.5 -0.1 )
+    post_translation = ( 0 0.1 )
+    length = 1
+    orientation = horizontal
+}
+
+
+set hand myosin_base
+{
+    binding_rate = 100
+    binding_range = 0.05
+    unbinding_rate = 0
+    unbinding_force = 6
+    binding_key = 2
+
+    display = { color=orange; size=5 }
+}
+
+set hand myosin_motor
+{
+    binding_rate = 0
+    binding_range = 0.06
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    binding_key = 1
+
+    activity = move
+    max_speed = -0.5
+    stall_force = 6
+
+    display = { color=white; size=5 }
+}
+
+set couple myosin
+{
+    hand1 = myosin_motor
+    hand2 = myosin_base
+    stiffness = 200
+    diffusion = 0
+
+    activity = bridge
+    length = 0.05
+}
+
+new 20 couple myosin
+{
+    position = ( -0.5 0 )
+    post_translation = ( -0.1 0 )
+}
+new 20 couple myosin
+{
+    position = ( -0.5 0.1 )
+    post_translation = ( -0.1 0 )
+}
+new 20 couple myosin
+{
+    position = ( -0.5 -0.1 )
+    post_translation = ( -0.1 0 )
+}
+
+new 20 couple myosin
+{
+    position = ( 0.5 0 )
+    post_translation = ( 0.1 0 )
+}
+new 20 couple myosin
+{
+    position = ( 0.5 0.1 )
+    post_translation = ( 0.1 0 )
+}
+new 20 couple myosin
+{
+    position = ( 0.5 -0.1 )
+    post_translation = ( 0.1 0 )
+}
+
+run simul *
+{
+    nb_steps = 100
+    solve = 0
+}
+
+change hand:binding_rate myosin_motor { 50 }
+
+run simul *
+{
+    nb_steps  = 5000
+    nb_frames = 100
+}
+

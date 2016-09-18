@@ -1,0 +1,64 @@
+/**
+ @example fiber_treadmill.cym
+ We create a dynamic fiber with activity=treadmill
+
+ F. Nedelec, February 2011
+*/
+
+
+set simul demo
+{
+    time_step = 0.001
+    viscosity = 1
+}
+
+set space cell
+{
+    geometry = ( capsule 2 2 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity     = 20
+    segmentation = 0.5
+    confine      = inside, 200
+    
+    activity        = treadmill
+    growing_speed   =   0.1,  0.05
+    shrinking_speed = -0.05, -0.1
+    growing_force   =     2,  2
+
+    display = ( speckles=1, 0.1; line_width=4; line_style=2; )
+}
+
+new 1 fiber microtubule
+{
+    length = 3
+    end_state = 1, 4
+}
+
+new 1 fiber microtubule
+{
+    length = 1
+    end_state = 1, 1
+}
+
+new 1 fiber microtubule
+{
+    length = 3
+    end_state = 4, 1
+}
+
+new 1 fiber microtubule
+{
+    length = 6
+    end_state = 4, 4
+}
+
+run simul *
+{
+    nb_steps = 100000
+    nb_frames = 10
+}

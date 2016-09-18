@@ -1,0 +1,77 @@
+% A test for cuting fiber
+% F. Nedelec, April 2011
+
+set simul fiber 
+{
+    time_step = 0.01
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( capsule 4 3 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    display = ( plus_tip=16,2; line_style=2; speckles=1, 0.25 )
+}
+
+new 1 fiber microtubule
+{
+    length = 12
+    position = ( 0 0 0 )
+}
+
+set hand binder
+{
+    binding_rate = 50
+    binding_range = 0.01
+    unbinding_rate = 0.2
+    unbinding_force = 3
+    display = ( width=3; size=10; color=green )
+}
+
+set single protein
+{
+    hand = binder
+    diffusion = 0.1
+    stiffness = 100
+}
+
+new 100 single protein
+
+
+run simul * 
+{
+    nb_steps =  100
+    nb_frames = 5
+}
+
+cut fiber *
+{
+    plane = 1 0 0, 0
+}
+
+cut fiber *
+{
+    plane = 1 0 0, 3
+}
+
+cut fiber *
+{
+    plane = 1 0 0, -3
+}
+
+run simul *
+{
+    nb_steps = 1000
+    nb_frames = 1
+}
+

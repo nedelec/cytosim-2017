@@ -1,0 +1,84 @@
+/**
+ @example fiber_glue.cym
+ Parameter fiber:glue is set link fiber with the boundaries:
+ - it creates a Single, everytime a fiber contacts the surface.
+ - the Single is deleted if the associated Hand detaches.
+ .
+ F. Nedelec, February 2011
+*/
+
+set simul fiber_glue
+{
+    time_step = 0.01
+    viscosity = 0.1
+    display = { delay=4; }
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set hand strong_hand
+{
+    unbinding_rate = 0
+    unbinding_force = 1e6
+    hold_growing_end = 1
+    hold_shrinking_end = 1
+    display = { size=8 }
+}
+
+set single cortical_glue
+{
+    hand = strong_hand
+    stiffness = 10
+    activity = fixed
+}
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 0.5
+    confine = inside, 100
+    glue = 3, cortical_glue
+
+    activity        = tubule
+    dynamic_model   = 3
+    dynamic_speed1  = 0.51,  -0.84
+    dynamic_trans1  = 0.01
+    dynamic_trans2  = 5 
+    fate            = rescue
+    growing_force   = 1.7
+    min_length      = 0.5
+    
+    display = { line=8, 2; point=1; speckles=2, 0.25; rainbow=-0.1 }
+}
+
+set solid core
+{
+    display = ( style=3 )
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster centrosome
+{
+    radius = 0.5
+    nb_fibers = 20
+    fiber_length = 2
+    position = 0 0 0
+}
+
+
+run simul *
+{
+    nb_steps = 10000
+    nb_frames = 50
+}

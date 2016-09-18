@@ -1,0 +1,74 @@
+set simul aster 
+{
+    time_step = 0.005
+    viscosity = 0.01
+}
+
+set space cell
+{
+    geometry = ( sphere 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 1
+    confine = inside, 100
+    
+    activity        = dynamic
+    unit_length     = 0.008
+    growing_speed   = 0.06
+    shrinking_speed = -0.30
+    hydrolysis_rate = 0.06
+    growing_force   = 1.7
+    
+    display = ( line_width=6; plus_end=10, 2; )
+}
+
+set solid core
+{
+    display = ( style=3 )
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+set hand cutter
+{
+    binding_rate = 10
+    binding_range = 0.02
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    activity = cut
+    cutting_rate = 0.5
+    display = ( size=7; color=red; )
+}
+
+set single katanin
+{
+    hand=cutter
+    stiffness = 0
+    diffusion = 10
+}
+new 100 single katanin
+
+new aster centrosome
+{
+    position = circle 3
+    nb_fibers = 32
+    radius = 0.5
+    length = 5, 4
+}
+
+run simul *
+{
+    nb_steps = 20000
+    nb_frames = 20
+}
+

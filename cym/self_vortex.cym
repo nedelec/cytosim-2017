@@ -1,0 +1,63 @@
+% One of the oldest simulation
+% F. Nedelec, July 2009
+
+set simul self_vortex 
+{
+    time_step = 0.01
+    viscosity = 0.05
+}
+
+
+set space cell
+{
+    geometry = ( circle 16 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 1.5
+    confine = inside, 100
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 0.8
+    stall_force = 5
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    stiffness = 100
+    diffusion = 10
+}
+
+new 80 fiber microtubule
+{
+    length = 14
+}
+
+new 2000 couple complex
+
+set simul:display *
+{
+    label = (Nedelec et al. 1998 -)
+}
+
+
+run simul *
+{
+    nb_frames  = 100
+    nb_steps   = 10000
+}
+

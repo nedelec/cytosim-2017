@@ -1,0 +1,101 @@
+/**
+ @example fiber_both.cym
+ We create two classes of fibers and associated motors
+
+ F. Nedelec, October 2011
+*/
+
+set simul demo
+{
+    time_step = 0.001
+    viscosity = 0.05
+    display = ( window_size=900,300 )
+}
+
+set space cell
+{
+    geometry = ( capsule 2 1 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    binding_key = 1
+    confine = inside, 200
+    display = ( line_width=8 )
+}
+
+new 1 fiber microtubule
+{
+    length = 3
+}
+
+set hand kinesin
+{
+    binding_key = 1
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 0.8
+    stall_force = 5
+    display = ( size=10; color=orange; )
+}
+
+set single singleK
+{
+    hand = kinesin
+    diffusion = 0.01
+    stiffness = 100
+}
+
+
+set fiber actin
+{
+    rigidity = 0.05
+    segmentation = 0.05
+    binding_key = 2
+    confine = inside, 100
+    display = ( line_width=5; plus_end=5,5; minus_end=5,5; )
+}
+
+new 3 fiber actin
+{
+    length = 1
+}
+
+set hand myosin
+{
+    binding_key = 2
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 4
+    
+    activity = move
+    max_speed = -0.8
+    stall_force = 5
+    display = ( size=10; color=sky_blue )
+}
+
+set single singleM
+{
+    hand = myosin
+    diffusion = 0.01
+    stiffness = 100
+}
+
+new 100 single singleK
+new 100 single singleM
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}
+

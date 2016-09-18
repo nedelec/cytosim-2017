@@ -1,0 +1,68 @@
+/**
+ @example hand_cut.cym
+ We create a Cutter with `hand:activity=cut`
+
+ F. Nedelec, October 2011
+*/
+
+
+set simul hand_cut 
+{
+    time_step = 0.005
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( capsule 4 1 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.25
+    confine = inside, 100
+
+    activity        = treadmill
+    growing_speed   =  0.1,  0
+    shrinking_speed =    0, -0.05
+    growing_force   =    2,  2
+
+    display = ( color = blue )
+}
+
+new 1 fiber microtubule
+{
+    length = 10
+    position = ( 0 0 0 )
+    end_state = 1, 1
+}
+
+
+set hand cutter
+{
+    binding_rate = 10
+    binding_range = 0.05
+    unbinding_rate = 0
+    unbinding_force = 3
+    activity = cut
+    cutting_rate = 1
+    new_end_state = 4, 4
+    display = ( size=6; color=green; )
+}
+
+set single protein
+{
+    hand = cutter
+    diffusion = 0.5
+}
+
+new 3 single protein
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 10
+}

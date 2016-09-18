@@ -1,0 +1,86 @@
+% Francois Nedelec, August, 2010 
+
+set simul solid 
+{
+    time_step = 0.01
+    viscosity = 0.01
+    steric = 1, 500
+}
+
+set space cell
+{
+    geometry = ( sphere 15 )
+}
+
+new space cell
+
+
+set hand protein
+{
+    binding = 10, 0.05
+    unbinding = 0, 3
+    display = { size=8; color=green; }
+}
+
+set single gprotein
+{
+    hand = protein
+    stiffness = 100
+}
+
+set solid blob
+{
+    confine = all_inside, 100
+    steric = 1
+    display = ( style=7; coloring=1; visible=transparent; )
+}
+
+new 10 solid blob
+{
+    nb_points = 4
+    radius = 0.5
+    shape = surface
+    singles = 2 gprotein
+}
+
+new 5 solid blob
+{
+    nb_points = 10
+    shape = inside
+    radius = 1.5
+    single = gprotein
+}
+
+new 10 solid blob
+{
+    nb_points = 3
+    point0 = -1 0 0, 1
+    point1 =  0 0 0, 0.75, gprotein
+    point2 =  1 0 0, 1
+}
+
+
+new 10 solid blob
+{
+    radius = 2
+    nb_points = 4
+    point0 = 0 0 0, 2
+    point1 = inside, 0.1, gprotein
+    point2 = inside, 0.1, gprotein
+    point3 = inside, 0.1
+}
+
+new 3 solid blob
+{
+    nb_points = 3
+    point0 = 0 0 0, 1
+    point1 = 0.95  0.1 0, 0, 2 gprotein
+    point2 = 0.95 -0.1 0, 0, 2 gprotein
+}
+
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}

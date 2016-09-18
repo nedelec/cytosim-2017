@@ -1,0 +1,114 @@
+% After 2 seconds, the link is cut betwen two fibers pulled appart
+% F. Nedelec, 24 Feb 2011
+
+set simul break 
+{
+    time_step = 0.005
+    viscosity = 0.05
+}
+
+set space cell
+{
+    geometry = ( capsule 6 1 )
+}
+
+new space cell
+
+set fiber tubule
+{
+    rigidity = 30
+    segmentation = 0.5
+    display = { line_width=1; minus_tip=3, 4 }
+}
+
+new fiber tubule
+{
+    position = ( 2 0 0 )
+    orientation = ( 1 0 0 )
+    length = 4
+}
+
+new fiber tubule
+{
+    position = ( -2 0 0 )
+    orientation = ( -1 0 0 )
+    length = 4
+}
+
+set hand dynein 
+{
+    binding = 50, 0.01
+    unbinding = 0.5, 2
+    
+    activity    = move
+    max_speed   = -1
+    stall_force = 5
+    limit_speed = 1
+    display = ( size=6; color=orange )
+}
+
+set hand binder 
+{
+    binding = 50, 0.01
+    unbinding = 0, 1
+    display = ( width=9; size=12; color=blue )
+}
+
+set couple crosslinker 
+{
+    hand1 = binder
+    hand2 = binder
+    diffusion = 0
+    stiffness = 500
+}
+
+new 1 couple crosslinker
+{
+    position = ( 0 0 0 )
+    mark = 1
+}
+
+set single grafted 
+{
+    hand = dynein
+    activity = fixed
+    stiffness = 500
+}
+
+new 100 single grafted
+{
+    position = ( rectangle 5 0 0 )
+}
+
+run simul *
+{
+    nb_steps = 50
+    solve = 0
+}
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 100
+}
+
+% make a red flash!
+change simul:display * { back_color=red }
+run simul *
+{
+    nb_steps = 10
+    nb_frames = 1
+}
+
+delete couple *
+{
+    mark = 1
+}
+change simul:display * { back_color=black }
+
+run simul *
+{
+    nb_steps = 500
+    nb_frames = 10
+}
+

@@ -1,0 +1,70 @@
+
+
+
+set simul bead 
+{
+    steric = 1, 100
+    
+    time_step = 0.001
+    viscosity = 0.1
+    precondition = 0
+}
+
+set space cell
+{
+    geometry = ( sphere 3 )
+}
+
+new space cell
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.02
+    unbinding_rate = 2
+    unbinding_force = 3
+    display = ( color=blue; size=10; )
+}
+
+set single grafted
+{
+    hand = kinesin
+    stiffness = 100
+}
+
+set bead balls
+{
+    confine = all_inside, 1000
+    steric = 1
+    display = ( coloring=1; style=5 )
+}
+
+new 320 bead balls
+{
+    radius = 0.05
+    single = grafted
+}
+
+new 160 bead balls
+{
+    radius = 0.1
+    single = grafted
+}
+
+new 40 bead balls
+{
+    radius = 0.25
+}
+
+new 10 solid balls
+{
+    nb_points = 10
+    shape = surface
+    radius = 0.5
+}
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 10
+}

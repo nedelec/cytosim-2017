@@ -1,0 +1,49 @@
+% Changing the confining space
+% Francois Nedelec, January 2012 26
+
+
+set simul ring
+{
+    viscosity = 1
+    time_step = 0.001
+    steric = 1, 100
+}
+
+set space small
+{
+    geometry = ( sphere 1 )
+}
+
+set space big
+{
+    geometry = ( sphere 2 )
+}
+
+new space big
+new space small
+
+set bead balls
+{
+    confine = all_inside, 10
+    steric = 1
+    display = ( coloring=1; style=5 )
+}
+
+new 100 bead balls
+{
+    radius = 0.1
+}
+
+run 1000 simul *
+{   
+    nb_frames = 10
+}
+
+
+change bead:confine balls ( inside, 50, small )
+
+
+run 1000 simul *
+{   
+    nb_frames = 10
+}

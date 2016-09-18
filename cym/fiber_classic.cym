@@ -1,0 +1,49 @@
+/**
+ @example fiber_classic.cym
+ We create a dynamic fiber with activity=classic
+
+ F. Nedelec, April 2010
+*/
+
+set simul demo
+{
+    time_step = 0.01
+    viscosity = 0.2
+}
+
+set space cell
+{
+    geometry = ( capsule 2 1 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity       = 30
+    segmentation   = 0.5
+    confine        = inside, 200
+    
+    activity         = classic
+    growing_speed    = 0.06
+    shrinking_speed  = -0.15
+    catastrophe_rate = 0.004,  0.04
+    rescue_rate      = 0
+    growing_force    = 1.67
+    fate             = rescue
+    min_length       = 0.5
+    
+    display = ( plus_tip = 10, 2; )
+}
+
+new 2 fiber microtubule
+{
+    length = 2
+}
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 50
+}
+

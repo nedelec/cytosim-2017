@@ -1,0 +1,46 @@
+/**
+ @example fiber_forces.cym
+ We display the forces acting on a confined fiber
+
+ F. Nedelec, 23 Jan 2010
+*/
+
+
+set simul demo
+{
+    precondition = 0
+    time_step = 0.00001
+    viscosity = 0.01
+    kT = 0.0042  
+    display = { window_size=1000, 400; }
+}
+
+set space cell
+{
+    geometry = ( square 3 0 0 )
+}
+
+new space cell
+
+set fiber tube
+{
+    rigidity = 10
+    confine = inside, 100
+    segmentation = 0.1
+    display = { color=yellow; line=1, 0; point=10, 1; forces=1 }
+}
+
+
+new 1 fiber tube
+{
+    length = 5
+    position = ( 0 0 0 )
+    orientation = horizontal
+}
+
+run simul *
+{
+    nb_steps  = 10000
+    nb_frames = 100
+}
+

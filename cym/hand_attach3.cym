@@ -1,0 +1,61 @@
+% A test for attachments
+% F. Nedelec, April 7th 2010
+
+set simul hand_attach3
+{
+    time_step = 0.005
+    precondition = 0
+}
+
+set space cell
+{
+    geometry = ( periodic 5 5 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 1
+    display = {
+        line_width = 1
+    }
+}
+
+set hand binder
+{
+    binding_rate = 10
+    binding_range = 0.5
+    unbinding_rate = 0
+    unbinding_force = 1
+}
+
+set single grafted
+{
+    hand = binder
+    activity = fixed
+    stiffness = 0
+}
+
+new fiber microtubule
+{
+    length = 6
+}
+
+new 16000 single grafted
+
+set simul:display *
+{
+    label = (Binding test -)
+    zoom  = 0.66
+    tiled = 1, 1
+    point_size = 2
+    style = 2
+}
+
+run simul *
+{
+    nb_steps = 1000
+    nb_frames = 10
+}

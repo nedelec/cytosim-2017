@@ -1,0 +1,76 @@
+% Microtubules in interphase S.pombe
+% Francois Nedelec, Aug. 4, 2009
+% NOTE: parameters use units of picoNewton, micrometer, second
+
+
+set simul pombe 
+{
+    time_step  = 0.01
+    kT         = 0.0042
+    viscosity  = 0.9
+    precondition = 0
+    display = ( window_size=800,400 )
+}
+
+set space pombe
+{
+    geometry = ( capsule 3.5 1.6 )
+    display = ( color=0xFFFFFF55; )
+}
+
+new space pombe
+
+set fiber microtubule
+{
+    rigidity       = 30
+    segmentation   = 0.5
+    confine        = inside, 200
+    
+    activity        = dynamic
+    unit_length     = 0.008
+    growing_speed   = 0.06
+    shrinking_speed = -0.15
+    hydrolysis_rate = 0.058
+    growing_force   = 1.7
+    fate            = rescue
+    min_length      = 0.5
+    display = ( line_width=5; plus_end=15; minus_end=15; )
+}
+
+set sphere envelope
+{
+    point_mobility = 0.05
+    confine        = all_inside, 200
+    piston_effect  = 1
+    
+    display = ( color=0xFFFFFF55; size=12; style=12 )
+}
+
+set bundle microtubule_bundle
+{
+    fibers    = microtubule
+    nb_fibers = 4
+    overlap   = 0.5
+    stiffness = 1000
+}
+
+set nucleus nucleus
+{
+    sphere     = envelope
+    nb_bundles = 4 
+    bundles    = microtubule_bundle
+    stiffness  = 200
+}
+
+new nucleus nucleus
+{
+    radius       = 1.3
+    position     =  ( 3.5 0 0 )
+    fiber_length = 0.5
+}
+
+run simul *
+{
+    nb_steps   = 50000
+    nb_frames  = 100
+}

@@ -1,0 +1,71 @@
+% Demonstrates use of parameter 'play:magic_key'
+% F. Nedelec - 28 Jan 2012
+
+set simul self 
+{
+    time_step = 0.01
+    viscosity = 0.05
+}
+
+
+% define the magic key to delete fibers:
+set simul:display *
+{
+    magic_key1 = m, (delete 10 fiber microtubule)
+    magic_key2 = n, (new 10 fiber microtubule)
+    magic_key3 = N, (cut fiber * { plane = 1 0 0, 0 } )
+    label = (Press 'm' to delete fibers!)
+}
+
+
+set space cell
+{
+    geometry = ( circle 16 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 30
+    segmentation = 1.5
+    confine = inside, 100
+    display = { line_width=1; }
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 0.8
+    stall_force = 5
+    
+    hold_growing_end = 1
+    display = { size=8 }
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    stiffness = 100
+    diffusion = 10
+}
+
+new 80 fiber microtubule
+{
+    length = 14
+}
+
+new 2000 couple complex
+
+run simul *
+{
+    nb_frames  = 100
+    nb_steps   = 4000
+}
+

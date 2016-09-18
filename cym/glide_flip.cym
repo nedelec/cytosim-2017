@@ -1,0 +1,96 @@
+% F. Nedelec, June 2011
+
+set space cell
+{
+    geometry = ( periodic 10 10 )
+}
+
+new space cell
+
+set simul glide_flip 
+{
+    viscosity = 0.01
+    time_step = 0.0025
+    display = {
+        style = 2;
+        delay = 10;
+        point_size = 8
+    }
+    precondition = 0
+}
+
+set fiber microtubule
+{
+    rigidity = 10
+    segmentation = 0.5
+    display = { line_width = 10; plus_end=24, 2; }
+}
+
+set hand fast
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 2.5
+    stall_force = 6
+    
+    activity = move
+    max_speed = 1
+    display = {
+        color = 0xE69F00FF;
+        size = 5
+    }
+}
+
+set hand slow
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.3
+    unbinding_force = 2.5
+    stall_force = 6
+    
+    activity = move
+    max_speed = 0.1
+    display = {
+        color = 0x0072B2FF;
+        size = 5
+    }
+}
+
+set single graftedF
+{
+    hand = fast
+    activity = fixed
+    stiffness = 200
+}
+
+set single graftedS
+{
+    hand = slow
+    activity = fixed
+    stiffness = 200
+}
+
+new 1 fiber microtubule
+{
+    length = 10
+    position = ( -10 0 0 )
+    orientation = ( -1 0 0 )
+}
+
+% --------------
+
+new 250  single graftedF ( line 11 at -5 0 )
+new 350  single graftedF ( arc 15.7 3.14 turn -1 0 0 at 0 0 ) 
+new 100  single graftedS ( line 1 at 2.5 0 ) 
+
+
+run simul *
+{
+    nb_frames = 400
+    nb_steps = 80000
+}
+
+
+

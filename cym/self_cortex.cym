@@ -1,0 +1,75 @@
+% One of the first config file, Woods-hole, July 2009
+
+
+set simul self_cortex 
+{
+    time_step = 0.01
+    kT = 0.0042
+    viscosity = 0.1
+}
+
+set space cell
+{
+    geometry = ( circle 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 10
+    segmentation = 0.5
+    confine = inside, 100
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.5
+    unbinding_force = 3
+    hold_growing_end = 0
+    hold_shrinking_end = 0
+    
+    activity = move
+    max_speed = 1
+    stall_force = 6
+}
+
+set hand binder
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+}
+
+set single grafted
+{
+    hand = binder
+    stiffness = 100
+    activity = fixed
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    diffusion = 10
+    stiffness = 100
+}
+
+new 80 fiber microtubule
+{
+    length = 7
+}
+
+new 5000 couple complex
+new 1000 single grafted ( edge 0.1 )
+
+
+run simul *
+{
+    nb_frames  = 100
+    nb_steps   = 10000
+}

@@ -1,0 +1,71 @@
+% Fiber under compression and extension
+% F. Nedelec, August 2013
+
+set simul push_pull 
+{
+    time_step = 0.001
+    viscosity = 0.01
+    precondition = 1
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 1000
+    display = ( point=6,1; line=10,2; )
+}
+
+new 1 fiber microtubule
+{
+    length = 12
+    position = 0 0 0
+    orientation = horizontal
+}
+
+new 1 fiber microtubule
+{
+    length = 6
+    position = 0 0 0
+    orientation = vertical
+}
+
+set hand map
+{
+    binding = 10, 0.05
+    unbinding = 0, 0
+ 
+    display = ( width=3; size=12; color=green )
+}
+
+set single link
+{
+    hand = map
+    activity = fixed
+    stiffness = 1000
+}
+
+new single link
+{
+    position = -4 0 0 
+    attach = 0, 0
+}
+new single link
+{
+    position = +4 0 0 
+    attach = 0, 6
+}
+
+
+
+run 20000 simul *
+{
+    nb_frames = 10
+}

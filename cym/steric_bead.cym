@@ -1,0 +1,57 @@
+% F. Nedelec, February 26 2011
+% A test for steric
+
+set simul steric_bead 
+{
+    time_step = 0.01
+    viscosity = 0.02
+    steric = 1, 20
+    display = ( zoom=0.6 )
+}
+
+set space cell
+{
+    geometry = ( sphere 1 )
+}
+
+new space cell
+
+set hand strong_hand
+{
+    unbinding = 0, 1e6
+}
+
+set bead ball
+{
+    confine = all_inside, 500
+    steric = 1
+    display = ( coloring=1; size=6; style=4; )
+}
+
+new 19 bead ball
+{
+    radius = 0.5
+    placement = anywhere
+}
+
+run 50 simul * { nb_frames = 10 }
+set simul:steric * ( 1, 100 )
+
+
+run 50 simul * { nb_frames = 10 }
+set simul:steric * ( 1, 200 )
+
+
+run 50 simul * { nb_frames = 10 }
+set simul:steric * ( 1, 400 )
+
+
+run 50 simul * { nb_frames = 10 }
+set simul:steric * ( 1, 800 )
+
+
+run 50 simul * { nb_frames = 10 }
+set simul:steric * ( 1, 1600 )
+
+
+run 250 simul * { nb_frames = 50 }
