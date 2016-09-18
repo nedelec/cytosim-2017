@@ -1,0 +1,119 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+/**
+ @defgroup DisplayParameters Display Parameters
+ 
+ Display parameters can be embedded in the config file, in the `display` string of each object.
+ A minimal list of parameters is given by `play parameters`.
+ The `display` strings are ignored by `sim`.
+
+ <h3> Global Parameters </h3>
+ 
+ Global parameters are divided in three groups:
+ - @ref DisplayPar "World"
+ - @ref glAppPar "Graphics"
+ - @ref ViewPar "View"
+ - @ref PlayPar
+ .
+ 
+ They are all set in the `simul` object, for example:
+  
+ @code
+ set simul *
+ {
+   ...
+   display = ( delay=50; point_value=0.01; zoom=0.6; )
+ }
+ @endcode
+
+ or alternatively:
+  
+ @code
+ set simul:display * ( back_color=blue )
+ @endcode
+
+ <h3> Objects </h3>
+
+ Each class of object has its own display parameters (color, size, etc.),
+ which should be specified within the 'set' command.
+ Fibers use @ref FiberDispPar:
+
+ @code
+ set fiber filament
+ {
+   ...
+   display = ( line_width=3; color=blue; )
+ }
+ @endcode
+ 
+ Most objects use @ref PointDispPar:
+ 
+ @code
+ set hand motor
+ {
+   ...
+   display = ( size=3; color=green; )
+ }
+ @endcode
+
+ 
+ Alternative syntax:
+ 
+ @code
+ set fiber:display microtubule
+ {
+   line_width = 3
+   color = blue
+ }
+ @endcode
+
+
+ <h3> External setup files </h3>
+
+ Display parameters can also be specified in a separate file with extension `.cms`.
+ Such setup file should be specified on the command line:
+ @code
+ play display.cms live
+ @endcode
+ It will be read before the simulation starts, and thus any value can be changed
+ while cytosim reads `config.cym`.
+
+ To control at which time the display parameters are changed, the best technique is to 
+ `include` the setup in the main config file:
+ @code
+ include ../display.cms { required=0 }
+ @endcode
+
+ The result will be equivalent to having the specifications directly in the config file, 
+ except that cytosim will continue even if the setup file is not found (because 'required=0').
+ In this way, you can safely share a single display file for multiple simulations.
+ 
+ <h3>Colors</h3>
+ 
+ A color is composed of 4 components (Red, Green, Blue, Alpha), where the alpha value
+ specifies transparency. Colors can be specified in different ways:
+ 
+ Syntax                     | Example      |  Note
+ ---------------------------|--------------|----------------------------------------------
+ `0xRRGGBBAA` \n `0xRRGGBB` | `0xFF0000FF` | Component are specified with 2 hexadecimal bytes
+ `(r g b a)` \n `(r g b)`   | `(1 0 0.5)`  | Components are specified in floating points
+ `COLOR_NAME`               | `red`        | Cytosim has a list of common colors
+ `#INTEGER`                 | `#12`        | Index in the list of known colors
+ 
+ Examples:
+ @code
+ color = blue
+ @endcode
+
+ Opaque red:
+ @code
+ color = 0xFF0000FF
+ @endcode
+
+ Transparent blue:
+ @code
+ color = 0x0000FF88
+ @endcode
+ */
+

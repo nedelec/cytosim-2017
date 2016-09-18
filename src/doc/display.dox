@@ -1,0 +1,16 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+/**
+ @page Display Display
+
+ Display is normally created by `play`:
+ - @ref Executables
+ - @subpage DisplayParameters
+ - @subpage DisplayMovie
+ .
+ 
+ For more realistic rendering, you may use @subpage DisplayMicimage
+*/
+
+
+

@@ -1,0 +1,77 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @defgroup Compile How to compile cytosim
+ 
+ Cytosim is written in C++ and it is necessary to recompile the program after each modification
+ of the source code.
+ 
+ This can be done from a command-line terminal, with a program called <a href="http://www.gnu.org/software/make/">make</a>, if you have a C++ standard compiler: e.g. <a href="http://gcc.gnu.org/">gcc</a>, <a href="http://clang.llvm.org">Clang</a> or the <a href="http://en.wikipedia.org/wiki/Intel_C%2B%2B_Compiler">Intel compiler</a>.
+
+ On Mac OS X, the easiest is to install <a href="https://developer.apple.com/technologies/tools/">Xcode</a>, which is available on the Mac App Store. One need to install the Xcode 'Command-Line Tools', which is an optional package.
+
+ After installing the compiler and make, you need to edit the file \c makefile.inc to set the @ref CompileOptions options for your particular platform.
+
+ You can then compile with the following instructions:
+ @code
+ make ready
+ make
+ @endcode
+ 
+ <h3> Mathematical Libraries </h3>
+ 
+ \c sim and \c play require two mathematical libraries:
+ - <a href="http://netlib.org/blas/"> BLAS </a>
+ - <a href="http://netlib.org/lapack/"> LAPACK </a>
+ .
+ The <a href="http://netlib.org">reference implementations</a> are public. However, since these libraries are coded in <a href="http://en.wikipedia.org/wiki/Fortran">Fortran</a>, you will need a Fortran compiler.
+
+ Precompiled libraries are also included in <a href="http://software.intel.com/en-us/articles/intel-mkl/"> Intel MKL </a> and <a href="http://developer.apple.com/hardwaredrivers/ve/vector_libraries.html"> Apple's vecLib </a>.
+ 
+ These libraries are bundled with MacOSX and you simply need to specify:
+ @code
+ -framework vecLib
+ @endcode
+ 
+ Recent Linux distributions provide BLAS/LAPACK as an optional installation.
+ 
+ For troubleshooting, it can be helpful to compile the test programs to check the libraries:
+ @code
+ make test_blas
+ make reader
+ @endcode
+ 
+ 
+ <h3> Graphical Libraries </h3>
+ 
+ \c play relies on <a href="http://www.opengl.org/">OpenGL</a> for display 
+ and uses <a href="http://en.wikipedia.org/wiki/POSIX_Threads">POSIX threads</a>.
+ 
+ Interactivity is provided by <a href="http://www.opengl.org/resources/libraries/glut/">GLUT</a>,
+ which can be replaced by <a href="http://freeglut.sourceforge.net/">freeGLUT</a>.
+ The <a href="http://en.wikipedia.org/wiki/OpenGL_Utility_Library">OpenGL Utility Library</a> (GLU)
+ is also used, but it comes usually bundled with GLUT.
+ 
+ GLUT and OpenGL are included in Mac OSX:
+ @code
+ -framework GLUT -framework OpenGL 
+ @endcode
+ 
+ 
+ If compilation fails, it can be helpful to compile the test programs:
+ @code
+ make test_glut
+ make test_glapp
+ make test_thread
+ @endcode
+ 
+ <h3> Optional Install </h3>
+ 
+ Cytosim can use the mouse wheel to zoom in and out:
+ 
+ This requires freeglut, or <a href="http://iihm.imag.fr/blanch/howtos/MacOSXGLUTMouseWheel.html">Renaud Blanch's GLUT patch on mac osx</a>.
+
+ */
+

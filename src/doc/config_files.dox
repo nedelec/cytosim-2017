@@ -1,0 +1,161 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+/**
+ @page ConfigFiles Collection of Config Files
+ 
+ @subpage ConfigFilesF
+ 
+ @subpage ConfigFilesH
+ 
+ @subpage ConfigFiles1
+ 
+ @subpage ConfigFiles2
+ 
+ @subpage ConfigFiles3
+ 
+ @subpage ConfigFiles4
+ 
+ @subpage ConfigFiles5
+ 
+ More config files can be found in directory `cym`
+
+ */
+
+
+/**
+ @page ConfigFilesF Config Files - Fibers
+ 
+ <h1> fiber.cym </h1>
+ @include fiber.cym
+ 
+ <h1> fiber_dynamic.cym </h1>
+ @include fiber_dynamic.cym
+ 
+ <h1> fiber_treadmill.cym </h1>
+ @include fiber_treadmill.cym 
+ 
+ <h1> fiber_both.cym </h1>
+ @include fiber_both.cym
+ 
+ */
+
+/**
+ @page ConfigFilesH Config Files - Hands
+ 
+ <h1> hand_track.cym </h1>
+ @include hand_track.cym
+ 
+ <h1> hand_cut.cym </h1>
+ @include hand_cut.cym
+ 
+ <h1> hand_slide.cym </h1>
+ @include hand_slide.cym
+ 
+ <h1> hand_move.cym </h1>
+ @include hand_move.cym
+ 
+ <h1> hand_walk.cym </h1>
+ @include hand_walk.cym
+
+ <h1> hand_nucleate.cym </h1>
+ @include hand_nucleate.cym
+
+ <h1> hand_rescue.cym </h1>
+ @include hand_rescue.cym
+ 
+ */
+
+
+/**
+ @page ConfigFiles1 Config Files - Set 1
+ 
+ <h1> aster.cym </h1>
+ @include aster.cym
+ 
+ <h1> pombe_classic.cym </h1>
+ @include pombe_classic.cym
+ 
+ <h1> self.cym </h1>
+ @include self.cym
+ 
+ <h1> glide.cym </h1>
+ @include glide.cym
+ 
+ <h1> overlap.cym </h1>
+ @include overlap.cym
+
+ */
+
+
+/**
+ @page ConfigFiles2 Config Files - Set 2
+
+ <h1> glide_stripe.cym </h1>
+ @include glide_stripe.cym
+ 
+ <h1> solid.cym </h1>
+ @include solid.cym
+
+ <h1> bead.cym </h1>
+ @include bead.cym
+ 
+ <h1> cut_fibers.cym </h1>
+ @include cut_fibers.cym
+
+ */
+
+
+/**
+ @page ConfigFiles3 Config Files - Set 3
+ 
+ <h1> event.cym </h1>
+ @include event.cym
+ 
+ <h1> fiber_anchor.cym </h1>
+ @include fiber_anchor.cym
+ 
+ <h1> aster_couple.cym </h1>
+ @include aster_couple.cym
+ 
+ <h1> steric.cym </h1>
+ @include steric.cym
+ 
+ */
+
+
+/**
+ @page ConfigFiles4 Config Files - Set 4
+ 
+ <h1> overlap_walk.cym </h1>
+ @include overlap_walk.cym
+ 
+ <h1> aster_texas.cym </h1>
+ @include aster_texas.cym
+ 
+ <h1> fiber_glue.cym </h1>
+ @include fiber_glue.cym
+ 
+ <h1> motif.cym </h1>
+ @include motif.cym
+ 
+ <h1> wash.cym </h1>
+ @include wash.cym
+ */ 
+
+
+/**
+ @page ConfigFiles5 Config Files - Set 5
+  
+ <h1> beat.cym </h1>
+ @include beat.cym
+ 
+ <h1> motile_bead.cym </h1>
+ @include motile_bead.cym
+ 
+ <h1> pombe.cym </h1>
+ @include pombe.cym
+
+ <h1> contract.cym </h1>
+ @include contract.cym
+ */ 

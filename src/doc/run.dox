@@ -1,0 +1,168 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+/**
+@page Running Running simulations
+
+ This describes some simple ways to run one or many simulations on a computer.
+ You must have access to the unix-style command line:
+ - on Mac OS X, open Applications/Utilities/Terminal
+ - go to the directory where the executable and parameter file are located.
+ .
+ 
+ If the directory is named `cytosim/run`:
+ @code
+ cd cytosim/run
+ @endcode
+
+ You can verify the content of the directory:
+ @code
+ ls
+ @endcode
+
+ If you are unfamiliar with the `Command Line Interface`, you may want to follow one of the many good tutorials available online.
+
+ <h2> Live Run </h2>
+ 
+ To run a program, you need to specify the full path of the corresponding executable.
+ If cytosim's executable `play` is present in the current directory, you can type:
+ 
+ @code
+ ./play live
+ @endcode
+ 
+ this should open a graphical window and start a live simulation using `config.cym`.
+ You can specify another configuration file:
+ 
+ @code
+ ./play live spindle.cym
+ @endcode
+
+ By configuring your <a href="http://en.wikipedia.org/wiki/PATH_(variable)">PATH</a>
+ to include the directory where the executable is located, you may be able to just type:
+ 
+ @code
+ play live
+ @endcode
+
+ In the following, only the executable name will be specified. If you get the error `command not found`, you need either to specify the full path of the executable, or to configure your search path (`$PATH`).
+
+
+ <h2> Normal Run </h2>
+ 
+ The canonical way to use cytosim is to call `sim` to calculate a simulation,
+ and then `play` to display the results once `sim` has finished:
+ 
+ @code
+ sim
+ play
+ @endcode
+ 
+ This will use the configuration `config.cym` in the current directory.
+ 
+ If you do not want to wait until `sim` finishes, you may run `sim` in the background:
+ 
+ @code
+ sim&
+ @endcode
+ 
+ You can then use `play` to display the results at any time, even if the simulation is not completed.
+ 
+ 
+ <h2> Overnight Run </h2>
+ 
+ You should not run two simulations in the same directory, because the output files
+ are always named in the same way, and the results will be losts. The good practice
+ is to run every simulation in a separate directory.
+ 
+ In addition, if the calculation requires an hour to complete or more,
+ you should probably use <a href="http://en.wikipedia.org/wiki/Nohup">nohup</a> to prevent 
+ the simulation from being automatically terminated when you log out:
+
+ Here is an example:
+ @code
+ mkdir run0
+ cp config.cym run0
+ cd run0
+ nohup ../sim&
+ @endcode
+
+ To automate this, you can use the script `/python/run/start.py`:
+ it will automatically create the new directory, and start the simulation:
+ @code
+ start.py sim config.cym
+ @endcode
+
+ You can call `start.py` many times, and the new directories will be named `run0000`, `run0001`, etc.
+
+ 
+
+ <h2> Visual Inspection </h2>
+
+ You should now have many completed simulations, each in a different directory.
+ You can look at them, using a few python scripts located in /python/look:
+
+ Script          |   Typical usage                      
+ ----------------|----------------------------------------------------
+ `make_image.py` | create one image in each directory
+ `make_movie.py` | create a movie in each directory
+ `make_page.py`  | create a HTML page to easily view all the images
+ `scan.py`       | run a command in multiple directories
+
+
+ For example:
+ 
+ Create HTML directory with a single image
+ @code
+ make_image.py 'play window_size=1024,128 frame=100' run*
+ make_page.py run*
+ @endcode
+ 
+ Create HTML directory with images every 100 frame:
+ @code
+ scan.py '../play movie period=100 size=256 label={}' run*
+ make_page.py run*
+ @endcode
+ 
+ Open `page.html` in a browser to view the results.
+ 
+ 
+ <h2> Analysis </h2>
+
+ You can also analyse the runs in a non-visual way:
+
+  Program         |   Typical usage
+ -----------------|-----------------------------------------------------------
+ `report`         | extract data from trajectory files
+ `get_data.py`    | collect data from the directories into one master file
+ `make_plots.py`  | make a plot
+
+ Cytosim's tool `report` will generate some output from the trajectory file of a completed simulation.
+ You may use `scan.py` to analyse a set of directories.
+ It is however generally better to include some reporting directly into the config file,
+ with the @ref SimCommands "command" `write`.
+ 
+ <hr>
+
+ The tools and python scripts should be able provide up-to-date help, for example:
+ @code
+ make_page.py help
+ make_image.py help
+ @endcode
+
+ 
+ <h3> Conversion </h3>
+
+ With `sim`, it is possible to extract a frame from a binary trajectory file,
+ and export it in the text-based format. The text-based format is a plain ascii
+ file containing all the simulation state variables.
+
+
+ Simply execute a following config file:
+ @code
+ read properties.cmo
+ import objects.cmo { frame = 10 }
+ export objects objects.txt { binary=0 }
+ @endcode
+
+ */
+

@@ -1,0 +1,26 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @defgroup NewObject How to create objects
+
+ @copydetails Parser::parse_new
+
+
+ <h2> POSITION </h2>
+ @copydetails Movable::readPosition
+ 
+ <h2> SHAPE </h2>
+ @copydetails Movable::readPrimitive
+ 
+  <h2> DIRECTION </h2>
+ @copydetails Movable::readDirection
+
+ <h2> ROTATION </h2>
+ @copydetails Movable::readRotation
+ 
+  
+ See also @ref ObjectGroup.
+ */ 
+

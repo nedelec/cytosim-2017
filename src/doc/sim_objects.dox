@@ -1,0 +1,88 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+/**
+ @page SimObjects Flat list of Objects
+ 
+ <h2>Simul</h2>
+ 
+ Simul - SimulProp - @ref SimulPar
+ 
+ <h2>Surfaces & Volumes</h2>
+ 
+   Class       | Parameters       |  Property    | Options
+ --------------|------------------|--------------|-----------------
+ Space         | @ref SpacePar    | SpaceProp    | @ref SpaceGroup
+ FieldBase     | @ref FieldPar    | FieldProp    | @ref NewField
+
+ 
+ <h2>Mecables</h2>
+ 
+   Class       | Parameters       |  Property    | Options
+ --------------|------------------|--------------|-----------------
+ Fiber         | @ref FiberPar    | FiberProp    | @ref FiberGroup
+ Bead          | @ref BeadPar     | BeadProp     | @ref NewBead
+ Solid         | @ref BeadPar     | BeadProp     | @ref NewSolid
+ Sphere        | @ref SpherePar   | SphereProp   | @ref NewSphere
+
+ <h2>Fibers</h2>
+ @ref FiberGroup
+
+  `activity`   |   Class             | Parameters                |  Property
+ --------------|---------------------|---------------------------|----------------------
+ `none`        | Fiber               | @ref FiberPar             | FiberProp
+ `dynamic`     | DynamicFiber        | @ref DynamicFiberPar      | DynamicFiberProp
+ `classic`     | ClassicFiber        | @ref ClassicFiberPar      | ClassicFiberProp
+ `treadmill`   | TreadmillingFiber   | @ref TreadmillingFiberPar | TreadmillingFiberProp
+ `tubule`      | Tubule (deprecated) | @ref TubulePar            | TubuleProp
+ 
+ <h2>Hands</h2>
+ 
+ @ref HandGroup
+ 
+  `activity`   |   Class       | Parameters         |  Property
+ --------------|---------------|--------------------|---------------
+ `bind`        | Hand          | @ref HandPar       | HandProp
+ `move`        | Motor         | @ref MotorPar      | MotorProp
+ `nucleate`    | Nucleator     | @ref NucleatorPar  | NucleatorProp
+ `slide`       | Slider        | @ref SliderPar     | SliderProp
+ `track`       | Tracker       | @ref TrackerPar    | TrackerProp
+ `rescue`      | Rescuer       | @ref RescuerPar    | RescuerProp
+ `cut`         | Cutter        | @ref CutterPar     | CutterProp
+ `mighty`      | Mighty        | @ref MightyPar     | MightyProp
+ `act`         | Actor         | @ref ActorPar      | ActorProp
+
+ <h2>Singles</h2>
+ 
+ @ref SingleGroup
+ 
+ `activity`     |   Class           | Parameters      |  Property
+ ---------------|-------------------|-----------------|-------------
+ `diffuse`      | Single            | @ref SinglePar  | SingleProp
+ `fixed`        | Picket PicketLong | @ref SinglePar  | SingleProp
+ not applicable | Wrist  WristLong  | @ref SinglePar  | SingleProp
+ 
+ <h2>Couples</h2>
+ 
+ @ref CoupleGroup
+ 
+ `activity`    |   Class                 | Parameters           |  Property
+ --------------|-------------------------|----------------------|------------
+ `diffuse`     | Couple CoupleLong       | @ref CouplePar       | CoupleProp
+ `crosslink`   | Crosslink CrosslinkLong | @ref CrosslinkPar    | CrosslinkProp
+ `bridge`      | Bridge                  | @ref BridgePar       | BridgeProp
+ `slide`       | Shackle ShackleLong     | @ref ShacklePar      | ShackleProp
+ `fork`        | Fork                    | @ref ForkPar         | ForkProp
+
+ 
+ <h2>Organizers</h2>
+ 
+   Class       | Parameters       |  Property
+ --------------|------------------|---------------
+ Aster         | @ref AsterPar    | AsterProp
+ Fake          | @ref FakePar     | FakeProp
+ Bundle        | @ref BundlePar   | BundleProp
+ Nucleus       | @ref NucleusPar  | NucleusProp
+ 
+ */
+

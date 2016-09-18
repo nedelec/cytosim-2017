@@ -1,0 +1,29 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @page SimUnits Physical units
+ 
+ The parameters in cytosim can be specified in any system of units,
+ but the same system should be used consistently for all values!
+ 
+ For convenience, default values are provided for some parameters,
+ and this is done with this system of units:
+
+  Quantity   |  Unit        | Value                      
+ ------------|--------------|-----------------------------------------------------
+ Distance    | micro-meter  | 10^(-6) = 0.000001 meter
+ Force       | pico-Newton  | 10^(-12) = 0.000000000001 Newton
+ Time        | second       | 1/60 minute
+
+ For example:
+
+  Parameter  |  Default value                           
+ ------------|------------------
+ viscosity   | 1 pN.s/um^2
+ kT          | 0.0042 pN.um
+
+ It is therefore strongly advised to convert everything to pico-Newtons, micro-meters and seconds.
+
+ */

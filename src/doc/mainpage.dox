@@ -1,0 +1,42 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ 
+ @mainpage
+ 
+ Cytosim is a simulation of the cytoskeleton:  http://www.cytosim.org\n
+ The project was started in 1995 the name was coined in 1999.
+ and development is conducted by the Nedelec group at EMBL.\n
+ 
+ Documentation:
+ - @subpage Introduction
+ - @subpage Executables
+ - @subpage Tutorial
+ - @subpage Config
+ - @subpage Running
+ - @subpage Display
+ .
+ 
+ @version PI - Increased Modularity
+ 
+ @date 2009-2015
+ 
+ @authors
+ Francois Nedelec        1995-\n
+ Dietrich Foethke        2003-2007\n
+ Cleopatra Kozlowski     2003-2007\n
+ Elizabeth Loughlin      2006-2010\n
+ Ludovic Brun            2008-2010\n
+ Beat Rupp               2008-2011\n
+ Jonathan Ward           2008-2014\n
+ Antonio Politi          2010-2012\n
+ Andre-Claude Clapson    2011-2013\n
+ 
+ @par Contact:
+ Email: nedelec@embl.de\n
+ EMBL, Meyerhofstrasse. 1, 69117 Heidelberg, Germany.\n
+
+*/
+

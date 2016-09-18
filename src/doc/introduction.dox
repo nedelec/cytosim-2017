@@ -1,0 +1,56 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+/**
+ @page Introduction Overview
+
+ Cytosim can handle systems of fibers with associated proteins such as molecular motors. 
+ The fibers can bend but are incompressible along their axis.
+ Besides fiber that are linear objects, cytosim can also simulate `beads`, `spheres` and `solids` of custom shapes.
+ 
+ The objects can be connected by springs, without any restriction on the topology of the connections:
+ - the attachment points on the fibers can be located anywhere along their length,
+ - an object can be connected to any other object, or to itself.
+ .
+ 
+ 
+ The motion of the objects is calculated taking into account Brownian agitation, and neglecting inertia. 
+ These approximations are correct inside living cells, for cytoskeletal fibers, micro-meter sized beads and larger assemblies. 
+
+ A physicist may say that each fiber is represented by a worm-like chain model,
+ and that the system is characterized by a low Reynolds number. The equations of motion
+ in this case are called overdamped Langevin equations, and the method is also called Brownian dynamics.
+ 
+ The simulation engine was optimized to handle large systems with thousands of interconnected fibers.
+ Implicit integration allows large time steps to be used. 
+ 
+ All molecular events are stochastic (see @subpage Stochastic).
+
+ For more information, please read:<br>
+ 
+ <em>
+ <b>Collective Langevin Dynamics of Flexible Cytoskeletal Fibers</b>.<br>
+ Nedelec F, Foethke D. New Journal of Physics 9 (11) 427, Nov 2007.<br>
+ http://www.iop.org/EJ/abstract/1367-2630/9/11/427<br>
+ doi:10.1088/1367-2630/9/11/427<br>
+ </em>
+ 
+ <hr>
+ 
+ In parallel to the mechanical calculation, 
+ cytosim has a stochastic engine to simulate the different chemical processes,
+ for instance the diffusion, binding/unbinding of molecules.
+ Other activities such as the stepping of molecular motors or nucleation events, etc.
+ Molecular motors can be modelled using a continuous approximation or as discrete stochastic steppers. 
+ The fibers themselves can lengthen and shorten, which is the case with microtubules or actin filaments in cells.
+ Different models of dynamic instability are available.
+ 
+ <hr>
+
+ Cytosim has a modular architecture and can be customized.
+ The entities (fiber, motor, nucleator, etc.) are specified in derived C++ classes with very few lines of code.
+ These classes can be modified easily for custom application.
+ They can be added to the main source tree, shared or exchanged.
+ 
+ */
+

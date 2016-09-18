@@ -1,0 +1,61 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @page SimCommands List of commands
+
+ @copydetails Parser::parse
+ 
+ <hr><hr><hr>
+ 
+   <h2> Command <i> set </i></h2>
+   @copydetails Parser::parse_set 
+
+   <h2> Command <i> change </i></h2>
+   @copydetails Parser::parse_change
+
+ <hr><hr><hr>
+ 
+   <h2> Command <i> new </i></h2>
+   @copydetails Parser::parse_new
+   See also @ref NewObject
+
+   <h2> Command <i> delete </i></h2>
+   @copydetails Parser::parse_delete
+
+   <h2> Command <i> mark </i></h2>
+   @copydetails Parser::parse_mark
+   
+ <hr><hr><hr>
+
+   <h2> Command <i> run </i></h2>
+   @copydetails Parser::parse_run
+
+   <h2> Command <i> repeat </i></h2>
+   @copydetails Parser::parse_repeat
+
+   <h2> Command <i> stop </i></h2>
+   @copydetails Parser::parse_stop
+
+ <hr><hr><hr>
+
+   <h2> Command <i> cut </i></h2>
+   @copydetails Parser::parse_cut
+
+   <h2> Command <i> call </i></h2>
+   @copydetails Parser::parse_call
+ 
+ <hr><hr><hr>
+ 
+   <h2> Command <i> include </i></h2>
+   @copydetails Parser::parse_include
+
+   <h2> Command <i> read </i></h2>
+   @copydetails Parser::parse_read
+
+   <h2> Command <i> write </i></h2>
+   @copydetails Parser::parse_write
+   
+ */
+

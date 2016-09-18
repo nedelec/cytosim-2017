@@ -1,0 +1,1202 @@
+/**
+@page Tutorial
+
+This tutorial only requires `play` and provides an step-by-step introduction to cytosim. In 20 lessons, you will see the most common objects, such as `hand`, `single`, `couple`, `fiber` and `aster`.
+
+Authors: Francois Nedelec (2002-2013), Beat Rupp (Oct 9, 2009), Sven Mesecke (Sep 12, 2013)
+
+
+## Preamble
+
+Here is how you will run a simulation:
+
+1. Copy the example configuration to a file named `config.cym` in a directory containing the `play` executable
+2. From the console run ‘play live’. This will read `config.sym` and start a simulation
+3. Restart the simulation using the ‘z’ character. This should be done when the configuration file has changed, e.g. as you progress through the tutorial
+
+
+## Lesson 0
+
+Let's start with a minimal parameter file. 
+A square "cell" is defined, but it is kept empty.
+It is simulated for 1 second, and nothing happens.
+
+~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{
+    geometry = ( rectangle 10 10 )
+}
+
+new space cell
+
+run 100 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~
+
+The config file defines the minimal components that are necessary to run this simulation.
+The command `set` defines physical entities, and `new` creates the objects following these definitions. More in detail:
+
+~~~~~~~~~~~~~~~
+set simul tutorial
+{
+    time_step = 0.01
+}
+~~~~~~~~~~~~~~~
+
+defines the name of the simulation (`tutorial`), and the general parameters:
+
+* `time_step = 0.01` sets the time step to 0.01 seconds
+
+~~~~~~~~~~~~~~~
+set space cell 
+{
+    geometry = ( rectangle 10 10 )
+}
+~~~~~~~~~~~~~~~
+
+defines a rectangular space named `cell` with the dimension `(w, h)` of the box in micrometers, the total box is actually `2*w` wide, and `2*h` high with the origin in the center.
+
+The last section
+
+~~~~~~~~~~~~~~
+run 100 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~
+
+is where the system is simulated. Specifically, it will perform 100 iterations, and hence simulate a total time of `100 * 0.01 = 1 second`.  It will also record 50 frames at equal intervals, so in this case every 1 second / 50 = 0.02 second.
+
+
+## Lesson 1
+
+Let's add one object into the "cell": a diffusing particle.
+
+~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{
+    geometry = ( rectangle 10 10 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 10
+}
+
+new 1 single particle
+
+run 100 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~
+
+The new object is defined as follows:
+
+~~~~~~~~~~~~~~~
+set hand kinesin
+~~~~~~~~~~~~~~~
+
+defines a `hand`, which in cytosim is a class of object that can bind to a fiber.
+For now, the binding rate was not defined, and it is thus equal to zero, so it cannot bind.
+The simulation anyway contains no fiber.
+
+~~~~~~~~~~~~~~~
+set single particle
+{
+    hand = kinesin
+    diffusion = 10
+}
+~~~~~~~~~~~~~~~
+
+creates a diffusible entity containing the `kinesin` defined previously.
+
+The parameter `diffusion = 10` in this section defines the [diffusion coefficient](http://en.wikipedia.org/wiki/Mass_diffusivity) of the complexes in um^2/s (micro-meter squared per second).
+
+The next command creates one "particle":
+
+~~~~~~~~~~~~~~~~~
+new 1 single particle
+~~~~~~~~~~~~~~~~~
+
+By running the simulation, you will see that the particle is freely diffusing inside the box.
+In the next examples, we will see some of these parameters in more detail. 
+
+## Lesson 2
+
+Let's change the number of particles:
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( rectangle 10 10 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 10
+}
+
+new 100 single particle
+
+run 100 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+The simulation now has 100 complexes... They are set initially uniformly and randomly inside the box, and all diffuse freely with the same coefficient.
+
+
+## Lesson 3
+
+Let's change the diffusion constant of the particles:
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( rectangle 10 10 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 1
+}
+
+new 100 single particle
+
+run 100 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+The diffusion coefficient has been reduced from 10 to 1 micro-meters squared per seconds... and the complexes diffuse now very slowly. There is no interaction between motors, but they bounce off the walls of the box.
+
+
+## Lesson 4
+
+We can start the simulation with all the particles in the center:
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( rectangle 30 30 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 1
+}
+
+new 100 single particle
+{
+    position = 0 0 0
+}
+
+run 100 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+All the particles are now initially at the origin, and you can see them spread in time. The profile of density is Gaussian. You can press 'z' on the keyboard to restart the simulation.
+
+
+### Exercise:
+
+Change the `geometry` parameter to increase the box size to 60 x 60 micro-meters. The points seems to move even more slowly on the animation, but this is due to the larger field of view of the simulation. The coefficient of diffusion has not changed.
+Now change the `geometry` to `circle 30`.
+
+
+## Lesson 5
+
+Let's extend the simulation time:
+
+~~~~~~~~~~~~~~~~~ 
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( rectangle 30 30 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 1
+}
+
+new 100 single particle
+
+run 1000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+The total simulated time can be controlled by the number of iterations. The simulated time is simply `nb_steps * time_step`, the unit of time in the simulation is the second, and `time_step` should be given in seconds.
+
+
+## Lesson 6
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.001
+}
+
+set space cell 
+{ 
+    geometry = ( rectangle 30 30 )
+}
+
+new space cell
+
+set hand kinesin
+{
+
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 1
+}
+
+new 100 single particle
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+One of the first control in any simulation is to check that the `time_step` does not affect the outcome of the calculation. This should be true as long as `time_step` is below a certain value needed for numerical precision. The value of this threshold is however different for each system, and it might be difficult to know it a priori. A usual strategy is then to run two simulations with different time steps, and to compare the outcome. If the result are different, then `time_step` for sure is too big.
+
+Here the animation produced is similar to the previous simulation with `time_step = 0.01` seconds, even though `time_step` was reduced by a factor 10. This is because the total simulated time `nb_steps * time_step` is the same in both simulations.
+
+
+## Lesson 7
+
+Let's now turn to the [microtubules](http://en.wikipedia.org/wiki/Microtubules)! 
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+}
+
+new 1 fiber microtubule
+{
+    length = 7
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+Here, we define a type of fiber named ''microtubule'' with a bending elastic modulus of 20.
+These filaments are confined inside the ''cell''.
+When a filament is created by `new`, its initial length is set to 7 um.
+
+### Exercise
+Increase the length of the filament to make so long that it will not fit in the cell anymore. Observe what happens. 
+
+
+## Lesson 8
+
+We can build more complicated objects: 
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 7
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+Here is one [aster](http://en.wikipedia.org/wiki/Aster_%28cell_biology%29), with 35 microtubules. The microtubules are all initially 7 micro-meter long, and have their minus-ends in the center and their plus end pointing out. The structure of the aster is here imposed by the simulation, i.e. its structural integrity is completely independent from the action of motor complexes, which are absent here.
+
+~~~~~~~~~~~~~
+set solid core
+{
+}
+~~~~~~~~~~~~~
+
+defines a solid sphere named core that will be used for the construction of the aster
+
+~~~~~~~~~~~~~~~~~
+set aster star
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 7
+}
+
+~~~~~~~~~~~~~~~~~
+
+defines an aster named ''star''
+
+
+* `solid = core` specifies the attachment for the fibers
+* `nb_fibers = 35` sets the number of fibers to 35
+* `fibers = microtubule` a reference to the fiber that is used to compose the aster
+* `radius = 1` the radius of the aster body
+
+
+## Lesson 9
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 7
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+For objects of this scale, the dominating forces are the [Brownian motion](http://en.wikipedia.org/wiki/Brownian_motion), and the viscous drag induced by motion in the fluid. The parameter `viscosity` sets the [viscosity](http://en.wikipedia.org/wiki/Viscosity) of the surrounding fluid. In the units of the simulations, water has viscosity 0.001. The viscosity is here set to 0.05, which would be typical of an embryo or an egg (measurements are somewhere between 0.005 and 0.1).
+
+In the model, the drag is linear in the total amount of microtubules-length. Asters with more microtubules, or with longer ones are more difficult to move than asters with less microtubules or shorter ones. This is a simplifying approximation which ignores hydrodynamic interactions.
+
+Diffusion is calculated from the drag, using the [Einstein relation](http://en.wikipedia.org/wiki/Einstein_relation_%28kinetic_theory%29). The aster is diffusing both in translation and rotation, but this is usually quite slow. Temperature is set by kT, with 0.0042 corresponding to room temperature. 
+
+
+## Lesson 10
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 10
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+Parameter `length = 10` within the `new` block defines the initial length of the microtubules. The microtubules bend here under the action of thermal activation, but this is hardly noticable. Indeed, microtubules are very rigid structure, and their measured persistence length is of a few millimeters, about 100 times longer than the length here!
+
+
+## Lesson 11
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+    segmentation = 0.5
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 10
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+~~~~~~~~~~~~~~~~~
+
+In order to calculate their motion, the microtubules are cut into segments of equal length. The parameter `segmentation` sets the preferred length of these segments. For example, the filaments are here discretized every 0.5 micro-meters. Each 10 micro-meter long microtubules is represented by 20 points.
+
+
+## Lesson 12 
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+
+set fiber microtubule
+{
+    rigidity = 20
+    confine = inside, 100
+    segmentation = 1
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 10
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+The default value for `segmentation` is 1 micro-meter. A finer discretization would give more precision, but we do not find this very useful, because the added precision is smaller than the thermal noise due to Brownian motion. Press ''1'' to cycle through different visualization styles for the microtubules to see the effect.
+
+
+## Lesson 13 
+
+Let's make the microtubules grow and shrink!
+
+~~~~~~~~~~~~~~~~~ 
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+    
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+Microtubules can grow and shrink according to the dynamic instability model. The parameter `activity = dynamic` turns that feature on. The growing/shrinking speed in micro-meter per seconds is set by `growing_speed` and `shrinking_speed`, respectively. Microtubules which shrink to 0 micro-meter are automatically rescued.
+
+Points are dynamically added or removed as microtubules grow and shrink. All points on a microtubule are always equidistant. The number of points is always such that this distance is as close as possible to the preferred section length `segmentation`.
+
+
+## Lesson 14 
+
+Let's add [molecular motors](http://en.wikipedia.org/wiki/Molecular_motor):
+
+~~~~~~~~~~~~~~~~~ 
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 1
+    unbinding_force = 3
+    activity = move
+    max_speed = 1
+    stall_force = 5
+    display = ( color=yellow; width=3; size=4; )
+}
+
+set single particle
+{
+    hand = kinesin
+    diffusion = 10
+}
+
+new 1000 single particle
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+The `kinesin` can now bind and move on a microtubule, and it will carry the `particle` along. Actually, a `hand` cannot exist by itself, and it must be a part of a `single` or a `couple`. Here, the particle is defined as a `single` and it will thus contain one `kinesin`. The `kinesin` is defined with:
+
+* `binding_range` and `binding_rate` are used to calculate the attachement of hands onto microtubules. A hand has a probability `binding_rate` per second to bind to any microtubule closer than `binding_range` micro-meter away.
+* `unbinding_rate` sets the frequencies per second at which attached hands detach.
+* `activity = move` defines the complex to be a moving on the fibers
+* `max_speed` sets the speed of motion while bound on the microtubule. In the model, plus-end directed motor have positive speeds, and minus-end directed ones have negative speeds.
+* `stall_force` is the characteristic force of the motor for detachment under load (in pN)
+
+The movement of bound motors is more apparent on a larger time scale, therefore 10 seconds are simulated here. The motors bind and stay bound on average for 1 / `unbinding_rate` seconds, during which they move by a distance `max_speed` / `unbinding_rate` micro-meters, here roughly 1 micro-meter. 
+
+Finally, we have specified that the `kinesin` should be displayed as a yellow dot of size 4 pixels. Chosing different colors is very useful if you want to define multiple hands.
+
+
+## Lesson 15
+
+Let's create motor complexes:
+
+~~~~~~~~~~~~~~~~~ 
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 1
+    unbinding_force = 3
+    activity = move
+    max_speed = 1
+    stall_force = 5
+    display = ( color=yellow; width=3; size=4; )
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    diffusion = 10
+    stiffness = 100
+}
+
+new 1000 couple complex
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+We have now defined a `couple` instead of a `single`, and the motor-complexes are made of two `kinesin`. Each hand can bind and move on a microtubule. 
+The two hands are linked by a Hookean spring with the specified stiffness in pN/m^2 (here `stiffness = 100`)
+
+Our motor complexes are made of two identical `kinesin` hands, but if we had defined two different type of hands, we could have created a couple containing two different hands.
+
+###Exercise
+
+Define two different type of hands, for example a `kinesin` that walks towards the plus-end, and a `dynein` that goes to the minus-end of microtubules. Create a mixed `couple`. 
+
+We will see what these parameters mean in the next lessons. 
+
+
+## Lesson 16
+
+Let's change the processivity of the motors:
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    activity = move
+    max_speed = 1
+    stall_force = 5
+    display = ( color=yellow; width=3; size=4; )
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    diffusion = 10
+    stiffness = 100
+}
+
+new 1000 couple complex
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+If the detachment rate `unbinding_rate` is very low, motors walk for a very long time, and are said to be very processive. Here they would walk on average for 10 micro-meters, but they usually reach the end of the filament first, from which they unbind immediately. 
+
+
+## Lesson 17 
+
+Let's change the direction in which the motor move:
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    activity = move
+    max_speed = -1
+    stall_force = 5
+    display = ( color=yellow; width=3; size=4; )
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    diffusion = 10
+    stiffness = 100
+}
+
+new 1000 couple complex
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+If `max_speed` is set positive, the motor walks towards the plus-end of the microtubules. If `max_speed` is set negative, the motor walks towards the minus-end, i.e. the center of the aster. 
+
+###Exercise
+Increase the number of asters to 2, to see if the `kinesin` complexes can push them appart.
+
+
+## Lesson 18 
+
+~~~~~~~~~~~~~~~~~
+
+set simul tutorial
+{
+    time_step = 0.01
+    viscosity = 0.05
+    kT = 0.0042
+}
+
+set space cell 
+{ 
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+
+    activity = dynamic
+    unit_length = 0.008
+    growing_speed = 0.16
+    shrinking_speed = -0.25
+    hydrolysis_rate = 0.06
+    growing_force = 1.7
+}
+
+set solid core
+{
+}
+
+set aster star
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+}
+
+new 1 aster star
+{
+    radius = 1
+    nb_fibers = 35
+    length = 1
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.1
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    activity = move
+    max_speed = -1
+    stall_force = 5
+    display = ( color=yellow; width=3; size=4; )
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    diffusion = 0
+    stiffness = 100
+}
+
+new 65000 couple complex
+
+run 10000 simul *
+{
+    nb_frames = 50
+}
+
+~~~~~~~~~~~~~~~~~
+
+This is a control to check that attachments are calculated correctly. The box is saturated by motors, their diffusion is set to zero, and `binding_range` is set to a high value. As microtubules grow, motors bind to the microtubules and this progressively clears the space.
+
+Any motor can bind with a rate `binding_rate` per seconds to every microtubule closer than `binding_range`. If they bind, a motor does so always to the closest position on a microtubule. The regions where motors are close to two or more microtubules clear up faster. 
+
+
+Congratulation, you have completed the tutorial.
+*/

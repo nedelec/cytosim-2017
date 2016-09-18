@@ -1,0 +1,36 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @page Config The Config File
+ 
+ The virtual system and the sequence of actions to be performed must be given in a configuration file (e.g. `config.cym`).
+ It contains @ref SimCommands "commands" and definitions of objects with @ref Parameters "parameters".
+ The config file should be a plain text file and it can be edited by any plain text editor.
+ 
+ You will at least want to:
+ - call `set` to define new objects categories,
+ - call `new` to create objects,
+ - call `run` to perform simulation steps. 
+ .
+ 
+ Most @ref Commands "commands" accept parameters, 
+ and there are many @ref ObjectGroup "objects" to choose from.
+
+ For more details, please check:
+ - @subpage SimUnits
+ - @subpage SimCommands
+ - @subpage SimObjects
+ - @subpage NewObject
+ .
+
+ <h2>Example</h2>
+ 
+ @include fiber.cym
+
+ For more examples, check the Tutorial and see the @subpage ConfigFiles.\n
+ 
+ 
+ */
+

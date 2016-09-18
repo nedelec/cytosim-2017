@@ -1,0 +1,94 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @page CompileOptions Compile Options
+ @ingroup Compile
+
+ <h4>Dimensionality</h4>
+
+ The dimension of the simulation is selected in \c src/math/dim.h
+ @code
+ #define DIM 2
+ @endcode
+ 
+ 
+ <h4>Assertions</h4>
+
+ 
+ Assertions (a safety mechanism to speed up debugging) are turned on/off in \c src/base/assert_macro.h
+ @code
+ //#define NDEBUG
+ @endcode
+ 
+ 
+ <h4>Precision</h4>
+ 
+ The precision of the floating points numbers can be selected in \c src/math/real.h
+ 
+ @code
+ //#define REAL_IS_FLOAT
+ @endcode
+ 
+ double precision is strongly advised.
+ 
+ 
+ <h4>Compiler Options</h4>
+ 
+ Compiler options can be selected by editing the file \c makefile.inc.
+ This file should be in the root of the distribution.
+ 
+ Select the machine on which you want to compile:
+ @code
+ MACHINE=mac
+ @endcode
+ 
+ Select the compiler:
+ @code
+ COMPILER=gcc
+ @endcode
+ 
+ Select the mode:
+ @code
+ MODE=F
+ @endcode
+ 
+ To test new code, \c debug is the best, but to run extensive calculations, you should:
+ - disable assertions,
+ - compile with option \c fast
+ .
+ 
+ 
+<h4>GIF support</h4>
+ 
+ You can install the GIF library (giflib) on your mac with <a href="http://www.macports.org">macPorts</a>: 
+ @code 
+ sudo port install giflib
+ @endcode
+ 
+ You can then enable GIF support in cytosim by editing the \c makefile.inc:
+ @code
+ HAS_GIF = 1
+ @endcode
+ 
+ 
+ <h4>PNG support</h4>
+ 
+ You can install the PNG library (libpnb) on your mac with <a href="http://www.macports.org">macPorts</a>:
+ @code
+ sudo port install libpng
+ @endcode
+ 
+ You can then enable PNG support by editing the \c makefile.inc:
+ @code
+ HAS_PNG = 1
+ @endcode
+ 
+ <h4>Documentation</h4>
+ 
+ The HTML documentation is built by <a href="http://www.doxygen.org/index.html">doxygen</a>
+ Please, use doxygen 1.8 or better.
+ 
+ */
+

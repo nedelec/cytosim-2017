@@ -1,0 +1,53 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+
+/**
+ @page DisplayMovie Making a movie
+ 
+ Cytosim can only export images, but you can then assemble these images
+ into a movie with freely available tools, for example ImageJ or ffmpeg.
+ 
+  <h3> Generating the images </h3>
+ 
+ Play may be able to generate images without opening a window:
+ 
+  Command                               |   Result                      
+ ---------------------------------------|-------------------------------------------------
+ `play movie`                           | an image for each frame in the trajectory file
+ `play image frame=10,20,30`            | images representing the specified frames
+ `play movie period=10`                 | images for frames 0, 10, 20, ...
+
+ 
+ Cytosim is always able to generate <a href="http://en.wikipedia.org/wiki/Netpbm_format">PPM images</a>, 
+ that can be read and converted with <a href="http://rsbweb.nih.gov/ij/">ImageJ</a>.
+ In addition, Cytosim may be able to generate images in the GIF or PNG formats, if the required libraries were available during compilation.
+
+
+
+ <h3> Assembling the images </h3>
+
+ Multiple images can be combined into a movie by using <a href="http://rsbweb.nih.gov/ij/">ImageJ</a>:
+ simply drag the folder containing all the images directly onto the ImageJ window,
+ and ImageJ will open a dialog asking if you would like to assemble them into a stack.
+ Accept, and this stack can then be exported as a movie.
+ 
+ Alternatively, the command line tool <a href="http://ffmpeg.org/">ffmpeg</a> can assemble images into a movie. For example:
+ 
+ @code
+ ffmpeg -qscale 3 -r 10 -i image%04d.png movie.mp4
+ @endcode
+
+<h3> Optional libraries </h3>
+
+ The PNG libraries can be installed on MacOS via <a href="http://brew.sh">Homebrew</a>:
+ @code
+ brew install libpng
+ brew tap homebrew/dupes
+ @endcode
+
+ For the GIF library:
+ @code
+ brew install giflib
+ @endcode
+ */

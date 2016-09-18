@@ -1,0 +1,135 @@
+// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+
+
+/**
+ @page Executables Executables
+ See also @subpage FileTypes
+ 
+ The cytosim platform has two main executables:
+ - `sim` executes the instructions contained in a config file,
+ - `play` generates a graphical representation of a simulation state.
+ .
+
+
+ <h2> Sim </h2>
+ 
+ `sim` performs the instructions specified in a @ref Config "config file", 
+ and it should generate 3 output files:
+ 
+ File              |  Type  |   Content                      
+ ------------------|--------|-----------------------------------------------------
+ `properties.cmo`  | text   | the properties of all objects
+ `objects.cmo`     | binary | positions of the objects at different time points
+ `messages.cmo`    | text   | informations such as the execution time
+ 
+ The trajectory file `properties.cmo` is by default a binary file, 
+ but it can be written in to a text-based format (see command `write`).
+ 
+ By default the config file is `config.cym` in the current working directory,
+ but another file can be specified on the command line, 
+ if its name ends with a <b>.cym</b> extension, for example:
+
+ @code
+ sim spindle.cym
+ @endcode
+
+ For more instructions on how to use `sim`, check @ref Running.
+
+
+ <h2> Play </h2>
+
+ `play` generates a graphical representation of the system, and it is sometimes named \c cytosim.
+ While `sim` can run on any computer, `play` requires OpenGL capabilities, 
+ and some of its functionality (eg. GIF support) depends on external libraries.
+ 
+ The @ref DisplayParameters "Display parameters" that control the graphical output can be embedded in the config file.
+ The properties of most object have a \c display parameter that `play` will read.
+ These parameters are ignored by `sim`, but they are copied verbatim to \c properties.cmo,
+ where they are read by `play`.
+ The display parameters can also be included in a separate file with extension ".cms", as in `play 3d.cms`.
+ 
+
+ `play` can be used to:
+  Purpose                                         | Command                              
+ -------------------------------------------------|-------------------
+ Display the simulation in the current folder     |  `play`     
+ Perform a live simulation                        |  `play live`     
+ Generate images offscreen                        |  `play image`     
+
+
+ <h3> Display Mode </h3>
+
+ Use `play` to display a simulation calculated by `sim`.
+ By default, play reads \c properties.cmo and \c objects.cmo, in the current directory. 
+ 
+ A different trajectory file can be specified:
+ @code
+ play final.cmo
+ @endcode
+ 
+ <h3> Live Mode </h3>
+ 
+ Use `play live` to start a simulation and display it online:
+ @code
+ play live
+ play live spindle.cym
+ @endcode
+ 
+ This should open a window. This simulation is calculated on the fly, and nothing is saved.
+ 
+
+ <h3> Offscreen Mode </h3>
+ 
+ Play can generate images without opening a window, as for example:
+ 
+  Command                               |   Result                      
+ ---------------------------------------|-------------------------------------------------
+ `play image frame=10`                  | An image representing frame 10
+ `play image frame=10,20,30`            | Three images representing the specified frames
+ `play image frame=10 image_format=png` | a PNG image representing frame 10 
+ `play image magnification=3 frame=10`  | an image for frame 10 at 3x magnified resolution
+ `play movie`                           | an image for each frame in the trajectory file
+
+ 
+ Cytosim is always able to generate <a href="http://en.wikipedia.org/wiki/Netpbm_format">PPM images</a>, 
+ that can be open with <a href="http://rsbweb.nih.gov/ij/">ImageJ</a>.
+ Cytosim may be able to generate images in the GIF or PNG formats, 
+ if the required libraries were included during compilation.
+ 
+ <h3> Keyboard controls </h3>
+
+ Play is controlled by the keyboard and a pull-down menu. Here are the most useful controls:
+ 
+ Key        |   Action                      
+ -----------|--------------------------------------------
+ `h`        | show online help (press again to hide)
+ `p` `s`    | play, stop
+ `<` `>`    | previous, next frame
+ `+` `=`    | zoom in, zoom out
+ arrow-keys | move around
+ `R`        | write display parameters to terminal
+ `CTRL-Q`   | quit (mac osx)
+
+ A list of keyboard commands is given by 'play keys'.
+ 
+ 
+ <h2> Accessory Programs </h2>
+ 
+ 
+ Cytosim has a number of other tools:
+
+  Program        |   Typical usage                      
+ ----------------|--------------------------------------------------
+ `report`        | generate analysis data from trajectory files
+ `frametool`     | extract frames from trajectory files
+ 
+ See how they are used on @ref Running.
+ 
+ <h2> Clickable Icons </h2>
+ 
+ 
+ On MacOS or Linux, it is possible to use a script to start cytosim with a double-click.
+ See for example \c bash/play_live.command and \c bash/play0000.command.
+
+ */
+
