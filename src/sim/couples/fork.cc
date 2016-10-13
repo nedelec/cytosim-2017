@@ -9,19 +9,13 @@
 Fork::Fork(ForkProp const* p, Vector const& w)
 : Couple(p, w), prop(p)
 {
+    flip = 1;
 }
 
 
 Fork::~Fork()
 {
     prop = 0;
-}
-
-//------------------------------------------------------------------------------
-
-void Fork::setInteractions(Meca & meca) const
-{    
-    meca.interLink(cHand1->interpolation(), cHand2->interpolation(), prop->stiffness);
 }
 
 
@@ -59,3 +53,24 @@ void Fork::stepFF(const FiberGrid& grid)
     }
 }
 
+
+void Fork::setInteractions(Meca & meca) const
+{
+    PointInterpolated pt1 = cHand1->interpolation();
+    PointInterpolated pt2 = cHand2->interpolation();
+    
+    meca.interLink(pt1, pt2, prop->stiffness);
+    
+#if ( DIM == 2 )
+    // flip the angle to match the current configuration of the bond
+    if ( prop->flip )
+    {
+        if ( vecProd(pt1.diff(), pt2.diff()) < 0 )
+            flip = -1;
+        else
+            flip = +1;
+    }
+    
+    meca.interTorque2D(pt1, pt2, prop->cosinus, flip * prop->sinus, prop->angular_stiffness);
+#endif
+}

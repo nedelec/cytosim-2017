@@ -1750,6 +1750,125 @@ void Meca::interSideSlidingLink(const PointInterpolated & pta,
 #endif
 }
 
+
+
+
+//==============================================================================
+#pragma mark -
+#pragma mark Torque
+
+#if (DIM == 2)
+/**
+ Update Meca to include torque between segment A-B and C-D containing pt1 and pt2.
+ Implicit version with linearized force 2D
+ Angle is between AB and CD. Force is along normal N_A and N_C pointing to the other filament
+ L_AB and L_CD is the length of the segments AB and CD
+ force_A = torque_weight * ( Delta angle ) * N_A/L_AB =-force_B
+ force_C = torque_weight * ( Delta angle ) * N_C/L_CD =-force_D
+ Delta_angle is the difference between actual angle and resting angle between AB and CD
+ 
+ Antonio Politi, 2013
+ */
+void Meca::interTorque2D(const PointInterpolated & pt1,
+                         const PointInterpolated & pt2,
+                         const real cosinus, const real sinus,
+                         const real weight)
+{
+    assert_true( weight >= 0 );
+    if ( pt1.overlapping(pt2) )
+        return;
+    
+    //index in the matrix mC:
+    const index_type index[] = { DIM*pt1.matIndex1(),DIM*pt1.matIndex1()+1, DIM*pt1.matIndex2(),
+        DIM*pt1.matIndex2()+1, DIM*pt2.matIndex1(), DIM*pt2.matIndex1()+1,  DIM*pt2.matIndex2(),
+        DIM*pt2.matIndex2()+1 };
+    
+    //Vectors and points of torque
+    Vector ab = pt1.diff();
+    Vector cd = pt2.diff();
+    Vector a = pt1.pos1();
+    Vector b = pt1.pos2();
+    Vector c = pt2.pos1();
+    Vector d = pt2.pos2();
+    const real coord[]={a.XX, a.YY, b.XX, b.YY, c.XX, c.YY, d.XX, d.YY};
+    //Helping vector this vector is at torque_angle from cd.
+    //Therefore in resting state angle difference between ab and ce is zero. This vector is used to compute the strength of torque
+    Vector ce;
+    ce.XX =  cd.XX*cosinus + cd.YY*sinus;
+    ce.YY = -cd.XX*sinus   + cd.YY*cosinus;
+    //normalize
+    const real abn = ab.norm();
+    const real abnS= ab.normSqr();
+    const real cdn = cd.norm();
+    const real cdnS= cd.normSqr();
+    if (abn < REAL_EPSILON || cdn < REAL_EPSILON ) return;
+    
+    //normalize the vectors
+    ab /= abn; cd /= cdn; ce /= cdn;
+    
+    //Coordinates of normal vectors yielding the direction of the force
+    //fa = torque_weight*dangle*(h[0], h[1]) = torque_weight*dangle*na/la
+    const real h[]={ ab.YY/abn, -ab.XX/abn, -ab.YY/abn, ab.XX/abn, -cd.YY/cdn, cd.XX/cdn, cd.YY/cdn, -cd.XX/cdn };
+    
+    //dangle = angle - torque_angle
+    //real dangle = atan2( vecProd(ab, ce), ab * ce );
+    real dangle = atan2( ab.XX*ce.YY - ab.YY*ce.XX, ab * ce );
+    //Computation of the jacobian for the linearization
+    //M = d_x f = M1 + M2
+    //M1 = w1/l normal d_x dangle
+    //M2 = w2 * dangle  d_x normal/l
+    real w1 = weight;
+    real w2 = weight*dangle;
+    
+    
+    //Matrix M1 with k*hxh (outer product) this yieald a matrix stored with its lower triangular part in m. The -w1 is because ab = b-a
+    real m[36] = { 0 };
+    //blas_xspr('U', 8, -w1, h, 1, m);
+    blas_xspr('L', 8, -w1, h, 1, m);
+    
+    
+    
+    //Matrix M2
+    real Da = w2*( -2*ab.XX*ab.YY )/abnS;
+    real da = w2*( ab.XX*ab.XX-ab.YY*ab.YY )/abnS;
+    real Dc = w2*( -2*cd.XX*cd.YY )/cdnS;
+    real dc = w2*(  cd.XX*cd.XX-cd.YY*cd.YY )/cdnS;
+    real entrya[] = {-Da, -da, Da,  da}; //={d(na_x/la)/dxa, d(na_x/la)/dya, d(na_x/l)/dxb, ...}
+    real entryc[] = { Dc,  dc,  -Dc,  -dc};//={ d(nc_x/lc)/dxc, d(nc_x/lc)/dyc, d(nc_x/l)/dxd, ...}
+    int shifta = 0;
+    int shiftc= 26;
+    int mm;
+    
+    //Add second part of matrix.
+    //The pos(-1, jj) accounts for the different signs of the matrix
+    for ( int jj=0; jj <  4; ++jj) {
+        for ( int ii=jj ; ii < 4; ++ii ) {
+            m[ii + shifta] += pow(-1,jj)*entrya[ii-jj];
+            m[ii + shiftc] += pow(-1,jj)*entryc[ii-jj];
+        }
+        shifta += 7 - jj;
+        shiftc += 3 - jj;
+    }
+    
+    
+    //very Cumbersome!!!
+    //Entries for Matrix mC  and vector vBas
+    //vBas = fa - M*P0
+    for ( int ii = 0; ii < 8; ++ii ) {
+        vBAS[index[ii]] += w2*h[ii];
+        for (int jj = 0; jj < 8; ++jj) {
+            if (jj < ii)
+                mm = jj*(7.5-0.5*jj)+ii;
+            else {
+                mm = ii*(7.5-0.5*ii)+jj;
+                mC( index[ii], index[jj] ) += m[mm];
+            }
+            vBAS[index[ii]] -= m[mm]*coord[jj];
+        }
+    }
+}
+#endif
+
 //==============================================================================
 #pragma mark -
 #pragma mark Clamps

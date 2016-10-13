@@ -8,15 +8,18 @@ class ForkProp;
 
 /// A specialized kind of Couple
 /**
- The Fork is unfinished and should not be used.
- 
- The plan is to use Meca:interTorque()
+ The fork connect two fibers at an angle.
+ It creates a torque between the two fibers, with a resting angle defined by 'ForkProp::angle',
+ and a rotational stiffness which is 'ForkProp::angular_stiffness'.
+
  @ingroup CoupleGroup
  */
 class Fork : public Couple
 {
+    /// direction for flipping (-1 or +1)
+    mutable int     flip;
     
-    /// property
+    /// Property
     ForkProp const* prop;
         
 public:
@@ -27,13 +30,11 @@ public:
     /// destructor
     virtual ~Fork();
     
-    //--------------------------------------------------------------------------
+    /// simulation step for a free Couple, implementing CrosslinkProp::trans_activated
+    void    stepFF(const FiberGrid&);
     
     /// add interactions to the Meca
     void    setInteractions(Meca &) const;
-    
-    /// simulation step for a free Couple, implementing CrosslinkProp::trans_activated
-    void    stepFF(const FiberGrid&);
 
 };
 

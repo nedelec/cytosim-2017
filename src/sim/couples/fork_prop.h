@@ -24,11 +24,24 @@ public:
      */
     
     /// if ( trans_activated == 1 ), hand2 is active only if hand1 is bound
-    bool         trans_activated;
+    bool trans_activated;
 
+    /// Resting angle in radian (set as `torque[0]`
+    real angle;
+    
+    /// Stiffness of the angular link, in Torque per radians (pN.um/radian) (set as `torque[1]`)
+    real angular_stiffness;
+    
+    /// Allow the angle to flip in 2D (currently unused)
+    bool flip;
     
     /// @}
-    //------------------ derived variables below ----------------
+    
+    /// derived variable: cosine(angle)
+    real cosinus;
+    
+    /// derived variable: sinus(angle)
+    real sinus;
 
 public:
     

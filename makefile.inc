@@ -1,7 +1,7 @@
 # // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-#---------------- MACHINE = {mac, linux-centos, embl-cluster, linux-ubuntu, windows}
+#---------------- MACHINE = {mac, linux-centos, cluster, linux-ubuntu, windows}
 MACHINE := mac
 
 #---------------- COMPILER = {gcc, icc, clang}
@@ -41,6 +41,7 @@ HAS_MKL := 0
 HAS_PNG := 0
 
 #---------------- GIF image export support
+# The GIF export is DEPRECATED, since PNG support is more reliable 
 # You need to install giflib (http://giflib.sourceforge.net) to export GIF images 
 #     Mac OSX:
 #         www.macports.org:  port install giflib 
@@ -75,7 +76,7 @@ ifeq ($(COMPILER),gcc)
 
     CXX      := g++ -ffinite-math-only -ftrapping-math -Wfatal-errors
     FAST     :=-O3 -fno-tree-vectorize -ffast-math -funroll-loops -msse3 -Wno-deprecated
-    DEBUG    :=-g3 -ggdb
+    DEBUG    :=-g3 -ggdb -Wno-deprecated
     COVERAGE :=-fprofile-arcs -ftest-coverage
     
 else ifeq ($(COMPILER),icc)
@@ -108,7 +109,7 @@ endif
 #------------------------------------- Linux ----------------------------------------
 #------------------------------------------------------------------------------------
 
-ifeq ($(MACHINE),embl-cluster)
+ifeq ($(MACHINE),cluster)
 
     MKL_PATH := /opt/intel/mkl/lib/intel64
 

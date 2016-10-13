@@ -121,7 +121,7 @@ Object * FiberSet::newObject(const std::string& kd, const std::string& nm, Gloss
  @code
  new fiber microtubule
  {
-   couple = NAME_OF_SINGLE, NUMBER, LEN
+   couple = NAME_OF_COUPLE, NUMBER, LEN
  }
  @endcode
 

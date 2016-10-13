@@ -266,6 +266,9 @@ public:
     /// Force of stiffness weight and resting length len, on the side of first point, which can slide
     void  interSideSlidingLink(PointInterpolated const&, PointInterpolated const&, real len, real weight);
     
+#if (DIM == 2)
+    void interTorque2D(PointInterpolated const&, PointInterpolated const&, real cosinus, real sinus, real torque_weight);
+#endif
     
     /// Force of stiffness weight with fixed position g
     void  interClamp(PointExact const&, const real g[], real weight);
