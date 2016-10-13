@@ -1,0 +1,76 @@
+/**
+ @example couple_fork.cym
+ A fork link two fibers at an angle with a given angular stiffness
+
+ First version by Antonio Z Politi, 2013
+ Reviewed Aug. 2015 by F. Nedelec
+*/
+
+
+set simul fork 
+{
+    time_step = 0.005
+    viscosity = 0.02
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+
+set fiber tube
+{
+    rigidity = 20
+    segmentation = 0.5
+    display = ( plus_end = 10,2 )
+}
+
+
+set hand binder
+{
+    binding = 10, 0.05
+    unbinding = 0, 3
+    display = ( size=16 )
+}
+
+
+set couple fork
+{
+    hand1 = binder
+    hand2 = binder
+    diffusion = 0
+    stiffness = 100
+    activity = fork
+    torque = 10, 1.22  % 1.22 radian is 70 degrees
+    %torque = 10, 1.57  % 1.57 radian is 90 degrees
+}
+
+new fiber tube
+{
+    orientation = 0 1 0
+    position = 0 0 0
+    length = 8
+}
+
+new fiber tube
+{
+    orientation = 1 0 0
+    position = 1 1 0
+    length = 4
+}
+
+new couple fork
+{
+    attach1 = 1, 5
+    attach2 = 2, 1
+}
+
+run simul *
+{
+    nb_steps = 5000
+    nb_frames = 10
+}
+
