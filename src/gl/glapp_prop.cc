@@ -11,7 +11,7 @@ void glAppProp::clear()
     show_fps       = 0;
 
     depth_test     = 1;
-    buffered       = 0;
+    buffered       = 1;
     stencil_buffer = 0;
     multisample    = 0;
     depth_clamp    = 0;
