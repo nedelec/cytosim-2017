@@ -238,11 +238,11 @@ ifeq ($(MACHINE),cygwin)
     ### libXi:   yum install libXi-devel
     ### libXmu:  yum install libXmu-devel
     ###  check for correct library yourlibname.so otherwise give full path 	
-    LINKGL := -L/usr/lib64 -lglut -lGL -lGLU -lXt -lX11
+    LINKGL := -L/usr/lib -lglut -lGL -lGLU -lXt -lX11
 
     ifneq ($(HAS_PNG), 0)
       
-        LIB_PNG := /usr/lib64/libpng.a /usr/lib64/libz.a
+        LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
         ING_PNG :=
     
     endif
