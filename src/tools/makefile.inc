@@ -39,7 +39,9 @@ vpath sieve bin
 
 
 frame_readerVB.o: frame_reader.cc frame_reader.h
-	$(CXXFLAGS) -c $(PLAY_INC) -DVERBOSE_READER $< -o $@
+	$(CXXFLAGS) -c $(PLAY_INC) -DVERBOSE_READER $< -o build/$@
+vpath frame_readerVB.o build
+
 
 reader: reader.cc frame_readerVB.o $(TOOL_DEP)
 	$(TOOL_MAKE)
