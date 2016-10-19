@@ -1,7 +1,7 @@
 # // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-#---------------- MACHINE = {mac, linux-centos, cluster, linux-ubuntu, windows}
+#---------------- MACHINE = {mac, linux-centos, cluster, linux-ubuntu, cygwin}
 MACHINE := mac
 
 #---------------- COMPILER = {gcc, icc, clang}
@@ -39,20 +39,6 @@ HAS_MKL := 0
 #     2 : homebrew installation
 
 HAS_PNG := 0
-
-#---------------- GIF image export support
-# The GIF export is DEPRECATED, since PNG support is more reliable 
-# You need to install giflib (http://giflib.sourceforge.net) to export GIF images 
-#     Mac OSX:
-#         www.macports.org:  port install giflib 
-#         Homebrew (http://brew.sh) :  brew install giflib
-#     CentOS:  yum install giflib-devel 
-#     Ubuntu:  apt-get or synaptic libgif-dev 
-# HAS_GIF can be:
-#     0 : no GIF support
-#     1 : static linking of giflib
-
-HAS_GIF := 0
 
 #------------------------------------------------------------------------------------
 #---------------------------  Compiler Specifications  ------------------------------
@@ -163,13 +149,6 @@ ifeq ($(MACHINE),linux-centos)
     
     endif
 
-    ifneq ($(HAS_GIF), 0)
-
-    	LIB_GIF := /usr/lib64/libgif.a
-        INC_GIF :=
-
-    endif
-
 endif
 
 
@@ -199,12 +178,6 @@ ifeq ($(MACHINE),linux-ubuntu)
 
     endif
 
-    ifneq ($(HAS_GIF), 0)
-
-        LIB_GIF :=/usr/lib/libgif.a
-        ING_GIF :=
-
-    endif
 endif
 
 #------------------------------------------------------------------------------------
@@ -240,39 +213,40 @@ ifeq ($(MACHINE),mac)
 
     endif
 
-    ifeq ($(HAS_GIF), 1)
-
-        # macport library:
-    	LIB_GIF := /opt/local/lib/libgif.a
-        INC_GIF := -I/opt/local/include
-
-    endif
-    ifeq ($(HAS_GIF), 2)
-    
-        # homebrew library:
-        LIB_GIF := /usr/local/lib/libgif.a
-        INC_GIF := -I/usr/local/include
-
-    endif
-
 endif
 
 #------------------------------------------------------------------------------------
-#--------------------------------- Windows ------------------------------------------
+#---------------------------------- Cygwin ------------------------------------------
 #------------------------------------------------------------------------------------
 
-ifeq ($(MACHINE),windows)
+ifeq ($(MACHINE),cygwin)
 
-    #--- use a home-made blas/lapack for distribution:
-    # the libraries "libblas.a" and "liblapack.a" are expected to be in the
-    # standard location: "/usr/lib"
+    ### Cygwin October 2016
+    FlagsD := -O0 $(DEBUG) $(WARN)
+    FlagsP := -O0 -fno-inline -pg $(ALIGN) $(FAST)
+    FlagsC := -O0 -fprofile-arcs -ftest-coverage
+    FlagsF := -O3 -finline-functions $(ALIGN) $(FAST)
 
-    FlagsD := -g  $(WARN)
-    FlagsP := -pg -O3 -march=i686 -ffast-math $(ALIGN)
-    FlagsF := -O3 -finline-functions -march=i686 -ffast-math $(ALIGN)
-  
-    LINK   := -llapack -lblas
-    LINKGL := -lglut32 -lglu32 -lopengl32
+    ### Needs
+    # blas:   yum install blas-devel
+    # lapack: yum install lapack-devel
+    LINK = -L/usr/lib -L/bin -llapack -lblas -lpthread -lgfortran
+    
+    ### linkage options for programs using graphics:
+    ### Needs
+    ### freglut: yum install freeglut-devel
+    ### libXi:   yum install libXi-devel
+    ### libXmu:  yum install libXmu-devel
+    ###  check for correct library yourlibname.so otherwise give full path 	
+    LINKGL := -L/usr/lib64 -lglut -lGL -lGLU -lXt -lX11
+
+    ifneq ($(HAS_PNG), 0)
+      
+        LIB_PNG := /usr/lib64/libpng.a /usr/lib64/libz.a
+        ING_PNG :=
+    
+    endif
+
     BINEXT :=.exe
 
 endif
