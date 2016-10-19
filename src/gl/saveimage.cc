@@ -19,10 +19,6 @@ bool SaveImage::supported(const char format[])
     if ( 0 == strcasecmp(format, "png") )
         return true;
 #endif
-#ifdef HAS_GIF
-    if ( 0 == strcasecmp(format, "gif") )
-        return true;
-#endif
     if ( 0 == strcasecmp(format, "ppm") )
         return true;
     
@@ -331,9 +327,6 @@ int SaveImage::savePixels(const char format[],
     
     if ( 0 == strcasecmp(format, "png") )
         return saveColorPNG(file, pixels, width, height);
-    
-    if ( 0 == strcasecmp(format, "gif") )
-        return saveColorGIF(file, pixels, width, height);
 
     return -1;
 }
@@ -582,111 +575,3 @@ int SaveImage::saveGrayPNG(FILE* file,  void* pixels,
     return savePNG(file, pixels, 16, 1, width, height);
 }
 
-
-//------------------------------------------------------------------------------
-//------------------------------ GIF FORMAT ------------------------------------
-//------------------------------------------------------------------------------
-#ifndef HAS_GIF
-
-int SaveImage::saveColorGIF(FILE*, const GLubyte[], const int, const int)
-{
-    fprintf(stderr, "GIF format not supported (recompilation needed)\n");
-    return -1;
-}
-
-#else
-
-
-#include <gif_lib.h>
-
-
-///This code was initiated by Jens Odenheimer, January 2007
-/**
- Updated for giflib 5.0.0 on 6 Sept 2012.
- Tested with giflib 4.1.6 on 26 April 2013
- */
-int SaveImage::saveColorGIF(FILE* file,
-                             const GLubyte pixels[],
-                             const int width, const int height)
-{
-    int desc = fileno(file);
-    
-    if ( desc == -1 )
-        return 1;
-    
-    int code = GIF_OK;
-    int colormap_size = 256;
-    GifFileType *outfile = 0;
-
-    const size_t msize = width*height;
-    GifByteType *red    = new GifByteType[msize];
-    GifByteType *green  = new GifByteType[msize];
-    GifByteType *blue   = new GifByteType[msize];
-    GifByteType *buffer = new GifByteType[msize];
-    
-    ColorMapObject *colormap = MakeMapObject(colormap_size, 0);
-    
-    int l = 0, k;
-    for ( int j = 0; j < height; ++j)
-    {
-        k = width * (height-1 - j);
-        for ( int i = 0; i < width; ++i )
-        {
-            red[k]   = (GifByteType) pixels[3*l  ];
-            green[k] = (GifByteType) pixels[3*l+1];
-            blue[k]  = (GifByteType) pixels[3*l+2];
-            ++l;
-            ++k;
-        }
-    }
-
-    code = QuantizeBuffer(width, height, &colormap_size, red, green, blue,
-                          buffer, colormap->Colors);
-        
-    delete[] red;
-    delete[] green;
-    delete[] blue;
-    
-    if ( code == GIF_ERROR )
-        goto end;
-    
-    outfile = EGifOpenFileHandle(desc);
-    
-    if ( outfile == 0 )
-        goto end;
-    
-    code = EGifPutScreenDesc(outfile, width, height, colormap_size, 0, colormap);
-    
-    if ( code == GIF_OK )
-        code = EGifPutImageDesc(outfile, 0, 0, width, height, FALSE, NULL);
-    
-    if ( code == GIF_OK )
-    {
-        GifByteType *ptr = buffer;
-        for ( int i = 0; i < height; ++i )
-        {
-            code = EGifPutLine(outfile, ptr, width);
-            if ( code == GIF_ERROR )
-                goto end;
-            ptr += width;
-        }
-    }
-    else
-        goto end;
-
-    code = EGifCloseFile(outfile);
-
-end:
-    
-    if ( code != GIF_OK )
-    {
-        PrintGifError();
-        //fprintf(stderr, "ERROR: %s\n", GifErrorString());
-    }
-    
-    delete[] buffer;
-
-    return ( code == GIF_ERROR );
-}
-
-#endif

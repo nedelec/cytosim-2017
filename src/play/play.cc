@@ -49,7 +49,6 @@ void info(std::ostream & os = std::cout)
     os << " with assertions" << endl;
 #endif
 
-    os << " GIF : " << SaveImage::supported("gif") << endl;
     os << " PNG : " << SaveImage::supported("png") << endl;
     os << " DIM = " << DIM << endl;
 }

@@ -74,7 +74,7 @@ public:
      */
     char           magic_key[NB_MAGIC_KEYS];    
     
-    /// format of exported images [gif, png, ppm]
+    /// format of exported images [png, ppm]
     std::string    image_format;
     
     /// directory where images are exported

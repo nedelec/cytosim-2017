@@ -9,24 +9,24 @@ OBJ_MATH:=smath.o vector1.o vector2.o vector3.o matrix1.o matrix2.o matrix3.o \
 
 #----------------------------rules----------------------------------------------
 
-INC_MATH:=$(addprefix -I$(SRCDIR)/, SFMT math base)
+INC_MATH:=$(addprefix -Isrc/, SFMT math base)
 
 
 $(OBJ_MATH): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(INC_MATH) $< -o $(BLDDIR)/$@
+	$(CXXFLAGS) -c $(INC_MATH) $< -o build/$@
 
 
 # this is for graphical debugging of the rasterizer:
-$(BLDDIR)/rasterizerGL.o: rasterizer.cc rasterizer.h
-	$(CXXFLAGS) -c $(INC_MATH) -I$(SRCDIR)/gl -DDISPLAY $< -o $@
+build/rasterizerGL.o: rasterizer.cc rasterizer.h
+	$(CXXFLAGS) -c $(INC_MATH) -Isrc/gl -DDISPLAY $< -o $@
 
 
-$(BLDDIR)/libcytomath.a: $(OBJ_MATH)
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
+build/libcytomath.a: $(OBJ_MATH)
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
 
 #----------------------------makedep--------------------------------------------
 
-$(DEPDIR)/part0.dep:
-	$(MAKEDEP) $(wildcard $(SRCDIR)/math/*.cc) > $@
+dep/part0.dep:
+	$(MAKEDEP) $(wildcard src/math/*.cc) > $@

@@ -9,18 +9,18 @@ TOOLS:=frametool sieve reader report reportF analyse1 analyse2 analyse3
 tools: $(TOOLS)
 
 
-vpath %.cc $(SRCDIR)/tools
+vpath %.cc src/tools
 
 
 #--------------------macros----------------------------------------------------
 
-TOOL_DEP := $(addprefix $(BLDDIR)/,libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+TOOL_DEP := $(addprefix build/,libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
 
-TOOL_OBJ  = $(filter %.cc, $^) $(addprefix $(BLDDIR)/, $(notdir $(filter-out %.cc, $^)))
+TOOL_OBJ  = $(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $^)))
 
-TOOL_INC  = $(addprefix -I$(SRCDIR)/, SFMT math base sim sim/spaces sim/fibers sim/singles sim/organizers gl play)
+TOOL_INC  = $(addprefix -Isrc/, SFMT math base sim sim/spaces sim/fibers sim/singles sim/organizers gl play)
 
-TOOL_MAKE = $(CXXFLAGS) $(TOOL_INC) $(TOOL_OBJ) $(LINK) -o $(BINDIR)/$@
+TOOL_MAKE = $(CXXFLAGS) $(TOOL_INC) $(TOOL_OBJ) $(LINK) -o bin/$@
 
 
 #-------------------targets----------------------------------------------------
@@ -29,53 +29,53 @@ TOOL_MAKE = $(CXXFLAGS) $(TOOL_INC) $(TOOL_OBJ) $(LINK) -o $(BINDIR)/$@
 frametool: frametool.cc
 	$(TOOL_MAKE)
 	$(DONE)
-vpath frametool $(BINDIR)
+vpath frametool bin
 
 
 sieve: sieve.cc frame_reader.o $(TOOL_DEP) 
 	$(TOOL_MAKE)
 	$(DONE)
-vpath sieve $(BINDIR)
+vpath sieve bin
 
 
-$(BLDDIR)/frame_readerVB.o: frame_reader.cc frame_reader.h
+frame_readerVB.o: frame_reader.cc frame_reader.h
 	$(CXXFLAGS) -c $(PLAY_INC) -DVERBOSE_READER $< -o $@
 
 reader: reader.cc frame_readerVB.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath reader $(BINDIR)
+vpath reader bin
 
 
 
 report: report.cc frame_reader.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath report $(BINDIR)
+vpath report bin
 
 reportF: reportF.cc frame_reader.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath reportF $(BINDIR)
+vpath reportF bin
 
 analyse1: analyse1.cc frame_reader.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath analyse1 $(BINDIR)
+vpath analyse1 bin
 
 analyse2: analyse2.cc frame_reader.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath analyse2 $(BINDIR)
+vpath analyse2 bin
 
 analyse3: analyse3.cc frame_reader.o $(TOOL_DEP)
 	$(TOOL_MAKE)
 	$(DONE)
-vpath analyse3 $(BINDIR)
+vpath analyse3 bin
 
 
 #----------------------------makedep--------------------------------------------
 
-$(DEPDIR)/part7.dep:
-	$(MAKEDEP) $(wildcard $(SRCDIR)/tools/*.cc) > $@
+dep/part7.dep:
+	$(MAKEDEP) $(wildcard src/tools/*.cc) > $@
 

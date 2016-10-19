@@ -541,13 +541,21 @@ Vector Movable::readDirection(std::istream& is, Vector const& pos, const Space* 
         if ( tok == "circular" )
             return pos.randPerp(1);
         
+#if ( DIM == 3 )
+        if ( tok == "orthoradial" )
+        {
+            Vector yz(0, pos.YY, pos.ZZ);
+            return vecProd(yz.normalize(), Vector(RNG.sflip(), 0, 0));
+        }
+#endif
+        
+        if ( tok == "circular" )
+            return pos.randPerp(1);
+
         if ( spc )
         {
             if ( tok == "tangent" )
                 return spc->normalToEdge(pos).randPerp(1);
-            
-            if ( tok == "circular" )
-                return pos.randPerp(1);
             
 #if ( DIM == 3 )
             Vector dir(0,0,1);

@@ -407,7 +407,7 @@ void Interface::execute_run(Glossary& opt, unsigned nb_steps, bool do_write)
     opt.set(nb_frames,  "nb_frames");
     opt.set(event_rate, "event");
     opt.set(event_code, "event", 1);
-    opt.set(solve,      "solve", KeyList<int>("none",0, "full", 1, "x_only", 2, "flux", 3));
+    opt.set(solve,      "solve", KeyList<int>("off", 0, "on", 1, "horizontal", 2, "flux", 3));
     opt.set(prune,      "prune");
     opt.set(binary,     "binary");
     

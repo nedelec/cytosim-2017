@@ -29,24 +29,24 @@ endif
 #----------------------------targets--------------------------------------------
 
 
-$(BLDDIR)/libcytogl.a: $(OBJ_GL) $(BLDDIR)/offscreen.o $(BLDDIR)/saveimage.o
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
+build/libcytogl.a: $(OBJ_GL) build/offscreen.o build/saveimage.o
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
 
-$(BLDDIR)/saveimage.o: saveimage.cc saveimage.h
+build/saveimage.o: saveimage.cc saveimage.h
 	$(CXXFLAGS) -c $(IMAGE_DEF) $< -o $@
 
 
-$(BLDDIR)/offscreen.o: offscreen.cc offscreen.h
+build/offscreen.o: offscreen.cc offscreen.h
 	$(CXXFLAGS) -c $< -o $@
 
 
 $(OBJ_GL): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(addprefix -I$(SRCDIR)/, SFMT math base) $< -o $(BLDDIR)/$@
+	$(CXXFLAGS) -c $(addprefix -Isrc/, SFMT math base) $< -o build/$@
 
 #----------------------------makedep--------------------------------------------
 
-$(DEPDIR)/part4.dep:
-	$(MAKEDEP)  $(wildcard $(SRCDIR)/gl/*.cc) > $@
+dep/part4.dep:
+	$(MAKEDEP)  $(wildcard src/gl/*.cc) > $@
 

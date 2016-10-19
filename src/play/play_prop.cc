@@ -30,8 +30,6 @@ void PlayProp::clear()
     
     if ( SaveImage::supported("png") )
         image_format = "png";
-    else if ( SaveImage::supported("gif") )
-        image_format = "gif";
     else
         image_format = "ppm";
 

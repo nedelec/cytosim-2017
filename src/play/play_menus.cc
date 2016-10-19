@@ -467,7 +467,6 @@ void processMenuExport(int item)
         
         case 10:  PP.image_format="png";  flashText("PNG");   break;
         case 11:  PP.image_format="ppm";  flashText("PPM");   break;
-        case 12:  PP.image_format="gif";  flashText("GIF");   break;
         case 15:  PP.image_index = 0;                         return;
         
         case 20:  writePlayParameters(std::cout, true);       return;
@@ -502,8 +501,6 @@ int buildMenuExport()
     {
         if ( SaveImage::supported("png") )
             glutAddMenuEntry("Use PNG Format", 10);
-        else if ( SaveImage::supported("gif") )
-            glutAddMenuEntry("Use GIF Format", 12);
         else
             glutAddMenuEntry("Use PPM Format", 11);
     }

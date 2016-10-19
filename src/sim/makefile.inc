@@ -51,79 +51,79 @@ OBJ_CYTOSIM_3D:=$(OBJ_CYTOSIM:.o=3D.o)
 
 #--- normal build:
 
-sim: sim.cc $(addprefix $(BLDDIR)/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) $^ $(LINK) -o $(BINDIR)/$@
+sim: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+	$(CXXFLAGS) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
-vpath sim  $(BINDIR)
+vpath sim  bin
 
 
 #--- build with debuging flags:
 
-simd: sim.cc $(addprefix $(BLDDIR)/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
-	$(CXX) $(FlagsD) $(INC_SIM) $^ $(LINK) -o $(BINDIR)/$@
+simd: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+	$(CXX) $(FlagsD) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
-vpath simd  $(BINDIR)
+vpath simd  bin
 
 
 #--- builds with specific dimension:
 
-sim1: sim.cc $(addprefix $(BLDDIR)/, libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=1 $^ $(LINK) -o $(BINDIR)/$@
+sim1: sim.cc $(addprefix build/, libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a)
+	$(CXXFLAGS) $(INC_SIM) -DDIM=1 $^ $(LINK) -o bin/$@
 	$(DONE)
-vpath sim1  $(BINDIR)
+vpath sim1  bin
 
-sim2: sim.cc $(addprefix $(BLDDIR)/, libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=2 $^ $(LINK) -o $(BINDIR)/$@
+sim2: sim.cc $(addprefix build/, libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a)
+	$(CXXFLAGS) $(INC_SIM) -DDIM=2 $^ $(LINK) -o bin/$@
 	$(DONE)
-vpath sim2  $(BINDIR)
+vpath sim2  bin
 
-sim3: sim.cc $(addprefix $(BLDDIR)/, libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=3 $^ $(LINK) -o $(BINDIR)/$@
+sim3: sim.cc $(addprefix build/, libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a)
+	$(CXXFLAGS) $(INC_SIM) -DDIM=3 $^ $(LINK) -o bin/$@
 	$(DONE)
-vpath sim3  $(BINDIR)
+vpath sim3  bin
 
 
 
-$(BLDDIR)/libcytosim.a: $(OBJ_CYTOSIM)
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
-	$(DONE)
-
-
-$(BLDDIR)/libcytosim1D.a: $(OBJ_CYTOSIM_1D)
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
+build/libcytosim.a: $(OBJ_CYTOSIM)
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
 
-$(BLDDIR)/libcytosim2D.a: $(OBJ_CYTOSIM_2D)
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
+build/libcytosim1D.a: $(OBJ_CYTOSIM_1D)
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
 
-$(BLDDIR)/libcytosim3D.a: $(OBJ_CYTOSIM_3D)
-	$(MAKELIB) $@ $(addprefix $(BLDDIR)/, $(notdir $^))
+build/libcytosim2D.a: $(OBJ_CYTOSIM_2D)
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+	$(DONE)
+
+
+build/libcytosim3D.a: $(OBJ_CYTOSIM_3D)
+	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
 
 #----------------------------rules----------------------------------------------
 
-INC_SIM=$(addprefix -I$(SRCDIR)/, SFMT math base sim sim/fibers sim/hands sim/singles sim/couples sim/organizers sim/spaces)
+INC_SIM=$(addprefix -Isrc/, SFMT math base sim sim/fibers sim/hands sim/singles sim/couples sim/organizers sim/spaces)
 
 
-$(OBJ_CYTOSIM): %.o: %.cc %.h | $(BLDDIR)
-	$(CXXFLAGS) -c $(INC_SIM) $< -o $(BLDDIR)/$@
+$(OBJ_CYTOSIM): %.o: %.cc %.h | build
+	$(CXXFLAGS) -c $(INC_SIM) $< -o build/$@
 
-$(OBJ_CYTOSIM_1D): %1D.o: %.cc %.h | $(BLDDIR)
-	$(CXXFLAGS) -c -DDIM=1 $(INC_SIM) $< -o $(BLDDIR)/$@
+$(OBJ_CYTOSIM_1D): %1D.o: %.cc %.h | build
+	$(CXXFLAGS) -c -DDIM=1 $(INC_SIM) $< -o build/$@
 
-$(OBJ_CYTOSIM_2D): %2D.o: %.cc %.h | $(BLDDIR)
-	$(CXXFLAGS) -c -DDIM=2 $(INC_SIM) $< -o $(BLDDIR)/$@
+$(OBJ_CYTOSIM_2D): %2D.o: %.cc %.h | build
+	$(CXXFLAGS) -c -DDIM=2 $(INC_SIM) $< -o build/$@
 
-$(OBJ_CYTOSIM_3D): %3D.o: %.cc %.h | $(BLDDIR)
-	$(CXXFLAGS) -c -DDIM=3 $(INC_SIM) $< -o $(BLDDIR)/$@
+$(OBJ_CYTOSIM_3D): %3D.o: %.cc %.h | build
+	$(CXXFLAGS) -c -DDIM=3 $(INC_SIM) $< -o build/$@
 
 #----------------------------makedep--------------------------------------------
 
-$(DEPDIR)/part3.dep:
-	$(MAKEDEP) $(wildcard $(SRCDIR)/sim/*.cc)   >  $@
-	$(MAKEDEP) $(wildcard $(SRCDIR)/sim/*/*.cc) >> $@
+dep/part3.dep:
+	$(MAKEDEP) $(wildcard src/sim/*.cc)   >  $@
+	$(MAKEDEP) $(wildcard src/sim/*/*.cc) >> $@
 

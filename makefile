@@ -2,12 +2,6 @@
 
 # THIS FILE SHOULD NOT BE EDITED: EDIT FILE makefile.inc 
 
-
-SRCDIR := src
-BINDIR := bin
-DEPDIR := dep
-BLDDIR := build
-
 #include the compiler-specifications
 include makefile.inc
 
@@ -30,45 +24,45 @@ ifndef LINK
 endif
 
 
-SRCDIR1   := $(addprefix $(SRCDIR)/, math base sim gl play doc)
-SRCDIR2   := $(addprefix $(SRCDIR)/sim/, spaces hands fibers singles couples organizers)
+SRCDIR1   := $(addprefix src/, math base sim gl play doc)
+SRCDIR2   := $(addprefix src/sim/, spaces hands fibers singles couples organizers)
 ALLSRCDIR := $(SRCDIR1) $(SRCDIR2)
 
 
 #command used to build the dependencies files automatically
-MAKEDEP := gcc -MM $(addprefix -I, $(ALLSRCDIR) $(SRCDIR)/SFMT)
+MAKEDEP := gcc -MM $(addprefix -I, $(ALLSRCDIR) src/SFMT)
 
 #----------------------------paths----------------------------------------------
 
 vpath %.h   $(ALLSRCDIR)
 vpath %.cc  $(ALLSRCDIR)
-vpath %.o   $(BLDDIR)
-vpath %.a   $(BLDDIR)
-vpath %.dep $(DEPDIR)
-vpath SFMT% $(SRCDIR)/SFMT
+vpath %.o   build
+vpath %.a   build
+vpath %.dep dep
+vpath SFMT% src/SFMT
 
 #----------------------------targets--------------------------------------------
 
 # calling 'make' without arguments will make sim and play:
 .PHONY: simplay
-simplay: sim play
+simplay: bin build sim play
 
 
-include $(SRCDIR)/sim/makefile.inc
-include $(SRCDIR)/base/makefile.inc
-include $(SRCDIR)/math/makefile.inc
-include $(SRCDIR)/sim/spaces/makefile.inc
-include $(SRCDIR)/gl/makefile.inc
-include $(SRCDIR)/play/makefile.inc
+include src/sim/makefile.inc
+include src/base/makefile.inc
+include src/math/makefile.inc
+include src/sim/spaces/makefile.inc
+include src/gl/makefile.inc
+include src/play/makefile.inc
 
--include $(SRCDIR)/tools/makefile.inc
--include $(SRCDIR)/test/makefile.inc
+-include src/tools/makefile.inc
+-include src/test/makefile.inc
 
 
 # Attention: Mersenne-Twister is coded in C-language,
 # and we must provide this with '-x c' to the compiler:
 SFMT.o: SFMT.c SFMT.h
-	$(CXXFLAGS) -x c -DNDEBUG -DSFMT_MEXP=19937 -c $< -o $(BLDDIR)/$@
+	$(CXXFLAGS) -x c -DNDEBUG -DSFMT_MEXP=19937 -c $< -o build/$@
 
 
 .PHONY: all
@@ -90,7 +84,7 @@ doc:
 
 cytosim.tar:
 	tar cf cytosim.tar --exclude \*.cmo --exclude \*tar\* \
-        --exclude $(BINDIR)/\* --exclude $(BLDDIR)/\*  *
+        --exclude bin/\* --exclude build/\*  *
 
 
 cytosim.tar.bz2: cytosim.tar
@@ -110,31 +104,31 @@ tar: cytosim_src.tar cytosim.tar.bz2
 .PHONY: ready clean cleaner sterile ts
 
 
-$(BLDDIR):
-	mkdir $(BLDDIR)
+build:
+	if ! test -d build; then mkdir build; fi
 
-$(BINDIR):
-	mkdir $(BINDIR)
+bin:
+	if ! test -d bin; then mkdir bin; fi
 
 
-ready: | $(BINDIR) $(BLDDIR) dep
-	rm -rf $(BLDDIR)/*
-	rm -f $(BINDIR)/*
+ready: | bin build dep
+	rm -rf build/*
+	rm -f bin/*
 
 
 clean:
-	rm -f $(BLDDIR)/*.o $(BLDDIR)/*.a
+	rm -f build/*.o build/*.a
 
 
 cleaner:
-	rm -f *.cmo $(BLDDIR)/*.o $(BLDDIR)/*.a $(DEPDIR)/*.dep;
+	rm -f *.cmo build/*.o build/*.a dep/*.dep;
 
 
 sterile:
-	rm -rf $(BLDDIR)/*
-	rm -f  $(DEPDIR)/*
-	rm -rf $(BINDIR)/*.dSYM
-	rm -f  $(BINDIR)/*
+	rm -rf build/*
+	rm -f  dep/*
+	rm -rf bin/*.dSYM
+	rm -f  bin/*
 	rm -f *.cmo
 
 
@@ -143,12 +137,12 @@ ts: sterile tar
 #---------------------------- dependencies ----------------------------------------
 
 depdir:
-	if ! test -d $(DEPDIR); then mkdir $(DEPDIR); fi
+	if ! test -d dep; then mkdir dep; fi
 
-dep: depdir | $(addprefix $(DEPDIR)/, part0.dep part1.dep part2.dep part3.dep part4.dep part5.dep part6.dep part7.dep)
+dep: depdir | $(addprefix dep/, part0.dep part1.dep part2.dep part3.dep part4.dep part5.dep part6.dep part7.dep)
 
 
--include $(DEPDIR)/part?.dep
+-include dep/part?.dep
 
 
 

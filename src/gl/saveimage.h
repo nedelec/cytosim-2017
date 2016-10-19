@@ -21,20 +21,18 @@ typedef unsigned char GLubyte;
 #endif
 
 
-/// Can save pixel array to files in (PNG, GIF or PPM) format
+/// Can save pixel array to files in (PNG or PPM) format
 /**
  - PPM files do not require any library, and thus writing is supported on any platform.
    They can be read by various software, in particular the 'pbmplus' toolkit
    However, they are big and usually not supported by most viewers.
    Known viewers on Mac OS X: ImageJ, GraphicConverter, ToyViewer.
- - GIF files are great for web, a multiple images GIF file can be animated.
- - PNG files are more modern GIF, but do not support multi-image files.
+ - PNG files are more modern all purpose image format.
  .
  
- GIF support requires 'giflib' and PNG support requires 'libpng'. 
+ PNG support requires 'libpng'.
  
  Both libraries are available on Mac OSX via macPorts (www.macports.org):
- - port install giflib
  - port install libpng
  .
  */
@@ -57,10 +55,7 @@ namespace SaveImage
 
     /// gray-level PNG format with 2 bytes per pixels
     int saveGrayPNG(FILE* file, void* pixels, int width, int height);
-    
-    /// Graphics Interchange Format, 3 bytes per pixels (R, G, B). Returns error-code
-    int saveColorGIF(FILE* file, const GLubyte pixels[], int width, int height);
-    
+   
     /// save pixels[] and return error-code
     int savePixels(const char format[], FILE *, GLubyte* pixels, int width, int height);
     
@@ -71,7 +66,7 @@ namespace SaveImage
     
     /// true if 'format' is the 3-letter file-entension of a supported image format
     /**
-     Currently 'gif', 'png' and 'ppm' are supported. 
+     Currently 'png' and 'ppm' are supported. 
      The extension can equally be lowercase or uppercase.
      */
     bool supported(const char format[]);
