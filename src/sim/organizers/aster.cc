@@ -26,19 +26,21 @@ void Aster::step()
     assert_true( asClamp.size()+1 == nbOrganized() );
     
     // nucleation:
+    Glossary opt;
+
     for ( unsigned ii = 0; ii < asClamp.size(); ++ii )
     {
         if ( 0 == fiber(ii) &&  RNG.test(prop->nucleation_rate_prob) )
         {
             AsterClamp const& clamp = asClamp[ii];
-            Glossary opt;
+            Solid const* so = solid();
+            const Vector pos = so->posPoint( clamp.clamp1 );
+            const Vector dir = ( so->posPoint( clamp.clamp2 ) - pos ).normalized();
+            
             ObjectList objs = prop->fiber_set->newObjects("fiber", prop->fibers, opt);
             if ( objs.size() )
             {
                 Fiber * fib = static_cast<Fiber*>(objs[0]);
-                Solid const* so = solid();
-                const Vector pos = so->posPoint( clamp.clamp1 );
-                const Vector dir = ( so->posPoint( clamp.clamp2 ) - pos ).normalized();
                 fib->setStraight(pos, dir, clamp.clampA, prop->focus);
                 objset()->simul.add(objs);
                 grasp(fib, ii+1);
@@ -97,7 +99,10 @@ ObjectList Aster::build(Glossary& opt)
     grasp(so, 0);
     ObjectList res;
     res.push_back(so);
-    
+        
+    for ( unsigned ii = 0; ii < asClamp.size(); ++ii )
+        grasp(0, ii+1);
+
     for ( unsigned ii = 0; ii < asClamp.size(); ++ii )
     {
         ObjectList objs = prop->fiber_set->newObjects("fiber", prop->fibers, opt);

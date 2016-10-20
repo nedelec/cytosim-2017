@@ -37,9 +37,12 @@ void Organizer::grasp(Mecable * m, unsigned int ix)
 
 void Organizer::goodbye(Buddy * b)
 {
-    MecableList::iterator oi = std::find(objs.begin(), objs.end(), b);
-    if ( oi != objs.end() )
-        *oi = 0;
+    if ( b )
+    {
+        MecableList::iterator oi = std::find(objs.begin(), objs.end(), b);
+        if ( oi != objs.end() )
+            *oi = 0;
+    }
 }
 
 

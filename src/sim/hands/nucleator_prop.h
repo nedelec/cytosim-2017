@@ -25,8 +25,7 @@ public:
     {
         NUCLEATE_ORIENTATED,
         NUCLEATE_PARALLEL, 
-        NUCLEATE_ANTIPARALLEL, 
-        NUCLEATE_PARALLEL_IF
+        NUCLEATE_ANTIPARALLEL
     };
     
 public:

@@ -41,7 +41,18 @@ void Nucleator::nucleate(Vector pos)
     // the Fiber will be oriented depending on specificity:
     Rotation rot;
     
-    switch( prop->specificity )
+    real ang = 0;
+    if ( opt.set(ang, "nucleation_angle") )
+    {
+        Vector dir = haMonitor->otherDirection(this);
+        rot = Rotation::rotationToVector(dir);
+#if ( DIM == 2 )
+        rot = rot * Rotation::rotationFromEulerAngles(RNG.sflip()*ang);
+#else
+        rot = rot * Rotation::rotationAroundX(RNG.sreal()*M_PI) * Rotation::rotationAroundZ(ang);
+#endif
+    }
+    else switch( prop->specificity )
     {            
         case NucleatorProp::NUCLEATE_PARALLEL:
         {
@@ -54,20 +65,6 @@ void Nucleator::nucleate(Vector pos)
             Vector dir = -haMonitor->otherDirection(this);
             rot = Rotation::rotationToVector(dir, RNG);
         } break;
-
-        case NucleatorProp::NUCLEATE_PARALLEL_IF:
-            if ( haMonitor->otherHand(this)->attached() )
-            {
-                Vector dir = haMonitor->otherDirection(this);
-                rot = Rotation::rotationToVector(dir, RNG);
-                fib->mark(1);
-                // we read 'orientation' to avoid the 'unused' warning
-                std::string str;
-                opt.set(str, "orientation");
-                break;
-            }
-            fib->mark(3);
-            //there is an intentional fallback on the next case:
             
         case NucleatorProp::NUCLEATE_ORIENTATED:
         {

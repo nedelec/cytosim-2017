@@ -59,10 +59,6 @@ void NucleatorProp::read(Glossary& glos)
     glos.set(specificity, "specificity",
              KeyList<Specificity>("none",         NUCLEATE_ORIENTATED,
                                   "parallel",     NUCLEATE_PARALLEL,
-                                  "parallel_if",  NUCLEATE_PARALLEL_IF,
-#ifdef BACKWARD_COMPATIBILITY
-                                  "circular",     NUCLEATE_ORIENTATED,
-#endif
                                   "antiparallel", NUCLEATE_ANTIPARALLEL));
 }
 
