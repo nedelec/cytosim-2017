@@ -1,0 +1,67 @@
+/**
+ @example branch.cym
+ Nucleation on the side of existing fibers with an angle
+
+ F. Nedelec, October 20 2016
+*/
+
+set simul branch 
+{
+    time_step = 0.001
+    viscosity = 1
+}
+
+set space cell
+{
+    geometry = ( sphere 1 )
+}
+
+new space cell
+
+set fiber actin
+{
+    rigidity = 0.1
+    segmentation = 0.1
+	confine = inside, 10
+    display = ( plus_end = 8,2 )
+}
+
+set hand activator
+{
+    binding = 10, 0.5
+    unbinding = 0, 4
+    display = ( size=7; color=green; )
+}
+
+set hand nucleator
+{
+    unbinding = 0, 3
+    activity = nucleate
+    nucleate = 10, actin, ( fiber_length=0.1; nucleation_angle=1.22; )
+    display = ( size=7; color=white; )
+}
+
+set couple arp23
+{
+    hand1 = activator
+    hand2 = nucleator
+	trans_activated = 1
+    diffusion = 1
+    stiffness = 1000
+    activity = fork
+    torque = 1, 1.22  % 1.22 radian is 70 degrees
+}
+
+new fiber actin
+{
+    position = 0 0 0
+    length = 2
+}
+
+new 10 couple arp23
+
+run 10000 simul *
+{
+    nb_frames = 10
+}
+
