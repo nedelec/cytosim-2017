@@ -48,7 +48,7 @@ void Nucleator::nucleate(Vector pos)
         rot = Rotation::rotationToVector(dir);
 #if ( DIM == 2 )
         rot = rot * Rotation::rotationFromEulerAngles(RNG.sflip()*ang);
-#else
+#elif ( DIM == 3 )
         rot = rot * Rotation::rotationAroundX(RNG.sreal()*M_PI) * Rotation::rotationAroundZ(ang);
 #endif
     }

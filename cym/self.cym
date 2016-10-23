@@ -33,7 +33,8 @@ set hand kinesin
     activity = move
     max_speed = 0.8
     stall_force = 5
-    
+
+    bind_also_end = 1
     hold_growing_end = 1
     display = { size=8 }
 }
