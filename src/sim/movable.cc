@@ -545,7 +545,7 @@ Vector Movable::readDirection(std::istream& is, Vector const& pos, const Space* 
         if ( tok == "orthoradial" )
         {
             Vector yz(0, pos.YY, pos.ZZ);
-            return vecProd(yz.normalize(), Vector(RNG.sflip(), 0, 0));
+            return vecProd(yz.normalized(), Vector(RNG.sflip(), 0, 0));
         }
 #endif
         

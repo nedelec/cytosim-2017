@@ -73,6 +73,38 @@ Matrix3 Matrix3::rotationAroundX(const real angle)
 }
 
 
+Matrix3 Matrix3::rotationAroundY(const real angle)
+{
+    real ca = cos(angle);
+    real sa = sin(angle);
+    
+    Matrix3 res;
+    res.makeZero();
+    res.val[0] = ca;
+    res.val[4] = 1;
+    res.val[8] = ca;
+    res.val[2] = -sa;
+    res.val[6] = sa;
+    
+    return res;
+}
+
+Matrix3 Matrix3::rotationAroundZ(const real angle)
+{
+    real ca = cos(angle);
+    real sa = sin(angle);
+    
+    Matrix3 res;
+    res.makeZero();
+    res.val[0] = ca;
+    res.val[4] = ca;
+    res.val[8] = 1;
+    res.val[3] = -sa;
+    res.val[1] = sa;
+    
+    return res;
+}
+
 Matrix3 Matrix3::rotationAroundPrincipalAxis(unsigned ii, const real angle)
 {
     real ca = cos(angle);

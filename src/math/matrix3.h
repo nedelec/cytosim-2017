@@ -30,11 +30,17 @@ public:
     static Matrix3 rotationFromEulerAngles(const real a[3]);
 
     
-    /// a rotation of angle \a a, around the X axis
+    /// a rotation around the X axis of specified angle
     static Matrix3 rotationAroundX(real angle);
     
-    /// a rotation of angle a, around one of the main axis X, Y or Z
-    static Matrix3 rotationAroundPrincipalAxis(unsigned axis, real angle);
+    /// a rotation around the Y axis of specified angle
+    static Matrix3 rotationAroundY(real angle);
+    
+    /// a rotation around the Z axis of specified angle
+    static Matrix3 rotationAroundZ(real angle);
+
+    /// a rotation around one the axis X if `x==0`, Y if `x==1` or Z if `x==2`
+    static Matrix3 rotationAroundPrincipalAxis(unsigned x, real angle);
     
     /// a rotation around the given axis
     static Matrix3 rotationAroundAxis(const Vector3&, real angle);

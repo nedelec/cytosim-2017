@@ -165,7 +165,7 @@ void Sphere::setDragCoefficientStokes()
     spMobility    = 1.0 / ( 6 * M_PI * prop->viscosity * rad );
     spMobilityRot = 1.0 / ( 8 * M_PI * prop->viscosity * rad * rad * rad );
 
-    MSG("Mobility of Sphere is %.2e\n", spMobility);
+    //MSG("Mobility of Sphere is %.2e\n", spMobility);
 }
 
 
@@ -198,7 +198,7 @@ void Sphere::setDragCoefficientPiston()
     spMobilityRot = sqrt(eps/2) / ( 2*M_PI*M_PI * prop->viscosity * rad * rad * rad );
         
     //report the reduced mobility of the sphere:
-    MSG("Mobility of Sphere is %.2e, due to piston effect\n", spMobility);
+    //MSG("Mobility of Sphere is %.2e, due to piston effect\n", spMobility);
 }
 
 
