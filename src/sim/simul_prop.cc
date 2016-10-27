@@ -156,7 +156,7 @@ void SimulProp::write_data(std::ostream & os) const
     write_param(os, "time_step",       time_step);
     write_param(os, "kT",              kT);
     write_param(os, "viscosity",       viscosity);
-    write_param(os, "flow", flow);
+    write_param(os, "flow",            flow);
     os << std::endl;
     write_param(os, "tolerance",       tolerance);
     write_param(os, "acceptable_rate", acceptable_rate);

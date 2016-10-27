@@ -124,7 +124,7 @@ public:
     void      erase(ObjectList);
 
     /// mark objects in list
-    void      mark(ObjectList, int);
+    static void mark(ObjectList, int);
 
     /// erase simulation world (all sub-lists and variables)
     void      erase();

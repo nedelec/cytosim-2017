@@ -39,17 +39,17 @@ public:
      */
     
     /// rate for nucleation (also known as \c nucleate[0])
-    real         nucleation_rate;
+    real         rate;
 
     /// type of fiber that is nucleated (also known as \c nucleate[1])
-    std::string  nucleated_fiber;
+    std::string  fiber;
     
     /// specifications of a new fiber (also known as \c nucleate[2])
     /**
      Options valid for the command 'new fiber' may be specified here:
      see @ref FiberGroup.
      */
-    std::string  nucleation_spec;
+    std::string  spec;
     
     /// specifies the direction of the new Fiber
     /**
@@ -81,12 +81,13 @@ public:
     
     /// @}
     //------------------ derived variables below ----------------
-    
+
+    /// global Simul
+    Simul * simul;
+
 private:
     
-    FiberSet  *  nucleated_fiber_set;
-    FiberProp *  nucleated_fiber_prop;
-    real         nucleation_rate_dt;
+    real         rate_dt;
     
     
 public:

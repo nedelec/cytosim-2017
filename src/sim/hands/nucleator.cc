@@ -8,6 +8,7 @@
 #include "fiber_prop.h"
 #include "fiber_set.h"
 #include "hand_monitor.h"
+#include "simul.h"
 
 extern Random RNG;
 
@@ -24,20 +25,24 @@ Nucleator::Nucleator(NucleatorProp const* p, HandMonitor* h)
 
 void Nucleator::nucleate(Vector pos)
 {
-    Glossary opt(prop->nucleation_spec);
-    Fiber * fib = prop->nucleated_fiber_prop->newFiber(opt);
-    assert_true(fib);
+    Glossary opt(prop->spec);
     
-    // register the new Fiber:
-    prop->nucleated_fiber_set->add(fib);
+    ObjectList objs = prop->simul->fibers.newObjects("fiber", prop->fiber, opt);
+    if ( objs.empty() )
+        return;
+    
+    Fiber * fib = static_cast<Fiber*>(objs[0]);
+    
+    // register the new objects:
+    prop->simul->add(objs);
     
     // indicate the origin of nucleation:
     int mk = 0;
     if ( opt.set(mk, "mark") )
-        fib->mark(mk);
+        Simul::mark(objs, mk);
     else
-        fib->mark(haMonitor->objNumber());
-
+        Simul::mark(objs, haMonitor->objNumber());
+    
     // the Fiber will be oriented depending on specificity:
     Rotation rot;
     
@@ -53,18 +58,20 @@ void Nucleator::nucleate(Vector pos)
 #endif
     }
     else switch( prop->specificity )
-    {            
+    {
         case NucleatorProp::NUCLEATE_PARALLEL:
         {
             Vector dir = haMonitor->otherDirection(this);
             rot = Rotation::rotationToVector(dir, RNG);
-        } break;
+        }
+        break;
             
         case NucleatorProp::NUCLEATE_ANTIPARALLEL:
         {
             Vector dir = -haMonitor->otherDirection(this);
             rot = Rotation::rotationToVector(dir, RNG);
-        } break;
+        }
+        break;
             
         case NucleatorProp::NUCLEATE_ORIENTATED:
         {
@@ -72,18 +79,19 @@ void Nucleator::nucleate(Vector pos)
             if ( opt.set(str, "orientation") )
             {
                 std::istringstream iss(str);
-                rot = Movable::readRotation(iss, pos, prop->nucleated_fiber_prop->confine_space_ptr);
+                rot = Movable::readRotation(iss, pos, fib->prop->confine_space_ptr);
             }
             else {
                 rot = Rotation::randomRotation(RNG);
             }
-        } break;
-
+        }
+        break;
+            
         default:
             throw InvalidParameter("unknown nucleator:specificity");
     }
     
-    fib->rotate(rot);
+    ObjectSet::rotateObjects(objs, rot);
     
     
     // shift position by the length of the interaction:
@@ -92,27 +100,29 @@ void Nucleator::nucleate(Vector pos)
         Vector dir = haMonitor->otherDirection(this);
         pos += dir.randPerp(haMonitor->interactionLength());
     }
-
+    
     /*
      We translate Fiber to match the Nucleator's position,
-     and if prop->track_end, the Hand is attached to the new fiber
+     and if prop->hold_end, the Hand is attached to the new fiber
      */
-    if ( prop->track_end == PLUS_END )
+    if ( prop->track_end == MINUS_END )
+    {
+        attachToEnd(fib, MINUS_END);
+        ObjectSet::translateObjects(objs, pos-fib->posEnd(MINUS_END));
+    }
+    else if ( prop->track_end == PLUS_END )
     {
         attachToEnd(fib, PLUS_END);
-        fib->translate(pos-fib->posEnd(PLUS_END));
+        ObjectSet::translateObjects(objs, pos-fib->posEnd(PLUS_END));
     }
     else
-    {
-        if ( prop->track_end != NOT_END )
-            attachToEnd(fib, MINUS_END);
-        fib->translate(pos-fib->posEnd(MINUS_END));
-    }
+        ObjectSet::translateObjects(objs, pos-fib->position());
     
+    // report unused options:
     if ( opt.warnings(std::cerr) )
     {
-        std::cerr << "in hand:nucleation_spec" << std::endl;
-        std::cerr << prop->nucleation_spec << std::endl;
+        std::cerr << "in nucleation:spec" << std::endl;
+        std::cerr << prop->spec << std::endl;
     }
     //MSG("Nucleation at %.2fs,  X = %.2f\n", sim.simTime(), pos.XX);
 }
@@ -126,7 +136,7 @@ void Nucleator::stepFree(const FiberGrid&, Vector const & pos)
 {
     assert_true( !attached() );
     
-    gspTime -= prop->nucleation_rate_dt;
+    gspTime -= prop->rate_dt;
     
     if ( gspTime < 0 )
     {

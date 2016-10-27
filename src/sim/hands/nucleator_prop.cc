@@ -23,14 +23,12 @@ void NucleatorProp::clear()
 {
     HandProp::clear();
 
-    nucleated_fiber.clear();
-    nucleated_fiber_prop = 0;
-    nucleated_fiber_set = 0;
-    nucleation_rate = 0;
-    nucleation_spec = "";
-    specificity     = NUCLEATE_ORIENTATED;
-    track_end       = MINUS_END;
-    addictive       = false;
+    fiber.clear();
+    rate        = 0;
+    spec        = "";
+    specificity = NUCLEATE_ORIENTATED;
+    track_end   = MINUS_END;
+    addictive   = false;
 }
 
 //------------------------------------------------------------------------------
@@ -38,16 +36,17 @@ void NucleatorProp::read(Glossary& glos)
 {
     HandProp::read(glos);
     
-    glos.set(nucleation_rate, "nucleation_rate");
-    glos.set(nucleated_fiber, "nucleated_fiber");
-    glos.set(nucleation_spec, "nucleation_spec");
+    glos.set(rate,  "nucleation_rate");
+    glos.set(fiber, "nucleated_fiber");
+    glos.set(spec,  "nucleation_spec");
+    glos.set(spec,  "nucleate_spec");
     
     
-    glos.set(nucleation_rate, "nucleate", 0);
-    glos.set(nucleated_fiber, "nucleate", 1);
-    glos.set(nucleation_spec, "nucleate", 2);
+    glos.set(rate,  "nucleate", 0);
+    glos.set(fiber, "nucleate", 1);
+    glos.set(spec,  "nucleate", 2);
     
-    glos.set(addictive,       "addictive");
+    glos.set(addictive,  "addictive");
     
     
     glos.set(track_end,  "track_end",
@@ -66,18 +65,16 @@ void NucleatorProp::read(Glossary& glos)
 void NucleatorProp::complete(SimulProp const* sp, PropertyList* plist)
 {
     HandProp::complete(sp, plist);
+    
+    simul = sp->simul;
+    
+    if ( fiber.empty() )
+        throw InvalidParameter("hand:nucleate[1] (fiber) must be specified if activity=nucleate");
+    
+    if ( rate < 0 )
+        throw InvalidParameter("hand:nucleate (rate) must be positive");
 
-    nucleated_fiber_set = &sp->simul->fibers;
-    
-    if ( nucleated_fiber.empty() )
-        throw InvalidParameter("hand:nucleate[1] (=nucleated_fiber) must be specified if activity=nucleate");
-    
-    nucleated_fiber_prop = static_cast<FiberProp*>(plist->find("fiber", nucleated_fiber, true));
-    
-    if ( nucleation_rate < 0 )
-        throw InvalidParameter("hand:nucleate (=nucleation_rate) must be positive");
-
-    nucleation_rate_dt = nucleation_rate * sp->time_step;
+    rate_dt = rate * sp->time_step;
 }
 
 
@@ -86,8 +83,8 @@ void NucleatorProp::complete(SimulProp const* sp, PropertyList* plist)
 void NucleatorProp::write_data(std::ostream & os) const
 {
     HandProp::write_data(os);
-    write_param(os, "nucleate",        nucleation_rate, nucleated_fiber);
-    write_param(os, "nucleation_spec", "("+nucleation_spec+")");
+    write_param(os, "nucleate",        rate, fiber);
+    write_param(os, "nucleate_spec",   "("+spec+")");
     write_param(os, "track_end",       track_end);
     write_param(os, "addictive",       addictive);
 }
