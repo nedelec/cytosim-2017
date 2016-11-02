@@ -80,7 +80,7 @@ const Vector2 Vector2::randBall(real n)
 
 const Vector2 Vector2::randPerp(real len) const
 {
-    real s = len * RNG.sflip();
+    real s = RNG.sflip() * len / sqrt( XX * XX + YY * YY );
     return Vector2(-s*YY, s*XX, 0);
 }
 
