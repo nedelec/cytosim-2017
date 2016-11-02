@@ -481,16 +481,17 @@ int Glossary::warnings(std::ostream& os, Glossary::pair_type const& pair, unsign
         
     if ( warn.size() )
     {
-        os << "Warning, " + warn + ":" << std::endl;
-        os << std::endl << PREF;
+        os << "Warning, " + warn + ":\n";
+        os << PREF;
         write(os, pair);
-        os << std::endl;
+        os << "\n";
         if ( used )
         {
             os << PREF;
             write_cnt(os, pair);
-            os << std::endl;
+            os << "\n";
         }
+        os << std::flush;
         return 1;
     }
     return 0;
