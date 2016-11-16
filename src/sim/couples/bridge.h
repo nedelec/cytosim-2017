@@ -6,29 +6,29 @@
 #include "couple.h"
 class BridgeProp;
 
-/// A specialized kind of Couple
+/// A Couple with a different mechanical link
 /**
- The Bridge can have:
- - specificity (parallel/antiparallel)
- - trans_activated (hand2 is active only if hand1 is bound)
- .
- It must have a non-zero resting length, and uses Meca:interSideLink()
+ The Bridge differs from CoupleLong in the nature of the mechanical link that it
+ creates betwen two filaments.
+ The Bridge uses Meca::interLongLink(), whereas other CoupleLong use Meca::interSideLink().
  
- @todo: change Bridge to use Meca::interLongLink()
+ The "Long link" is a finite resting length Hookean spring, which can freely rotate
+ at both of its ends. Hence the angle with respect to the filament is uncontrained,
+ unlike the "Side link", in which the spring extends orthogonally to  the direction of the filaments.
  
- For zero-resting length, use Crosslink
+ Because of this the Bridge does not impose a strict separation between a pair of filaments.
+ Longitudinal shear on two filaments connected by 'bridges' will likely affect the distance between them.
+ 
+ \image html meca_links.png
+ 
+ The Bridge should have a non-zero resting length.
+ For zero-resting length, use Couple or Crosslink
  @ingroup CoupleGroup
  */
 class Bridge : public Couple
 {
     /// property
     BridgeProp const* prop;
-    
-    /// the side (top/bottom) of the interaction
-    mutable Torque mArm;
-    
-    /// used to calculate \a mArm
-    static Torque calcArm(const PointInterpolated & pt, Vector const& pos, real len);
     
 public:
     
@@ -45,11 +45,8 @@ public:
     
     /// simulation step for a free Couple, implementing BridgeProp::trans_activated
     void    stepFF(const FiberGrid&);
-    
-    /// position on the side of fiber1 used for sideInteractions
-    Vector  posSide() const;
  
-    /// force between hands, essentially: stiffness * ( cHand2->posHand() - cHand1->posHand() )
+    /// force between hands
     Vector  force1() const;
     
     /// add interactions to the Meca
