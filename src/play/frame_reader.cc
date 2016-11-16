@@ -283,7 +283,7 @@ int FrameReader::readFrame(Simul& sim, int frm, const bool reload)
     fpos_t pos;
     inw.get_pos(pos);
 
-    if ( 0 == sim.readObjects(inw) )
+    if ( 0 == sim.reloadObjects(inw) )
     {
     
 #ifdef VERBOSE_READER
@@ -340,7 +340,7 @@ int FrameReader::readNextFrame(Simul& sim)
     fpos_t pos;
     inw.get_pos(pos);
 
-    if ( 0 == sim.readObjects(inw) )
+    if ( 0 == sim.reloadObjects(inw) )
     {
         ++curFrame;
         

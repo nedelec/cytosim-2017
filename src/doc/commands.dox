@@ -49,13 +49,16 @@
  <hr><hr><hr>
  
    <h2> Command <i> include </i></h2>
-   @copydetails Parser::parse_include
-
-   <h2> Command <i> read </i></h2>
    @copydetails Parser::parse_read
 
+   <h2> Command <i> read </i></h2>
+   @copydetails Parser::parse_import
+
+   <h2> Command <i> read </i></h2>
+   @copydetails Parser::parse_export
+
    <h2> Command <i> write </i></h2>
-   @copydetails Parser::parse_write
-   
+   @copydetails Parser::parse_report
+
  */
 

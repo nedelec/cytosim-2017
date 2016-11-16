@@ -210,7 +210,7 @@ private:
     ObjectSet* findSet(const Tag);
 
     /// read sim-state from IO (low-level function)
-    int        readObjects0(InputWrapper&);
+    int        readObjects(InputWrapper&);
     
 public:
     
@@ -259,10 +259,10 @@ public:
     //-------------------------------------------------------------------------------
 
     /// read sim-state from InputWrapper
-    int       readObjects(InputWrapper&);
+    int       reloadObjects(InputWrapper&);
     
     /// read sim-state from a named file
-    int       readObjects(std::string const& file);
+    int       loadObjects(InputWrapper&);
     
     /// write simulation-state to specified file
     void      writeObjects(OutputWrapper&) const;

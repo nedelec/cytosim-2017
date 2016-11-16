@@ -485,78 +485,130 @@ void Interface::execute_run(Glossary& opt, unsigned nb_steps, bool do_write)
 #pragma mark -
 
 /**
- Imports a simulation snapshot from a trajectory file
+ Import a simulation snapshot from a trajectory file
  
- By default, the first frame in the file is read, but
- an argument 'frame=INTEGER' can be given in 'opt'.
+ The frame to be imported can be specified as an option: `frame=INTEGER`:
+ @code
+ import sim_objects.cmo { frame = 10 }
+ @endcode
+ 
+ By default, this will replace the simulation state by the one loaded from file.
+ To add the file objects to the simulation without deleting the current world,
+ you should specify `keep=1`:
+ 
+ @code
+ import sim_objects.cmo { keep = 1 }
+ @endcode
  */
-void Interface::execute_read(std::string const& file, unsigned frame)
+void Interface::execute_import(std::string const& file, Glossary& opt)
 {
-#if ( VERBOSE_INTERFACE > 0 )
-    std::cerr << "-READ frame " << frame << " from " << file << std::endl;
-#endif
-    
     InputWrapper in(file.c_str(), "rb");
     if ( ! in.good() )
-        throw InvalidIO("Could not open trajectory file `"+file+"'");
+        throw InvalidIO("Could not open file `"+file+"'");
     
-    unsigned indx = 0;
+    bool kip = false;
+    unsigned cnt = 0, frm = 0;
+    
+    opt.set(frm, "frame");
+    opt.set(kip, "keep");
+    
+#if ( VERBOSE_INTERFACE > 0 )
+    std::clog << "-IMPORT frame " << indx << " from " << file << std::endl;
+#endif
+    
     while ( in.good() )
     {
-        simul.readObjects(in);
-        if ( indx >= frame )
+        if ( kip )
+        {
+            real t = simul.simTime();
+            simul.loadObjects(in);
+            simul.setTime(t);
+        }
+        else
+            simul.reloadObjects(in);
+        if ( cnt >= frm )
             break;
-        ++indx;
+        ++cnt;
     }
     
-    if ( frame > 0  &&  indx != frame )
-        throw InvalidIO("Could not find requested frame in trajectory file");
+    if ( cnt < frm )
+        throw InvalidIO("Could not import requested frame");
+    
+#if ( 0 )
+    //unfinished code to mark imported objects
+    int mrk;
+    if ( opt.set(mrk, "mark") )
+    {
+        simul.mark(objs, mrk);
+    }
+#endif
+    
+    // set time
+    real t;
+    if ( opt.set(t, "time") )
+        simul.setTime(t);
 }
 
 
 /**
- see Parser::parse_write
+ see Parser::parse_export
  */
-void Interface::execute_write(std::string& file, std::string const& what, Glossary& opt)
+void Interface::execute_export(std::string& file, std::string const& what, Glossary& opt)
 {
     bool append = true;
     bool binary = true;
     
     opt.set(append, "append");
     opt.set(binary, "binary");
-
+    
 #if ( VERBOSE_INTERFACE > 0 )
-    std::cerr << "-WRITE " << what << " to " << file << std::endl;
+    std::clog << "-EXPORT " << what << " to " << file << std::endl;
 #endif
     
-    // write `state` uses a C-File instead of a C++ stream
-    if ( what == "state" )
+    if ( what == "objects" || what == "all" )
     {
+        // a '*' designates the usual file name for output:
         if ( file == "*" )
             file = simul.prop->trajectory_file;
-
+        
         simul.writeObjects(file, binary, append);
-        return;
     }
-    
-    if ( what == "dump" )
+    else if ( what == "properties" )
     {
-        simul.dump();
-        return;
+        // a '*' designates the usual file name for output:
+        if ( file == "*" )
+            file = simul.prop->property_file;
+        
+        simul.writeProperties(file, false);
     }
+    else
+        throw InvalidIO("only `objects' or `properties' can be exported");
+}
+
+
+/**
+ see Parser::parse_report
+ */
+void Interface::execute_report(std::string& file, std::string const& what, Glossary& opt)
+{
+    std::string str;
+#if ( VERBOSE_INTERFACE > 0 )
+    std::clog << "-WRITE " << what << " to " << file << std::endl;
+#endif
     
-    // other cases are handled with simul.report()
+    // a '*' designates the C-standard output:
     if ( file == "*" )
     {
-        std::cout << "% time " << simul.simTime() << std::endl;
         simul.report(std::cout, what, opt);
     }
     else
     {
+        bool append = true;
+        opt.set(append, "append");
         std::ofstream out(file.c_str(), append ? std::ios_base::app : std::ios_base::out);
-        out << "% time " << simul.simTime() << std::endl;
         simul.report(out, what, opt);
         out.close();
     }
 }
+
 

@@ -113,19 +113,32 @@ Object * Simul::readReference(InputWrapper & in, char & tag)
 
 //------------------------------------------------------------------------------
 
-/**
-Create an InputWrapper and calls readObjects(in)
- */
-int Simul::readObjects(std::string const& file)
-{    
-    InputWrapper in(file.c_str(), true);
+int Simul::loadObjects(InputWrapper & in)
+{
+    if ( in.eof() )
+        return 1;
     
     if ( ! in.good() )
-        throw InvalidIO("Could not open file `"+file+"'");
+        throw InvalidIO("invalid file in Simul::loadObjects()");
     
-    return readObjects(in);
+    int res = 0;
+    
+    in.lock();
+    try
+    {
+        res = readObjects(in);
+        //std::clog << "loadObjects returns " << res << std::endl;
+    }
+    catch(Exception & e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        in.unlock();
+        throw;
+    }
+    
+    in.unlock();
+    return res;
 }
-
 
 /**
  Before reading, all objects are transfered to a secondary list called 'ice'.
@@ -139,7 +152,7 @@ int Simul::readObjects(std::string const& file)
  - 1 = EOF
  */
 
-int Simul::readObjects(InputWrapper & in)
+int Simul::reloadObjects(InputWrapper & in)
 {
     if ( in.eof() )
         return 1;
@@ -164,7 +177,7 @@ int Simul::readObjects(InputWrapper & in)
     
     try
     {
-        if ( readObjects0(in) == 0 )
+        if ( readObjects(in) == 0 )
             erase = false;
         
         in.unlock();
@@ -222,7 +235,7 @@ int Simul::readObjects(InputWrapper & in)
  1 : a frame starting tag (FRAME_TAG) was found, but not the end
  2 : the frame starting and end tags were found
  */
-int Simul::readObjects0(InputWrapper & in)
+int Simul::readObjects(InputWrapper & in)
 {
     int res = 0;
     char c = '\n', tag, pretag;

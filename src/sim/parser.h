@@ -73,13 +73,16 @@ public:
     void      parse_run(std::istream&);
     
     /// parse command \b include
-    void      parse_include(std::istream&);
-    
-    /// parse command \b read
     void      parse_read(std::istream&);
     
+    /// parse command \b read
+    void      parse_import(std::istream&);
+    
+    /// parse command \b read
+    void      parse_export(std::istream&);
+    
     /// parse command \b write
-    void      parse_write(std::istream&);
+    void      parse_report(std::istream&);
     
     /// parse command \b call
     void      parse_call(std::istream&);

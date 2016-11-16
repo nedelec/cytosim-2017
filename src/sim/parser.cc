@@ -668,7 +668,7 @@ void Parser::parse_run(std::istream & is)
 
 //------------------------------------------------------------------------------
 /**
- Include another specified config file, and executes it.
+ Include another config file, and executes it.
  
  @code
  include FILE_NAME
@@ -684,7 +684,7 @@ void Parser::parse_run(std::istream & is)
  \todo: able to specify do_set and do_new for command 'include' 
 */
 
-void Parser::parse_include(std::istream & is)
+void Parser::parse_read(std::istream & is)
 {
     bool required = true;
     std::string file = Tokenizer::get_token(is);
@@ -723,92 +723,153 @@ void Parser::parse_include(std::istream & is)
 
 //------------------------------------------------------------------------------
 /**
- Import Objects from a frame of the specified trajectory file.
-
+ Import a simulation snapshot from a trajectory file
+ 
+ The frame to be imported can be specified as an option: `frame=INTEGER`:
  @code
- read [INTEGER] FILE_NAME
+ import sim_objects.cmo { frame = 10 }
  @endcode
  
- by default frame = 0, corresponding to the first frame in the file.
+ By default, this will replace the simulation state by the one loaded from file.
+ To add the file objects to the simulation without deleting the current world,
+ you should specify `keep=1`:
  
- Note that the simulation time will be changed to match the one stored in the file,
+ @code
+ import sim_objects.cmo { keep = 1 }
+ @endcode
+ 
+ Note that the simulation time will be changed to the one specified in the file,
  but it can be reset with:
  @code
  change simul * { time=0 }
  @endcode
  */
 
-void Parser::parse_read(std::istream & is)
+void Parser::parse_import(std::istream & is)
 {
-    unsigned indx = 0;
-    Tokenizer::get_integer(is, indx);
     std::string file = Tokenizer::get_token(is);
     
     if ( file.empty() )
-        throw InvalidSyntax("missing/invalid file name after 'read'");
+        throw InvalidSyntax("missing/invalid file name after 'import'");
+    
+    std::string blok = Tokenizer::get_block(is, '{', '}');
+    Glossary opt(blok);
     
     if ( do_new )
-        execute_read(file, indx);
+    {
+        execute_import(file, opt);
+        if ( opt.warnings(std::cerr) )
+        {
+            std::cerr << "in" << std::endl;
+            StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
+        }
+    }
 }
 
-//------------------------------------------------------------------------------
+
+
 /**
- Export to file. The general syntax is:
+ Export state to file. The general syntax is:
  
  @code
- write WHAT FILE_NAME
+ export WHAT FILE_NAME
  {
-   append = BOOL
-   binary = BOOL
+ append = BOOL
+ binary = BOOL
  }
  @endcode
  
- WHAT can be ``state`` or a valid argument to `report`:
- @copydetails Simul::report
+ WHAT must be ``objects``, and by default, `binary` and `append` are both `true`.
+ If `*` is specified instead of a file name, the current trajectory file will be used.
  
- If `*` is specified instead of a file name,
- the current trajectory file will be used if WHAT=`statee`,
- or the standard output for a report.
- 
- The \a binary option only applies if WHAT=`state`.
- By default:
- - append = true
- - binary = true
-
  
  Short syntax:
  @code
- write WHAT FILE_NAME
+ export objects FILE_NAME
  @endcode
  
  
  Examples:
  
  @code
- write state objects1.cmo { append=0 }
- write state objects1.txt { binary=0 }
- write properties properties1.cmo { append=0 }
- write fiber:length fibers.txt
+ export objects sim_objects.cmo { append=0 }
+ @code
+ @endcode
+ export objects sim_objects.txt { binary=0 }
  @endcode
  
- Attention: For safety reason, this command is disabled for `play`.
+ Attention: this command is disabled for `play`.
  */
 
-void Parser::parse_write(std::istream & is)
+void Parser::parse_export(std::istream & is)
 {
     std::string what = Tokenizer::get_token(is);
     std::string file = Tokenizer::get_token(is);
-
-    if ( file.empty() )
-        throw InvalidSyntax("missing/invalid file name after 'write'");
     
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    if ( file.empty() )
+        throw InvalidSyntax("missing/invalid file name after 'export'");
+    
+    std::string blok = Tokenizer::get_block(is, '{', '}');
     Glossary opt(blok);
     
     if ( do_write )
     {
         //what = Tokenizer::strip_block(what);
-        execute_write(file, what, opt);
+        execute_export(file, what, opt);
+        if ( opt.warnings(std::cerr) )
+        {
+            std::cerr << "in" << std::endl;
+            StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
+        }
+    }
+}
+
+/**
+ Export formatted data to file. The general syntax is:
+ 
+ @code
+ report WHAT FILE_NAME
+ {
+ append = BOOL
+ }
+ @endcode
+ 
+ Short syntax:
+ @code
+ report WHAT FILE_NAME
+ @endcode
+ 
+ 
+ WHAT should be a valid argument to `report`:
+ @copydetails Simul::report
+ 
+ If `*` is specified instead of a file name, the report is sent to the standard output.
+ 
+ Examples:
+ 
+ @code
+ report parameters parameters.cmo { append=0 }
+ report fiber:length fibers.txt
+ @endcode
+ 
+ Note that this command is disabled for `play`.
+ */
+
+void Parser::parse_report(std::istream & is)
+{
+    std::string what = Tokenizer::get_token(is);
+    std::string file = Tokenizer::get_token(is);
+    
+    if ( file.empty() )
+        throw InvalidSyntax("missing/invalid file name after 'report'");
+    
+    std::string blok = Tokenizer::get_block(is, '{', '}');
+    Glossary opt(blok);
+    
+    if ( do_write )
+    {
+        execute_report(file, what, opt);
+        
         if ( opt.warnings(std::cerr) )
         {
             std::cerr << "in" << std::endl;
@@ -1012,11 +1073,17 @@ void Parser::parse(std::istream & is, std::string const& msg)
             else if ( tok == "run" )
                 parse_run(is);
             else if ( tok == "include" )
-                parse_include(is);
+                parse_read(is);
             else if ( tok == "read" )
                 parse_read(is);
             else if ( tok == "write" )
-                parse_write(is);
+                parse_report(is);
+            else if ( tok == "report" )
+                parse_report(is);
+            else if ( tok == "import" )
+                parse_import(is);
+            else if ( tok == "export" )
+                parse_export(is);
             else if ( tok == "call" )
                 parse_call(is);
             else if ( tok == "repeat" )

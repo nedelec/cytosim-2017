@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     while ( in.good() )
     {
         try {
-            if ( 0 == simul.readObjects(in) )
+            if ( 0 == simul.reloadObjects(in) )
             {
                 if ( skip.size() )
                 {

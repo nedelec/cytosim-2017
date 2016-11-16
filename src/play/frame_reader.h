@@ -14,7 +14,7 @@ class Simul;
 
  FrameReader makes minimal assuptions on what constitutes a 'frame':
  - It looks for a string-tag present at the start of a frame (FRAME_TAG).
- - It calls Simul::readObjects() to actually read the simulation state.
+ - It calls Simul::reloadObjects() to actually read the simulation state.
  .
 */
 class FrameReader

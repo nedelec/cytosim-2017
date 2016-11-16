@@ -159,7 +159,7 @@
 
  Simply execute a following config file:
  @code
- read properties.cmo
+ include properties.cmo
  import objects.cmo { frame = 10 }
  export objects objects.txt { binary=0 }
  @endcode

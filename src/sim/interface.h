@@ -80,10 +80,13 @@ public:
     void       execute_cut(std::string const& k, std::string const& n, Glossary&);
     
     /// import objects from another file
-    void       execute_read(std::string const& file, unsigned index);
+    void       execute_import(std::string const& file, Glossary&);
+    
+    /// export objects from another file
+    void       execute_export(std::string& file, std::string const& what, Glossary&);
     
     /// write output file with object coordinates or information on objects
-    void       execute_write(std::string& file, std::string const& what, Glossary&);
+    void       execute_report(std::string& file, std::string const& what, Glossary&);
     
     /// perform simulation steps
     void       execute_run(Glossary& opt, unsigned cnt, bool do_write);

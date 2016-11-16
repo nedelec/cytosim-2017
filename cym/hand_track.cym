@@ -24,6 +24,14 @@ set fiber microtubule
     rigidity = 20
     segmentation = 0.5
     confine = inside, 500
+    
+    activity         = classic
+    growing_speed    = 0.06
+    shrinking_speed  = -0.15
+    catastrophe_rate = 0.01
+    fate             = rescue
+    min_length       = 0.5
+	
     display = { line_width=1; minus_end=4, 8; }
 }
 
@@ -42,7 +50,7 @@ set hand tracker
     
     activity = track
     bind_end = plus_end, 1
-    display = { width=3; size=6; color=green }
+    display = { width=3; size=8; color=0x00FF0044; }
 }
 
 set single protein
