@@ -136,7 +136,7 @@ std::string Tokenizer::get_token(std::istream & is, bool eat_line)
     char d = is.peek();
     
     if ( Tokenizer::block_delimiter(c) )
-        return Tokenizer::get_block(is, c, Tokenizer::block_delimiter(c));
+        return Tokenizer::get_block_content(is, c, Tokenizer::block_delimiter(c));
     
     if ( isalpha(c) || c == '/' || c == '.' )
     {
@@ -203,7 +203,7 @@ char Tokenizer::block_delimiter(char c)
  This will read a block, assuming that character \a c_in has been read already.
  It will read characters until the corresponding closing delimiter is found.
  */
-std::string Tokenizer::get_block(std::istream & is, char c, const char c_out)
+std::string Tokenizer::get_block_content(std::istream & is, char c, const char c_out)
 {
     assert_true(c_out);
     std::string res;
@@ -219,7 +219,7 @@ std::string Tokenizer::get_block(std::istream & is, char c, const char c_out)
         if ( c == c_out )
             return res;
         else if ( block_delimiter(c) )
-            res.append( get_block(is, 0, block_delimiter(c)) );
+            res.append( get_block_content(is, 0, block_delimiter(c)) );
         else if ( c == ')' || c == '}' )
             throw InvalidSyntax("unclosed block '"+std::string(1,c)+"'");
 #if ( 0 )
@@ -244,9 +244,9 @@ std::string Tokenizer::get_block(std::istream & is, char c, const char c_out)
  If this character is equal to \a c_in, then the block is read and returned.
  Otherwise returns empty string "".
  
- The delimiter parenthesis around the block are not included in the returned string!
+ @returns content of the block without delimiters
  */
-std::string Tokenizer::get_block_stripped(std::istream & is, char c_in)
+std::string Tokenizer::get_block(std::istream & is, char c_in)
 {
     assert_true(c_in);
     
@@ -254,7 +254,7 @@ std::string Tokenizer::get_block_stripped(std::istream & is, char c_in)
     
     if ( c == c_in )
     {
-        std::string res = get_block(is, 0, block_delimiter(c_in));
+        std::string res = get_block_content(is, 0, block_delimiter(c_in));
         res.resize(res.size()-1);
 #if VERBOSE_TOKENIZER > 0
         std::cerr << "BLOCK |" << res << "|" << std::endl;

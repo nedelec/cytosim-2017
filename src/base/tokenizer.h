@@ -33,10 +33,10 @@ namespace Tokenizer
     std::string get_line(std::istream & is);
 
     /// read next block delimited by `c_in` and the corresponding closing delimiter
-    std::string get_block(std::istream & is, char c_in, char c_out);
+    std::string get_block_content(std::istream & is, char c_in, char c_out);
     
     /// skip spaces and read a block delimited by `c_in`, or return empty string if `c_in` is not found
-    std::string get_block_stripped(std::istream & is, char c_in);
+    std::string get_block(std::istream & is, char c_in);
     
     /// remove enclosing parenthesis at the start and at the end of `blok`
     std::string strip_block(std::string const& blok);

@@ -343,10 +343,10 @@ void Parser::parse_new(std::istream & is)
     Glossary opt;
     
     // Syntax sugar: () specify only position
-    std::string blok = Tokenizer::get_block_stripped(is, '(');
+    std::string blok = Tokenizer::get_block(is, '(');
     if ( blok.empty() )
     {
-        blok = Tokenizer::get_block_stripped(is, '{');
+        blok = Tokenizer::get_block(is, '{');
         opt.read(blok);
     }
     else {
@@ -477,7 +477,7 @@ void Parser::parse_delete(std::istream & is)
     std::string name;
     read_property_name(is, name, kind);
     
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    std::string blok = Tokenizer::get_block(is, '{');
     
     if ( do_change )
     {
@@ -521,7 +521,7 @@ void Parser::parse_mark(std::istream & is)
     std::string name;
     read_property_name(is, name, kind);
     
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    std::string blok = Tokenizer::get_block(is, '{');
     
     if ( do_change )
     {
@@ -556,7 +556,7 @@ void Parser::parse_cut(std::istream & is)
 {    
     std::string kind = Tokenizer::get_identifier(is);
     std::string name = Tokenizer::get_token(is);    
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    std::string blok = Tokenizer::get_block(is, '{');
 
     if ( blok.empty() )
         throw InvalidSyntax("missing block after `cut'");
@@ -633,7 +633,7 @@ void Parser::parse_run(std::istream & is)
         throw InvalidSyntax("only `run simul *' is supported");
     
     std::string name = Tokenizer::get_token(is);
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    std::string blok = Tokenizer::get_block(is, '{');
     
     if ( blok.empty() && !has_cnt )
     {
@@ -692,7 +692,7 @@ void Parser::parse_read(std::istream & is)
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'include'");
     
-    std::string blok = Tokenizer::get_block_stripped(is, '{');
+    std::string blok = Tokenizer::get_block(is, '{');
     if ( ! blok.empty() )
     {
         Glossary opt(blok);
@@ -752,7 +752,7 @@ void Parser::parse_import(std::istream & is)
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'import'");
     
-    std::string blok = Tokenizer::get_block(is, '{', '}');
+    std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
     if ( do_new )
@@ -809,7 +809,7 @@ void Parser::parse_export(std::istream & is)
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'export'");
     
-    std::string blok = Tokenizer::get_block(is, '{', '}');
+    std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
     if ( do_write )
@@ -863,7 +863,7 @@ void Parser::parse_report(std::istream & is)
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'report'");
     
-    std::string blok = Tokenizer::get_block(is, '{', '}');
+    std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
     if ( do_write )
@@ -936,7 +936,7 @@ void Parser::parse_repeat(std::istream & is)
     if ( ! Tokenizer::get_integer(is, cnt) )
         throw InvalidSyntax("missing number after 'repeat'");
 
-    std::string code = Tokenizer::get_block_stripped(is, '{');
+    std::string code = Tokenizer::get_block(is, '{');
     
     for ( unsigned int c = 0; c < cnt; ++c )
     {

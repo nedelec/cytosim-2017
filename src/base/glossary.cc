@@ -161,7 +161,7 @@ void Glossary::read_values(pair_type& res, std::istream & is)
         }
         if ( Tokenizer::block_delimiter(c) )
         {
-            k = Tokenizer::get_block(is, 0, Tokenizer::block_delimiter(c));
+            k = Tokenizer::get_block_content(is, 0, Tokenizer::block_delimiter(c));
             k.resize(k.size()-1);
         }
         else {
