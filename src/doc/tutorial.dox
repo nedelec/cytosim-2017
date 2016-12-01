@@ -932,7 +932,7 @@ run 10000 simul *
 ~~~~~~~~~~~~~~~~~
 
 We have now defined a `couple` instead of a `single`, and the motor-complexes are made of two `kinesin`. Each hand can bind and move on a microtubule. 
-The two hands are linked by a Hookean spring with the specified stiffness in pN/m^2 (here `stiffness = 100`)
+The two hands are linked by a Hookean spring with the specified stiffness in pN/um (here `stiffness = 100`)
 
 Our motor complexes are made of two identical `kinesin` hands, but if we had defined two different type of hands, we could have created a couple containing two different hands.
 
