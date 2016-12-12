@@ -38,7 +38,7 @@ real Bead::volume() const
 {
 #if ( DIM == 1 )
     return 2 * paRadius;
-#elif ( DIM == 3 )
+#elif ( DIM == 2 )
     return M_PI * paRadius * paRadius;
 #else
     return 4 * M_PI / 3.0 * paRadius * paRadius * paRadius;
