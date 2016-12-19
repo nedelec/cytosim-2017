@@ -244,12 +244,12 @@ int Polygon::project(Point2D const* pts, unsigned npts, real xx, real yy,
     
     for ( unsigned ii = 0; ii < npts; ++ii )
     {
-        register real x = xx - pts[ii].x;
-        register real y = yy - pts[ii].y;
+        real x = xx - pts[ii].x;
+        real y = yy - pts[ii].y;
         // distance to polygon point:
-        register real d = x * x + y * y;
+        real d = x * x + y * y;
         // abscissa of projection on segment [ii, ii+1] of the polygon:
-        register real a = pts[ii].dx * x + pts[ii].dy * y;
+        real a = pts[ii].dx * x + pts[ii].dy * y;
         
         if ( a > 0 )
         {

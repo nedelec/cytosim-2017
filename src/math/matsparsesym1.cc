@@ -527,13 +527,13 @@ void MatrixSparseSymmetric1::vecMulAdd( const real* X, real* Y ) const
 {
     for ( index_type jj = colF[0]; jj < mxSize; jj = colF[jj+1] )
     {
-        register real X0 = X[jj];
-        register real Y0 = Y[jj] + sa[jj] * X0;
+        real X0 = X[jj];
+        real Y0 = Y[jj] + sa[jj] * X0;
         const index_type end = ija[jj+1];
         for ( index_type kk = ija[jj]; kk < end; ++kk )
         {
-            register real a = sa[kk];
-            register index_type ii = ija[kk];
+            real a = sa[kk];
+            index_type ii = ija[kk];
             Y[ii] += a * X0;
             Y0    += a * X[ii];
         }
@@ -554,7 +554,7 @@ void MatrixSparseSymmetric1::vecMulAddIso2D( const real* X, real* Y ) const
 {
     for ( index_type jj = colF[0]; jj < mxSize; jj = colF[jj+1] )
     {
-        register __m128d x, y, a, t;
+        __m128d x, y, a, t;
         x = SSE(load)(X+2*jj);
         a = SSE(loaddup)(sa+jj);
         y = SSE(add)(_mm_load_pd(Y+2*jj), SSE(mul)(a, x));
@@ -576,17 +576,17 @@ void MatrixSparseSymmetric1::vecMulAddIso2D( const real* X, real* Y ) const
 {    
     for ( index_type jj = colF[0]; jj < mxSize; jj = colF[jj+1] )
     {
-        register index_type Djj = 2 * jj;
-        register real X0 = X[Djj  ];
-        register real X1 = X[Djj+1];
-        register real Y0 = Y[Djj  ] + sa[jj] * X0;
-        register real Y1 = Y[Djj+1] + sa[jj] * X1;
+        index_type Djj = 2 * jj;
+        real X0 = X[Djj  ];
+        real X1 = X[Djj+1];
+        real Y0 = Y[Djj  ] + sa[jj] * X0;
+        real Y1 = Y[Djj+1] + sa[jj] * X1;
         const index_type end = ija[jj+1];
         for ( index_type kk = ija[jj]; kk < end; ++kk )
         {
-            register index_type Dii = 2 * ija[kk];
+            index_type Dii = 2 * ija[kk];
             assert_true( Djj != Dii );
-            register real a = sa[kk];
+            real a = sa[kk];
             Y0       += a * X[Dii  ];
             Y1       += a * X[Dii+1];
             Y[Dii  ] += a * X0;
@@ -604,19 +604,19 @@ void MatrixSparseSymmetric1::vecMulAddIso3D( const real* X, real* Y ) const
 {
     for ( index_type jj = colF[0]; jj < mxSize; jj = colF[jj+1] )
     {
-        register index_type Djj = 3 * jj;
-        register real X0 = X[Djj  ];
-        register real X1 = X[Djj+1];
-        register real X2 = X[Djj+2];
-        register real Y0 = Y[Djj  ] + sa[jj] * X0;
-        register real Y1 = Y[Djj+1] + sa[jj] * X1;
-        register real Y2 = Y[Djj+2] + sa[jj] * X2;
+        index_type Djj = 3 * jj;
+        real X0 = X[Djj  ];
+        real X1 = X[Djj+1];
+        real X2 = X[Djj+2];
+        real Y0 = Y[Djj  ] + sa[jj] * X0;
+        real Y1 = Y[Djj+1] + sa[jj] * X1;
+        real Y2 = Y[Djj+2] + sa[jj] * X2;
         const index_type next = ija[jj+1];
         for ( index_type kk = ija[jj]; kk < next; ++kk )
         {
-            register index_type Dii = 3 * ija[kk];
+            index_type Dii = 3 * ija[kk];
             assert_true( Djj != Dii );
-            register real a = sa[kk];
+            real a = sa[kk];
             Y0       += a * X[Dii  ];
             Y1       += a * X[Dii+1];
             Y2       += a * X[Dii+2];

@@ -96,7 +96,7 @@ real Random::gauss()
     }
     else
     {
-        register real x, y, w;
+        real x, y, w;
         do {
             x = sreal();
             y = sreal();

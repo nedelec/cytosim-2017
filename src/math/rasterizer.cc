@@ -1125,7 +1125,7 @@ void Rasterizer::paintHexLine3D(void (*paint)(int, int, int, int, void*, void*),
     }
     
     //normalize pq to norm = radius:
-    register real sca = radius / lengthPQ;
+    real sca = radius / lengthPQ;
     pqx *= sca;
     pqy *= sca;
     pqz *= sca;

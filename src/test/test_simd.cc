@@ -64,7 +64,7 @@ void init()
 
 real vector2()
 {
-    register vec2 s = SSE(setzero)();
+    vec2 s = SSE(setzero)();
     for ( unsigned ii=0; ii<size; ii+=2 )
         s = SSE(add)(s, SSE(mul)( SSE(load)(a+ii), SSE(load)(b+ii) ));
     _mm_empty();
@@ -79,7 +79,7 @@ real vector2()
 
 real vector4()
 {
-    register vec4 s = AVX(setzero)();
+    vec4 s = AVX(setzero)();
     for ( unsigned ii=0; ii<size; ii+=4 )
         s = AVX(add)(s, AVX(mul)( AVX(load)(a+ii), AVX(load)(b+ii) ));
     _mm_empty();
@@ -92,10 +92,10 @@ real vector4()
 
 real vectorU()
 {
-    register vec4 x = AVX(setzero)();
-    register vec4 y = AVX(setzero)();
-    register vec4 z = AVX(setzero)();
-    register vec4 t = AVX(setzero)();
+    vec4 x = AVX(setzero)();
+    vec4 y = AVX(setzero)();
+    vec4 z = AVX(setzero)();
+    vec4 t = AVX(setzero)();
     
     for ( unsigned ii=0; ii<size; ii+=16 )
     {
