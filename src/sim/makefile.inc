@@ -121,9 +121,3 @@ $(OBJ_CYTOSIM_2D): %2D.o: %.cc %.h | build
 $(OBJ_CYTOSIM_3D): %3D.o: %.cc %.h | build
 	$(CXXFLAGS) -c -DDIM=3 $(INC_SIM) $< -o build/$@
 
-#----------------------------makedep--------------------------------------------
-
-dep/part3.dep:
-	$(MAKEDEP) $(wildcard src/sim/*.cc)   >  $@
-	$(MAKEDEP) $(wildcard src/sim/*/*.cc) >> $@
-

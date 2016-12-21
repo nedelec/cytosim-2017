@@ -25,8 +25,3 @@ build/libcytomath.a: $(OBJ_MATH)
 	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
 	$(DONE)
 
-
-#----------------------------makedep--------------------------------------------
-
-dep/part0.dep:
-	$(MAKEDEP) $(wildcard src/math/*.cc) > $@

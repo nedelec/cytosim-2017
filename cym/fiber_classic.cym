@@ -33,7 +33,7 @@ set fiber microtubule
     fate             = rescue
     min_length       = 0.5
     
-    display = ( plus_tip = 10, 2; )
+    display = ( plus_end = 10, 2; )
 }
 
 new 2 fiber microtubule

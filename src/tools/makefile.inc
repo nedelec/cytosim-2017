@@ -76,8 +76,3 @@ analyse3: analyse3.cc frame_reader.o $(TOOL_DEP)
 vpath analyse3 bin
 
 
-#----------------------------makedep--------------------------------------------
-
-dep/part7.dep:
-	$(MAKEDEP) $(wildcard src/tools/*.cc) > $@
-

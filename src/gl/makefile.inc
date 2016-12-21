@@ -45,8 +45,4 @@ build/offscreen.o: offscreen.cc offscreen.h
 $(OBJ_GL): %.o: %.cc %.h
 	$(CXXFLAGS) -c $(addprefix -Isrc/, SFMT math base) $< -o build/$@
 
-#----------------------------makedep--------------------------------------------
-
-dep/part4.dep:
-	$(MAKEDEP)  $(wildcard src/gl/*.cc) > $@
 

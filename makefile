@@ -101,19 +101,13 @@ tar: cytosim_src.tar cytosim.tar.bz2
 
 
 #---------------------------- maintenance ----------------------------------------
-.PHONY: ready clean cleaner sterile ts
+.PHONY: dep ready clean cleaner sterile
 
 
-build:
+ready:
 	if ! test -d build; then mkdir build; fi
-
-bin:
 	if ! test -d bin; then mkdir bin; fi
-
-
-ready: | bin build dep
-	rm -rf build/*
-	rm -f bin/*
+	$(MAKE) dep
 
 
 clean:
@@ -126,23 +120,26 @@ cleaner:
 
 sterile:
 	rm -rf build/*
-	rm -f  dep/*
+	rm -f  dep/*.dep
 	rm -rf bin/*.dSYM
 	rm -f  bin/*
 	rm -f *.cmo
-
-
-ts: sterile tar
+	rm -f log.txt;
 
 #---------------------------- dependencies ----------------------------------------
 
-depdir:
+dep:
 	if ! test -d dep; then mkdir dep; fi
-
-dep: depdir | $(addprefix dep/, part0.dep part1.dep part2.dep part3.dep part4.dep part5.dep part6.dep part7.dep)
+	if test -f dep/*.dep; then rm dep/*.dep; fi
+	$(foreach file, $(wildcard src/base/*.cc),  $(MAKEDEP) $(file) >> dep/part0.dep; )
+	$(foreach file, $(wildcard src/math/*.cc),  $(MAKEDEP) $(file) >> dep/part1.dep; )
+	$(foreach file, $(wildcard src/sim/*.cc),   $(MAKEDEP) $(file) >> dep/part2.dep; )
+	$(foreach file, $(wildcard src/sim/*/*.cc), $(MAKEDEP) $(file) >> dep/part3.dep; )
+	$(foreach file, $(wildcard src/disp/*.cc),  $(MAKEDEP) $(file) >> dep/part4.dep; )
+	$(foreach file, $(wildcard src/play/*.cc),  $(MAKEDEP) $(file) >> dep/part5.dep; )
+	$(foreach file, $(wildcard src/tools/*.cc), $(MAKEDEP) $(file) >> dep/part6.dep; )
+	$(foreach file, $(wildcard src/test/*.cc),  $(MAKEDEP) $(file) >> dep/part7.dep; )
 
 
 -include dep/part?.dep
-
-
 

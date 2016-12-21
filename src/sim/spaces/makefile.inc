@@ -89,8 +89,3 @@ $(OBJ_SPACE2DGL): %2DGL.o: %.cc %.h
 $(OBJ_SPACE3DGL): %3DGL.o: %.cc %.h
 	$(CXXFLAGS) -c -DDIM=3 -DDISPLAY $(INC_SPACE) $< -o build/$@
 
-#----------------------------makedep--------------------------------------------
-
-dep/part2.dep:
-	$(MAKEDEP) $(wildcard src/sim/spaces/*.cc)  >  $@
-

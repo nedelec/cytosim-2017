@@ -72,7 +72,3 @@ play3: build/play3D.o $(OBJ_PLAY3D) build/libcytosim3D.a build/libcytospace3DGL.
 vpath play3 bin
 
 
-#------------------------------------------------------------------------
-
-dep/part5.dep:
-	$(MAKEDEP)  $(wildcard src/play/*.cc)  >  $@

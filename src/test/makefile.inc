@@ -123,9 +123,4 @@ test_solve: test_solve.cc libcytomath.a libcytobase.a
 	$(TEST_MAKE_GL)
 vpath test_solve bin
 
-#----------------------------makedep--------------------------------------------
-
-dep/part6.dep:
-	$(MAKEDEP)  $(wildcard src/test/*.cc)  >  $@
-
 

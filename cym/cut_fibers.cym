@@ -20,7 +20,7 @@ set fiber microtubule
     segmentation = 0.5
     confine = inside, 100
 
-    display = ( plus_tip=16,2; line_style=2; speckles=1, 0.25 )
+    display = ( plus_end=16,2; line_style=2; speckles=1, 0.25 )
 }
 
 new 1 fiber microtubule

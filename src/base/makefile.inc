@@ -19,7 +19,3 @@ build/libcytobase.a: $(OBJ_BASE) SFMT.o
 	$(DONE)
 
 
-#----------------------------makedep--------------------------------------------
-
-dep/part1.dep:
-	$(MAKEDEP)  $(wildcard src/base/*.cc)  >  $@
