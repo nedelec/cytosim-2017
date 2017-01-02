@@ -101,40 +101,31 @@ namespace sMath
         return b * b;
     }
     
-    /// power of \a a by positive integer exponent \a n
+    /// power of `a` by positive integer exponent `n`
+    /** This should be equivalent to std::pow(a, n) */
     template <typename T>
-    inline T powerN(const T& a, unsigned int n)
+    inline T power_int(const T& a, unsigned n)
     {
-        if ( n == 0 )
-            return 1;
         T x = a;
-        while ( (n & 1) == 0 )
+        T y = 1;
+        while ( n )
         {
+            if ( n & 1 )
+                y = y * x;
             x = x * x;
-            n >>= 1;
+            n = n >> 1;
         }
-        T P = x;
-        n >>= 1;
-        while ( n > 0 )
-        {
-            x = x * x; 
-            if (n & 1)
-                P = P * x;
-            n >>= 1;
-        }
-        return P;
+        return y;
     }
     
     
-    ///power of \a by integer exponent \a n
+    ///power of `a` by integer exponent `n`
     template <typename T>
     inline T power(const T& a, const int n)
     {
         if ( n < 0 )
-            return static_cast<T>(1) / powerN(a, n);
-        if ( n == 0 ) 
-            return 1;
-        return powerN(a, n);
+            return power_int(1.0/a, -n);
+        return power_int(a, n);
     }
     
     
