@@ -94,7 +94,7 @@ cytosim.tar.bz2: cytosim.tar
 
 cytosim_src.tar:
 	tar cf cytosim_src.tar --exclude "*.o" --exclude ".*" \
-	--exclude ".svn" --exclude "*~" src makefile makefile.inc cym python
+	--exclude ".svn" --exclude "*~" src makefile makefile.inc cym 
 
 
 tar: cytosim_src.tar cytosim.tar.bz2
@@ -129,8 +129,7 @@ sterile:
 #---------------------------- dependencies ----------------------------------------
 
 dep:
-	if ! test -d dep; then mkdir dep; fi
-	if test -f dep/*.dep; then rm dep/*.dep; fi
+	if ! test -d dep; then mkdir dep; else rm -f dep/* fi
 	$(foreach file, $(wildcard src/base/*.cc),  $(MAKEDEP) $(file) >> dep/part0.dep; )
 	$(foreach file, $(wildcard src/math/*.cc),  $(MAKEDEP) $(file) >> dep/part1.dep; )
 	$(foreach file, $(wildcard src/sim/*.cc),   $(MAKEDEP) $(file) >> dep/part2.dep; )
