@@ -231,7 +231,7 @@ void FiberGrid::paintGrid(const Fiber * first, const Fiber * last, const real ma
 #elif (DIM == 3)
             //Rasterizer::paintHexLine3D(paint, seg, &mGrid, P, Q, width, offset, deltas, S);
             Rasterizer::paintFatLine3D(paint, seg, &mGrid, P, Q, width, offset, deltas, S);
-            Rasterizer::paintBox3D(paint, seg, &mGrid, P, Q, width, offset, deltas);
+            //Rasterizer::paintBox3D(paint, seg, &mGrid, P, Q, width, offset, deltas);
 #endif
         }
     }
