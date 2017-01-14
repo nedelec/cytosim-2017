@@ -166,7 +166,7 @@ Inventoried* Inventory::first() const
 Inventoried* Inventory::last() const
 {
     Number n = highest;
-    while ( n > 1 )
+    while ( n > 0 )
     {
         if ( byNames[n] )
             return byNames[n];
