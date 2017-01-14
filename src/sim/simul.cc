@@ -124,10 +124,20 @@ void Simul::space(Space * spc)
 }
 
 
-Space* Simul::firstSpace(const std::string& name)
+Space* Simul::findSpace(std::string const& str) const
 {
-    Property * prop = properties.find("space", name, true);
-    return spaces.first(static_cast<SpaceProp*>(prop));
+    if ( str == "first" )
+        return static_cast<Space*>(spaces.inventory.first());
+    
+    if ( str == "last" )
+        return static_cast<Space*>(spaces.inventory.last());
+    
+    Property * sp = properties.find("space", str);
+    
+    if ( sp )
+        return spaces.first(static_cast<SpaceProp*>(sp));
+    else
+        return 0;
 }
 
 //------------------------------------------------------------------------------

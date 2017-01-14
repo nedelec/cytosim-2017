@@ -9,8 +9,9 @@
 //------------------------------------------------------------------------------
 void FieldProp::clear()
 {
-    confine_space_ptr     = 0;
     step                  = 0;
+    confine_space         = "first";
+    confine_space_ptr     = 0;
     diffusion             = 0;
     diffusion_theta       = 0;
     decay_rate            = 0;
@@ -24,6 +25,7 @@ void FieldProp::clear()
 void FieldProp::read(Glossary& glos)
 {
     glos.set(step,               "step");
+    glos.set(confine_space,      "space");
     glos.set(diffusion,          "diffusion");
     glos.set(decay_rate,         "decay_rate");
 
@@ -35,8 +37,7 @@ void FieldProp::read(Glossary& glos)
 //------------------------------------------------------------------------------
 void FieldProp::complete(SimulProp const* sp, PropertyList*)
 {
-    // confine_space_ptr = last Space defined
-    confine_space_ptr = sp->lastSpace();
+    confine_space_ptr = sp->simul->findSpace(confine_space);
 
     if ( step < REAL_EPSILON )
         throw InvalidParameter("field:step must be defined and > 0");
@@ -68,6 +69,7 @@ void FieldProp::complete(SimulProp const* sp, PropertyList*)
 void FieldProp::write_data(std::ostream & os) const
 {
     write_param(os, "step",        step);
+    write_param(os, "space",       confine_space);
     write_param(os, "diffusion",   diffusion);
     write_param(os, "decay_rate",  decay_rate);
     write_param(os, "positive",    positive);

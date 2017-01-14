@@ -14,21 +14,7 @@
 extern Random RNG;
 extern bool functionKey[];
 
-/**
- This returns the last Space that was created
- */
-const Space* SimulProp::lastSpace() const
-{
-    return simul->space();
-}
 
-const Space* SimulProp::firstSpace(const std::string& name) const
-{
-    Property * sp = simul->properties.find("space", name, true);
-    return simul->spaces.first(static_cast<SpaceProp*>(sp));
-}
-
-//------------------------------------------------------------------------------
 void SimulProp::clear()
 {
     viscosity         = 1;

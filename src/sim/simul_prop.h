@@ -227,12 +227,6 @@ public:
     
     /// this is a backpointer to the associated Simul
     Simul*        simul;
-    
-    /// return current Space
-    const Space*  lastSpace() const;
-
-    /// return first Space with this name
-    const Space*  firstSpace(const std::string& name) const;
 
 public:
     

@@ -26,6 +26,9 @@ public:
      */
     
     
+    /// name of confining Space
+    std::string   confine_space;
+
     /// size of square unit cell
     real          step;
     

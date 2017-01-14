@@ -219,20 +219,26 @@ int Interface::execute_new(std::string const& kind, std::string const& name, uns
 //------------------------------------------------------------------------------
 #pragma mark -
 
-/// holds a set of criteria to select Objects
-class Criteria
+/// holds a set of criteria used to select Objects
+class SelectionCriteria
 {
 public:
-
-    int     mrk;
-    void  * prp;
-    Space * ins;
-    Space * ous;
-
+    
+    unsigned     mrk;
+    int          st;
+    int          st1;
+    int          st2;
+    void  const* prp;
+    Space const* ins;
+    Space const* ous;
+    
     /// initialize
-    Criteria()
+    SelectionCriteria()
     {
-        mrk = -1;
+        mrk = 0;
+        st  = -1;
+        st1 = -1;
+        st2 = -1;
         prp = 0;
         ins = 0;
         ous = 0;
@@ -250,10 +256,10 @@ public:
         std::string str;
         if ( opt.set(str, "position") )
         {
-            Space * spc = 0;
+            Space const* spc = 0;
             std::string spn;
             if ( opt.set(spn, "position", 1) )
-                spc = simul.firstSpace(spn);
+                spc = simul.findSpace(spn);
             else
                 spc = simul.space();
             if ( spc == 0 )
@@ -268,28 +274,47 @@ public:
         }
         
         opt.set(mrk, "mark");
+        opt.set(st1, "state")    || opt.set(st1, "state1") || opt.set(st1, "stateP");
+        opt.set(st2, "state", 1) || opt.set(st2, "state2") || opt.set(st2, "stateM");
     }
     
-    /// check criteria for given object
+    /// return `true` if given object fulfull all the criteria
     bool check(Object const * obj)
     {
-        bool res = true;
-        if ( mrk >= 0 )
-            res &= ( obj->mark() == mrk );
-        if ( ins )
-            res &= ins->inside(obj->position());
-        if ( ous )
-            res &= ous->outside(obj->position());
-        if ( prp )
-            res &= ( obj->property() == prp );
-        return res;
+        if ( mrk > 0 && obj->mark() != mrk )
+            return false;
+        if ( ins && ins->outside(obj->position()) )
+            return false;
+        if ( ous && ous->inside(obj->position()) )
+            return false;
+        if ( prp && obj->property() != prp )
+            return false;
+        if ( st1 >= 0 )
+        {
+            if ( obj->tag()==Single::TAG && static_cast<Single const*>(obj)->attached() != st1 )
+                return false;
+            if ( obj->tag()==Couple::TAG && static_cast<Couple const*>(obj)->attached1() != st1 )
+                return false;
+            if ( obj->tag()==Fiber::TAG && static_cast<Fiber const*>(obj)->dynamicState(PLUS_END) != st1 )
+                return false;
+        }
+        if ( st2 >= 0 )
+        {
+            if ( obj->tag()==Single::TAG )
+                throw InvalidParameter("to select Single, 'state[1]' is irrelevant");
+            if ( obj->tag()==Couple::TAG && static_cast<Couple const*>(obj)->attached2() != st2 )
+                return false;
+            if ( obj->tag()==Fiber::TAG && static_cast<Fiber const*>(obj)->dynamicState(MINUS_END) != st2 )
+                return false;
+        }
+        return true;
     }
 };
 
 
 bool select_object(Object const* obj, void* val)
 {
-    return static_cast<Criteria*>(val)->check(obj);
+    return static_cast<SelectionCriteria*>(val)->check(obj);
 }
 
 
@@ -302,7 +327,7 @@ void Interface::execute_delete(std::string const& kind, std::string const& name,
     if ( set == 0 )
         throw InvalidSyntax("unknown object class `"+kind+"' after `delete'");
     
-    Criteria cri;
+    SelectionCriteria cri;
     cri.set(simul, kind, name, opt);
 
     ObjectList objs = set->collect(select_object, &cri);
@@ -333,7 +358,7 @@ void Interface::execute_mark(std::string const& kind, std::string const& name, G
         throw InvalidParameter("mark must be specified for command `mark'");
     opt.erase("mark");
     
-    Criteria cri;
+    SelectionCriteria cri;
     cri.set(simul, kind, name, opt);
     
     ObjectList objs = set->collect(select_object, &cri);
@@ -355,7 +380,7 @@ void Interface::execute_cut(std::string const& kind, std::string const& name, Gl
     if ( kind != "fiber" )
         throw InvalidSyntax("only `cut fiber *' is supported");
     
-    Criteria cri;
+    SelectionCriteria cri;
     cri.set(simul, kind, name, opt);
     
     Vector n(1,0,0);

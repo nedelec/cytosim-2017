@@ -196,7 +196,7 @@ ObjectList ObjectSet::newPlacedObjects(const std::string& kd, const std::string&
     const Space* spc = simul.space();
     std::string str;
     if ( opt.set(str, "placement", 1) )
-        spc = simul.firstSpace(str);
+        spc = simul.findSpace(str);
 
     
     //we may bail out after 'nb_trials' unsuccessful attempts

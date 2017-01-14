@@ -83,8 +83,7 @@ void NucleatorProp::complete(SimulProp const* sp, PropertyList* plist)
 void NucleatorProp::write_data(std::ostream & os) const
 {
     HandProp::write_data(os);
-    write_param(os, "nucleate",        rate, fiber);
-    write_param(os, "nucleate_spec",   "("+spec+")");
+    write_param(os, "nucleate",        rate, fiber, "("+spec+")");
     write_param(os, "track_end",       track_end);
     write_param(os, "addictive",       addictive);
 }

@@ -13,7 +13,7 @@ void BeadProp::clear()
     
     confine           = CONFINE_NOT;
     confine_stiff     = 0;
-    confine_space     = "last";
+    confine_space     = "first";
     confine_space_ptr = 0;
     
     display           = "";
@@ -58,10 +58,7 @@ void BeadProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( viscosity < 0 )
         throw InvalidParameter("bead:viscosity or simul:viscosity should be defined");
     
-    if ( confine_space == "last" )
-        confine_space_ptr = sp->lastSpace();
-    else        
-        confine_space_ptr = sp->firstSpace(confine_space);
+    confine_space_ptr = sp->simul->findSpace(confine_space);
     
     if ( confine && confine_stiff < 0 )
         throw InvalidParameter("solid:confine[1] (stiffness value) must be specified and >= 0");

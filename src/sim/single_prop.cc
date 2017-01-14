@@ -84,7 +84,7 @@ void SingleProp::clear()
     
     confine           = CONFINE_INSIDE;
     confine_stiff     = 0;
-    confine_space     = "last";
+    confine_space     = "first";
     confine_space_ptr = 0;
 }
 
@@ -113,10 +113,7 @@ void SingleProp::read(Glossary& glos)
 
 void SingleProp::complete(SimulProp const* sp, PropertyList* plist)
 {
-    if ( confine_space == "last" )
-        confine_space_ptr = sp->lastSpace();
-    else        
-        confine_space_ptr = sp->firstSpace(confine_space);
+    confine_space_ptr = sp->simul->findSpace(confine_space);
     
     if ( hand.empty() )
         throw InvalidParameter("single:hand must be defined");

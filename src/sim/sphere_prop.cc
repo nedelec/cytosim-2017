@@ -21,7 +21,7 @@ void SphereProp::clear()
     
     confine           = CONFINE_NOT;
     confine_stiff     = -1;
-    confine_space     = "last";
+    confine_space     = "first";
     confine_space_ptr = 0;
     
     display           = "";
@@ -67,10 +67,7 @@ void SphereProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( viscosity < 0 )
         throw InvalidParameter("sphere:viscosity or simul:viscosity should be defined");
     
-    if ( confine_space == "last" )
-        confine_space_ptr = sp->lastSpace();
-    else        
-        confine_space_ptr = sp->firstSpace(confine_space);
+    confine_space_ptr = sp->simul->findSpace(confine_space);
     
     if ( point_mobility < 0 )
         throw InvalidParameter("sphere:point_mobility must be specified and >= 0");

@@ -161,7 +161,7 @@ public:
     Space *   space() const { return sSpace; }
     
     /// return first Space with this name
-    Space *   firstSpace(const std::string& name);
+    Space *   findSpace(const std::string& name) const;
 
     /// call foldPosition() for all objects
     void      foldPosition() const;

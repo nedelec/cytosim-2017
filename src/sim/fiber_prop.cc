@@ -178,7 +178,7 @@ void FiberProp::clear()
     
     confine             = CONFINE_NOT;
     confine_stiff       = -1;
-    confine_space       = "last";
+    confine_space       = "first";
     confine_space_ptr   = 0;
     
     steric              = 0;
@@ -260,10 +260,7 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
 {
     time_step = sp->time_step;
     
-    if ( confine_space == "last" )
-        confine_space_ptr = sp->lastSpace();
-    else        
-        confine_space_ptr = sp->firstSpace(confine_space);
+    confine_space_ptr = sp->simul->findSpace(confine_space);
     
     if ( length <= 0 )
         throw InvalidParameter("fiber:length should be > 0");
