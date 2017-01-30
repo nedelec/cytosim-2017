@@ -8,6 +8,14 @@
 #define SIM_H
 
 
+
+/**
+ Enables simulation of uniform fluid flow using parameter 'Simul::flow'
+ Option normally OFF
+ */
+#define NEW_CYTOPLASMIC_FLOW
+
+
 /**
  Display the Meca-links with OpenGL 
  This only works for DIM > 1, and if compilation is done in Xcode

@@ -18,7 +18,9 @@ extern bool functionKey[];
 void SimulProp::clear()
 {
     viscosity         = 1;
+#ifdef NEW_CYTOPLASMIC_FLOW
     flow.set(0, 0, 0);
+#endif
     time_step         = 0;
     kT                = 0.0042;
     tolerance         = 0.05;
@@ -51,7 +53,9 @@ void SimulProp::clear()
 void SimulProp::read(Glossary& glos)
 {
     glos.set(viscosity,         "viscosity");
+#ifdef NEW_CYTOPLASMIC_FLOW
     glos.set(flow,              "flow");
+#endif
     glos.set(time_step,         "time_step");
     glos.set(kT,                "kT");
 
@@ -142,7 +146,9 @@ void SimulProp::write_data(std::ostream & os) const
     write_param(os, "time_step",       time_step);
     write_param(os, "kT",              kT);
     write_param(os, "viscosity",       viscosity);
+#ifdef NEW_CYTOPLASMIC_FLOW
     write_param(os, "flow",            flow);
+#endif
     os << std::endl;
     write_param(os, "tolerance",       tolerance);
     write_param(os, "acceptable_rate", acceptable_rate);

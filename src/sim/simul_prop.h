@@ -69,9 +69,11 @@ public:
      */
     real      viscosity;
     
+#ifdef NEW_CYTOPLASMIC_FLOW
     /// uniform and constant fluid flow
     Vector    flow;
-
+#endif
+    
     /// Level of Brownian motion in the system = temperature * Boltzman constant
     /**
      <em>kT</em> is the product of the absolute temperature in Kelvin,

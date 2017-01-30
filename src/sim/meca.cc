@@ -650,6 +650,21 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
         mec->setSpeedsFromForces( vFOR+indx, vRHS+indx, time_step, true );
     }
     
+#ifdef NEW_CYTOPLASMIC_FLOW
+    
+    /**
+     Includes a constant fluid flow displacing all the objects along
+     */
+    MSG_ONCE("NEW_CYTOPLASMIC_FLOW code enabled\n");
+    Vector flow_dt = prop->flow * time_step;
+    
+    const real *const end = vRHS + DIM*nbPts;
+    
+    for ( real * mx = vRHS; mx < end; mx += DIM )
+        flow_dt.addTo(mx);
+    
+#endif
+
 #ifdef EXPLICIT
     /*  This implements a forward Euler integration, for testing purposes
         It is very slow, since we have built the entire stiffness matrix,
