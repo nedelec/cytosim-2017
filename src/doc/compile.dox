@@ -1,32 +1,22 @@
-// Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
+// Cytosim 3.0 -  Copyright Francois Nedelec et al.  EMBL 2007-2013
 
 
 
 /**
  @defgroup Compile How to compile cytosim
  
- Cytosim is written in C++ and it is necessary to recompile the program after each modification
- of the source code.
+ Cytosim is written in C++ and it is necessary to recompile the program after each modification of the source code.
  
- This can be done from a command-line terminal, with a program called <a href="http://www.gnu.org/software/make/">make</a>, if you have a C++ standard compiler: e.g. <a href="http://gcc.gnu.org/">gcc</a>, <a href="http://clang.llvm.org">Clang</a> or the <a href="http://en.wikipedia.org/wiki/Intel_C%2B%2B_Compiler">Intel compiler</a>.
+ This can be done from a terminal, with a program called <a href="http://www.gnu.org/software/make/">make</a>, using a C++ compiler: e.g. <a href="http://gcc.gnu.org/">gcc</a>, <a href="http://clang.llvm.org">Clang</a> or the <a href="http://en.wikipedia.org/wiki/Intel_C%2B%2B_Compiler">Intel compiler</a>.
 
- On Mac OS X, the easiest is to install <a href="https://developer.apple.com/technologies/tools/">Xcode</a>, which is available on the Mac App Store. One need to install the Xcode 'Command-Line Tools', which is an optional package.
 
- After installing the compiler and make, you need to edit the file \c makefile.inc to set the @ref CompileOptions options for your particular platform.
-
- You can then compile with the following instructions:
- @code
- make ready
- make
- @endcode
+<h3> Mathematical Libraries </h3>
  
- <h3> Mathematical Libraries </h3>
- 
- \c sim and \c play require two mathematical libraries:
+ Running cytosim with `sim` or `play` require these mathematical libraries:
  - <a href="http://netlib.org/blas/"> BLAS </a>
  - <a href="http://netlib.org/lapack/"> LAPACK </a>
  .
- The <a href="http://netlib.org">reference implementations</a> are public. However, since these libraries are coded in <a href="http://en.wikipedia.org/wiki/Fortran">Fortran</a>, you will need a Fortran compiler.
+ The <a href="http://netlib.org">reference implementations</a> are public. However, to compile the libraries, you will need a <a href="http://en.wikipedia.org/wiki/Fortran">Fortran</a> compiler to use them.
 
  Precompiled libraries are also included in <a href="http://software.intel.com/en-us/articles/intel-mkl/"> Intel MKL </a> and <a href="http://developer.apple.com/hardwaredrivers/ve/vector_libraries.html"> Apple's vecLib </a>.
  
@@ -35,16 +25,15 @@
  -framework vecLib
  @endcode
  
- Recent Linux distributions provide BLAS/LAPACK as an optional installation.
- 
- For troubleshooting, it can be helpful to compile the test programs to check the libraries:
+ Recent Linux distributions provide precompiled BLAS/LAPACK as optional installation.
+
+ For troubleshooting at this stage, it can be helpful to compile a test program to check the 'makefile.inc' configuration directly:
  @code
  make test_blas
- make reader
  @endcode
- 
- 
- <h3> Graphical Libraries </h3>
+
+
+<h3> Graphical Libraries </h3>
  
  \c play relies on <a href="http://www.opengl.org/">OpenGL</a> for display 
  and uses <a href="http://en.wikipedia.org/wiki/POSIX_Threads">POSIX threads</a>.
@@ -58,20 +47,56 @@
  @code
  -framework GLUT -framework OpenGL 
  @endcode
- 
- 
- If compilation fails, it can be helpful to compile the test programs:
+
+
+<h3> Compilation </h3>
+
+ After installing the compiler and `make`, you need to edit `makefile.inc` to set the @ref CompileOptions options for your particular platform.
+
+ You can then compile from a terminal, with the following commands in the root directory of cytosim:
+ @code
+ make ready
+ make sim
+ make play
+ @endcode
+ The command `make` without arguments will build `sim` and `play`. On a cluster without graphical capabilities, you only need 'sim'.
+
+ For troubleshooting, it can be helpful to compile some of the test programs, to check the different requirements of the compilation independently:
  @code
  make test_glut
  make test_glapp
  make test_thread
  @endcode
- 
+
+
+<h3> Compiling on MacOSX </h3>
+
+ On Mac OSX, the easiest is to install <a href="https://developer.apple.com/technologies/tools/">Xcode</a>, which is available on the Mac App Store. One need to install the Xcode 'Command-Line Tools', which is an optional package.
+
+ On OSX, Cytosim can use the mouse wheel to zoom in and out, if you use freeglut, instead of Apple's GLUT,
+ or <a href="http://iihm.imag.fr/blanch/howtos/MacOSXGLUTMouseWheel.html">Renaud Blanch's GLUT patch</a>.
+
+
+<h3> Compiling on Linux </h3>
+
+ On Linux, you need to install the GNU compiler collection, OpenGL developer libraries, OpenGLUT, BLAS and LAPACK.
+
+
+<h3> Compiling on Windows </h3>
+
+ On Windows, we recommend installing Cygwin, which emulates a Linux-like environment.
+
+
+<h3> Compiling on CygWin </h3>
+
+ A fresh installation of Cygwin is recommended to ensure that all required reference libraries are installed. When installing CygWin ensure that all LAPACK and BLAS libraries are installed.
+ If compilation fails, open the makefile.inc in the main cytosim folder and ensure that all references to the LIBLAS and LAPACK do not have x64 in their folder paths.
+ To run 'play' on Cygwin Xming will need to be installed on the PC. Set up the display properties through XLaunch (part of Xming), and set `Display` to `0`. In the CygWin terminal set the display export to `DISPLAY=:0.` (export DISPLAY=:0.0)
+
+
  <h3> Optional Install </h3>
- 
- Cytosim can use the mouse wheel to zoom in and out:
- 
- This requires freeglut, or <a href="http://iihm.imag.fr/blanch/howtos/MacOSXGLUTMouseWheel.html">Renaud Blanch's GLUT patch on mac osx</a>.
+
+ Cytosim program `play` will be able to export images only if it is linked with the PNG graphical libraries. See @ref CompileOptions.
 
  */
 
