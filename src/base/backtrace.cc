@@ -3,7 +3,7 @@
 #include "backtrace.h"
 
 
-#ifdef __APPLE__
+#ifdef __GNUC__
 
 
 #include <stdlib.h>
@@ -32,9 +32,9 @@ void print_backtrace(FILE * out)
 
 #else
 
-void print_backtrace(FILE *)
+void print_backtrace(FILE * out)
 {
-    //fprintf(file, "Execution stack not available\n");
+    fprintf(out, "Execution stack unavailable\n");
 }
 
 #endif

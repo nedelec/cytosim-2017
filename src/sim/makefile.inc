@@ -51,7 +51,7 @@ OBJ_CYTOSIM_3D:=$(OBJ_CYTOSIM:.o=3D.o)
 
 #--- normal build:
 
-sim: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+sim: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a) | bin
 	$(CXXFLAGS) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim  bin
@@ -59,7 +59,7 @@ vpath sim  bin
 
 #--- build with debuging flags:
 
-simd: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+simd: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a) | bin
 	$(CXX) $(FlagsD) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath simd  bin

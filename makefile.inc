@@ -144,7 +144,7 @@ ifeq ($(MACHINE),linux-centos)
 
     ifneq ($(HAS_PNG), 0)
       
-        LIB_PNG := /usr/lib64/libpng.a /usr/lib64/libz.a
+        LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
         ING_PNG :=
     
     endif

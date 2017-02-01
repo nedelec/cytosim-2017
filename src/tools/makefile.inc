@@ -50,7 +50,7 @@ vpath reader bin
 
 
 
-report: report.cc frame_reader.o $(TOOL_DEP)
+report: report.cc frame_reader.o $(TOOL_DEP) | bin
 	$(TOOL_MAKE)
 	$(DONE)
 vpath report bin

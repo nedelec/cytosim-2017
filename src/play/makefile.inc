@@ -27,7 +27,7 @@ build/play.o: $(FILES_PLAY) | build
 $(OBJ_PLAYND): build/%.o: %.cc %.h
 	$(CXXFLAGS) -c $(PLAY_INC) $< -o $@
 
-play: build/play.o $(OBJ_PLAYND) build/libcytosim.a build/libcytospaceGL.a $(PLAY_DEP)
+play: build/play.o $(OBJ_PLAYND) build/libcytosim.a build/libcytospaceGL.a $(PLAY_DEP) | bin
 	$(CXXFLAGS) $^ $(PLAY_LINK) -o bin/$@
 	$(DONE)
 vpath play bin

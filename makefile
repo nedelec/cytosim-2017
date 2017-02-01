@@ -45,7 +45,7 @@ vpath SFMT% src/SFMT
 
 # calling 'make' without arguments will make sim and play:
 .PHONY: simplay
-simplay: bin build sim play
+simplay: sim play
 
 
 include src/sim/makefile.inc
@@ -101,13 +101,12 @@ tar: cytosim_src.tar cytosim.tar.bz2
 
 
 #---------------------------- maintenance ----------------------------------------
-.PHONY: dep ready clean cleaner sterile
+.PHONY: bin dep clean cleaner sterile
 
 
-ready:
-	if ! test -d build; then mkdir build; fi
+bin:
 	if ! test -d bin; then mkdir bin; fi
-	$(MAKE) dep
+	if ! test -d build; then mkdir build; fi
 
 
 clean:
