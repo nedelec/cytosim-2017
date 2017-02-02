@@ -55,7 +55,6 @@
 
  You can then compile from a terminal, with the following commands in the root directory of cytosim:
  @code
- make ready
  make sim
  make play
  @endcode
