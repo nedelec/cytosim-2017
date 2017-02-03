@@ -655,13 +655,16 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
     /**
      Includes a constant fluid flow displacing all the objects along
      */
-    MSG_ONCE("NEW_CYTOPLASMIC_FLOW code enabled\n");
-    Vector flow_dt = prop->flow * time_step;
-    
-    const real *const end = vRHS + DIM*nbPts;
-    
-    for ( real * mx = vRHS; mx < end; mx += DIM )
-        flow_dt.addTo(mx);
+    if ( prop->flow.norm() > REAL_EPSILON )
+    {
+        MSG_ONCE("NEW_CYTOPLASMIC_FLOW code enabled\n");
+        Vector flow_dt = prop->flow * time_step;
+        
+        const real *const end = vRHS + DIM*nbPts;
+        
+        for ( real * mx = vRHS; mx < end; mx += DIM )
+            flow_dt.addTo(mx);
+    }
     
 #endif
 
@@ -688,20 +691,6 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
         mec->makeProjectionDiff(vFOR+DIM*mec->matIndex());
     }
 #endif
-    
-    /**
-     Includes a constant fluid flow displacing all the objects along
-     */
-    if ( prop->flow.norm() > REAL_EPSILON )
-    {
-        MSG_ONCE("NEW_CYTOPLASMIC_FLOW code enabled\n");
-        Vector flow_dt = prop->flow * time_step;
-        
-        const real *const end = vRHS + DIM*nbPts;
-        
-        for ( real * mx = vRHS; mx < end; mx += DIM )
-            flow_dt.addTo(mx);
-    }
     
     /*
      Choose the initial guess for the solution of the system (Xnew - Xold):
