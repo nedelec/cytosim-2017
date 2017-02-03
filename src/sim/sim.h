@@ -13,7 +13,7 @@
  Enables simulation of uniform fluid flow using parameter 'Simul::flow'
  Option normally OFF
  */
-#define NEW_CYTOPLASMIC_FLOW
+//#define NEW_CYTOPLASMIC_FLOW
 
 
 /**
