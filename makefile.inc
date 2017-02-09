@@ -61,7 +61,7 @@ endif
 ifeq ($(COMPILER),gcc)
 
     CXX      := g++ -ffinite-math-only -ftrapping-math -Wfatal-errors
-    FAST     :=-O3 -fno-tree-vectorize -ffast-math -funroll-loops -msse3 -Wno-deprecated
+    FAST     :=-O3 -fno-tree-vectorize -ffast-math -funroll-loops -xHost -Wno-deprecated
     DEBUG    :=-g3 -ggdb -Wno-deprecated
     COVERAGE :=-fprofile-arcs -ftest-coverage
     
