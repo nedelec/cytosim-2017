@@ -45,7 +45,7 @@ vpath SFMT% src/SFMT
 
 # calling 'make' without arguments will make sim and play:
 .PHONY: simplay
-simplay: sim play
+simplay: sim report play
 
 
 include src/sim/makefile.inc
@@ -101,11 +101,13 @@ tar: cytosim_src.tar cytosim.tar.bz2
 
 
 #---------------------------- maintenance ----------------------------------------
-.PHONY: bin dep clean cleaner sterile
+.PHONY: bin build dep clean cleaner sterile
 
 
 bin:
 	if ! test -d bin; then mkdir bin; fi
+
+build:
 	if ! test -d build; then mkdir build; fi
 
 
@@ -128,7 +130,7 @@ sterile:
 #---------------------------- dependencies ----------------------------------------
 
 dep:
-	if ! test -d dep; then mkdir dep; else rm -f dep/* fi
+	if ! test -d dep; then mkdir dep; else rm -f dep/*; fi
 	$(foreach file, $(wildcard src/base/*.cc),  $(MAKEDEP) $(file) >> dep/part0.dep; )
 	$(foreach file, $(wildcard src/math/*.cc),  $(MAKEDEP) $(file) >> dep/part1.dep; )
 	$(foreach file, $(wildcard src/sim/*.cc),   $(MAKEDEP) $(file) >> dep/part2.dep; )

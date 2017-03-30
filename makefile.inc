@@ -12,7 +12,7 @@ COMPILER := gcc
 # P = Profiling
 # D = Debug 
 # C = Coverage
-MODE := D
+MODE := F
 
 #---------------- INTEL Math Kernel Library
 # If the Intel Math Kernel library is available on your system,
@@ -61,7 +61,7 @@ endif
 ifeq ($(COMPILER),gcc)
 
     CXX      := g++ -ffinite-math-only -ftrapping-math -Wfatal-errors
-    FAST     :=-O3 -fno-tree-vectorize -ffast-math -funroll-loops -xHost -Wno-deprecated
+    FAST     :=-O3 -fno-tree-vectorize -ffast-math -funroll-loops -march=native -Wno-deprecated
     DEBUG    :=-g3 -ggdb -Wno-deprecated
     COVERAGE :=-fprofile-arcs -ftest-coverage
     
