@@ -221,6 +221,12 @@ public:
     /// read from file
     void           read(InputWrapper&, Simul&);
     
+    /// return PointDisp of Hand1
+    PointDisp *    disp1() const { return cHand1->prop->disp; }
+    
+    /// return PointDisp of Hand2
+    PointDisp *    disp2() const { return cHand2->prop->disp; }
+
 };
 
 

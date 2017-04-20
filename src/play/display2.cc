@@ -929,50 +929,33 @@ void Display2::displayASingles(const SingleSet & set)
 //------------------------------------------------------------------------------
 #pragma mark -
 
+/**
+ Display either Hand1 or Hand2, exposing both sides with equal chances.
+ This gives the impression that Couple flicker randomly between frames,
+ as if they were two-sided balls 'rotating' very fast.
+ */
 void Display2::displayFCouples(CoupleSet const& set)
 {
     if ( prop->point_size > 0 )
     {
+        Couple * nxt;
+        Couple * obj = set.firstFF();
+        
         glPointSize(prop->point_size*uFactor);
         glBegin(GL_POINTS);
-        
-        /*
-         We display either Hand1 or Hand2, exposing both sides with equal chances.
-         This gives the impression that Couple flicker randomly between frames,
-         as if they were two-sided balls 'rotating' very fast.
-         */
-        
-        Couple * cx = set.firstFF();
-        uint32_t z = cx ? cx->number() * set.lastFF()->number() : 1;
-        
-        z = lcrng1(z);
-        
         if ( set.sizeFF() % 2 )
         {
-            if ( z & 0x40000000U )
-                drawVertex(cx->posFree(), cx->hand1()->prop->disp, 2);
-            else
-                drawVertex(cx->posFree(), cx->hand2()->prop->disp, 2);
-            
-            cx = cx->next();
+            nxt = obj->next();
+            drawVertex(obj->posFree(), obj->disp1(), 2);
+            obj = nxt;
         }
-        
-        for ( ; cx ; cx=cx->next() )
+        while ( obj )
         {
-            z = lcrng1(z);
-            if ( z & 0x40000000U )
-                drawVertex(cx->posFree(), cx->hand1()->prop->disp, 2);
-            else
-                drawVertex(cx->posFree(), cx->hand2()->prop->disp, 2);
-            
-            cx = cx->next();
-            
-            if ( z & 0x80000000U )
-                drawVertex(cx->posFree(), cx->hand1()->prop->disp, 2);
-            else
-                drawVertex(cx->posFree(), cx->hand2()->prop->disp, 2);
+            nxt = obj->next();
+            drawVertex(obj->posFree(), obj->disp2(), 2);
+            obj = nxt->next();
+            drawVertex(nxt->posFree(), nxt->disp1(), 2);
         }
-        
         glEnd();
     }
 }

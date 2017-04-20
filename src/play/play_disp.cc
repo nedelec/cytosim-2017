@@ -110,7 +110,7 @@ std::string Player::buildMessageR(Simul const& simul)
     
     Glossary opt;
     try {
-        simul.report(oss, PP.report, opt);
+        simul.report0(oss, PP.report, opt);
     }
     catch ( Exception & e )
     {

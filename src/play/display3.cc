@@ -753,24 +753,31 @@ void Display3::displayASingles(SingleSet const& set)
 //------------------------------------------------------------------------------
 #pragma mark -
 
+/**
+ Display either Hand1 or Hand2, exposing both sides with equal chances.
+ This gives the impression that Couple flicker randomly between frames,
+ as if they were two-sided balls 'rotating' very fast.
+ */
 void Display3::displayFCouples(CoupleSet const& set)
 {
-    Couple * cx = set.firstFF();
-    uint32_t z = cx ? cx->number() * set.lastFF()->number() : 1;
+    Couple * nxt;
+    Couple * obj = set.firstFF();
     
-    for ( ; cx ; cx=cx->next() )
+    if ( set.sizeFF() % 2 )
     {
-        z = lcrng1(z);
-        if ( z & 0x80000000U )
-        {
-            cx->cHand1->prop->disp->color.colorT(2);
-            displayPoint(cx->posFree(), cx->cHand1->prop->disp);
-        }
-        else
-        {
-            cx->cHand2->prop->disp->color.colorT(2);
-            displayPoint(cx->posFree(), cx->cHand2->prop->disp);
-        }
+        nxt = obj->next();
+        nxt->disp1()->color.colorT(2);
+        displayPoint(obj->posFree(), obj->disp1());
+        obj = nxt;
+    }
+    while ( obj )
+    {
+        nxt = obj->next();
+        obj->disp1()->color.colorT(2);
+        displayPoint(obj->posFree(), obj->disp2());
+        obj = nxt->next();
+        nxt->disp1()->color.colorT(2);
+        displayPoint(nxt->posFree(), nxt->disp1());
     }
 }
 
@@ -780,15 +787,15 @@ void Display3::displayACouples(CoupleSet const& set)
     for ( Couple * cx=set.firstAF(); cx ; cx=cx->next() )
         if ( cx->fiber1()->disp->visible )
         {
-            cx->cHand1->prop->disp->color.colorT(1);
-            displayPoint(cx->pos1(), cx->cHand1->prop->disp);
+            cx->disp1()->color.colorT(1);
+            displayPoint(cx->pos1(), cx->disp1());
         }
     
     for ( Couple * cx=set.firstFA(); cx ; cx=cx->next() )
         if ( cx->fiber2()->disp->visible )
         {
-            cx->cHand2->prop->disp->color.colorT(1);
-            displayPoint(cx->pos2(), cx->cHand2->prop->disp);
+            cx->disp2()->color.colorT(1);
+            displayPoint(cx->pos2(), cx->disp2());
         }
 }
 
@@ -804,8 +811,8 @@ void Display3::displayBCouples(CoupleSet const& set)
         if ( ( prop->couple_select & 8 ) && ( cx->cosAngle() > 0 ) )
             continue;
         
-        const PointDisp * pd1 = cx->cHand1->prop->disp;
-        const PointDisp * pd2 = cx->cHand2->prop->disp;
+        const PointDisp * pd1 = cx->disp1();
+        const PointDisp * pd2 = cx->disp2();
         Vector p1 = cx->pos1();
         Vector p2 = cx->pos2();
         if (modulo)
