@@ -272,12 +272,11 @@ public:
     
     //-------------------------------------------------------------------------------
     
+    /// call `Simul::report0`, adding lines before and after with 'start' and 'end' tags.
+    void      report(std::ostream&, std::string const&, Glossary&) const;
     
     /// call one of the report function
-    void      report(std::ostream&, std::string const& str, Glossary&) const;
-    
-    /// call one of the report function
-    void      report(std::ostream&, std::string const& what, std::string const& who, Glossary&) const;
+    void      report0(std::ostream&, std::string const&, Glossary&) const;
     
     /// print time
     void      reportTime(std::ostream&) const;
@@ -291,9 +290,15 @@ public:
     /// print the length and the points of each fiber
     void      reportFiber(std::ostream&) const;
     
+    /// print the length and the points of each fiber
+    void      reportFiber(std::ostream&, FiberProp const*) const;
+    
     /// print the coordinates of the model-points of each fiber
     void      reportFiberPoints(std::ostream&) const;
     
+    /// print the mean and standard deviation of model-points of all fibers
+    void      reportFiberMoments(std::ostream&) const;
+
     /// print the coordinates and forces on the model-points of each fiber
     void      reportFiberForces(std::ostream&) const;
     

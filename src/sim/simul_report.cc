@@ -9,19 +9,49 @@
 #include <set>
 
 
+/// this macro defines the beggining of a new line
+#define LIN '\n' << std::setw(10)
+
+/// this macro define the separator used between values
+#define SEP  ' ' << std::setw(9)
+
+
+/// remove any 's' at the end of the argument
+void remove_trailing_s(std::string & str)
+{
+    if ( str.size() > 2  &&  str.at(str.size()-1) == 's' )
+        str.resize(str.size()-1);
+}
+
+
 /**
- @copydetails Simul::reportW
- @copydetails Simul::reportWW
+ @copydetails Simul::report0
  */
 void Simul::report(std::ostream& out, std::string const& str, Glossary& opt) const
 {
-    size_t pos = str.find(":");
-    if ( std::string::npos == pos )
-        report(out, str.substr(0, pos), std::string(), opt);
-    else
-        report(out, str.substr(0, pos), str.substr(pos+1), opt);
+    int p = 4;
+    if ( opt.set(p, "precision") )
+        out.precision(p);
+    
+    out << "% start   " << simTime() << "\n";
+    try {
+        report0(out, str, opt);
+        out << "% end\n";
+    }
+    catch( Exception & e )
+    {
+        out << "% error: " << e.what() << "\n";
+        out << "% end\n";
+        throw;
+    }
     out << std::endl;
+    
+    /// check that all options have been used:
+    std::stringstream ss;
+    if ( opt.warnings(ss) > 1 )
+        throw InvalidParameter(ss.str());
 }
+
 
 
 /**
@@ -58,25 +88,49 @@ void Simul::report(std::ostream& out, std::string const& str, Glossary& opt) con
  `couple:NAME`       | Position of couples of class NAME
  
  */
-void Simul::report(std::ostream& out, std::string const& what, std::string const& who, Glossary& opt) const
+void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) const
 {
+    std::string what = arg, who, which;
+    
+    // split the argument string into 3 parts separated by ':':
+    std::string::size_type pos = arg.find(':');
+    if ( pos != std::string::npos )
+    {
+        what = arg.substr(0, pos);
+        who  = arg.substr(pos+1);
+        std::string::size_type pas = who.find(':');
+        if ( pas != std::string::npos )
+        {
+            which = what.substr(pas+1);
+            who.resize(pas);
+        }
+    }
+    
+    // allow for approximate English:
+    remove_trailing_s(who);
+    remove_trailing_s(what);
+
+    //std::clog << "report("<< what << "|" << who << "|" << which << ")\n";
+
     if ( what == "fiber" )
     {
         if ( who.empty() )
             return reportFiber(out);
-        if ( who == "ends" )
+        if ( who == "end" )
             return reportFiberEnds(out);
-        if ( who == "points" )
+        if ( who == "point" )
             return reportFiberPoints(out);
-        if ( who == "speckles" )
+        if ( who == "moment" )
+            return reportFiberMoments(out);
+        if ( who == "speckle" )
         {
             real len = 1;
             opt.set(len, "interval");
             return reportFiberSpeckles(out, len);
         }
-        if ( who == "segments" )
+        if ( who == "segment" )
             return reportFiberSegments(out);
-        if ( who == "lengths" )
+        if ( who == "length" )
             return reportFiberLengths(out);
         if ( who == "length_distribution" )
         {
@@ -85,23 +139,23 @@ void Simul::report(std::ostream& out, std::string const& what, std::string const
             opt.set(max, "max");
             return reportFiberLengthDistribution(out, len, max);
         }
-        if ( who == "tensions" )
+        if ( who == "tension" )
             return reportFiberTension(out, opt);
-        if ( who == "dynamics" )
+        if ( who == "dynamic" )
             return reportFiberDynamic(out);
-        if ( who == "forces" )
+        if ( who == "force" )
             return reportFiberForces(out);
-        if ( who == "clusters" )
+        if ( who == "cluster" )
             return reportClusters(out, 1);
-        throw InvalidSyntax("I only know fiber: ends, points, speckles, segments, dynamics, lengths, length_distribution, tensions, forces, clusters");
+        throw InvalidSyntax("I only know fiber: end, point, speckle, segment, dynamic, length, length_distribution, tension, force, cluster");
     }
     if ( what == "bead" )
     {
         if ( who.empty() )
             return reportBeadPosition(out);
-        if ( who == "singles" )
+        if ( who == "single" )
             return reportBeadSingles(out);
-        if ( who == "positions" || who == "all" )
+        if ( who == "position" || who == "all" )
             return reportBeadPosition(out);
         throw InvalidSyntax("I only know bead: all, singles");
     }
@@ -127,19 +181,19 @@ void Simul::report(std::ostream& out, std::string const& what, std::string const
     {
         if ( who.empty() )
             return reportSingle(out);
-        if ( who == "positions" || who == "all" )
+        if ( who == "position" || who == "all" )
             return reportSinglePosition(out);
-        if ( who == "forces" )
+        if ( who == "force" )
             return reportSingleForce(out);
         else
             return reportSinglePosition(out, who);
-        throw InvalidSyntax("I only know single: all, forces, NAME");
+        throw InvalidSyntax("I only know single: all, force, NAME");
     }
     if ( what == "couple" )
     {
         if ( who.empty() )
             return reportCouple(out);
-        else if ( who == "positions" || who == "all" )
+        else if ( who == "position" || who == "all" )
             return reportCouplePosition(out);
         else
             return reportCouplePosition(out, who);
@@ -327,34 +381,49 @@ void Simul::reportFiberDynamic(std::ostream& out) const
 }
 
 
+
+/**
+ Export length, position and directions at center of fibers
+ */
+void Simul::reportFiber(std::ostream& out, FiberProp const* fp) const
+{
+    out << "% class_id  fiber_id    length";
+#if ( DIM == 3 )
+    out << " positionX positionY positionZ directionX directionY directionZ end-to-end cosinus";
+#else
+    out << " positionX positionY directionX directionY end-to-end cosinus";
+#endif
+    
+    for ( Fiber * obj=fibers.first(); obj; obj=obj->next() )
+    {
+        if ( obj->prop == fp )
+        {
+            out << LIN << obj->prop->index();
+            out << SEP << obj->number();
+            out << SEP << obj->length();
+            out << SEP << obj->posEnd(CENTER);
+            out << SEP << obj->dirEnd(CENTER);
+            out << SEP << (obj->posEnd(MINUS_END)-obj->posEnd(PLUS_END)).norm();
+            out << SEP << obj->dirEnd(MINUS_END) * obj->dirEnd(PLUS_END);
+        }
+    }
+    out << std::endl;
+}
+
+
+
 /**
  Export length, position and directions at center of fibers
  */
 void Simul::reportFiber(std::ostream& out) const
 {
-    out << "% class id length center_position center_direction" << std::endl;
-    
     PropertyList plist = properties.find_all("fiber");
     
     for ( PropertyList::iterator ip = plist.begin(); ip < plist.end(); ++ip )
     {
-        FiberProp * fp = static_cast<FiberProp*>(*ip);
-        
-        out << "% " << fp->name() << std::endl;
-        out << std::fixed;
-        out.precision(5);
-        
-        for ( Fiber * obj=fibers.first(); obj; obj=obj->next() )
-        {
-            if ( obj->property() == fp )
-            {
-                write(out, obj);
-                out << "  " << std::setw(9) << obj->length();
-                out << "  " << std::setw(9) << obj->posEnd(CENTER);
-                out << "  " << std::setw(9) << obj->dirEnd(CENTER);
-                out << std::endl;
-            }
-        }
+        FiberProp const* fp = static_cast<FiberProp*>(*ip);
+        out << "% fiber class " << fp->name() << "\n";
+        reportFiber(out, fp);
     }
 }
 
@@ -406,6 +475,132 @@ void Simul::reportFiberPoints(std::ostream& out) const
         fib = static_cast<Fiber*>(fibers.inventory.next(fib));
     }
 }
+
+
+
+/// Helper class to calculate moments of a cloud of points
+class Accumulator
+{
+public:
+    real sum;
+    real avg[3];
+    real var[9];
+    
+    void init()
+    {
+        sum = 0;
+        for ( int i = 0; i < 3; ++i ) avg[i] = 0;
+        for ( int i = 0; i < 9; ++i ) var[i] = 0;
+    }
+    
+    void add(real w, Vector const& p)
+    {
+        sum += w;
+        avg[0] += w * p.XX;
+        var[0] += w * p.XX * p.XX;
+#if ( DIM > 1 )
+        avg[1] += w * p.YY;
+        var[1] += w * p.YY * p.XX;
+        var[4] += w * p.YY * p.YY;
+#endif
+#if ( DIM > 2 )
+        avg[2] += w * p.ZZ;
+        var[2] += w * p.ZZ * p.XX;
+        var[5] += w * p.ZZ * p.YY;
+        var[8] += w * p.ZZ * p.ZZ;
+#endif
+    }
+    
+    void add(Vector const& p)
+    {
+        sum += 1;
+        avg[0] += p.XX;
+        var[0] += p.XX * p.XX;
+#if ( DIM > 1 )
+        avg[1] += p.YY;
+        var[1] += p.YY * p.XX;
+        var[4] += p.YY * p.YY;
+#endif
+#if ( DIM > 2 )
+        avg[2] += p.ZZ;
+        var[2] += p.ZZ * p.XX;
+        var[5] += p.ZZ * p.YY;
+        var[8] += p.ZZ * p.ZZ;
+#endif
+    }
+    
+    void subtract_mean()
+    {
+        //Remove the mean:
+        avg[0] /= sum;
+        var[0] = var[0]/sum - avg[0] * avg[0];
+#if ( DIM > 1 )
+        avg[1] /= sum;
+        var[1] = var[1]/sum - avg[1] * avg[0];
+        var[4] = var[4]/sum - avg[1] * avg[1];
+#endif
+#if ( DIM > 2 )
+        avg[2] /= sum;
+        var[2] = var[2]/sum - avg[2] * avg[0];
+        var[5] = var[5]/sum - avg[2] * avg[1];
+        var[8] = var[8]/sum - avg[2] * avg[2];
+#endif
+    }
+    
+    void print(std::ostream& out)
+    {
+        out << SEP << sum;
+        out << SEP << avg[0];
+        out << SEP << avg[1];
+        out << SEP << avg[2];
+        out << SEP << var[0];
+        out << SEP << var[4];
+        out << SEP << var[8];
+        out << SEP << var[0] + var[4] + var[8];
+    }
+};
+
+
+/**
+ Export first and second-order moments of model points
+ */
+void Simul::reportFiberMoments(std::ostream& out) const
+{
+    out << "% class             sum_weight    mean_x    mean_y    mean_z";
+    out << "     var_x     var_y     var_z   var_sum";
+    out << std::fixed;
+    
+    Accumulator accum;
+    
+    PropertyList plist = properties.find_all("fiber");
+    
+    for ( PropertyList::iterator ip = plist.begin(); ip < plist.end(); ++ip )
+    {
+        FiberProp * fp = static_cast<FiberProp*>(*ip);
+        
+        accum.init();
+        
+        for ( Fiber * fib=fibers.first(); fib; fib=fib->next() )
+        {
+            if ( fib->prop == fp )
+            {
+                const real w = fib->segmentation();
+                accum.add(0.5*w, fib->posEnd(MINUS_END));
+                for ( unsigned n = 1; n < fib->lastPoint(); ++n )
+                    accum.add(w, fib->posPoint(n));
+                accum.add(0.5*w, fib->posEnd(PLUS_END));
+            }
+        }
+        
+        accum.subtract_mean();
+        out << LIN << std::setw(20) << fp->name();
+        accum.print(out);
+        out << std::endl;
+    }
+}
+
+
+
 
 /**
  Export Fiber-number, position of model points
