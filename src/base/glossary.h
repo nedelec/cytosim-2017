@@ -351,6 +351,39 @@ public:
         return 1;
     }
     
+    /// check if value associated with `key` at index `inx` is a number
+    /**
+     @returns:
+     - 0 if this is not a number
+     - 2 for positive integer
+     - 3 for negative integer
+     - 4 for positive float
+     - 5 for negative float
+     .
+     */
+    int is_number(key_type const& key, unsigned inx = 0) const
+    {
+        rec_type const * rec = values(key);
+        
+        if ( rec == 0  || inx >= rec->size() )
+            return 0;
+        
+        std::string const& val = rec->at(inx).str;
+        
+        char const* str = val.c_str();
+        char * end;
+        
+        int i = strtol(str, &end, 10);
+        if ( end > str && 0 == not_space(end) )
+            return 2 + ( i < 0 );
+        
+        double d = strtod(str, &end);
+        if ( end > str && 0 == not_space(end) )
+            return 4 + ( d < 0 );
+        
+        return 0;
+    }
+
 };
 
 

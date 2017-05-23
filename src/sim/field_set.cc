@@ -46,7 +46,7 @@ Object * FieldSet::newObjectT(const Tag tag, int idx)
     Field * obj = 0;
     if ( tag == Field::TAG )
     {
-        Property * p = simul.properties.find(kind(), idx, true);
+        Property * p = simul.properties.find_or_die(kind(), idx);
         obj = new Field(static_cast<FieldProp*>(p));
         //the field is not initialized, because it should be set by FieldBase::read
     }
@@ -69,12 +69,12 @@ Object * FieldSet::newObjectT(const Tag tag, int idx)
  
  \todo: read the value of the field from a file, at initialization
  */
-Object * FieldSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
+ObjectList FieldSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     Field * obj = 0;
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         FieldProp * fp = static_cast<FieldProp*>(p);
         
         obj = new Field(fp);
@@ -87,7 +87,13 @@ Object * FieldSet::newObject(const std::string& kd, const std::string& nm, Gloss
         if ( opt.set(val, "value") || opt.set(val, "initial_value") )
             obj->setConcentration(val);
     }
-    return obj;
+    
+    ObjectList res;
+    if ( obj )
+        res.push_back(obj);
+    
+    return res;
+
 }
 
 

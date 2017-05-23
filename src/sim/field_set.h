@@ -38,7 +38,7 @@ public:
     //--------------------------
     
     /// create a new object from the corresponding property
-    Object *    newObject(const std::string& kind, const std::string& prop, Glossary& opt);
+    ObjectList  newObjects(const std::string& kind, const std::string& prop, Glossary& opt);
 
     /// construct object
     Object *    newObjectT(const Tag tag, int);

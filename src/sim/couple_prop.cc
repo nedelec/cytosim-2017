@@ -86,11 +86,11 @@ void CoupleProp::complete(SimulProp const* sp, PropertyList* plist)
     
     if ( hand1.empty() )
         throw InvalidParameter("couple:hand1 must be defined");
-    hand_prop1 = static_cast<HandProp*>(plist->find("hand", hand1, true));
+    hand_prop1 = static_cast<HandProp*>(plist->find_or_die("hand", hand1));
    
     if ( hand2.empty() )
         throw InvalidParameter("couple:hand2 must be defined");
-    hand_prop2 = static_cast<HandProp*>(plist->find("hand", hand2, true));
+    hand_prop2 = static_cast<HandProp*>(plist->find_or_die("hand", hand2));
     
     if ( sp->strict )
     {

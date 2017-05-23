@@ -36,7 +36,7 @@ void BundleProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( fibers.empty() )
         throw InvalidParameter("bundle:fibers must be specified");
     
-    fiber_prop = static_cast<FiberProp*>(plist->find("fiber", fibers, true));
+    fiber_prop = static_cast<FiberProp*>(plist->find_or_die("fiber", fibers));
     
     if ( nb_fibers <= 0 )
         throw InvalidParameter("bundle:nb_fibers must be specified and > 0");

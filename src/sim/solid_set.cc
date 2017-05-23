@@ -32,7 +32,7 @@ Object * SolidSet::newObjectT(const Tag tag, int idx)
     if ( tag == Solid::TAG )
     {
         // as Solid use a BeadProp, we search for "bead":
-        Property * p = simul.properties.find("bead", idx, true);
+        Property * p = simul.properties.find_or_die("bead", idx);
         Solid * s = new Solid(static_cast<SolidProp*>(p));
         return s;        
     }
@@ -49,7 +49,7 @@ Object * SolidSet::newObject(const std::string& kd, const std::string& nm, Gloss
     if ( kd == kind() )
     {
         // as Solid use a BeadProp, we search for "bead":
-        Property * p = simul.properties.find("bead", nm, true);
+        Property * p = simul.properties.find_or_die("bead", nm);
         obj = new Solid(static_cast<SolidProp*>(p));
         obj->build(opt);
     }

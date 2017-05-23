@@ -48,15 +48,16 @@ void NucleusProp::complete(SimulProp const* sp, PropertyList* plist)
         if ( fibers.empty() )
             throw InvalidParameter("nucleus:fibers must be specified");
         
-        fiber_prop = static_cast<FiberProp*>(plist->find("fiber", fibers, true));
+        fiber_prop = static_cast<FiberProp*>(plist->find_or_die("fiber", fibers));
     }
     
     if ( sphere.empty() )
         throw InvalidParameter("nucleus:sphere (a sphere) must be specified");
     
-    sphere_prop = static_cast<SphereProp*>(plist->find("sphere", sphere, true));
+    sphere_prop = static_cast<SphereProp*>(plist->find_or_die("sphere", sphere));
     
-    bundle_prop = static_cast<BundleProp*>(plist->find("bundle", bundles, nb_bundles>0));
+    if ( nb_bundles > 0 )
+        bundle_prop = static_cast<BundleProp*>(plist->find_or_die("bundle", bundles));
         
     if ( stiffness < REAL_EPSILON )
         throw InvalidParameter("nucleus:stiffness must be specified and >= 0");

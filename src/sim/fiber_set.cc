@@ -77,7 +77,7 @@ Object * FiberSet::newObject(const std::string& kd, const std::string& nm, Gloss
     Fiber * obj = 0;
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         obj = static_cast<FiberProp*>(p)->newFiber(opt);
     }
     return obj;
@@ -192,7 +192,7 @@ ObjectList FiberSet::newObjects(const std::string& kd, const std::string& nm, Gl
 
         if ( opt.set(nam, "couple") )
         {
-            CoupleProp * cop = static_cast<CoupleProp*>(simul.properties.find("couple", nam, true));
+            CoupleProp * cop = static_cast<CoupleProp*>(simul.properties.find_or_die("couple", nam));
             int cnt = 1;
             opt.set(cnt, "couple", 1);
             real len = fib->length();
@@ -218,7 +218,7 @@ ObjectList FiberSet::newObjects(const std::string& kd, const std::string& nm, Gl
  */
 Object * FiberSet::newObjectT(const Tag tag, int idx)
 {
-    Property * p = simul.properties.find(kind(), idx, true);
+    Property * p = simul.properties.find_or_die(kind(), idx);
     Fiber* fib = static_cast<FiberProp*>(p)->newFiber();
 
 #ifdef BACKWARD_COMPATIBILITY

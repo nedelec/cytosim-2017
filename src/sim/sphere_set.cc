@@ -45,7 +45,7 @@ Object * SphereSet::newObjectT(const Tag tag, int idx)
     Sphere * obj = 0;
     if ( tag == Sphere::TAG )
     {
-        Property * p = simul.properties.find(kind(), idx, true);
+        Property * p = simul.properties.find_or_die(kind(), idx);
         obj = new Sphere(static_cast<SphereProp*>(p));
     }
     return obj;
@@ -70,7 +70,7 @@ Object * SphereSet::newObject(const std::string& kd, const std::string& nm, Glos
     Sphere * obj = 0;
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         obj = new Sphere(static_cast<SphereProp*>(p), 1);
         assert_true(obj);
         

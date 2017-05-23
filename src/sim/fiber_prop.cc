@@ -274,7 +274,7 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( glue )
     {
         glue_set = &sp->simul->singles;
-        glue_prop = static_cast<SingleProp*>(plist->find("single", glue_single, true));
+        glue_prop = static_cast<SingleProp*>(plist->find_or_die("single", glue_single));
     }
 
     if ( rigidity < 0 )

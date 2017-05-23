@@ -33,26 +33,6 @@ void ObjectSet::relink(Object * obj)
 }
 
 //------------------------------------------------------------------------------
-#pragma mark -
-
-/**
- This returns a list of Objects, that are not necessarily all of the same class.
- For example, the list may contain a Solid, and a bunch of attached Singles.
- The Objects are placed at the origin, and aligned with the X-axis.
- The Objects should be added to the Simul.
- 
- The default behavior is to call newObject()
- */
-ObjectList ObjectSet::newObjects(const std::string& kind, const std::string& prop, Glossary& opt)
-{
-    ObjectList res;
-    Object * obj = newObject(kind, prop, opt);
-    if ( obj )
-        res.push_back(obj);
-    return res;
-}
-
-//------------------------------------------------------------------------------
 
 /**
  Translate all objects for which ( Object::translatable()==true ) by \a vec

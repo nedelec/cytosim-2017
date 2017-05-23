@@ -155,7 +155,7 @@ void CoupleSet::relax()
 Object * CoupleSet::newObjectT(const Tag tag, int idx)
 {
     assert_true( tag == Couple::TAG );
-    Property * p = simul.properties.find(kind(), idx, true);
+    Property * p = simul.properties.find_or_die(kind(), idx);
     return static_cast<CoupleProp*>(p)->newCouple();
 }
 
@@ -166,7 +166,7 @@ Object * CoupleSet::newObject(const std::string& kd, const std::string& nm, Glos
     Object * obj = 0;
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         obj = static_cast<CoupleProp*>(p)->newCouple();
     }
     return obj;

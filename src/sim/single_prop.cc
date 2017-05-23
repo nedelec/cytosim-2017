@@ -117,7 +117,7 @@ void SingleProp::complete(SimulProp const* sp, PropertyList* plist)
     
     if ( hand.empty() )
         throw InvalidParameter("single:hand must be defined");
-    hand_prop = static_cast<HandProp*>(plist->find("hand", hand, true));
+    hand_prop = static_cast<HandProp*>(plist->find_or_die("hand", hand));
     
     if ( hand_prop == 0 )
         throw InvalidParameter("unknown single:hand '"+hand+"'");

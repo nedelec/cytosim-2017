@@ -26,7 +26,7 @@ Property* BeadSet::newProperty(const std::string& kd, const std::string& nm, Glo
 Object * BeadSet::newObjectT(const Tag tag, int idx)
 {
     assert_true( tag == Bead::TAG );
-    Property * p = simul.properties.find(kind(), idx, true);
+    Property * p = simul.properties.find_or_die(kind(), idx);
     return new Bead(static_cast<BeadProp*>(p), Vector(0,0,0), 0);
 }
 
@@ -54,7 +54,7 @@ Object * BeadSet::newObject(const std::string& kd, const std::string& nm, Glossa
         if ( rad < 0 ) 
             throw InvalidParameter("bead:radius must be specified and > 0");
 
-        Property * p = simul.properties.find(kind(), nm, true);
+        Property * p = simul.properties.find_or_die(kind(), nm);
         obj = new Bead(static_cast<BeadProp*>(p), Vector(0,0,0), rad);
     }
     return obj;
@@ -100,7 +100,7 @@ ObjectList BeadSet::newObjects(const std::string& kd, const std::string& nm, Glo
         {
             unsigned cnt = 1;
             Tokenizer::split_integer(sn, cnt);
-            Property * p = simul.properties.find("single", sn, true);
+            Property * p = simul.properties.find_or_die("single", sn);
             SingleProp * sp = static_cast<SingleProp*>(p);
             for ( unsigned s = 0; s < cnt; ++s )
                 res.push_back(sp->newWrist(PointExact(bid, 0)));

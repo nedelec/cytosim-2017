@@ -112,7 +112,7 @@ int PropertyList::find_index(const Property * p) const
  */
 Property * PropertyList::find(const std::string& nm) const
 {
-    //std::cerr << this << "->find(" << nm << ")" << std::endl;
+    //std::clog << this << "->find(" << nm << ")" << std::endl;
     
     for ( const_iterator n = vec.begin(); n != vec.end(); ++n )
         if ( (*n)->is_named(nm) )
@@ -124,9 +124,9 @@ Property * PropertyList::find(const std::string& nm) const
 /**
  returns the first match
  */
-Property * PropertyList::find(const std::string& kd, const std::string& nm, bool must_find) const
+Property * PropertyList::find(const std::string& kd, const std::string& nm) const
 {
-    //std::cerr << this << "->find(" << kd << ", " << nm << ")" << std::endl;
+    //std::clog << this << "->find(" << kd << ", " << nm << ")" << std::endl;
 
     for ( const_iterator n = vec.begin(); n != vec.end(); ++n )
     {
@@ -134,35 +134,54 @@ Property * PropertyList::find(const std::string& kd, const std::string& nm, bool
             return *n;
     }
     
-    if ( must_find )
-    {
-        std::ostringstream oss;
-        oss << "Unknown " << kd << " `" << nm << "'" << std::endl;
-        write_names(oss, PREF);
-        throw InvalidSyntax(oss.str());
-    }
+    return 0;
+}
+
+
+Property * PropertyList::find(const std::string& kd, const int idx) const
+{
+    //std::clog << this << "->find(" << kd << ", " << idx << ")" << std::endl;
+
+    for ( const_iterator n = vec.begin(); n != vec.end(); ++n )
+        if ( (*n)->kind()==kd  &&  (*n)->index()==idx )
+            return *n;
     
     return 0;
 }
 
 
-Property * PropertyList::find(const std::string& kd, const int idx, bool must_find) const
+
+Property * PropertyList::find_or_die(std::string const& knd, std::string const& nm) const
 {
-    //std::cerr << this << "->find(" << kd << ", " << idx << ")" << std::endl;
-
-    for ( const_iterator n = vec.begin(); n != vec.end(); ++n )
-        if ( (*n)->kind()==kd  &&  (*n)->index()==idx )
-            return *n;
-
-    if ( must_find )
+    Property * res = find(knd, nm);
+    
+    if ( !res )
     {
         std::ostringstream oss;
-        oss << "Unknown " << kd << "[" << idx << "]" << std::endl;
+        oss << "Unknown " << knd << " `" << nm << "'\n";
+        oss << PREF << "Known properties:\n";
         write_names(oss, PREF);
         throw InvalidSyntax(oss.str());
     }
-        
-    return 0;
+    
+    return res;
+}
+
+
+Property * PropertyList::find_or_die(std::string const& knd, const unsigned idx) const
+{
+    Property * res = find(knd, idx);
+    
+    if ( !res )
+    {
+        std::ostringstream oss;
+        oss << "Unknown " << knd << "(" << idx << ")\n";
+        oss << PREF << "Known properties:\n";
+        write_names(oss, PREF);
+        throw InvalidSyntax(oss.str());
+    }
+    
+    return res;
 }
 
 

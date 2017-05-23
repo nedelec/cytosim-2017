@@ -427,7 +427,7 @@ Property* Simul::findProperty(const std::string& kd, const int ix) const
 
 SingleProp* Simul::findSingleProp(const std::string& nm) const
 {
-    Property * p = properties.find("single", nm, true);
+    Property * p = properties.find_or_die("single", nm);
     return static_cast<SingleProp*>(p);
 }
 

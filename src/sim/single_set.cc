@@ -72,7 +72,7 @@ void SingleSet::erase()
 //------------------------------------------------------------------------------
 Object * SingleSet::newObjectT(const Tag tag, int ix)
 {
-    Property * p = simul.properties.find(kind(), ix, true);
+    Property * p = simul.properties.find_or_die(kind(), ix);
     SingleProp * sp = static_cast<SingleProp*>(p);
 
     if ( tag == Wrist::TAG )
@@ -114,7 +114,7 @@ Object * SingleSet::newObject(const std::string& kd, const std::string& nm, Glos
 {
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         SingleProp * sp = static_cast<SingleProp*>(p);
         
         std::string nam;

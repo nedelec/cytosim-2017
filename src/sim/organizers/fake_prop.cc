@@ -28,7 +28,7 @@ void FakeProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( asters.empty() )
         throw InvalidParameter("fake:asters must be specified");
     
-    aster_prop = static_cast<AsterProp*>(plist->find("aster", asters, true));
+    aster_prop = static_cast<AsterProp*>(plist->find_or_die("aster", asters));
     
     if ( stiffness < 0 )
         throw InvalidParameter("fake:stiffness must be specified and >= 0");

@@ -72,7 +72,7 @@ Object * SpaceSet::newObjectT(const Tag tag, int idx)
     Space * obj = 0;
     if ( tag == Space::TAG )
     {
-        Property * p = simul.properties.find(kind(), idx, true);
+        Property * p = simul.properties.find_or_die(kind(), idx);
         SpaceProp * sp = static_cast<SpaceProp*>(p);
         obj = sp->newSpace();
     }
@@ -88,12 +88,12 @@ Object * SpaceSet::newObjectT(const Tag tag, int idx)
  }
  @endcode
  */
-Object * SpaceSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
+ObjectList SpaceSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     Space * obj = 0;
     if ( kd == kind() )
     {
-        Property * p = simul.properties.find(kd, nm, true);
+        Property * p = simul.properties.find_or_die(kd, nm);
         SpaceProp * sp = static_cast<SpaceProp*>(p);
 
         obj = sp->newSpace();
@@ -102,5 +102,10 @@ Object * SpaceSet::newObject(const std::string& kd, const std::string& nm, Gloss
         if ( opt.set(dim, "dimensions") )
             obj->readLengths(dim);
     }
-    return obj;
+    
+    ObjectList res;
+    if ( obj )
+        res.push_back(obj);
+    
+    return res;
 }

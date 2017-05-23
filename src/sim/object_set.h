@@ -30,7 +30,7 @@ extern Random RNG;
  The Inventory can be used to access objects directly.
  
  Functions are used to manage:
- - object creation: newProperty(), newObject().
+ - object creation: newProperty(), newObjects().
  - object lists: size(), add(), remove(), relink(), erase().
  - object access: first(), find().
  - simulation: step(), mix().
@@ -108,12 +108,8 @@ public:
     
     //--------------------------
     
-    /// create a single new object with given Property
-    /** The Object should be placed at the origin and aligned with the X-axis */
-    virtual Object *   newObject(const std::string& kind, const std::string& name, Glossary& opt) = 0;
-    
     /// create new objects, given Property and options in \a opt
-    virtual ObjectList newObjects(const std::string& kind, const std::string& name, Glossary& opt);
+    virtual ObjectList newObjects(const std::string& kind, const std::string& name, Glossary& opt) = 0;
     
     /// create new objects, translate and rotate them according to specifications in \a opt
     virtual ObjectList newPlacedObjects(const std::string& kind, const std::string& name, Glossary& opt);

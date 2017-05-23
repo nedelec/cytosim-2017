@@ -33,25 +33,25 @@ Object * OrganizerSet::newObjectT(const Tag tag, int idx)
 {
     if ( tag == Aster::TAG )
     {
-        Property * p = simul.properties.find("aster", idx, true);
+        Property * p = simul.properties.find_or_die("aster", idx);
         return new Aster(static_cast<AsterProp*>(p));
     }
     
     if ( tag == Bundle::TAG )
     {
-        Property * p = simul.properties.find("bundle", idx, true);
+        Property * p = simul.properties.find_or_die("bundle", idx);
         return new Bundle(static_cast<BundleProp*>(p));
     }
     
     if ( tag == Nucleus::TAG )
     {
-        Property * p = simul.properties.find("nucleus", idx, true);
+        Property * p = simul.properties.find_or_die("nucleus", idx);
         return new Nucleus(static_cast<NucleusProp*>(p));
     }
     
     if ( tag == Fake::TAG )
     {
-        Property * p = simul.properties.find("fake", idx, true);
+        Property * p = simul.properties.find_or_die("fake", idx);
         return new Fake(static_cast<FakeProp*>(p));
     }
     
@@ -62,7 +62,7 @@ Object * OrganizerSet::newObjectT(const Tag tag, int idx)
 
 Object * OrganizerSet::newObject(const std::string& kd, const std::string& nm, Glossary&)
 {
-    Property * p = simul.properties.find(kd, nm, true);
+    Property * p = simul.properties.find_or_die(kd, nm);
     Organizer * obj = 0;
     
     if ( kd == "aster" )

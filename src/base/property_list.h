@@ -83,11 +83,17 @@ public:
     Property *   find(const std::string& name) const;
 
     /// return property which has the provided name, or zero if it cannot be found
-    Property *   find(const std::string& kind, const std::string& name, bool must_find=false) const;
+    Property *   find(const std::string& kind, const std::string& name) const;
 
     /// return property which has the provided index, or zero if it cannot be found
-    Property *   find(const std::string& kind, const int index, bool must_find=false) const;
+    Property *   find(const std::string& kind, const int index) const;
     
+    /// return property which has the provided name, and throw exception if it cannot be found
+    Property *   find_or_die(std::string const& kind, std::string const& name) const;
+    
+    /// return property which has the provided index, and throw exception if it cannot be found
+    Property *   find_or_die(std::string const& kind, const unsigned index) const;
+
     /// return list of properties of the given kind
     PropertyList find_all(const std::string& kind) const;
     
