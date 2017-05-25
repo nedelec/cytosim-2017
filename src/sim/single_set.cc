@@ -109,39 +109,8 @@ Object * SingleSet::newObjectT(const Tag tag, int ix)
  .
  
  if INTERGER1 is negative, the last object is used.
- */
-Object * SingleSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
-{
-    if ( kd == kind() )
-    {
-        Property * p = simul.properties.find_or_die(kd, nm);
-        SingleProp * sp = static_cast<SingleProp*>(p);
-        
-        std::string nam;
-        if ( opt.set(nam, "base") )
-        {
-            long io = 1;
-            unsigned ip = 0;
-            opt.set(io, "base", 1);  // object number
-            opt.set(ip, "base", 2);  // index of point
-            Mecable * mec = static_cast<Mecable*>(simul.findObject(nam, io));
-            if ( mec == 0 )
-                throw InvalidParameter("Could not find Mecable in single:base");
-            if ( ip >= mec->nbPoints() )
-                throw InvalidParameter("index out of range in single:base");
-            
-            return sp->newWrist(mec, ip);
-        }
-        return sp->newSingle();
-    }
-    return 0;
-}
 
-
-/**
- @addtogroup SingleGroup
-
- You can attach a Single to a fiber:
+ You can directly attach the newly created Single to a fiber:
  @code
  new single protein
  {
@@ -157,12 +126,33 @@ Object * SingleSet::newObject(const std::string& kd, const std::string& nm, Glos
  - REAL is the abscissa of the attachment point (0=MINUS_END)
  .
  */
-ObjectList SingleSet::newObjects(const std::string& kind, const std::string& prop, Glossary& opt)
+ObjectList SingleSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     ObjectList res;
-    Object * obj = newObject(kind, prop, opt);
-    if ( obj )
+    if ( kd == kind() )
     {
+        Property * p = simul.properties.find_or_die(kd, nm);
+        SingleProp * sp = static_cast<SingleProp*>(p);
+        Object * obj = 0;
+        
+        std::string nam;
+        if ( opt.set(nam, "base") )
+        {
+            long io = 1;
+            unsigned ip = 0;
+            opt.set(io, "base", 1);  // object number
+            opt.set(ip, "base", 2);  // index of point
+            Mecable * mec = static_cast<Mecable*>(simul.findObject(nam, io));
+            if ( mec == 0 )
+                throw InvalidParameter("Could not find Mecable in single:base");
+            if ( ip >= mec->nbPoints() )
+                throw InvalidParameter("index out of range in single:base");
+            
+            obj = sp->newWrist(mec, ip);
+        }
+        else
+            obj = sp->newSingle();
+
         res.push_back(obj);
         
         /*
@@ -199,7 +189,85 @@ void SingleSet::link(Object * gh)
         fList.push_back(gh);
 }
 
+
+
 //------------------------------------------------------------------------------
+#pragma mark - Wrists
+
+/**
+ This will create Wrists with `obj` as Base, following the specifications given in `str`.
+ These Wrists will be anchored on points `fip` to `fip+nbp-1` of `obj`.
+ 
+ The syntax understood for `str` is as follows:
+ @code
+ [INTEGER] [NAME_OF_SINGLE] [each]
+ @endcode
+ 
+ The first optional integer specifies the number of Singles to be attached.
+ If 'each' is specified, this number is multiplied by the number of point `nbp`,
+ and every point receives the same number of Singles.
+ 
+ This is used to decorate Solid and Sphere
+ */
+ObjectList SingleSet::makeWrists(Mecable const* obj, unsigned fip, unsigned nbp, std::string& str)
+{
+    ObjectList res;
+    unsigned num = 1;
+    
+    std::istringstream iss(str);
+    iss >> num;
+    
+    if ( iss.fail() )
+    {
+        num = 1;
+        iss.clear();
+    }
+    
+    if ( num == 0 || nbp == 0 )
+        return res;
+    
+    std::string sip, mod;
+    iss >> sip >> mod;
+    
+    SingleProp * sp = simul.findSingleProp(sip);
+    
+    if ( mod == "each" )
+    {
+        for ( unsigned u = 0; u < num; ++u )
+        {
+            for ( unsigned i = 0; i < nbp; ++i )
+                res.push_back(sp->newWrist(obj, fip+i));
+        }
+    }
+    else
+    {
+        for ( unsigned u = 0; u < num; ++u )
+        {
+            unsigned i = RNG.pint_exc(nbp);
+            res.push_back(sp->newWrist(obj, fip+i));
+        }
+    }
+    
+    return res;
+}
+
+
+ObjectList SingleSet::collectWrists(Object * foot) const
+{
+    ObjectList res;
+    
+    for ( Single * s=firstF(); s; s=s->next() )
+        if ( s->foot() == foot )
+            res.push_back(s);
+    
+    for ( Single * s=firstA(); s; s=s->next() )
+        if ( s->foot() == foot )
+            res.push_back(s);
+    
+    return res;
+}
+
+
 void SingleSet::removeWrists(Object * obj)
 {
     Single * ghi = firstF();

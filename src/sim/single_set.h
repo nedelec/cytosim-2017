@@ -55,15 +55,18 @@ public:
     Property *    newProperty(const std::string& kind, const std::string& name, Glossary&) const;
 
     //--------------------------
-    
-    /// create a new object from the corresponding property
-    Object *      newObject(const std::string& kind, const std::string& prop, Glossary& opt);
-    
+     
     /// construct object
     Object *      newObjectT(const Tag tag, int prop_index);
     
     /// create a new object directly from a glossary
     ObjectList    newObjects(const std::string& kind, const std::string& prop, Glossary&);
+
+    /// create Wrists anchored on given Mecable
+    ObjectList    makeWrists(Mecable const*, unsigned, unsigned, std::string&);
+    
+    /// return all Wrists anchored on `obj`
+    ObjectList    collectWrists(Object * obj) const;
 
     /// remove all Wrists anchored on Object 'obj'
     void          removeWrists(Object * obj);

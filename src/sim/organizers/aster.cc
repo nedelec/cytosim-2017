@@ -268,8 +268,8 @@ Solid * Aster::buildSolid(Glossary& opt, Simul& simul)
 #if ( DIM == 1 )
         
         //we use one central point, and an additional one on each side:
-        int left   = so->addPoint( Vector(-rad[0], 0, 0) );
-        int right  = so->addPoint( Vector(+rad[0], 0, 0) );
+        unsigned left  = so->addPoint( Vector(-rad[0], 0, 0) );
+        unsigned right = so->addPoint( Vector(+rad[0], 0, 0) );
         
         for ( unsigned ii = 0; ii < cnt; ++ii )
             asClamp[ii].set(center,  ( ii & 1 ) ? left : right, rad[0]);
@@ -280,7 +280,7 @@ Solid * Aster::buildSolid(Glossary& opt, Simul& simul)
         for ( unsigned ii = 0; ii < cnt; ++ii )
         {
             Vector P(cos(ang), sin(ang), 0);
-            int pt = so->addPoint((rad[0]+rad[1])*P);
+            unsigned pt = so->addPoint((rad[0]+rad[1])*P);
             if ( rad[1] > 0 )
                 asClamp[ii].set(so->addPoint(rad[1]*P), pt, rad[0]);
             else
@@ -295,7 +295,7 @@ Solid * Aster::buildSolid(Glossary& opt, Simul& simul)
         for ( unsigned ii = 0; ii < cnt; ++ii )
         {
             sphere.copyCoordinatesOfPoint(P, ii);
-            int pt = so->addPoint((rad[0]+rad[1])*P);
+            unsigned pt = so->addPoint((rad[0]+rad[1])*P);
             if ( rad[1] > 0 )
                 asClamp[ii].set(so->addPoint(rad[1]*P), pt, rad[0]);
             else

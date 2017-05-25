@@ -7,6 +7,7 @@
 #include "rotation.h"
 #include "meca.h"
 #include "messages.h"
+#include "glossary.h"
 #include "point_exact.h"
 #include "sphere_prop.h"
 #include "object_set.h"
@@ -89,6 +90,126 @@ unsigned Sphere::addSurfacePoint(Vector const& cp)
     if ( 8 * cp.norm() < spRadius )
         throw InvalidParameter("sphere:point is too far from the surface of radius ", spRadius);
     return addPoint(posPoint(0)+cp.normalized(spRadius));
+}
+
+
+/**
+ @ingroup NewObject
+ 
+ Specify radius and number of surface points of a Sphere:
+ @code
+ new sphere NAME
+ {
+ radius = REAL
+ point0 = INTEGER, POSITION [, SINGLE_SPEC]
+ }
+ @endcode
+ 
+ The `INTEGER` specifies the number of points created, and `POSITION` can be a
+ `VECTOR`, or the string 'surface'.  Multiple `SINGLE_SPEC` can be specified.
+ 
+ <h3> Add Singles to a Sphere </h3>
+ 
+ The parameter 'attach' can be used to add Single to the points of a Solid:
+ 
+ @code
+ new sphere NAME
+ {
+ radius   = ...
+ point0   = ...
+ etc.
+ attach   = SINGLE_SPEC [, SINGLE_SPEC] ...
+ attach0  = SINGLE_SPEC [, SINGLE_SPEC] ...
+ etc.
+ }
+ @endcode
+ 
+ Where `SINGLE_SPEC` is string containing at most 3 words: `[INTEGER] NAME [each]`,
+ where the `INTEGER` specifies the number of Singles, `NAME` specifies their name,
+ and the optional word `each` species that the command applies to every point.
+ 
+ The command `attach` applies to all the points of the Solid, while `attach0`,
+ `attach1`, etc. apply to the points specified by `point0`, `point1`, etc.
+ With `attach`, the Singles are distributed randomly on all the points,
+ and if `each` is specified, the specification is repeated for each point.
+ 
+ For example if `grafted` is the name of a Single, one can use:
+ 
+ @code
+ new solid NAME
+ {
+ attach0 = 1 grafted each
+ attach1 = 10 grafted
+ }
+ @endcode
+ */
+ObjectList Sphere::build(Glossary & opt, Simul& simul)
+{
+    ObjectList res;
+    std::string str;
+    unsigned inp = 0, inx = 0, nbp = 1;
+    
+    // interpret each instruction as a command to add points:
+    std::string var = "point0";
+    while ( opt.has_key(var) )
+    {
+        inx = 0;
+        nbp = 1;
+        if ( opt.is_number(var) == 2 && opt.set(nbp, var) )
+            ++inx;
+        
+        if ( nbp > 0 )
+        {
+            unsigned fip = nbPoints();
+            // add 'nbp' points:
+            for ( unsigned n = 0; n < nbp; ++n )
+            {
+                Vector vec(0,0,0);
+                str = opt.value(var, inx);
+                if ( str == "surface" )
+                    vec = Vector::randUnit(radius());
+                else
+                {
+                    std::istringstream iss(str);
+                    vec = Movable::readPosition(iss, 0);
+                    if ( 8 * vec.norm() < spRadius )
+                        throw InvalidParameter(var+" cannot be brought to the Sphere surface");
+                }
+                addSurfacePoint(vec);
+            }
+            
+            // attach Single to this set of points:
+            ++inx;
+            while ( opt.set(str, var, inx++) )
+                res.append(simul.singles.makeWrists(this, fip, nbp, str));
+            
+            // attach Single to this set of points:
+            inx = 0;
+            var = "attach" + sMath::repr(inp);
+            while ( opt.set(str, var, inx++) )
+                res.append(simul.singles.makeWrists(this, fip, nbp, str));
+        }
+        
+        // set next keyword:
+        var = "point" + sMath::repr(++inp);
+    }
+    
+    
+    // attach Singles distributed over the surface points:
+    inx = 0;
+    while ( opt.set(str, "attach", inx++) )
+        res.append(simul.singles.makeWrists(this, nbRefPts, nbSurfacePoints(), str));
+    
+    
+    // final verification of the number of points:
+    nbp = 0;
+    if ( opt.set(nbp, "nb_points")  &&  nbp != nbPoints() )
+    {
+        throw InvalidParameter("could not find the number of points specified in solid:nb_points");
+    }
+    
+    //std::cerr << *this << std::endl;
+    return res;
 }
 
 

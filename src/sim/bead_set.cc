@@ -42,31 +42,8 @@ Object * BeadSet::newObjectT(const Tag tag, int idx)
    radius = REAL
  }
  @endcode
- */
-Object * BeadSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
-{
-    Object * obj = 0;
-    if ( kd == kind() )
-    {
-        real rad = -1;
-        opt.set(rad, "radius");
-        
-        if ( rad < 0 ) 
-            throw InvalidParameter("bead:radius must be specified and > 0");
 
-        Property * p = simul.properties.find_or_die(kind(), nm);
-        obj = new Bead(static_cast<BeadProp*>(p), Vector(0,0,0), rad);
-    }
-    return obj;
-}
-
-
-/**
- @addtogroup NewBead
- @{
- <h3> How to add Single </h3>
-
- Singles can only be attached at the center of the Bead:
+ <h3> Singles can be attached at the center of the Bead </h3>
 
  @code
  new bead NAME
@@ -79,16 +56,23 @@ Object * BeadSet::newObject(const std::string& kd, const std::string& nm, Glossa
  `SINGLE_SPEC` is an optional number (1 by default) followed by the name of the Single,
  for example `grafted` or `10 grafted`, if this is the name of a Single.
  
- @}
  */
 
 ObjectList BeadSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     ObjectList res;
-    Object * obj = newObject(kd, nm, opt);
-
-    if ( obj )
+    Object * obj = 0;
+    if ( kd == kind() )
     {
+        real rad = -1;
+        opt.set(rad, "radius");
+        
+        if ( rad < 0 )
+            throw InvalidParameter("bead:radius must be specified and > 0");
+        
+        Property * p = simul.properties.find_or_die(kind(), nm);
+        obj = new Bead(static_cast<BeadProp*>(p), Vector(0,0,0), rad);
+ 
         res.push_back(obj);
         Bead * bid = static_cast<Bead*>(obj);
         

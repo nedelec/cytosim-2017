@@ -68,22 +68,6 @@ Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Gl
 }
 
 
-
-/**
-The initialization options depends on the type of fiber: Fiber, DynamicFiber, ClassicFiber, Tubule.
-*/
-Object * FiberSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
-{
-    Fiber * obj = 0;
-    if ( kd == kind() )
-    {
-        Property * p = simul.properties.find_or_die(kd, nm);
-        obj = static_cast<FiberProp*>(p)->newFiber(opt);
-    }
-    return obj;
-}
-
-
 /**
  @addtogroup FiberGroup 
  @{
@@ -134,7 +118,12 @@ Object * FiberSet::newObject(const std::string& kd, const std::string& nm, Gloss
 ObjectList FiberSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     ObjectList res;
-    Object * obj = newObject(kd, nm, opt);
+    Fiber * obj = 0;
+    if ( kd == kind() )
+    {
+        Property * p = simul.properties.find_or_die(kd, nm);
+        obj = static_cast<FiberProp*>(p)->newFiber(opt);
+    }
     
     //add optional singles to the Fiber:
     if ( obj )

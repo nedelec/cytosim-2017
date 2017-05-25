@@ -160,20 +160,6 @@ Object * CoupleSet::newObjectT(const Tag tag, int idx)
 }
 
 /**
- */
-Object * CoupleSet::newObject(const std::string& kd, const std::string& nm, Glossary& opt)
-{
-    Object * obj = 0;
-    if ( kd == kind() )
-    {
-        Property * p = simul.properties.find_or_die(kd, nm);
-        obj = static_cast<CoupleProp*>(p)->newCouple();
-    }
-    return obj;
-}
-
-
-/**
  @addtogroup CoupleGroup
 
  You can attach the hands of a Couple:
@@ -196,12 +182,16 @@ Object * CoupleSet::newObject(const std::string& kd, const std::string& nm, Glos
  .
  */
 
-ObjectList CoupleSet::newObjects(const std::string& kind, const std::string& prop, Glossary& opt)
+ObjectList CoupleSet::newObjects(const std::string& kd, const std::string& nm, Glossary& opt)
 {
     ObjectList res;
-    Object * obj = newObject(kind, prop, opt);
-    if ( obj )
+    Object * obj = 0;
+    
+    if ( kd == kind() )
     {
+        Property * p = simul.properties.find_or_die(kd, nm);
+        obj = static_cast<CoupleProp*>(p)->newCouple();
+
         res.push_back(obj);
         
         long io = 1;

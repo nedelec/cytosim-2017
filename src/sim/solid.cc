@@ -204,183 +204,165 @@ Vector Solid::centroid()
 #pragma mark -
 
 //------------------------------------------------------------------------------
+
 /**
- @defgroup NewSolid How to create a Solid
  @ingroup NewObject
  
- Specify  number of points and shape:
+ There are different ways to specify the number and positions of points in a Solid:
  
  @code
  new solid NAME
  {
-   nb_points = INTEGER
-   radius = REAL
-   shape  = SHAPE
+ point0 = [INTEGER,] POSITION, RADIUS [, SINGLE_SPEC]
+ point1 = [INTEGER,] POSITION, RADIUS [, SINGLE_SPEC]
+ point2 = [INTEGER,] POSITION, RADIUS [, SINGLE_SPEC]
+ etc.
  }
  @endcode
  
- SHAPE can be \a surface, \a inside, \a equator or \a cluster.
+ each `point#` specifies a number of points to be added.
+ The first parameter (`INTEGER`) specifies the number of points.
+ The second argument (`POSITION`) specifies their position with respect to the center.
+ The keywords are the same as for other position in cytosim (see examples below).
+ The last argument (`RADIUS`) specifies the radius of the bead attached at this point,
+ and it can be zero.
  
- Instead of providing 'shape', it is possible to specify the points and their associated radii
- directly, as follows:
+ Examples:
  
  @code
- new solid NAME
+ new solid blob
  {
-   nb_points = INTEGER
-   point0 = POSITION, RADIUS
-   point1 = POSITION, RADIUS
-   ...
+ point0 = center, 1.0
+ point1 = 10, sphere 1, 0, grafted
+ ...
  }
  @endcode
  
- POSITION can be a VECTOR, or one of the keywords:
- - `surface`
- - `inside`
- - `equator`
+ `POSITION` can be a `VECTOR`, or the usual keywords:
  - `center`
+ - `ball RADIUS`
+ - `sphere RADIUS`
+ - `equator RADIUS`
  .
+ 
+ Another way to specify points of a Solid:
+ 
+ @code
+ new solid NAME
+ {
+ sphere0 = POSITION, RADIUS [, SINGLE_SPEC]
+ sphere1 = POSITION, RADIUS [, SINGLE_SPEC]
+ etc.
+ }
+ @endcode
+ 
+ each `sphere#` specifies one sphere to be added.
+ The first argument (`POSITION`) specifies the position with respect to the center.
+ The keywords are the same as for other position in cytosim (see examples below).
+ The second argument (`RADIUS`) specifies the radius of the bead attached at this point,
+ and it should not be zero.
+ 
+ 
+ <h3> Add Singles to a Solid </h3>
+ 
+ The parameter 'attach' can be used to add Single to the points of a Solid:
+ 
+ @code
+ new solid NAME
+ {
+ point0   = ... , SINGLE_SPEC
+ sphere0  = ... , SINGLE_SPEC
+ etc.
+ attach   = SINGLE_SPEC [, SINGLE_SPEC] ...
+ attach0  = SINGLE_SPEC [, SINGLE_SPEC] ...
+ attach1  = SINGLE_SPEC [, SINGLE_SPEC] ...
+ etc.
+ }
+ @endcode
+ 
+ Where `SINGLE_SPEC` is string containing at most 3 words: `[INTEGER] NAME [each]`,
+ where the `INTEGER` specifies the number of Singles, `NAME` specifies their name,
+ and the optional word `each` species that the command applies to every point.
+ 
+ The command `attach` applies to all the points of the Solid, while `attach0`,
+ `attach1`, etc. apply to the points specified by `point0`, `point1`, etc. only.
+ With `attach`, the Singles are distributed randomly on all the points,
+ and if `each` is specified, the specification is repeated for each point.
+ 
+ For example if `grafted` is the name of a Single, one can use:
+ 
+ @code
+ new solid NAME
+ {
+ attach0 = 1 grafted each
+ attach1 = 10 grafted
+ }
+ @endcode
  */
 
-ObjectList Solid::build(Glossary & opt, Simul&)
+ObjectList Solid::build(Glossary & opt, Simul& simul)
 {
     ObjectList res;
-    unsigned nb_points = 1;
-
-    opt.set(nb_points, "nb_points");
+    std::string str;
+    unsigned inp = 0, inx = 0, nbp = 1;
     
-    if ( nb_points < 1 )
-        throw InvalidParameter("solid:nb_points must be > 0");
-    
-    if ( opt.has_key("point0") )
+    // interpret each instruction as a command to add points:
+    std::string var = "point0";
+    while ( opt.has_key(var) )
     {
-        Vector vec(0,0,0);
-        real radius = 1;
-        char var[16];
+        inx = 0;
+        nbp = 1;
+        // optionally specify a number of points
+        if ( opt.is_number(var) == 2 && opt.set(nbp, var) )
+            ++inx;
         
-        opt.set(radius, "radius");
-        
-        if ( radius < 0 )
-            throw InvalidParameter("solid:radius must be > 0");
-        
-        for ( unsigned ii = 0; ii < nb_points; ++ii )
+        if ( nbp > 0 )
         {
-            snprintf(var, sizeof(var), "point%u", ii);
+            // get sphere radius:
+            real sr = 0;
+            opt.set(sr, var, inx+1);
             
-            std::string str;
-
-            if ( ! opt.set(str, var) )
-                throw InvalidParameter("solid:"+std::string(var)+" must be specified");
+            if ( sr < 0 )
+                throw InvalidParameter("the radius of points specified in solid must be >= 0");
             
-            if ( str == "surface" )
-                vec = Vector::randUnit(radius);
-            else if ( str == "inside" || str == "volume" )
-                vec = Vector::randBall(radius);
-            else if ( str == "center" )
-                vec.set(0,0,0);
-            else if ( str == "equator" )
+            unsigned fip = nbPoints();
+            // add 'nbp' points:
+            for ( unsigned n = 0; n < nbp; ++n )
             {
-                Vector2 w = Vector2::randUnit(radius);
-                vec.get(w);
+                // get position:
+                Vector vec(0,0,0);
+                std::istringstream iss(opt.value(var, inx));
+                vec = Movable::readPosition(iss, 0);
+                addSphere(vec, sr);
             }
-            else if ( opt.query(vec, var) )
-            {
-                
-            }
-            else
-                throw InvalidParameter("unknown POSITION in solid::pointN");
-
-            real rad;
-            if ( opt.set(rad, var, 1) )
-                addSphere(vec, rad);
-            else
-                addPoint(vec);
+            
+            // attach Single to this set of points:
+            inx += 2;
+            while ( opt.set(str, var, inx++) )
+                res.append(simul.singles.makeWrists(this, fip, nbp, str));
+            
+            // attach Single to this set of points:
+            inx = 0;
+            var = "attach" + sMath::repr(inp);
+            while ( opt.set(str, var, inx++) )
+                res.append(simul.singles.makeWrists(this, fip, nbp, str));
         }
+        
+        var = "point" + sMath::repr(++inp);
     }
-    else
+
+    // attach Singles to be distributed over all the points:
+    inx = 0;
+    while ( opt.set(str, "attach", inx++) )
+        res.append(simul.singles.makeWrists(this, 0, nbPoints(), str));
+    
+    // final verification of the number of points:
+    nbp = 0;
+    if ( opt.set(nbp, "nb_points")  &&  nbp != nbPoints() )
     {
-        std::string shape = "surface";
-        opt.set(shape, "shape");
-        real radius = -1;
-        opt.set(radius, "radius");
-        
-        if ( radius < 0 ) 
-            throw InvalidParameter("solid:radius must be specified and > 0");
-        
-        if ( shape == "inside" || shape == "volume" )
-        {
-            // add a massive point in the center:    
-            addSphere(Vector(0,0,0), radius);
-            
-            // add point at constant distance from radius:
-            for ( unsigned int n = 1; n < nb_points; ++n )
-                addPoint(Vector::randBall(radius));
-        }
-        else if ( shape == "surface" ) 
-        {
-            // add a massive point in the center:    
-            addSphere(Vector(0,0,0), radius);
-            
-            // add point at constant distance from radius:
-            for ( unsigned int n = 1; n < nb_points; ++n )
-                addPoint(Vector::randUnit(radius));
-        }
-        else if ( shape == "equator" ) 
-        {
-            // add a massive point in the center:    
-            addSphere(Vector(0,0,0), radius);
-            
-            // add point on the equator:
-            for ( unsigned int n = 1; n < nb_points; ++n )
-            {
-                Vector w = Vector::randUnit(radius);
-#if ( DIM == 3 )
-                w.ZZ = 0;
-#endif
-                addPoint(w);
-            }
-        }
-        else if ( shape == "symmetric" ) 
-        {
-            // add a massive point in the center:
-            addSphere(Vector(0,0,0), radius);
-            
-            if ( nb_points > 1 )
-            {
-                //special case: we put the two point symmetrically around the center:
-                Vector x = Vector::randUnit(radius);
-                addPoint( x);
-                addPoint(-x);
-            }
-        }
-        else if ( shape == "cluster" )
-        {
-            //special case for ParM simulations (DYCHE)
-            addSphere(Vector(0,0,0), radius);
-            
-            real delta = 0.1;
-            opt.set(delta, "shape", 1);
-            if ( delta > 0 )
-            {
-                ///\todo Solid: 3D clustered distribution
-                real angle = 0;
-                real dangle = delta / radius;
-                for ( unsigned int n = 1; n < nb_points; ++n )
-                {
-                    Vector x = radius * Vector(cos(angle), sin(angle), 0);
-                    addPoint(x);
-                    angle += dangle;
-                }
-            }
-        }
-        else
-        {
-            throw InvalidParameter("unknown solid:shape `"+shape+"'");
-        }
-        
+        throw InvalidParameter("could not find the number of points specified in solid:nb_points");
     }
     
-    fixShape();
     return res;
 }
 

@@ -60,45 +60,24 @@ Object * OrganizerSet::newObjectT(const Tag tag, int idx)
 }
 
 
-Object * OrganizerSet::newObject(const std::string& kd, const std::string& nm, Glossary&)
+ObjectList OrganizerSet::newObjects(const std::string& kind, const std::string& name, Glossary& opt)
 {
-    Property * p = simul.properties.find_or_die(kd, nm);
     Organizer * obj = 0;
+    Property * p = simul.properties.find_or_die(kind, name);
     
-    if ( kd == "aster" )
-    {
+    if ( kind == "aster" )
         obj = new Aster(static_cast<AsterProp*>(p));
-    }
-    
-    if ( kd == "bundle" )
-    {
+    else if ( kind == "bundle" )
         obj = new Bundle(static_cast<BundleProp*>(p));
-    }
-    
-    if ( kd == "nucleus" )
-    {
+    else if ( kind == "nucleus" )
         obj = new Nucleus(static_cast<NucleusProp*>(p));
-    }
-
-    if ( kd == "fake" )
-    {
+    else if ( kind == "fake" )
         obj = new Fake(static_cast<FakeProp*>(p));
-    }
     
-    return obj;
-}
-
-
-ObjectList OrganizerSet::newObjects(const std::string& kind, const std::string& prop, Glossary& opt)
-{
     ObjectList res;
-    Object * obj = newObject(kind, prop, opt);
-    
     if ( obj )
     {
-        Organizer * org = static_cast<Organizer*>(obj);
-        res = org->build(opt, simul);
-        // add the organizer last in the list:
+        res = obj->build(opt, simul);
         res.push_back(obj);
     }
     

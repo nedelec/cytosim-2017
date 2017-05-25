@@ -39,11 +39,8 @@ public:
     Property* newProperty(const std::string& kind, const std::string& name, Glossary&) const;
 
     //--------------------------
-    
-    /// create a new Fiber from the corresponding property
-    Object * newObject(const std::string& kd, const std::string& nm, Glossary& opt);
-
-    /// create new Fibers 
+ 
+    /// create new Fibers
     ObjectList newObjects(const std::string& kd, const std::string& nm, Glossary& opt);
     
     /// construct Fiber
