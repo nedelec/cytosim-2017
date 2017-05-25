@@ -26,7 +26,7 @@ protected:
 public:
      
     /// constructor
-    Wrist(SingleProp const*, PointExact const&);
+    Wrist(SingleProp const*, Mecable const*, unsigned);
 
     /// destructor
     ~Wrist();

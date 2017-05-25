@@ -108,7 +108,7 @@ void Bundle::setInteractions(Meca & meca) const
  }
  @endcode
  */
-ObjectList Bundle::build(Glossary& opt)
+ObjectList Bundle::build(Glossary& opt, Simul&)
 {
     assert_true(prop);
     Vector pos(0,0,0);

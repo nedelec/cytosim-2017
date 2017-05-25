@@ -10,10 +10,14 @@ extern Modulo * modulo;
 
 
 //------------------------------------------------------------------------------
-Wrist::Wrist(SingleProp const* p, PointExact const& point)
-: Single(p), sBase(point)
+Wrist::Wrist(SingleProp const* p, Mecable const* mec, unsigned pti)
+: Single(p), sBase(mec, pti)
 {
-    assert_true(point.valid());
+    assert_true( mec );
+    
+    if ( pti > mec->nbPoints() )
+        throw InvalidParameter("Could not anchor Single (invalid point index)");
+    
 #if ( 0 )
     if ( p->diffusion > 0 )
         throw InvalidParameter("single:diffusion cannot be > 0 if activity=anchored");

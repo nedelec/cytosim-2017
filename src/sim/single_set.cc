@@ -76,7 +76,7 @@ Object * SingleSet::newObjectT(const Tag tag, int ix)
     SingleProp * sp = static_cast<SingleProp*>(p);
 
     if ( tag == Wrist::TAG )
-        return sp->newWrist(PointExact(0,0));
+        return sp->newWrist(0,0);
     
     if ( tag == Single::TAG )
         return sp->newSingle();
@@ -130,7 +130,7 @@ Object * SingleSet::newObject(const std::string& kd, const std::string& nm, Glos
             if ( ip >= mec->nbPoints() )
                 throw InvalidParameter("index out of range in single:base");
             
-            return sp->newWrist(PointExact(mec, ip));
+            return sp->newWrist(mec, ip);
         }
         return sp->newSingle();
     }

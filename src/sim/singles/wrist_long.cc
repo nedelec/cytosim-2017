@@ -9,8 +9,8 @@
 extern Modulo * modulo;
 
 
-WristLong::WristLong(SingleProp const* p, PointExact const& point)
-: Wrist(p, point)
+WristLong::WristLong(SingleProp const* p, Mecable const* mec, unsigned pti)
+: Wrist(p, mec, pti)
 {
 #if ( 0 )
     if ( p->diffusion > 0 )

@@ -103,7 +103,7 @@ ObjectList BeadSet::newObjects(const std::string& kd, const std::string& nm, Glo
             Property * p = simul.properties.find_or_die("single", sn);
             SingleProp * sp = static_cast<SingleProp*>(p);
             for ( unsigned s = 0; s < cnt; ++s )
-                res.push_back(sp->newWrist(PointExact(bid, 0)));
+                res.push_back(sp->newWrist(bid, 0));
             ++inx;
         }
     }

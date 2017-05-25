@@ -90,12 +90,12 @@ void Aster::setInteractions(Meca & meca) const
 
 
 //------------------------------------------------------------------------------
-ObjectList Aster::build(Glossary& opt)
+ObjectList Aster::build(Glossary& opt, Simul& simul)
 {
     assert_true(prop);
     assert_true(nbOrganized()==0);
     
-    Solid * so = buildSolid(opt);
+    Solid * so = buildSolid(opt, simul);
     grasp(so, 0);
     ObjectList res;
     res.push_back(so);
@@ -127,6 +127,7 @@ Aster::~Aster()
 
 
 //------------------------------------------------------------------------------
+
 /**
  @defgroup NewAster How to create an Aster
  @ingroup NewObject
@@ -194,12 +195,12 @@ Aster::~Aster()
  @endcode
  
  */
-Solid * Aster::buildSolid(Glossary& opt)
+Solid * Aster::buildSolid(Glossary& opt, Simul& simul)
 {
     assert_true(prop->solid_prop);
     Solid * so = new Solid(prop->solid_prop);
-    so->build(opt);
-    
+    so->build(opt, simul);
+
     unsigned cnt = 0;
     opt.set(cnt, "nb_fibers");
     if ( cnt < 1 )
@@ -256,9 +257,14 @@ Solid * Aster::buildSolid(Glossary& opt)
         real rad[2] = { 0 };
         
         opt.set(rad, 2, "radius");
+        
         if ( rad[0] <= 0 )
             throw InvalidParameter("aster:radius must be specified and > 0");
         
+        // add a massive bead if needed:
+        if ( so->dragCoefficient() < REAL_EPSILON )
+            so->addSphere(Vector(0,0,0), rad[0]);
+
 #if ( DIM == 1 )
         
         //we use one central point, and an additional one on each side:

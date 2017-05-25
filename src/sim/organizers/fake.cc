@@ -28,7 +28,7 @@ void Fake::setInteractions(Meca & meca) const
 
 
 //------------------------------------------------------------------------------
-ObjectList Fake::build(Glossary& opt)
+ObjectList Fake::build(Glossary& opt, Simul& simul)
 {
     assert_true(prop);
     Aster * a  = new Aster(prop->aster_prop);
@@ -41,8 +41,8 @@ ObjectList Fake::build(Glossary& opt)
     res.push_back(a);
     res.push_back(p);
     res.push_back(so);
-    res.append(a->build(opt));
-    res.append(p->build(opt));
+    res.append(a->build(opt, simul));
+    res.append(p->build(opt, simul));
 
     real span = 0;
     if ( ! opt.set(span, "span") || span < 0 )
@@ -82,9 +82,9 @@ ObjectList Fake::build(Glossary& opt)
             default:
                 ERROR("wrong number of points");
         }
-        solidPoints.push_back(PointExact(so, so->addPointWithDrag( wa+s, rad )));
+        solidPoints.push_back(PointExact(so, so->addSphere( wa+s, rad )));
         asterPoints.push_back(PointExact(sa, sa->addPoint( wa+s )));
-        solidPoints.push_back(PointExact(so, so->addPointWithDrag( wp+s, rad )));
+        solidPoints.push_back(PointExact(so, so->addSphere( wp+s, rad )));
         asterPoints.push_back(PointExact(sp, sp->addPoint( wp+s )));
     }
     

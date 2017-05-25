@@ -164,7 +164,7 @@ ObjectList SphereSet::newObjects(const std::string& kind, const std::string& pro
                 Tokenizer::split_integer(spc, ns);
                 SingleProp * sp = simul.findSingleProp(spc);
                 for ( unsigned s = 0; s < ns; ++s )
-                    res.push_back(sp->newWrist(PointExact(sph, pp)));
+                    res.push_back(sp->newWrist(sph, pp));
                 ++inx;
             }
             
@@ -196,7 +196,7 @@ ObjectList SphereSet::newObjects(const std::string& kind, const std::string& pro
                 Tokenizer::split_integer(spc, ns);
                 SingleProp * sp = simul.findSingleProp(spc);
                 for ( unsigned s = 0; s < ns; ++s )
-                    res.push_back(sp->newWrist(PointExact(sph, pp-RNG.pint_exc(nbp))));
+                    res.push_back(sp->newWrist(sph, pp-RNG.pint_exc(nbp)));
                 ++inx;
             }
             
@@ -221,7 +221,7 @@ ObjectList SphereSet::newObjects(const std::string& kind, const std::string& pro
             SingleProp * sp = simul.findSingleProp(spc);
             for ( unsigned s = 0; s < ns; ++s )
                 for ( unsigned p = sph->nbRefPts; p < sph->nbPoints(); ++p )
-                    res.push_back(sp->newWrist(PointExact(sph, p)));
+                    res.push_back(sp->newWrist(sph, p));
             ++inp;
         }
         
@@ -239,7 +239,7 @@ ObjectList SphereSet::newObjects(const std::string& kind, const std::string& pro
             for ( unsigned s = 0; s < ns; ++s )
             {
                 unsigned p = RNG.pint_exc(nbp) + sph->nbRefPts;
-                res.push_back(sp->newWrist(PointExact(sph, p)));
+                res.push_back(sp->newWrist(sph, p));
             }
             ++inp;
         }

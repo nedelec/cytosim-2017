@@ -36,7 +36,7 @@ public:
     Fake(FakeProp const* p) : prop(p), mSolid(0) { }
  
     /// construct all the dependent Objects of the Organizer
-    ObjectList build(Glossary&);
+    ObjectList build(Glossary&, Simul&);
  
     /// destructor  
     virtual   ~Fake();

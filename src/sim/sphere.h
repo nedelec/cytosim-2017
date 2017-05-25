@@ -138,6 +138,12 @@ public:
     
     /// normalize point and add center
     unsigned     addSurfacePoint(Vector const&);
+    
+    /// number of points on the surface
+    unsigned     nbSurfacePoints() const { return nbPoints() - nbRefPts; }
+
+    /// initialize according to options given in Glossary
+    ObjectList   build(Glossary&, Simul&);
 
     //------------------- methods for the projection ---------------------------
     

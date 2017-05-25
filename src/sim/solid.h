@@ -91,7 +91,7 @@ public:
     void        deallocatePoints();
     
     /// initialize points
-    void        build(Glossary&);
+    ObjectList  build(Glossary&, Simul&);
     
     /// create following the specifications in the SolidProp
     Solid(SolidProp const*);
@@ -158,7 +158,7 @@ public:
     Vector      centroid();
         
     /// add a new point with a sphere
-    unsigned int addPointWithDrag(Vector const& w, real radius);    
+    unsigned    addSphere(Vector const& w, real radius);
     
     //---------------------------- next / prev ---------------------------------
     

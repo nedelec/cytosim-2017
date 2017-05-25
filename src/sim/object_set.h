@@ -114,7 +114,7 @@ public:
     /// create new objects, translate and rotate them according to specifications in \a opt
     virtual ObjectList newPlacedObjects(const std::string& kind, const std::string& name, Glossary& opt);
     
-    /// create a new object from the corresponding tag (used for IO)
+    /// create a non-initialized Object with the corresponding Tag (used for reading trajectory file)
     virtual Object *   newObjectT(const Tag, int prop_index) = 0;
     
     //--------------------------

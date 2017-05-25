@@ -242,8 +242,9 @@ Vector Solid::centroid()
  .
  */
 
-void Solid::build(Glossary & opt)
+ObjectList Solid::build(Glossary & opt, Simul&)
 {
+    ObjectList res;
     unsigned nb_points = 1;
 
     opt.set(nb_points, "nb_points");
@@ -291,7 +292,7 @@ void Solid::build(Glossary & opt)
 
             real rad;
             if ( opt.set(rad, var, 1) )
-                addPointWithDrag(vec, rad);
+                addSphere(vec, rad);
             else
                 addPoint(vec);
         }
@@ -309,7 +310,7 @@ void Solid::build(Glossary & opt)
         if ( shape == "inside" || shape == "volume" )
         {
             // add a massive point in the center:    
-            addPointWithDrag(Vector(0,0,0), radius);
+            addSphere(Vector(0,0,0), radius);
             
             // add point at constant distance from radius:
             for ( unsigned int n = 1; n < nb_points; ++n )
@@ -318,7 +319,7 @@ void Solid::build(Glossary & opt)
         else if ( shape == "surface" ) 
         {
             // add a massive point in the center:    
-            addPointWithDrag(Vector(0,0,0), radius);
+            addSphere(Vector(0,0,0), radius);
             
             // add point at constant distance from radius:
             for ( unsigned int n = 1; n < nb_points; ++n )
@@ -327,7 +328,7 @@ void Solid::build(Glossary & opt)
         else if ( shape == "equator" ) 
         {
             // add a massive point in the center:    
-            addPointWithDrag(Vector(0,0,0), radius);
+            addSphere(Vector(0,0,0), radius);
             
             // add point on the equator:
             for ( unsigned int n = 1; n < nb_points; ++n )
@@ -342,7 +343,7 @@ void Solid::build(Glossary & opt)
         else if ( shape == "symmetric" ) 
         {
             // add a massive point in the center:
-            addPointWithDrag(Vector(0,0,0), radius);
+            addSphere(Vector(0,0,0), radius);
             
             if ( nb_points > 1 )
             {
@@ -355,7 +356,7 @@ void Solid::build(Glossary & opt)
         else if ( shape == "cluster" )
         {
             //special case for ParM simulations (DYCHE)
-            addPointWithDrag(Vector(0,0,0), radius);
+            addSphere(Vector(0,0,0), radius);
             
             real delta = 0.1;
             opt.set(delta, "shape", 1);
@@ -380,11 +381,12 @@ void Solid::build(Glossary & opt)
     }
     
     fixShape();
+    return res;
 }
 
 
 //------------------------------------------------------------------------------
-unsigned int Solid::addPointWithDrag(Vector const& w, real rad)
+unsigned int Solid::addSphere(Vector const& w, real rad)
 {
     if ( rad < 0 )
         throw InvalidParameter("solid::radius should be > 0");

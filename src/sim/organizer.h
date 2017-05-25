@@ -38,7 +38,7 @@ public:
     virtual      ~Organizer();
     
     /// construct all the dependent Objects of the Organizer
-    virtual ObjectList    build(Glossary&) = 0;
+    virtual ObjectList    build(Glossary&, Simul&) = 0;
 
     //--------------------------------------------------------------------------
 

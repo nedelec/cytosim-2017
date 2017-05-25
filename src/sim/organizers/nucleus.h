@@ -31,7 +31,7 @@ public:
     Nucleus(NucleusProp const* p) : prop(p) { }
 
     /// construct all the dependent Objects of the Organizer
-    ObjectList    build(Glossary&);
+    ObjectList    build(Glossary&, Simul&);
     
     /// destructor
     virtual      ~Nucleus() { prop = 0; }

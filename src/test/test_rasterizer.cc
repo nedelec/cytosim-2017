@@ -148,8 +148,8 @@ bool realTest()
     clearHits();    
     
     // use rasterizer to set hit[][]
-    Rasterizer::paintHexLine3D(paintHit, 0, 0, pts, pts+DIM, radius, shift, delta);
-    //Rasterizer::paintBox3D(paintHit, 0, 0, pts, pts+DIM, radius, shift, delta);
+    //Rasterizer::paintHexLine3D(paintHit, 0, 0, pts, pts+DIM, radius, shift, delta);
+    Rasterizer::paintFatLine3D(paintHit, 0, 0, pts, pts+DIM, radius, shift, delta);
 
     // compare with expected
     Vector p(pts[0], pts[1], pts[2]), q(pts[DIM], pts[DIM+1], pts[DIM+2]);
@@ -319,8 +319,8 @@ void display3D()
     if ( nbpts == 2 )
     {
         realTest();
-        Rasterizer::paintHexLine3D(paintDraw, 0, 0, pts, pts+DIM, radius, shift, delta);
-        //Rasterizer::paintBox3D(paintDraw, 0, 0, pts, pts+DIM, radius, shift, delta);
+        //Rasterizer::paintHexLine3D(paintDraw, 0, 0, pts, pts+DIM, radius, shift, delta);
+        Rasterizer::paintFatLine3D(paintDraw, 0, 0, pts, pts+DIM, radius, shift, delta);
     } else
     {
         Rasterizer::paintPolygon3D(paintDraw, 0, 0, nbpts, pts);

@@ -97,7 +97,7 @@ ObjectList OrganizerSet::newObjects(const std::string& kind, const std::string& 
     if ( obj )
     {
         Organizer * org = static_cast<Organizer*>(obj);
-        res = org->build(opt);
+        res = org->build(opt, simul);
         // add the organizer last in the list:
         res.push_back(obj);
     }

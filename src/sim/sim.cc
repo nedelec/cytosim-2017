@@ -14,9 +14,9 @@ using std::endl;
 
 void splash(std::ostream & os = std::cout)
 {
-    os << "  -------------------------------------------------------------" << endl;
-    os << " | CytoSIM "<<DIM<<"D  -  www.cytosim.org  -  version PI  -  Jan. 2015 |" << endl;
-    os << "  -------------------------------------------------------------" << endl;
+    os << "  ------------------------------------------------------------- " << endl;
+    os << " |  CytoSIM  -  www.cytosim.org  -  version PI  -  May  2017   |" << endl;
+    os << "  ------------------------------------------------------------- " << endl;
 }
 
 
@@ -34,7 +34,7 @@ void help(std::ostream & os = std::cout)
 void info(std::ostream & os = std::cout)
 {
     os << "www.cytosim.org - sim" << endl;
-    os << " Public version " << endl;
+    os << " GIT version " << endl;
     os << " Compiled at "<<__TIME__<< " on " <<__DATE__<< endl;
     os << " Precision: " << sizeof(real) << " bytes,  epsilon = " << REAL_EPSILON << endl;
     

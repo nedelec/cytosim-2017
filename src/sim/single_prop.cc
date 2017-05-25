@@ -61,14 +61,15 @@ Single * SingleProp::newSingle(Glossary * opt) const
 /**
  The Wrist requires a anchor point to be created
  */
-Wrist * SingleProp::newWrist(PointExact const& point) const
+Wrist * SingleProp::newWrist(Mecable const* mec, const unsigned point) const
 {
-    //std::cout << "SingleProp::newWrist" << std::endl;
+    //std::clog << "SingleProp::newWrist" << std::endl;
     if ( length > 0 )
-        return new WristLong(this, point);
+        return new WristLong(this, mec, point);
     else
-        return new Wrist(this, point);
+        return new Wrist(this, mec, point);
 }
+
 
 //------------------------------------------------------------------------------
 #pragma mark -

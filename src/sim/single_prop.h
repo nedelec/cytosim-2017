@@ -8,7 +8,7 @@
 #include "hand_prop.h"
 #include "common.h"
 
-class PointExact;
+class Mecable;
 class Glossary;
 class Single;
 class Wrist;
@@ -86,7 +86,7 @@ public:
     Single * newSingle(Glossary * opt = 0) const;
     
     /// create a Write with this property
-    Wrist * newWrist(PointExact const&) const;
+    Wrist * newWrist(Mecable const*, unsigned) const;
     
     /// identifies the property
     std::string kind() const { return "single"; }

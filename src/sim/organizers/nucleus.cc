@@ -43,7 +43,7 @@ void Nucleus::setInteractions(Meca & meca) const
 
 
 //------------------------------------------------------------------------------
-ObjectList Nucleus::build(Glossary& opt)
+ObjectList Nucleus::build(Glossary& opt, Simul& simul)
 {
     assert_true(prop);
     ObjectList res;
@@ -90,7 +90,7 @@ ObjectList Nucleus::build(Glossary& opt)
             Vector dir = rotation * Vector(1,0,0);
             
             Bundle * bu = new Bundle(prop->bundle_prop);
-            ObjectList bu_objs = bu->build(opt);
+            ObjectList bu_objs = bu->build(opt, simul);
             res.append(bu_objs);
             res.push_back(bu);
                         

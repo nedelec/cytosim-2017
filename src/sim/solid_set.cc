@@ -51,7 +51,7 @@ Object * SolidSet::newObject(const std::string& kd, const std::string& nm, Gloss
         // as Solid use a BeadProp, we search for "bead":
         Property * p = simul.properties.find_or_die("bead", nm);
         obj = new Solid(static_cast<SolidProp*>(p));
-        obj->build(opt);
+        obj->build(opt, simul);
     }
     return obj;
 }
@@ -117,7 +117,7 @@ ObjectList SolidSet::newObjects(const std::string& kd, const std::string& nm, Gl
             for ( unsigned pp = 0; pp < mec->nbPoints(); ++pp )
             {
                 for ( unsigned u = 0; u < ns; ++u )
-                    res.push_back(sp->newWrist(PointExact(mec, pp)));
+                    res.push_back(sp->newWrist(mec, pp));
             }
             ++inx;
         }
@@ -134,7 +134,7 @@ ObjectList SolidSet::newObjects(const std::string& kd, const std::string& nm, Gl
             for ( unsigned u = 0; u < ns; ++u )
             {
                 unsigned pp = RNG.pint_exc(mec->nbPoints());
-                res.push_back(sp->newWrist(PointExact(mec, pp)));
+                res.push_back(sp->newWrist(mec, pp));
             }
             ++inx;
         }
@@ -150,7 +150,7 @@ ObjectList SolidSet::newObjects(const std::string& kd, const std::string& nm, Gl
                 Tokenizer::split_integer(spc, ns);
                 SingleProp * sp = simul.findSingleProp(spc);
                 for ( unsigned u = 0; u < ns; ++u )
-                    res.push_back(sp->newWrist(PointExact(mec, ii)));
+                    res.push_back(sp->newWrist(mec, ii));
                 ++inx;
             }
         }

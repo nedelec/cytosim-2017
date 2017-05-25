@@ -80,10 +80,8 @@ private:
     /// store the information needed to make the links between Solid and Fiber
     Array<AsterClamp> asClamp;
     
-    //-------------------------------------------------------------------
-    
     /// create and configure the Solid
-    Solid *       buildSolid(Glossary& opt);
+    Solid *       buildSolid(Glossary& opt, Simul&);
     
 public:
     
@@ -97,7 +95,7 @@ public:
     virtual      ~Aster();
     
     /// construct all the dependent Objects of the Organizer
-    ObjectList    build(Glossary&);
+    ObjectList    build(Glossary&, Simul&);
     
     /// return the scaffolding Solid
     Solid *       solid() const { return static_cast<Solid*>(organized(0)); }
