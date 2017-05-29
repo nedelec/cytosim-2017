@@ -149,7 +149,46 @@
  make_image.py help
  @endcode
 
- 
+<h3> Restarting a Simulation </h3>
+
+One can start a simulation from a frame stored in a trajectory file.
+Follow these steps:
+1. build the accessory program `frametool` if needed.
+2. using `frametool`, extract the desired frame.
+3. adjust the `config.cym` to import this frame.
+
+For 1, you may use `make`:
+@code
+make frametool
+@endcode
+
+For 2, you need to provide a trajectory file, and the index of the frame to extract:
+@endcode
+frametool objects.cmo 30 > objects.cmi
+@endcode
+This will create the file ‘objects.cmi’ containing frame 30, where the frame index start at 0. You need to replace `30` with the appropriate index. Note that ‘frametool objects.cmo’ will tell you how many frames are contained in the file.
+
+For 3, use the ‘import’ command within a config file to read the frame:
+
+@code
+import objects objects.cmi
+
+run 1000000 simul *
+{
+nb_frames = 100
+}
+@endcode
+
+The ‘import’ command replaces all the objects of the simulation, without changing the Properties. The config file should thus define all the Properties with ’set’ as usual, but skip all the ’new’ instructions. From an existing configuration, one simply adds the 'import' and deletes all the 'new'.
+
+However, any ’new’ after ‘import’ will add objects as usual. The simulation should be started in a fresh directory, as ’sim’ will erase the ‘object.cmo’ file.
+
+One can merge two trajectory files later with 'cat' if necessary:
+@code
+cat objects1.cmo objects2.cmo > objects.cmo
+@endcode
+
+
  <h3> Conversion </h3>
 
  With `sim`, it is possible to extract a frame from a binary trajectory file,
