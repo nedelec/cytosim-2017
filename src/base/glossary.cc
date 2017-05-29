@@ -104,10 +104,15 @@ Glossary::rec_type const* Glossary::values(key_type const& key) const
 std::string Glossary::value(key_type const& key, unsigned indx)
 {
     map_type::iterator w = mTerms.find(key);
-    if ( w == mTerms.end() ) return "";
-    //std::cerr << *w << std::endl;
-    if ( w->second.size() <= indx ) return "";
-    return w->second[indx].str;
+    if ( w != mTerms.end() )
+    {
+        if ( indx < w->second.size() )
+        {
+            w->second[indx].cnt++;
+            return w->second[indx].str;
+        }
+    }
+    return "";
 }
 
 

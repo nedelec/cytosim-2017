@@ -323,7 +323,7 @@ ObjectList Solid::build(Glossary & opt, Simul& simul)
             opt.set(sr, var, inx+1);
             
             if ( sr < 0 )
-                throw InvalidParameter("the radius of points specified in solid must be >= 0");
+                throw InvalidParameter("the radius of solid:sphere must be >= 0");
             
             unsigned fip = nbPoints();
             // add 'nbp' points:
