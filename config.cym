@@ -1,7 +1,7 @@
-% A confined fiber
+% A confined filament
 % F. Nedelec, April 2010
 
-set simul fiber 
+set simul example 
 {
     time_step = 0.005
     viscosity = 0.02
@@ -21,7 +21,7 @@ set fiber microtubule
     confine = inside, 200
 }
 
-new 1 fiber microtubule
+new fiber microtubule
 {
     length = 12
 }
