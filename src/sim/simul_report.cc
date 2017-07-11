@@ -195,6 +195,8 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportCouple(out);
         else if ( who == "position" || who == "all" )
             return reportCouplePosition(out);
+        else if ( who == "bridge" )
+            return reportCoupleBridge(out);
         else
             return reportCouplePosition(out, who);
         throw InvalidSyntax("I only know couple: all, NAME");
@@ -915,6 +917,23 @@ void Simul::reportCouplePosition(std::ostream& out, std::string const& who) cons
     for ( Couple * obj=couples.firstAA(); obj ; obj = obj->next() )
         if ( obj->property() == prop )
             write(out, obj, " 1 1 ");
+}
+
+
+
+/**
+ Export position of Couples of a certain kind
+ */
+void Simul::reportCoupleBridge(std::ostream& out) const
+{
+    for ( Couple * obj=couples.firstAA(); obj ; obj = obj->next() )\
+    {
+        out << obj->property()->index() << " " << std::setw(9) << obj->number();
+        out << " " << std::setw(9) << obj->fiber1()->number() << " " << std::setw(9) << obj->hand1()->abscissa();
+        out << " " << std::setw(9) << obj->fiber2()->number() << " " << std::setw(9) << obj->hand2()->abscissa();
+        real c = obj->hand1()->dir() * obj->hand2()->dir();
+        out << " " << std::setw(9) <<  c << std::endl;
+    }
 }
 
 

@@ -350,6 +350,10 @@ public:
     /// print position of Couples of a certain kind
     void      reportCouplePosition(std::ostream&, std::string const&) const;
     
+    /// print info on doubly bound Couples 
+    void      reportCoupleBridge(std::ostream&) const;
+    
+    
     /// print state of Singles
     void      reportSingle(std::ostream&) const;
     
