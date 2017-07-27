@@ -269,13 +269,6 @@ void CoupleSet::foldPosition(const Modulo * s) const
 }
 
 
-/**
- @todo Write size of uniLists, to export a complete state info
- 
- Currently, we cannot restart the simulation for a stored state,
- if ( couple:fast_diffusion == true ) because it is impossible to
- know the number of free couple.
- */
 void CoupleSet::write(OutputWrapper & out) const
 {
     ObjectSet::write(ffList, out);

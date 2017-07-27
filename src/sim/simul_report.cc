@@ -922,15 +922,17 @@ void Simul::reportCouplePosition(std::ostream& out, std::string const& who) cons
 
 
 /**
- Export position of Couples of a certain kind
+ Export information of Couples that are bound twice
  */
 void Simul::reportCoupleBridge(std::ostream& out) const
 {
     for ( Couple * obj=couples.firstAA(); obj ; obj = obj->next() )\
     {
         out << obj->property()->index() << " " << std::setw(9) << obj->number();
-        out << " " << std::setw(9) << obj->fiber1()->number() << " " << std::setw(9) << obj->hand1()->abscissa();
-        out << " " << std::setw(9) << obj->fiber2()->number() << " " << std::setw(9) << obj->hand2()->abscissa();
+        out << " " << std::setw(9) << obj->fiber1()->number();
+        out << " " << std::setw(9) << obj->hand1()->abscissa();
+        out << " " << std::setw(9) << obj->fiber2()->number();
+        out << " " << std::setw(9) << obj->hand2()->abscissa();
         real c = obj->hand1()->dir() * obj->hand2()->dir();
         out << " " << std::setw(9) <<  c << std::endl;
     }

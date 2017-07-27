@@ -52,7 +52,7 @@ public:
         
     public:
         
-        /// Stop the simulation, create a pthread lock and call simul.relax();
+        /// Stop the simulation, create a pthread lock
         TryLock(SimThread * p) : mlt(p) { ecode = p->trylock(); }
         
         /// return 0 if the lock was acquired, and pthread_mutex_trylock error code otherwise

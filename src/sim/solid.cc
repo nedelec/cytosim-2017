@@ -368,16 +368,15 @@ ObjectList Solid::build(Glossary & opt, Simul& simul)
 
 
 //------------------------------------------------------------------------------
-unsigned int Solid::addSphere(Vector const& w, real rad)
+unsigned int Solid::addSphere(Vector const& vec, real rad)
 {
     if ( rad < 0 )
-        throw InvalidParameter("solid::radius should be > 0");
+        throw InvalidParameter("solid:sphere's radius should be >= 0");
 
-    unsigned int indx = addPoint(w);
-    soRadius[indx] = rad;
-    //std::cerr << "Solid::addPoint " << w;
-    //std::cerr << " with radius " << rad << " at index " << indx << std::endl;
-    return indx;
+    unsigned inx = addPoint(vec);
+    soRadius[inx] = rad;
+    //std::clog << "addSphere(" << vec << ", " << rad << ") for " << reference() << " index " << inx << "\n";
+    return inx;
 }
 
 
@@ -710,6 +709,8 @@ void Solid::setDragCoefficient()
     soCenter  /= soDrag;
     soDrag    *= 6*M_PI*prop->viscosity;
     soDragRot *= 8*M_PI*prop->viscosity;
+    
+    //std::clog << "Solid " << reference() << " has drag " << soDrag << "\n";
     
 #if ( DIM == 2 )
     soMom2D = soDragRot + 6*M_PI*prop->viscosity*roti - soDrag * soCenter.normSqr();

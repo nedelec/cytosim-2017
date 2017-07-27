@@ -362,7 +362,7 @@ real Fiber::dragCoefficientVolume()
     real drag = M_PI * prop->viscosity * ( drag_cylinder > drag_sphere ? drag_cylinder : drag_sphere );
 
     //MSG("Drag coefficient of Fiber in infinite fluid = %.1e\n", drag);
-    //std::cerr << "Drag coefficient of Fiber in bulk = " << drag << std::endl;
+    //std::clog << "Fiber " << reference() << " has drag " << drag << "\n";
 
     return drag;
 }
