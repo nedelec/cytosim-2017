@@ -468,6 +468,7 @@ void Interface::execute_run(Glossary& opt, unsigned nb_steps, bool do_write)
         {
             if ( do_write  &&  nb_frames > 0 )
             {
+                simul.relax();
                 simul.writeObjects(simul.prop->trajectory_file, binary, simul.prop->append_file);
                 simul.prop->append_file = true;
                 reportCPUtime(frame, simul.simTime());
@@ -487,6 +488,7 @@ void Interface::execute_run(Glossary& opt, unsigned nb_steps, bool do_write)
         etime -= event_rate_dt;
         while ( etime < 0 )
         {
+            simul.relax();
 #if ( VERBOSE_INTERFACE > 0 )
             std::cerr << "-EVENT" << std::endl;
 #endif
