@@ -21,7 +21,7 @@ Random::Random()
     sfmt_ptr   = sfmt_last;
     
     if ( sizeof(uint32_t) != 4 )
-        ERROR("sizeof( uint32_t ) != 4");
+        ABORT_NOW("sizeof( uint32_t ) != 4");
     
     bufferValue = 0;
     bufferValid = false;

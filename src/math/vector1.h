@@ -243,14 +243,14 @@ public:
     /// returns a perpendicular vector, of comparable but unspecified norm
     const Vector1 orthogonal() const
     {
-        ERROR("Vector::orthogonal() is not meaningful in 1D");
+        ABORT_NOW("Vector::orthogonal() is not meaningful in 1D");
         return Vector1(0, 0);
     }
     
     /// returns a perpendicular vector, of norm `n`
     const Vector1 orthogonal(const real) const
     {
-        ERROR("Vector::orthogonal() is not meaningful in 1D");
+        ABORT_NOW("Vector::orthogonal() is not meaningful in 1D");
         return Vector1(0, 0);
     }
     

@@ -181,7 +181,7 @@ real Solid::sumRadius()
 Vector Solid::centroid()
 {
     if ( nbPoints() == 0 )
-        ERROR("empty Solid");
+        ABORT_NOW("empty Solid");
     
     Vector res(0,0,0);
     real sum = 0;
@@ -194,7 +194,7 @@ Vector Solid::centroid()
         }
     }
     if ( sum < REAL_EPSILON )
-        ERROR("zero drag in solid");
+        ABORT_NOW("zero drag in solid");
     
     res /= sum;
     return res;
@@ -465,7 +465,7 @@ void Solid::rescale()
     
     if ( sz <= 0 )
     {
-        ERROR("Cannot rescale the Solid, because it has collapsed!");
+        ABORT_NOW("Cannot rescale the Solid, because it has collapsed!");
         return;
     }
     
@@ -501,7 +501,7 @@ void Solid::reshape()
 {    
     //we check that the number of points is the same as when fixShape() was called.
     if ( soShapeSize != nbPoints() )
-        ERROR("mismatch with current number of points: forgot to call fixShape()?");
+        ABORT_NOW("mismatch with current number of points: forgot to call fixShape()?");
          
     real cc = 0, a = 0;
     for ( unsigned int pp = 0; pp < nbPoints(); ++pp )
@@ -523,7 +523,7 @@ void Solid::reshape()
 {    
     // the number of points should be the same as when fixShape() was called.
     if ( soShapeSize != nbPoints() )
-        ERROR("mismatch with current number of points: forgot to call fixShape()?");
+        ABORT_NOW("mismatch with current number of points: forgot to call fixShape()?");
     
     real cc[DIM];
     calculateMomentum(cc, true);
@@ -567,7 +567,7 @@ void Solid::reshape()
 {
     // the number of points should be the same as when fixShape() was called.
     if ( soShapeSize != nbPoints() )
-        ERROR("mismatch with current number of points: forgot to call fixShape()?");
+        ABORT_NOW("mismatch with current number of points: forgot to call fixShape()?");
     
     /*
      We follow the procedure described by Berthold K.P. Horn in
@@ -861,7 +861,7 @@ void Solid::makeProjection()
     if ( info )
     {
         Matrix3(soMom).write(std::cerr);
-        ERROR("failed to factorize Solid momentum matrix");
+        ABORT_NOW("failed to factorize Solid momentum matrix");
     }
 }
 

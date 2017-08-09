@@ -23,7 +23,7 @@ void  Vector1::addRand(real n)            { XX += n*RNG.sreal(); }
 const Vector1 Vector1::randBall()         { return Vector1(   RNG.sreal(), 0); }
 const Vector1 Vector1::randBall(real n)   { return Vector1( n*RNG.sreal(), 0); }
 const Vector1 Vector1::randGauss(real n)  { return Vector1( n*RNG.gauss(), 0);  }
-const Vector1 Vector1::randPerp(real len) const { ERROR("Vector1::randPerp() meaningless in 1D"); }
+const Vector1 Vector1::randPerp(real len) const { ABORT_NOW("Vector1::randPerp() meaningless in 1D"); }
 
 
 //------------------------------------------------------------------------------

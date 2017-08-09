@@ -80,7 +80,7 @@ ObjectList Fake::build(Glossary& opt, Simul& simul)
             case 2: s=+dir2; break;
             case 3: s=-dir2; break;
             default:
-                ERROR("wrong number of points");
+                ABORT_NOW("wrong number of points");
         }
         solidPoints.push_back(PointExact(so, so->addSphere( wa+s, rad )));
         asterPoints.push_back(PointExact(sa, sa->addPoint( wa+s )));

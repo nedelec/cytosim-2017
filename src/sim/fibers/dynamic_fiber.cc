@@ -179,7 +179,7 @@ int DynamicFiber::stepPlusEnd(real growth_rate_dt)
 
 int DynamicFiber::stepMinusEnd(real growth_rate_dt)
 {
-    ERROR("unfinished");
+    ABORT_NOW("unfinished");
     return 0;
 }
 

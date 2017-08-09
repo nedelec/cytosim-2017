@@ -136,7 +136,7 @@ real  FiberBinder::abscissaFrom(const FiberEnd from) const
         case PLUS_END:   return fbFiber->abscissaP() - fbAbs;
         case ORIGIN:     return fbAbs;
         case CENTER:     return fbAbs - 0.5*( fbFiber->abscissaM() + fbFiber->abscissaP() );
-        default:         ERROR("invalid argument value");
+        default:         ABORT_NOW("invalid argument value");
     }
     return 0;
 }

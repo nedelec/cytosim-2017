@@ -393,7 +393,7 @@ void OutputWrapper::writeInt8(const int n, char before)
     int8_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
 
     if ( mBinary )
     {
@@ -413,7 +413,7 @@ void OutputWrapper::writeInt16(const int n, char before)
     int16_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
 
     if ( mBinary )
     {
@@ -433,7 +433,7 @@ void OutputWrapper::writeInt32(const int n, char before)
     int32_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
     
     if ( mBinary )
     {
@@ -454,7 +454,7 @@ void OutputWrapper::writeUInt8(const unsigned int n, char before)
     uint8_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
     
     if ( mBinary )
     {
@@ -481,7 +481,7 @@ void OutputWrapper::writeUInt16(const unsigned int n, char before)
     uint16_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
 
     if ( mBinary )
     {
@@ -508,7 +508,7 @@ void OutputWrapper::writeUInt32(const unsigned int n, char before)
     uint32_t v = n;
     
     if ( n != v )
-        ERROR("value out of range");
+        ABORT_NOW("value out of range");
     
     if ( mBinary )
     {

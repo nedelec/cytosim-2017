@@ -966,7 +966,7 @@ void Parser::parse_stop(std::istream & is)
     else if ( str == "if" )
     {
         str = Tokenizer::get_token(is);
-        ERROR("unfinished code");
+        ABORT_NOW("unfinished code");
     }
 }
 

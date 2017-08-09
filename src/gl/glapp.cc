@@ -895,7 +895,7 @@ void glApp::processMenuEvent(int item)
             view.enableClipPlane(1, Vector3(0,0,-1), 0.5);
             break;
 
-        default: ERROR("unknown menu item");
+        default: ABORT_NOW("unknown menu item");
     }
     glutPostRedisplay();
     buildMenu();

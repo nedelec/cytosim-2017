@@ -201,7 +201,7 @@ this code is equivalent to SpaceInflate::project(), with a negative radius
 void Space::project(const real point[], real proj[], const real rad) const
 {
     if ( rad < 0 )
-        ERROR("radius should not be negative");
+        ABORT_NOW("radius should not be negative");
 
     project(point, proj);
 

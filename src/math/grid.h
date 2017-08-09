@@ -758,10 +758,10 @@ private:
                 int * rig = new int[regMax+1];
                 rig[0] = calculateOffsets(rig+1, ccc, regMax, ori, positive);
                 if ( rig[0] != reg[0] )
-                    ERROR("inconsistent region size");
+                    ABORT_NOW("inconsistent region size");
                 for ( int s = 1; s < rig[0]+1; ++s )
                     if ( rig[s] != reg[s] )
-                        ERROR("inconsistent region offsets");
+                        ABORT_NOW("inconsistent region offsets");
                 delete [] rig;
             }
             regions[indx] = reg;

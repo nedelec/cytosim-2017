@@ -71,7 +71,7 @@ void FiberNaked::setStraight(Vector const& pos, Vector const& dir, const FiberEn
             break;
             
         default:
-            ERROR("invalid argument value");
+            ABORT_NOW("invalid argument value");
     }
 }
 
@@ -930,7 +930,7 @@ real FiberNaked::abscissa(const FiberEnd end) const
         case MINUS_END: return fnAbscissa;
         case PLUS_END:  return fnAbscissa + fnCut * nbSegments();
         case CENTER:    return fnAbscissa + 0.5 * fnCut * nbSegments();
-        default:        ERROR("invalid argument value"); return 0;
+        default:        ABORT_NOW("invalid argument value"); return 0;
     }
 }
 
@@ -949,7 +949,7 @@ real FiberNaked::abscissa(const real ab, const FiberEnd from) const
         case MINUS_END:  return ab + fnAbscissa;
         case CENTER:     return ab + fnAbscissa + 0.5 * fnCut * nbSegments();
         case PLUS_END:   return fnAbscissa + fnCut * nbSegments() - ab;
-        default:         ERROR("invalid argument value"); return 0;
+        default:         ABORT_NOW("invalid argument value"); return 0;
     }
 }
 
@@ -1082,7 +1082,7 @@ PointInterpolated FiberNaked::interpolate(const real ab, const FiberEnd from) co
             return interpolateM(fnCut*nbSegments() - ab);
         
         default:
-            ERROR("invalid argument value");
+            ABORT_NOW("invalid argument value");
     }
     return interpolate(0);
 }

@@ -18,7 +18,7 @@ extern Random RNG;
 /** The default implementation is invalid */
 void Movable::translate(Vector const&)
 {
-    ERROR("undefined/invalid translate()");
+    ABORT_NOW("undefined/invalid translate()");
 }
 
 /**

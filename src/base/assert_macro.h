@@ -82,30 +82,15 @@
 
 
 //-------------------------- ERROR HANDLING MACROS -----------------------------
-/**
- ERROR(message) simply stops the program with some information
- ABORT(message) will generate a Core file in addition
- EXIT(message, value) will stop the program with the specified exit value
-*/
-
-#define ERROR(message) {\
-        fprintf(stderr, "ERROR `%s'\n", message);\
-        TRACE;\
-        exit(EXIT_FAILURE);\
-        }
 
 
-#define ABORT(message) {\
-        fprintf(stderr, "ERROR `%s'\n", message);\
-        TRACE;\
-        abort();\
-        }
-
-
-#define EXIT(message, value) {\
-        fprintf(stderr, "Cytosim: %s\n", message);\
-        exit(value);\
-        }
+/// macro to abort after printing an error message
+#define ABORT_NOW(message)\
+    {\
+    fprintf(stderr, "Cytosim ERROR `%s'\n", message);\
+    TRACE;\
+    exit(EXIT_FAILURE);\
+    }
 
 
 #endif

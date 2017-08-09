@@ -42,13 +42,13 @@ RigidFiber::~RigidFiber()
 //------------------------------------------------------------------------------
 RigidFiber::RigidFiber(RigidFiber const&)
 {
-    ERROR("unfinished: cannot copy a Fiber");
+    ABORT_NOW("unfinished: cannot copy a Fiber");
 }
 
 
 RigidFiber& RigidFiber::operator=(RigidFiber const&)
 {
-    ERROR("unfinished: cannot copy a Fiber");
+    ABORT_NOW("unfinished: cannot copy a Fiber");
 }
 
 

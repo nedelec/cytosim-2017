@@ -509,7 +509,7 @@ void MatrixSparseSymmetric1::prepareForMultiply()
             for ( unsigned int cc = 1; cc < colSize[jj]; ++cc )
             {
                 ++kk;
-                if ( kk >= nbe ) ERROR("out-of-range");
+                if ( kk >= nbe ) ABORT_NOW("out-of-range");
                 sa[kk]  = col[jj][cc].val;
                 ija[kk] = col[jj][cc].line;
             }

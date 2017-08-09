@@ -500,7 +500,7 @@ void Sphere::allocateProjection(const unsigned int nbp)
 #if (DIM == 1)
 
 //this is unsafe, don't use the sphere in 1D!
-void Sphere::makeProjection() { ERROR("Sphere not implemented in 1D"); }
+void Sphere::makeProjection() { ABORT_NOW("Sphere is not implemented in 1D"); }
 void Sphere::addSurfaceSpeedsFromForces(real const*, real*, real) const {}
 void Sphere::setSpeedsFromForces(const real* X, real* Y, const real, bool) const {}
 
