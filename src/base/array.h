@@ -94,8 +94,8 @@ public:
         if ( k & k-1 )
         {
             do
-                k = k & k-1;
-            while ( k & k-1 );
+                k = k & (k-1);
+            while ( k & (k-1) );
             
             k <<= 1;
         }

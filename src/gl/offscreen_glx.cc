@@ -67,8 +67,8 @@ int OffScreen::open(const unsigned int width, const unsigned int height)
     /* PBuffer Creation */
     int attribListP[]= {
         GLX_PRESERVED_CONTENTS, GL_TRUE,
-        GLX_PBUFFER_WIDTH,  width,
-        GLX_PBUFFER_HEIGHT, height,
+        GLX_PBUFFER_WIDTH,  (int)width,
+        GLX_PBUFFER_HEIGHT, (int)height,
         None };
     
     pbuf = glXCreatePbuffer(dpy, FBConfig[0], attribListP);

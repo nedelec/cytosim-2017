@@ -380,7 +380,7 @@ void FiberNaked::reshape_sure(const unsigned ns, real* vec, real cut)
         dis = seg.norm();
         
         //move the left point by dp:
-        dp.addTo(vec+DIM*pp);
+        dp.add_to(vec+DIM*pp);
         //update the uniform motion of the points:
         sum += dp;
         
@@ -390,14 +390,14 @@ void FiberNaked::reshape_sure(const unsigned ns, real* vec, real cut)
     }
     
     //move the last point by dy[]:
-    dp.addTo(vec+DIM*ns);
+    dp.add_to(vec+DIM*ns);
     
     // calculte a uniform motion to conserve the center of gravity:
     sum = ( sum + dp ) * ( -1.0 / ( ns + 1 ) );
     
     //translate the entire fiber uniformly:
     for ( unsigned pp = 0; pp <= ns; ++pp )
-        sum.addTo(vec+DIM*pp);
+        sum.add_to(vec+DIM*pp);
 }
 
 

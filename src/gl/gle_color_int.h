@@ -107,8 +107,13 @@ public:
     /// set current color, but with \c s as alpha component
     void colorA(GLfloat s) const
     {
-        GLubyte ub[] = { red(), green(), blue(), s * 255 };
-        glColor4ubv(ub);
+        if ( s < 1.0 )
+            glColor4f(red(), green(), blue(), s);
+        else
+        {
+            GLubyte ub[] = { red(), green(), blue(), alpha() };
+            glColor4ubv(ub);
+        }
     }
     
     void clearColor() const

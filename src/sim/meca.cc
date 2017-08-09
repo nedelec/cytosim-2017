@@ -663,7 +663,7 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
         const real *const end = vRHS + DIM*nbPts;
         
         for ( real * mx = vRHS; mx < end; mx += DIM )
-            flow_dt.addTo(mx);
+            flow_dt.add_to(mx);
     }
     
 #endif

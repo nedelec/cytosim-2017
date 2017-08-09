@@ -200,7 +200,7 @@ public:
     operator VAL const* () const { return val; }
 
     /// access to array
-    VAL& operator [] (unsigned int i) { return val[i]; }
+    VAL& operator [] (size_t i) { return val[i]; }
 
 };
 

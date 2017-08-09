@@ -1,5 +1,4 @@
 // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
-
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
@@ -9,21 +8,22 @@
 
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include <cstdio>
 #include <cmath>
 
 /// Vector2 is a vector with 2 `real` components.
 /**
- Note: We assume that the coordinates XX and YY are adjacent in memory, which allows
- us to define an automatic conversion to a C-array.
- This is not guaranteed by the C-standard, but it usually works though...
+ Note: We assume that the coordinates XX and YY are adjacent in memory,
+ allowing easy conversion operators to and from C-array.
+ Although this is not guaranteed by the C-standard, this is usually the case.
  */
 class Vector2
 {
     
 public:
     
-    /// dimensionality
+    /// dimensionality is 2
     static unsigned dimensionality() { return 2; }
     
     /// coordinates are public
@@ -34,51 +34,61 @@ public:
     Vector2() {}
     
     /// construct from values
-    explicit Vector2(const real x, const real y) : XX(x), YY(y) {}
+    Vector2(const real x, const real y) : XX(x), YY(y) {}
     
     /// construct from values
-    Vector2(const real x, const real y, const real) : XX(x), YY(y) {}
-
+    Vector2(const real x, const real y, real) : XX(x), YY(y) {}
+    
     /// construct from address
     Vector2(const real v[]) : XX(v[0]), YY(v[1]) {}
     
     /// construct from array of size d
-    Vector2(const real v[], const int& d)
+    Vector2(const real v[], int d)
     {
         if ( d > 0 ) XX = v[0]; else XX = 0;
         if ( d > 1 ) YY = v[1]; else YY = 0;
     }
-
+    
     /// create new Vector with coordinates from the given array
     static Vector2 make(const real b[]) { return Vector2(b[0], b[1]); }
-
+    
     /// destructor (is not-virtual: do not derive from this class)
     ~Vector2() {}
     
     
-    /// implicit conversion to a modifiable real[] array
+    /// address of coordinate array
+    real * data()                { return &XX; }
+    
+    /// constant address of coordinate array
+    real const* data()     const { return &XX; }
+    
+#if ( 1 )
+    /// implicit conversion to a modifiable real pointer
     operator real*()             { return &XX; }
     
-    /// implicit conversion to a const real[] array
+    /// implicit conversion to a constant real pointer
     operator const real*() const { return &XX; }
-    
-    /// conversion to a 'real array'
-    real * addr()                { return &XX; }
+#else
+    /// value of a coordinate
+    real operator[](unsigned ii) const
+    {
+        assert_true(ii<2);
+        if ( ii == 1 )
+            return YY;
+        else
+            return XX;
+    }
     
     /// modifiable access to individual coordinates
-    real& operator[](const unsigned ii)
+    real& operator[](unsigned ii)
     {
-        assert_true(ii<3);
-        return (&XX)[ii];
+        assert_true(ii<2);
+        if ( ii == 1 )
+            return YY;
+        else
+            return XX;
     }
-
-    
-    /// replace coordinates by the ones provided
-    void get(const real b[])
-    {
-        XX = b[0];
-        YY = b[1];
-    }
+#endif
     
     /// copy coordinates from array of size d
     void get(const real v[], const int& d)
@@ -86,40 +96,78 @@ public:
         if ( d > 0 ) XX = v[0]; else XX = 0;
         if ( d > 1 ) YY = v[1]; else YY = 0;
     }
-
+    
+    /// replace coordinates by the ones provided
+    void get(const float b[])
+    {
+        XX = b[0];
+        YY = b[1];
+    }
+    
+    /// replace coordinates by the ones provided
+    void get(const double b[])
+    {
+        XX = b[0];
+        YY = b[1];
+    }
+    
     /// copy coordinates to given array
-    void put(real b[]) const
+    void put(float b[]) const
     {
         b[0] = XX;
         b[1] = YY;
     }
     
-    /// add to given array
-    void addTo(real b[]) const
+    /// copy coordinates to given array
+    void put(double b[]) const
+    {
+        b[0] = XX;
+        b[1] = YY;
+    }
+    
+    /// add content to given address
+    void add_to(real b[]) const
     {
         b[0] += XX;
         b[1] += YY;
     }
     
-    /// change coordinates by adding given array
-    void addFrom(real b[])
+    /// add content scaled by `alpha` to given address
+    void add_to(real alpha, real b[]) const
     {
-        XX += b[0];
-        YY += b[1];
+        b[0] += alpha * XX;
+        b[1] += alpha * YY;
+    }
+    
+    /// add content `n` times to array `b` of size `ldd*n`
+    void add_to(real b[], int n, int ldd) const
+    {
+        for ( int i = 0; i < n; ++i )
+        {
+            b[ldd*i  ] += XX;
+            b[ldd*i+1] += YY;
+        }
+    }
+    
+    /// subtract content scaled by `alpha` to given address
+    void sub_to(real alpha, real b[]) const
+    {
+        b[0] -= alpha * XX;
+        b[1] -= alpha * YY;
     }
     
     /// subtract to given array
-    void subTo(real b[]) const
+    void sub_to(real b[]) const
     {
         b[0] -= XX;
         b[1] -= YY;
     }
     
-    /// change coordinates by subtracting given array
-    void subFrom(real b[])
+    /// set coordinates to zero
+    void zero()
     {
-        XX -= b[0];
-        YY -= b[1];
+        XX = 0;
+        YY = 0;
     }
     
     /// change coordinates
@@ -129,13 +177,13 @@ public:
         YY = y;
     }
     
-    /// change coordinates
+    /// change coordinates (last argument is discarded)
     void set(const real x, const real y, const real)
     {
         XX = x;
         YY = y;
     }
-
+    
     /// change signs of all coordinates
     void oppose()
     {
@@ -150,7 +198,7 @@ public:
     {
         return XX*XX + YY*YY;
     }
-
+    
     
     /// the standard norm = sqrt(x^2+y^2)
     real norm() const
@@ -163,7 +211,7 @@ public:
     {
         return sqrt(XX*XX + YY*YY);
     }
-
+    
     /// square of the distance to other point == (a-this).normSqr()
     real distanceSqr(Vector2 const& a) const
     {
@@ -176,7 +224,7 @@ public:
         return sqrt((a.XX-XX)*(a.XX-XX) + (a.YY-YY)*(a.YY-YY));
     }
     
-    /// returns  min(x, y, z)
+    /// returns  min(x, y)
     real minimum() const
     {
         if ( XX > YY )
@@ -185,7 +233,7 @@ public:
             return XX;
     }
     
-    /// returns  max(x, y, z)
+    /// returns  max(x, y)
     real maximum() const
     {
         if ( XX > YY )
@@ -194,7 +242,7 @@ public:
             return YY;
     }
     
-    /// the infinite norm = max(|x|, |y|, |z|)
+    /// the infinite norm = max(|x|, |y|)
     real norm_inf() const
     {
         real x = fabs(XX);
@@ -203,6 +251,18 @@ public:
             return x;
         else
             return y;
+    }
+    
+    /// true if no component is NaN
+    bool valid() const
+    {
+        return ( XX == XX ) && ( YY == YY );
+    }
+    
+    /// true if all components are zero
+    bool null() const
+    {
+        return ( XX == 0 ) && ( YY == 0 );
     }
     
     /// normalize to norm=n
@@ -219,15 +279,15 @@ public:
         real sn = n / norm();
         return Vector2(XX*sn, YY*sn);
     }
-
+    
     //------------------------------------------------------------------
-
-    /// returns a perpendicular vector, of comparable but unspecified norm
+    
+    /// returns a perpendicular vector, of same norm
     const Vector2 orthogonal() const
     {
         return Vector2(-YY, XX);
     }
-
+    
     
     /// returns a perpendicular vector, of norm `n`
     const Vector2 orthogonal(const real n) const
@@ -235,19 +295,19 @@ public:
         real s = n / sqrt( XX*XX + YY*YY );
         return Vector2(-s*YY, s*XX);
     }
-
     
-    /// get the Euler angles
-    void getEulerAngles(real& angle) const
+    /// convert from cartesian to spherical coordinates ( r, theta, phi )
+    const Vector2 spherical() const
     {
-        angle = atan2(YY, XX);
+        return Vector2(sqrt(XX*XX+YY*YY),
+                       atan2(YY, XX));
     }
     
-    /// set from Euler angles
-    void setFromEulerAngles(const real angle)
+    /// convert from spherical to cartesian coordinates ( x, y, z )
+    const Vector2 cartesian() const
     {
-        XX = cos(angle);
-        YY = sin(angle);
+        return Vector2(XX*cos(YY),
+                       XX*sin(YY));
     }
     
     //------------------------------------------------------------------
@@ -287,12 +347,24 @@ public:
     {
         return Vector2(XX/b[0], YY/b[1]);
     }
-
+    
+    /// returns a vector with each element squared
+    const Vector2 e_squared() const
+    {
+        return Vector2(XX*XX, YY*YY);
+    }
+    
+    /// returns sum of all coordinates
+    real e_sum() const
+    {
+        return XX + YY;
+    }
+    
     
     /**
      In dimension 2, we define a cross-product operator which returns a real,
      which in this case represents a Vector aligned with the Z axis.
-     We also define the cross-product with a scalar, also corresponding to a 
+     We also define the cross-product with a scalar, also corresponding to a
      Vector aligned with Z. This is a fair contraction of the 3D vector product.
      */
     
@@ -301,19 +373,19 @@ public:
     {
         return a.XX * b.YY - a.YY * b.XX;
     }
-
+    
     /// cross product of a vector with a Z-Vector
     friend const Vector2 vecProd(Vector2 const& a, const real b)
     {
         return Vector2(a.YY*b, -a.XX*b);
     }
-
+    
     /// cross product of a Z-vector with a Vector
     friend const Vector2 vecProd(const real a, Vector2 const& b)
     {
         return Vector2(-a*b.YY, a*b.XX);
     }
-
+    
     
     /// scalar product of two vectors
     friend real operator *(Vector2 const& a, Vector2 const& b)
@@ -384,10 +456,20 @@ public:
     //------------------------------------------------------------------
     
     /// conversion to a string
-    std::string str() const
+    std::string repr() const
     {
         std::ostringstream oss;
         oss << XX << " " << YY;
+        return oss.str();
+    }
+    
+    /// conversion to a string with given precision
+    std::string repr(int w, int p) const
+    {
+        std::ostringstream oss;
+        oss.precision(p);
+        oss << std::setw(w) << XX << " ";
+        oss << std::setw(w) << YY;
         return oss.str();
     }
     
@@ -402,13 +484,13 @@ public:
     {
         fprintf(out, "( %+9.3f %+9.3f )", XX, YY);
     }
-
+    
     /// print, followed by a new line
     void println(FILE * out = stdout) const
     {
         fprintf(out, "  %+9.3f %+9.3f\n", XX, YY);
     }
-
+    
     //------------------------------------------------------------------
     
     /// add a random component in [-s, s] to each coordinate
@@ -448,10 +530,10 @@ public:
 //-------------------------- associated global functions -----------------------
 
 /// stream input operator
-std::istream & operator >> ( std::istream& is, Vector2& v);
+std::istream & operator >> (std::istream&, Vector2&);
 
 /// stream output operator
-std::ostream & operator << ( std::ostream& os, Vector2 const& v);
+std::ostream & operator << (std::ostream&, Vector2 const&);
 
 /// linear interpolation: returns a + x * b
 const Vector2 interpolate(Vector2 const& a, real x, Vector2 const& b);
