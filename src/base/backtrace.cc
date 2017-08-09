@@ -3,7 +3,8 @@
 #include "backtrace.h"
 
 
-#ifdef __GNUC__
+// Backtrace is disabled since it is not necessary to run Cytosim
+#if 0
 
 
 #include <stdlib.h>

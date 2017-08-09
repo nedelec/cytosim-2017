@@ -7,6 +7,8 @@
  * - backtrace_symbols()
  * .
  * On Mac, this is available since OSX 10.5
+ *
+ * Backtrace is however not needed to run Cytosim, and this can be disabled
  */
 
 
