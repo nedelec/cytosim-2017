@@ -329,8 +329,11 @@ public:
     /// print Fiber tensions along certain planes defined in `opt`
     void      reportFiberTension(std::ostream&, Glossary& opt) const;
     
-    /// print Aster positions
+    /// print Organizer positions
     void      reportOrganizer(std::ostream&) const;
+    
+    /// print Aster positions
+    void      reportAster(std::ostream&) const;
     
     /// print Bead positions
     void      reportBeadSingles(std::ostream&) const;

@@ -224,7 +224,7 @@ class SelectionCriteria
 {
 public:
     
-    unsigned     mrk;
+    int          mrk;
     int          st;
     int          st1;
     int          st2;

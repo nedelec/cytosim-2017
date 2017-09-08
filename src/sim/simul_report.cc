@@ -5,6 +5,7 @@
 #include "key_list.h"
 #include "aster.h"
 #include "solid.h"
+#include "aster.h"
 #include <iostream>
 #include <set>
 
@@ -207,6 +208,12 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportOrganizer(out);
         throw InvalidSyntax("I only know `organizer'");
     }
+    if ( who == "aster" )
+    {
+        if ( what.empty() )
+            return reportAster(out);
+        throw InvalidSyntax("I only know `aster'");
+    }
     if ( what == "time" )
     {
         if ( who.empty() )
@@ -284,7 +291,7 @@ void Simul::reportFiberLengthDistribution(std::ostream& out, real delta, real ma
     assert_true( max > 0 );
     assert_true( delta > 0 );
     
-    const int nbin = ceil( max / delta );
+    const unsigned nbin = ceil( max / delta );
     unsigned * cnt = new unsigned[nbin+1];
     
     PropertyList plist = properties.find_all("fiber");
@@ -760,6 +767,26 @@ void Simul::reportOrganizer(std::ostream& out) const
     }
 }
 
+
+/**
+ Export position of Asters
+ */
+void Simul::reportAster(std::ostream& out) const
+{
+    out << LIN << "%class" << SEP << "identity" << SEP << "position";
+    
+    for ( Organizer * obj=organizers.first(); obj; obj=obj->next() )
+    {
+        if ( obj->tag() == Aster::TAG )
+        {
+            out << LIN << obj->property()->index();
+            out << SEP << obj->number();
+            out << SEP << obj->position();
+        }
+    }
+}
+
+
 /**
  Export position of Beads
  */
@@ -950,7 +977,7 @@ void Simul::reportCouple(std::ostream& out) const
     int nb[mx] = { 0 }, cnt[mx][4];
     
     //reset counts:
-    for ( int ii = 0; ii < mx; ++ii )
+    for ( unsigned ii = 0; ii < mx; ++ii )
     {
         cnt[ii][0] = 0;
         cnt[ii][1] = 0;
