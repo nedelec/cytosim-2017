@@ -13,9 +13,7 @@ extern Modulo * modulo;
 Wrist::Wrist(SingleProp const* p, Mecable const* mec, unsigned pti)
 : Single(p), sBase(mec, pti)
 {
-    assert_true( mec );
-    
-    if ( pti > mec->nbPoints() )
+    if ( mec && pti > mec->nbPoints() )
         throw InvalidParameter("Could not anchor Single (invalid point index)");
     
 #if ( 0 )
