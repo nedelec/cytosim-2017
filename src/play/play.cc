@@ -268,7 +268,7 @@ int main(int argc, char* argv[])
     {
         if ( OffScreen::open(view.window_size[0], view.window_size[1]) )
         {
-            std::cerr << "Failed to create off-screen pixels" << std::endl;
+            std::cerr << "Failed to create off-screen pixels\n";
             return EXIT_FAILURE;
         }
        

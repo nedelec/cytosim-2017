@@ -208,9 +208,9 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportOrganizer(out);
         throw InvalidSyntax("I only know `organizer'");
     }
-    if ( who == "aster" )
+    if ( what == "aster" )
     {
-        if ( what.empty() )
+        if ( who.empty() )
             return reportAster(out);
         throw InvalidSyntax("I only know `aster'");
     }
@@ -773,7 +773,7 @@ void Simul::reportOrganizer(std::ostream& out) const
  */
 void Simul::reportAster(std::ostream& out) const
 {
-    out << LIN << "%class" << SEP << "identity" << SEP << "position";
+    out << "% class" << SEP << "identity" << SEP << "position";
     
     for ( Organizer * obj=organizers.first(); obj; obj=obj->next() )
     {
@@ -784,6 +784,7 @@ void Simul::reportAster(std::ostream& out) const
             out << SEP << obj->position();
         }
     }
+    out << '\n';
 }
 
 
