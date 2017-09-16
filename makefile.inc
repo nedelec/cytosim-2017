@@ -1,8 +1,8 @@
 # // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-#---------------- MACHINE = {mac, linux-centos, cluster, linux-ubuntu, cygwin}
-MACHINE := mac
+#---------------- MACHINE = {mac, centos, ubuntu, cluster, cygwin}
+MACHINE := cygwin
 
 #---------------- COMPILER = {gcc, icc, clang}
 COMPILER := gcc
@@ -70,15 +70,15 @@ else ifeq ($(COMPILER),icc)
     MAKELIB  := xiar -rcs
      
     #CXX     := icpc -fp-trap=common -vec-report0
-    #CXX     := icpc -bind_at_load -fvisibility=hidden -mkl=sequential -wd1224,161
+    #CXX     := icpc -bind_at_load -fvisibility=hidden -no-parallel -mkl=sequential -wd1224,161
     CXX      := icpc -vec-report0 -wd1224,161
-    CXX      := icpc -mkl=sequential -wd1224,161
+    CXX      := icpc -no-parallel -mkl=sequential -wd1224,161
     # Intel advanced instruction sets:
     # '-xSSE4.1' for core duo (ca. 2009)
     # '-mavx' for Intel core i7 (ca. 2012)
     FAST     := -O3 -xSSE4.1
-    FAST     := -O3 -xAVX -funroll-loops -fno-math-errno
-    DEBUG    := -Wall -no-pie -g -wd279,383,810,869,981,1418,1419,1572,2259
+    FAST     := -O3 -mdynamic-no-pic -funroll-loops -fno-math-errno -mavx
+    DEBUG    := -g -Wall -no-pie -wd279,383,810,869,981,1418,1419,1572,2259
     COVERAGE := -ftest-coverage
 
 else ifeq ($(COMPILER),clang)
@@ -152,7 +152,7 @@ ifeq ($(MACHINE),linux-centos)
 endif
 
 
-ifeq ($(MACHINE),linux-ubuntu)
+ifeq ($(MACHINE),ubuntu)
 
     FlagsD := -O0 $(DEBUG) $(WARN)
     FlagsP := -O0 -fno-inline -pg $(ALIGN) $(FAST)
@@ -241,7 +241,8 @@ ifeq ($(MACHINE),cygwin)
     LINKGL := -L/usr/lib -lglut -lGL -lGLU -lXt -lX11
 
     ifneq ($(HAS_PNG), 0)
-      
+    
+        LIB_PNG := /lib/libpng.dll.a /lib/libz.a
         LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
         ING_PNG :=
     
