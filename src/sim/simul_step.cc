@@ -110,7 +110,7 @@ void Simul::step()
         HandProp hp("test_binding");
         hp.binding_rate  = 10;
         hp.binding_range = HandProp::binding_range_max;
-        hp.bind_also_end = true;
+        hp.bind_also_ends = true;
         hp.complete(prop, 0);
         
         for ( unsigned int cnt = 0; cnt < TEST_BINDING; ++cnt )

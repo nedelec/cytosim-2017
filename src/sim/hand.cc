@@ -49,7 +49,7 @@ bool Hand::attachmentAllowed(FiberBinder & fb)
     // check minus-end-binding:
     if ( fb.abscissaFrom(MINUS_END) < 0 )
     {
-        if ( prop->bind_also_end )
+        if ( prop->bind_also_ends )
             fb.moveToEnd(MINUS_END);
         else
             return false;
@@ -58,7 +58,7 @@ bool Hand::attachmentAllowed(FiberBinder & fb)
     // check plus-end binding:
     if ( fb.abscissaFrom(PLUS_END) < 0 )
     {
-        if ( prop->bind_also_end )
+        if ( prop->bind_also_ends )
             fb.moveToEnd(PLUS_END);
         else
             return false;

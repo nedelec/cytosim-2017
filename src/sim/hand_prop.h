@@ -96,7 +96,7 @@ public:
      
      <em>default value = false</em>
      */
-    bool         bind_also_end;
+    bool         bind_also_ends;
     
     
     /// if false, the Hand will detach immediately upon reaching a growing or a static fiber end

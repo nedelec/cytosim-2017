@@ -123,7 +123,7 @@ void HandProp::clear()
     unbinding_force    = 0;
     unbinding_force_inv = 0;
 
-    bind_also_end      = false;
+    bind_also_ends     = false;
     hold_growing_end   = false;
     hold_shrinking_end = false;
     
@@ -148,7 +148,8 @@ void HandProp::read(Glossary& glos)
     glos.set(unbinding_rate,     "unbinding", 0);
     glos.set(unbinding_force,    "unbinding", 1);
     
-    glos.set(bind_also_end,      "bind_also_end");
+    glos.set(bind_also_ends, "bind_also_ends") || glos.set(bind_also_ends, "bind_also_end");
+
     glos.set(hold_growing_end,   "hold_growing_end");
     glos.set(hold_shrinking_end, "hold_shrinking_end");
     
@@ -156,8 +157,6 @@ void HandProp::read(Glossary& glos)
     glos.set(display,            "display");
     
 #ifdef BACKWARD_COMPATIBILITY
-    if ( glos.set(bind_also_end, "bind_also_ends") )
-        MSG.warning("hand:bind_also_ends was renamed bind_also_end\n");
     if ( glos.set(hold_growing_end, "hold_growing_ends") )
         MSG.warning("hand:hold_growing_ends was renamed hold_growing_end\n");
 #endif
@@ -242,7 +241,7 @@ void HandProp::write_data(std::ostream & os) const
     write_param(os, "binding_key",        binding_key);
     write_param(os, "unbinding",          unbinding_rate, unbinding_force);
 
-    write_param(os, "bind_also_end",      bind_also_end);
+    write_param(os, "bind_also_ends",     bind_also_ends);
     write_param(os, "hold_growing_end",   hold_growing_end);
     write_param(os, "hold_shrinking_end", hold_shrinking_end);
 

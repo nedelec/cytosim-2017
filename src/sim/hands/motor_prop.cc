@@ -36,7 +36,7 @@ void MotorProp::read(Glossary& glos)
     HandProp::read(glos);
     
     glos.set(stall_force,       "stall_force");
-    glos.set(max_speed,         "max_speed");
+    glos.set(max_speed, "unloaded_speed") || glos.set(max_speed, "max_speed");
     glos.set(limit_speed,       "limit_speed");
 }
 

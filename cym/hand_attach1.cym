@@ -42,7 +42,7 @@ set hand hand2
     binding_range   = 2
     binding_key     = 2
     unbinding       = 0, 3
-    bind_also_end   = 1
+    bind_also_ends   = 1
     display = { color=dark_green }
 }
 
