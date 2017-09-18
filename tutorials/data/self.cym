@@ -1,0 +1,71 @@
+% Fibers and bivalent Motor oligomers
+% One of the oldest simulation by F. Nedelec
+%
+% Self organization of Microtubules of Motors
+% Nedelec et al. Nature, 1998
+
+set simul self 
+{
+    time_step = 0.01
+    viscosity = 0.05
+    display = ( style=2; )
+}
+
+set space cell
+{
+    geometry = ( circle 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+    display = ( line_width=1; )
+}
+
+set hand kinesin
+{
+    binding_rate = 10
+    binding_range = 0.01
+    unbinding_rate = 0.1
+    unbinding_force = 3
+    
+    activity = move
+    max_speed = 0.8
+    stall_force = 5
+
+    bind_also_end = 1
+    hold_growing_end = 1
+
+    display = ( color=orange; size=7; width=7; )
+}
+
+set couple complex
+{
+    hand1 = kinesin
+    hand2 = kinesin
+    stiffness = 100
+    diffusion = 10
+}
+
+new 100 fiber microtubule
+{
+    length = 9
+}
+
+new 2000 couple complex
+
+set simul:display *
+{
+    label = (Nedelec et al. 1998 -)
+}
+
+run simul *
+{
+    nb_frames = 50
+    nb_steps = 5000
+}
+
