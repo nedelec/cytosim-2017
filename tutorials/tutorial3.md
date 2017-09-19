@@ -1,4 +1,4 @@
-# Tutorial 3: Aster centering
+# Tutorial 3: Aster Centering
 
 Authors: Alessandro De Simone and Pierre Gonczy (2015) and Francois Nedelec (15.09.2017)
 
@@ -14,7 +14,7 @@ To select 2D or 3D, you need to get the corresponding executables (sim and play)
 
 ## Preamble
 
-You have already followed Tutorial 1, and you should be familiar with the general syntax of Cytosim's configuration files, and be able to run a live simulation from the command-line.
+You have already followed Tutorial 1 and 2, and you should be familiar with the general syntax of Cytosim's configuration files, and be able to run a live simulation from the command-line.
 
 # Step 1 - Defining microtubules
 
@@ -58,13 +58,13 @@ Check that this works as expected, and verify that the values of the parameters 
 ### Use growing microtubules
 
  Set the `activity` of the microtubule to make it grow smoothly, up to a maximum length of 10: 
- 
+
     set fiber microtubule
     {
         ...
         activity = classic
         growing_speed = 1
-        growing_force = 2.7
+        growing_force = 1.67
         total_polymer = 10
         ...
     }
@@ -77,7 +77,7 @@ Where `free_polymer` is a number in [0,1], representing the fraction of free mon
 
     free_polymer = 1.0 - sum(all_fiber_length) / total_polymer
 
-You can press 'i' in the live simulation to display detailed information about the length of the filaments.
+You can press `i` in the live simulation to display detailed information about the length of the filaments.
 
 ### Frictionless boundaries
 
@@ -137,7 +137,9 @@ The solid named `core` is used for the construction of the aster, but only graph
 * `fibers = microtubule` defines which fiber class is used to compose the aster,
 * `radius` set the radius of the aster solid (here called `core`) which is at its center.
 
-The aster has 25 microtubules, and they are all initially 0.1 micro-meter long. Their minus-ends are anchored onto the solid with links of stiffness `1000` and `500`, while their plus end pointing out.
+The aster has 25 microtubules, and they are all initially 0.1 micro-meter long. Their minus-ends are anchored onto the solid with links of stiffness `1000` and `500` (which will be explained shortly), while their plus end pointing out. 
+
+The complete configuration file is here: [aster.cym](data/aster.cym).
 
 ### Microtubule length
 
@@ -208,7 +210,7 @@ Microtubules growing from a centrosome will exert pushing forces against the cel
 
     F = 2 * rigidity / length^2 
 
-Position the centrosome 1 um away from the cell edge to start with, in a cell with a radius of 5 um. Does the centrosome center itself? How stable is the final position? 
+Position the centrosome 1 um away from the cell edge to start with, in a cell with a radius of 5 um and a total amount of polymer such that the microtubule lengths are equal to the cell radius . Does the centrosome center itself? How stable is the final position? 
 
 ## Large cell
 
@@ -227,7 +229,7 @@ Place the centrosome 1 um away from the cell membrane by modifying the position 
         position = 14 0 0
     }
 
-What happens?
+What happens? Adjust the total amount of polymer so that all fibers can growth up to a length equal to the radius of the cell
 
 ## Impact of cell shape
 
@@ -265,6 +267,10 @@ Set the cell radius back to 5 um and the position to “4 0”. Now you will exp
         ...
     }
 
+You can start with the complete configuration file [aster_dynamic.cym](data/aster_dynamic.cym).
+
+Make sure that the fibers start with a length larger than `min_length`. 
+
 ## Nucleation
 
 If the fiber class from which the aster is constructed is dynamic, you can specify a nucleation rate:
@@ -278,10 +284,11 @@ If the fiber class from which the aster is constructed is dynamic, you can speci
 This will be the rate a which an empty site will be re-populated, leading to a steady-state in which the number of microtubules may vary.
     
 The mean length of the microtubules is then equal to `growing_speed/catastrophe_rate` at equilibrium.
-Increase (and then decrease) microtubule catastrophe rate, and run the two simulations in turn. Describe the events.
+Increase (and then decrease) microtubule catastrophe rate, and run the two simulations in turn. Describe the events.
+
 # Step 5 - Impact of cytoplasmic motors
 
-Reset catastrophe rate to 0.1 and add 2000 motors distributed throughout the cytoplasm:
+Reset catastrophe rate to 0.1 and add 2000 motors distributed at fixed points throughout the cytoplasm:
 
     set hand dynein
     {
@@ -310,15 +317,21 @@ Can you imagine why?
 
 Is the result very different if these motors are minus-end directed or plus-end directed? 
 
-Next, repeat this in the large cell. Compare the result with the situation without such motors.### Placement of motors
-Place the motors at a maximum distance of 0.1 from the edge of the cell:
+Next, repeat this in the large cell. Compare the result with the situation without such motors.
+
+### Placement of motors
+
+Place the motors at a maximum distance of 0.1 from the edge of the cell:
 
     new 2000 single grafted
     {
         position = edge 0.1
-    }Take a few minutes to guess what will happen with plus-end or minus-end directed motors...
+    }
+
+Take a few minutes to guess what will happen with plus-end or minus-end directed motors...
 write it down and, only then, run the simulation,
-
+
+
 ## The end
 
 Congratulation, you have completed the tutorial.

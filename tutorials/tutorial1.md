@@ -20,7 +20,7 @@ Here is how you will run the simulations:
 At any time, you can restart the simulation by pressing `z` on the keyboard. This should also be done if you change the configuration file, e.g. as you progress through the tutorial.
 The configuration file `config.cym` for Cytosim is a plain text file, and should be edited using a PLAIN text editor. You can use TextEdit, Geany or download TextMate; but do not use Word or Pages. 
 
-## Step 1 - The configuration file
+# Step 1 - The configuration file
 
 Cytosim reads a single configuration file, and executes the commands in the natural order, from top to bottom. By default, the configuration file is named `config.cym`.
 Let's start with a minimal configuration file. A square "cell" is defined, but it is kept empty.
@@ -71,7 +71,7 @@ Finally:
 instructs cytosim to simulate the system. Specifically, it will perform 100 iterations, and hence simulate a total time of `100 * 0.01 = 1 second`.  It will also record 50 frames at equal intervals, so in this case every 1 second / 50 = 0.02 second.
 
 
-## Step 2 - Diffusing particule
+# Step 2 - Diffusing particule
 
 Let's add a diffusing particle into the "cell":
 
@@ -203,7 +203,7 @@ or
     }
 
 
-## Step 3 - The time step
+# Step 3 - The time step
 
 One of the most important parameter of the simulation is the time step.
 This defines the time interval corresponding to one step of cytosim's engine.
@@ -243,7 +243,7 @@ Is the animation similar to the previous one obtained with `time_step = 0.01` se
 Can you decrease the time step even further?
 Does it take more time to simulate the system?
 
-## Step 4 - Filaments
+# Step 4 - Filaments
 
 Let's now define [microtubules](http://en.wikipedia.org/wiki/Microtubules)! 
 
@@ -373,8 +373,7 @@ This is expected, since the confiment is 'soft' and implemented with an Harmonic
 In this case, the controlling parameter is the ratio of bending elasticity to confinement elasticity.
 
 
-
-## Step 5 - Microtubule-binding molecules 
+# Step 5 - Microtubule-binding molecules 
 
 Let's make the `kinesin` able to bind microtubule. We need to define two properties for binding, and two more for unbinding:
 
@@ -466,7 +465,7 @@ As particles bind, this progressively clears the space.
 
 Any Hand can bind with a rate `binding_rate` per seconds to every filament closer than `binding_range`. If it binds, a Hand does so always to the closest position on a filament. The regions where particles are close to two or more filaments clear up faster. 
 
-### End-binding
+### Binding to the filaments
 
 By default hands will bind only to the side of the filaments, but the capture region can be extended with the parameter `bind_also_ends`. 
 
@@ -481,9 +480,9 @@ By default hands will bind only to the side of the filaments, but the capture re
 
 It extends the capture region to allow binding to the end:
 
-![bind_end](data/bind_also_end.png)
+![bind_also_end](data/bind_also_end.png)
 
-### End-binding
+### Binding to the ends of the filaments
 
 By default hands can bind anywhere in the filament, but you can restrict the binding site to a region near the filament ends. 
 All fiber objects in cytosim have an intrinsic polarity, with a plus-end and minus-end. These ends can have different properties. Dynamic microtubles, for example, grow and shrink primarily from the plus-ends.
@@ -507,7 +506,7 @@ The possible values for `bind_end` are `plus_end`, `minus_end` and `both_ends`:
 Add these features to the last example and check the difference.
 
 
-## Step 6 - Molecular motors 
+# Step 6 - Molecular motors 
 
 Let's make the `kinesin` behave like a [molecular motor](http://en.wikipedia.org/wiki/Molecular_motor):
 This is done by specifying an activity, and adding the necessary parameters for this activity:
@@ -546,7 +545,6 @@ This distance is informally called the processivity of the motor. You can increa
 
 If the detachment rate `unbinding_rate` is very low, motors walk for a very long time, and are said to be very processive. Here they would walk on average for 10 micro-meters, but they usually reach the end of the filament before, where they unbind immediately. 
 
-
 ### Directionality
 
 We can change the direction in which the motor move, by changing the speed which can be positive or negative:
@@ -568,6 +566,12 @@ If `max_speed` is set positive, the motor walks towards the plus-end of the micr
 
 In Cytosim, motors moving in opposite directly never collide, and instead pass through each other like fantoms. 
 Can you check this by defining two class of motors?
+
+### Force-velocity relationship
+
+Cytosim implements a linear force-velocity relationship, as measured for conventional kinesin. The speed of a motor is affected by the force that it experiences.
+
+![force_velocity](data/force_velocity.png)
 
 
 ### Motor reaching the end of a filament

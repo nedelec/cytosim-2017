@@ -1,0 +1,50 @@
+% A confined aster
+% F. Nedelec, April 2010 - Sep 2017
+
+set simul aster 
+{
+    time_step = 0.001
+    viscosity = 0.01
+}
+
+set space cell
+{
+    geometry = ( sphere 5 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 20
+    segmentation = 0.5
+    confine = inside, 100
+ 
+    display = ( line_width = 3 )
+}
+
+set solid core
+{
+    display = ( style = 3 )
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 500
+    nucleation_rate = 1
+}
+
+new aster centrosome
+{
+    radius = 0.5
+    nb_fibers = 32
+    fiber_length = 1
+	position = 4 0 
+}
+
+run 100000 simul *
+{
+    nb_frames = 100
+}
