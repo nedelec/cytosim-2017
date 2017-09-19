@@ -28,8 +28,8 @@ set fiber microtubule
     rescue_rate      = 0
     min_length       = 0.5
     fate = destroy
-
-    display = ( line_width = 3 )
+ 
+    display = ( line_width = 4; )
 }
 
 set solid core
@@ -37,7 +37,7 @@ set solid core
     display = ( style = 3 )
 }
 
-set aster centrosome
+set aster star
 {
     solid = core
     fibers = microtubule
@@ -45,12 +45,12 @@ set aster centrosome
     nucleation_rate = 1
 }
 
-new aster centrosome
+new aster star
 {
     radius = 0.5
     nb_fibers = 32
     fiber_length = 1
-	position = 4 0 
+    position = 4 0 
 }
 
 set hand dynein

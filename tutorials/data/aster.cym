@@ -19,8 +19,14 @@ set fiber microtubule
     rigidity = 20
     segmentation = 0.5
     confine = inside, 100
+	
+    activity = classic
+    growing_speed = 1.0
+    growing_force = 1.67
+    total_polymer = 160
+    fate = destroy
  
-    display = ( line_width = 3 )
+    display = ( line_width = 4; )
 }
 
 set solid core
@@ -28,7 +34,7 @@ set solid core
     display = ( style = 3 )
 }
 
-set aster centrosome
+set aster star
 {
     solid = core
     fibers = microtubule
@@ -36,12 +42,12 @@ set aster centrosome
     nucleation_rate = 1
 }
 
-new aster centrosome
+new aster star
 {
     radius = 0.5
     nb_fibers = 32
     fiber_length = 1
-	position = 4 0 
+    position = inside 
 }
 
 run 100000 simul *
