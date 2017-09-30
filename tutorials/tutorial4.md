@@ -28,19 +28,6 @@ Set the activity of a filament to `grow` to make it grow smoothly, up to a maxim
 
 Positive values of the rate correspond to assembly, and negative values to disassembly. 
 
-### Defining a maximum length
-
-Additional parameters can be defined:
-
-    set fiber microtubule
-    {
-        ...
-        max_length = 8
-        ...
-    }
-
-In this case, the length of a fiber will not exceed `max_length` (which by default is infinite).
-
 ### Assembly can depend on available monomers
     
 To simulate a finite pool of monomer, define the parameter `total_polymer`:
@@ -77,20 +64,6 @@ The projected force is negative ( antagonistic ) if it is directed against fiber
      else
          speed = growing_speed * free_polymer;
 
-### Assembly at the minus-end
-
-Assembly can be defined for the Minus end as well by providing a second value to these parameters:
-
-    set fiber microtubule
-    {
-        ...
-        growing_speed = 1, 1
-        growing_force = 3, 3
-        ...
-    }
-
-Here the minus-end (second column) will assembles at the same speed as the plus end (first column).
-
 # 2. Standard microtubule dynamic instability
 
 Filaments can grow and shrink according to the classical two-states dynamic instability model as defined by T. Hill.
@@ -116,7 +89,7 @@ The parameter `activity = classic` turns this feature on:
  * `growing_speed`, the base assembly rate in um/s (must be non-negative),
  * `shrinking_speed`, the base disassembly rate in um/s (must be non-positive),
  * `growing_force`, the characteristic force of polymerization in pN,
- * `castastrophe_rate`, the rate of stochastic switch from the assembly state to the disassembly state,
+ * `castastrophe_rate`, the transition rate from the assembly state to the disassembly state,
  * `rescue_rate`, the rate of stochastic switch from the disassembly state to the assembly state,
  * `min_length`, the length below which the filament stops shriking
  
