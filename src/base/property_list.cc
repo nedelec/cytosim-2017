@@ -159,7 +159,6 @@ Property * PropertyList::find_or_die(std::string const& knd, std::string const& 
     {
         std::ostringstream oss;
         oss << "Unknown " << knd << " `" << nm << "'\n";
-        oss << PREF << "Known properties:\n";
         write_names(oss, PREF);
         throw InvalidSyntax(oss.str());
     }
@@ -176,7 +175,6 @@ Property * PropertyList::find_or_die(std::string const& knd, const unsigned idx)
     {
         std::ostringstream oss;
         oss << "Unknown " << knd << "(" << idx << ")\n";
-        oss << PREF << "Known properties:\n";
         write_names(oss, PREF);
         throw InvalidSyntax(oss.str());
     }

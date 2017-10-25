@@ -354,7 +354,7 @@ public:
     void      reportCouplePosition(std::ostream&, std::string const&) const;
     
     /// print info on doubly bound Couples 
-    void      reportCoupleBridge(std::ostream&) const;
+    void      reportCoupleLink(std::ostream&, std::string const&) const;
     
     
     /// print state of Singles
