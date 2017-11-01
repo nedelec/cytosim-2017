@@ -4,6 +4,8 @@
 #include "sim.h"
 #include <fstream>
 #include "tictoc.h"
+#include "iowrapper.h"
+#include "messages.h"
 
 /// Current format version number used for writing object-files.
 /**

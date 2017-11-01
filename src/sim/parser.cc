@@ -5,6 +5,7 @@
 #include "glossary.h"
 #include "tokenizer.h"
 #include "stream_func.h"
+#include "messages.h"
 #include <fstream>
 
 

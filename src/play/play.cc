@@ -5,6 +5,7 @@
 #include "glossary.h"
 #include "exceptions.h"
 #include "offscreen.h"
+#include "messages.h"
 #include "gle.h"
 using namespace gle;
 

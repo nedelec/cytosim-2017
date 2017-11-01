@@ -3,6 +3,7 @@
 #include "fork.h"
 #include "fork_prop.h"
 #include "meca.h"
+#include "space.h"
 
 
 //------------------------------------------------------------------------------

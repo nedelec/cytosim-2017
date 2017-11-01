@@ -8,6 +8,7 @@
 #include "dynamic_fiber_prop.h"
 #include "classic_fiber_prop.h"
 #include "treadmilling_fiber_prop.h"
+#include "messages.h"
 #include "picket.h"
 #include "simul.h"
 #include "sim.h"

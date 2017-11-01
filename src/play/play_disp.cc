@@ -7,6 +7,7 @@
 #include "display3.h"
 #include "saveimage.h"
 #include "filepath.h"
+#include "messages.h"
 
 extern Modulo * modulo;
 

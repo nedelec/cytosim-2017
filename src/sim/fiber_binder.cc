@@ -3,6 +3,7 @@
 #include "fiber_binder.h"
 #include "fiber_locus.h"
 #include "iowrapper.h"
+#include "messages.h"
 #include "simul.h"
 #include "sim.h"
 
