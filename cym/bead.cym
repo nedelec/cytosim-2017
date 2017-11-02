@@ -42,13 +42,13 @@ set bead balls
 new 320 bead balls
 {
     radius = 0.05
-    single = grafted
+    attach = grafted
 }
 
 new 160 bead balls
 {
     radius = 0.1
-    single = grafted
+    attach = grafted
 }
 
 new 40 bead balls
