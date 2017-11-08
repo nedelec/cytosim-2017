@@ -22,7 +22,6 @@ void DynamicFiberProp::clear()
     FiberProp::clear();
     
     unit_length      = 0.008;
-    min_length       = 0.01;
     fate             = FATE_DESTROY;
     
     growing_speed[0] = 0;
@@ -43,7 +42,6 @@ void DynamicFiberProp::read(Glossary& glos)
     glos.set(hydrolysis_rate,    "hydrolysis_rate");
     glos.set(growing_force,      "growing_force");
     glos.set(shrinking_speed,    "shrinking_speed");
-    glos.set(min_length,         "min_length");
     glos.set(fate,               "fate", KeyList<Fate>("destroy", FATE_DESTROY, "rescue", FATE_RESCUE, "none", FATE_NONE));
 
 #ifdef BACKWARD_COMPATIBILITY
@@ -109,7 +107,6 @@ void DynamicFiberProp::write_data(std::ostream & os) const
     write_param(os, "growing_speed",   growing_speed, 2);
     write_param(os, "hydrolysis_rate", hydrolysis_rate);
     write_param(os, "shrinking_speed", shrinking_speed);
-    write_param(os, "min_length",      min_length);
     write_param(os, "fate",            fate);
 }
 

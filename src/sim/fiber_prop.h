@@ -99,6 +99,13 @@ public:
     /// amount of polymer available for this type of fiber
     real         total_polymer;
     
+    /// Minimum authorized length
+    /**
+     When the fiber becomes shorter than \a min_length,
+     the action specified by \a fate is applied.
+     */
+    real    min_length;
+
     /// radius used to calculate mobility
     /**
      hydrodynamic_radius[0] corresponds to the radius of the fiber

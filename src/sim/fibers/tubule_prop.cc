@@ -23,7 +23,6 @@ void TubuleProp::clear()
     dynamic_model[0] = 0;
     dynamic_model[1] = 0;
     growing_force    = INFINITY;
-    min_length       = 0.01;
     fate             = FATE_DESTROY;
     
     for ( unsigned int n=0; n<4; ++n )
@@ -42,7 +41,6 @@ void TubuleProp::read(Glossary& glos)
     
     glos.set(dynamic_model, 2,  "dynamic_model");
     glos.set(growing_force,     "growing_force");
-    glos.set(min_length,        "min_length");
     glos.set(fate,              "fate", KeyList<Fate>("destroy", FATE_DESTROY, "rescue", FATE_RESCUE, "none", FATE_NONE));
     
     glos.set(dynamic_trans1, 4, "dynamic_trans1");
@@ -95,7 +93,6 @@ void TubuleProp::write_data(std::ostream & os) const
     FiberProp::write_data(os);
     write_param(os, "dynamic_model",  dynamic_model, 2);
     write_param(os, "growing_force",  growing_force);
-    write_param(os, "min_length",     min_length);
     write_param(os, "fate",           fate);
     write_param(os, "dynamic_speed1", dynamic_speed1, 4);
     write_param(os, "dynamic_speed2", dynamic_speed2, 4);

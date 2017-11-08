@@ -34,13 +34,6 @@ public:
     /// Characteristic force for polymer assembly
     real    growing_force;
     
-    /// Minimum authorized length (used only for dynamic fibers)
-    /**
-     When the fiber becomes shorter than \a min_length,
-     the action specified by \a fate is applied.
-     */
-    real    min_length;
-    
     /// Action that is taken when the fiber shrinks below min_length
     Fate    fate;
     

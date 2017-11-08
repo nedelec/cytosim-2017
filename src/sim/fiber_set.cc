@@ -48,7 +48,7 @@ Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Gl
     if ( kd == kind() )
     {
         std::string a;
-        if ( opt.query(a, "activity") )
+        if ( opt.peek(a, "activity") )
         {
             if ( a == "classic" )
                 return new ClassicFiberProp(nm);

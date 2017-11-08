@@ -73,7 +73,7 @@ HandProp * HandProp::newProperty(const std::string& name, Glossary& glos)
     HandProp * hp = 0;
     
     std::string a;
-    if ( glos.query(a, "activity") )
+    if ( glos.peek(a, "activity") )
     {
         if ( a == "move" || a == "motor" )
             hp = new MotorProp(name);

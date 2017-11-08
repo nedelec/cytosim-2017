@@ -43,14 +43,6 @@ public:
     /// Speed of disassembly
     real    shrinking_speed;
     
-    
-    /// Minimum authorized length
-    /**
-     When the fiber becomes shorter than \a min_length,
-     the action specified by \a fate is applied.
-     */
-    real    min_length;
-
     /// Action that is taken when the fiber shrinks below min_length
     Fate    fate;
 

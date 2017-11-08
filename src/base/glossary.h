@@ -262,7 +262,7 @@ public:
 
     /// set `var` from `key[inx]`. The counter is not changed
     template <typename T>
-    int query(T & var, key_type const& key, unsigned inx = 0) const
+    int peek(T & var, key_type const& key, unsigned inx = 0) const
     {
         rec_type const * rec = values(key);
         
