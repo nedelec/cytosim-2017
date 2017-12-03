@@ -15,7 +15,7 @@ set simul example
 set space cell
 {
     shape = sphere
-	dimensions = 5
+    dimensions = 5
 }
 
 new space cell
