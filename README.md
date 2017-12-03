@@ -6,15 +6,16 @@ Cytosim is a cytoskeleton simulation engine written in C++ working on Mac OS, GN
 The objects in the simulation and their parameters are defined within a single text file `config.cym`:
 
 ~~~
-set simul example
+set simul example 
 {
-    time_step = 0.001
+    time_step = 0.005
     viscosity = 0.02
 }
 
 set space cell
 {
-    geometry = ( sphere 5 )
+    shape = sphere
+	dimensions = 5
 }
 
 new space cell
@@ -23,7 +24,7 @@ set fiber microtubule
 {
     rigidity = 20
     segmentation = 0.5
-    confine = inside, 100
+    confine = inside, 200, cell
 }
 
 new fiber microtubule
@@ -32,6 +33,9 @@ new fiber microtubule
 }
 
 run 5000 simul example
+{
+    nb_frames = 10
+}
 ~~~
 
 
