@@ -73,7 +73,7 @@ bool Hand::attachmentAllowed(FiberBinder & fb)
 /**
  This also sets the Gillespie detachment time \a nextDetach
  */
-void Hand::attach(FiberBinder & fb)
+void Hand::attach(FiberBinder const & fb)
 {
     assert_true( !attached() && !linked() );
     assert_true( fb.attached() );    

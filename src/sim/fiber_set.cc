@@ -188,14 +188,15 @@ ObjectList FiberSet::newObjects(const std::string& kd, const std::string& nm, Gl
             real len = fib->length();
             opt.set(len, "couple", 2);
             
-            real dabs = len / ( cnt - 1 );
-            real abs = 0;
             for ( int n = 0; n < cnt; ++n )
             {
-                Couple * cp = new Couple(cop, fib->posM(abs));
-                cp->attachTo1(fib, abs, MINUS_END);
-                res.push_back(cp);
-                abs += dabs;
+                real abs = fib->abscissa(len * n / (cnt-1), MINUS_END);
+                if ( fib->within(abs) )
+                {
+                    Couple * cp = new Couple(cop, fib->posM(abs));
+                    cp->attachTo1(fib, abs);
+                    res.push_back(cp);
+                }
             }
         }
         
