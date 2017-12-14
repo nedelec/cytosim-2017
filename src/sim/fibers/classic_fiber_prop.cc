@@ -28,7 +28,6 @@ void ClassicFiberProp::clear()
     catastrophe_rate[0] = 0;
     catastrophe_rate[1] = -1;
     rescue_rate         = 0;
-    min_length          = 0.01;
     fate                = FATE_DESTROY;
     
 #ifdef NEW_LENGTH_DEPENDENT_CATASTROPHE
@@ -46,7 +45,6 @@ void ClassicFiberProp::read(Glossary& glos)
     glos.set(shrinking_speed,     "shrinking_speed");
     glos.set(catastrophe_rate, 2, "catastrophe_rate");
     glos.set(rescue_rate,         "rescue_rate");
-    glos.set(min_length,          "min_length");
     glos.set(fate,                "fate", KeyList<Fate>("destroy", FATE_DESTROY, "rescue", FATE_RESCUE, "none", FATE_NONE));
     
 #ifdef NEW_LENGTH_DEPENDENT_CATASTROPHE
@@ -124,7 +122,6 @@ void ClassicFiberProp::write_data(std::ostream & os) const
     write_param(os, "shrinking_speed",  shrinking_speed);
     write_param(os, "catastrophe_rate", catastrophe_rate, 2);
     write_param(os, "rescue_rate",      rescue_rate);
-    write_param(os, "min_length",       min_length);
     write_param(os, "fate",             fate);
 #ifdef NEW_LENGTH_DEPENDENT_CATASTROPHE
     write_param(os, "catastrophe_length",       catastrophe_length);
