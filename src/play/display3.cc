@@ -406,7 +406,7 @@ void Display3::displayFiberPoints(Fiber const& fib)
     {
         /*
          A simple random number generators is used to distribute
-         points always in the same way for each Tubule, 
+         points always in the same way for each Fiber, 
          because it is seeded by fib.signature();
          */
         const real grad = 0x3p-32 * disp->interval;

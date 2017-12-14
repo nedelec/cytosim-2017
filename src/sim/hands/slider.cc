@@ -5,7 +5,6 @@
 #include "glossary.h"
 #include "exceptions.h"
 #include "iowrapper.h"
-#include "tubule_prop.h"
 #include "simul.h"
 extern Random RNG;
 

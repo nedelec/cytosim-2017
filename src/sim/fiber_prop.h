@@ -25,7 +25,6 @@ class FiberProp : public Property
 {
     friend class Fiber;
     friend class FiberSet;
-    friend class Tubule;
 
 public:
     

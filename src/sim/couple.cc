@@ -180,7 +180,7 @@ bool Couple::allowAttachment(const FiberBinder & fb)
 #if ( 0 )
         /*
          Test here if binding would create a link inside an aster, near the center:
-         i.e. a link between two Tubule from the same aster, very close to the center
+         i.e. a link between two Fibers from the same aster, very close to the center
          of this aster. Such links would be improductive, and would trap the Couples.
          */
         const Organizer * org = fb.fiber()->organizer();

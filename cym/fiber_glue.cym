@@ -44,14 +44,14 @@ set fiber microtubule
     confine = inside, 100
     glue = 3, cortical_glue
 
-    activity        = tubule
-    dynamic_model   = 3
-    dynamic_speed1  = 0.51,  -0.84
-    dynamic_trans1  = 0.01
-    dynamic_trans2  = 5 
-    fate            = rescue
-    growing_force   = 1.7
-    min_length      = 0.5
+    activity         = classic
+    growing_speed    = 0.2
+    shrinking_speed  = -0.8
+    catastrophe_rate = 0.02
+    rescue_rate      = 0
+    fate             = rescue
+    growing_force    = 1.7
+    min_length       = 0.5
     
     display = { line=8, 2; point=1; speckles=2, 0.25; rainbow=-0.1 }
 }

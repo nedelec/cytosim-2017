@@ -161,7 +161,7 @@ public:
     /// position of Hand1 when attached (invalid call otherwise)
     Vector         pos1()                                const { return cHand1->pos(); }
     
-    /// Tubule to which Hand1 is attached, or zero if attached to another kind of Fiber
+    /// Fiber to which Hand1 is attached, or zero if attached to another kind of Fiber
     Fiber*         fiber1()                              const { return cHand1->fiber(); }
     
     /// attach Hand1 at given abcissa
@@ -187,7 +187,7 @@ public:
     /// position of Hand2 when attached (invalid call otherwise)
     Vector         pos2()                                const { return cHand2->pos(); }
     
-    /// Tubule to which Hand2 is attached, or zero if attached to another kind of Fiber
+    /// Fiber to which Hand2 is attached, or zero if attached to another kind of Fiber
     Fiber*         fiber2()                              const { return cHand2->fiber(); }
     
     /// attach Hand1 at given abcissa

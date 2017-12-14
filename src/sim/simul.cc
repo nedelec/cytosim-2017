@@ -350,9 +350,6 @@ ObjectSet * Simul::findSet(const std::string& kind)
     //std::cerr << "findSet("<<kind<<")"<<std::endl;
     if ( kind == "space" )        return &spaces;
     if ( kind == "field" )        return &fields;
-#ifdef BACKWARD_COMPATIBILITY
-    if ( kind == "tubule" )       return &fibers;
-#endif
     if ( kind == "fiber" )        return &fibers;
     if ( kind == "bead" )         return &beads;
     if ( kind == "solid" )        return &solids;

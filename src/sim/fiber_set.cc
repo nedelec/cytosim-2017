@@ -4,7 +4,6 @@
 #include "iowrapper.h"
 #include "glossary.h"
 #include "fiber_prop.h"
-#include "tubule_prop.h"
 #include "dynamic_fiber_prop.h"
 #include "classic_fiber_prop.h"
 #include "treadmilling_fiber_prop.h"
@@ -35,16 +34,10 @@ extern Random RNG;
  `classic`     | ClassicFiber        | @ref ClassicFiberPar
  `dynamic`     | DynamicFiber        | @ref DynamicFiberPar
  `treadmill`   | TreadmillingFiber   | @ref TreadmillingFiberPar
- `tubule`      | Tubule (deprecated) | @ref TubulePar
  
  */
 Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Glossary& opt) const
 {
-#ifdef BACKWARD_COMPATIBILITY
-    if ( kd == "tubule" )
-        return new TubuleProp(nm);   
-#endif
-    
     if ( kd == kind() )
     {
         std::string a;
@@ -56,8 +49,6 @@ Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Gl
                 return new DynamicFiberProp(nm);
             else if ( a == "treadmill" )
                 return new TreadmillingFiberProp(nm);
-            else if ( a == "tubule" )
-                return new TubuleProp(nm);
             else if ( a == "none" )
                 return new FiberProp(nm);
             else
