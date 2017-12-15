@@ -1,0 +1,5 @@
+bin/
+build/
+src/doc/html/
+*.cmo
+html/
