@@ -6,6 +6,7 @@
 #include "modulo.h"
 #include "meca.h"
 #include "random.h"
+#include "space.h"
 
 extern Modulo* modulo;
 extern Random RNG;

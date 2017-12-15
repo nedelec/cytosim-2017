@@ -5,6 +5,7 @@
 #include "glossary.h"
 #include "exceptions.h"
 #include "offscreen.h"
+#include "messages.h"
 #include "gle.h"
 using namespace gle;
 
@@ -262,6 +263,11 @@ int main(int argc, char* argv[])
         }
     }
     
+#ifndef __APPLE__
+    // it is necessary under Linux/Windows to initialize GLUT to display fonts
+    glutInit(&argc, argv);
+#endif
+
     //-------- off-screen non interactive rendering -------
     
     if ( off_screen ) 
@@ -317,7 +323,10 @@ int main(int argc, char* argv[])
 
     //--------- initialize and open window
 
+#ifdef __APPLE__
     glutInit(&argc, argv);
+#endif
+    
     glApp::init(Player::displayLive, DIM);
     
     //-------- call GLUT to open a window & start playing -------

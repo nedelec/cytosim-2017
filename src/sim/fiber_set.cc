@@ -4,10 +4,10 @@
 #include "iowrapper.h"
 #include "glossary.h"
 #include "fiber_prop.h"
-#include "tubule_prop.h"
 #include "dynamic_fiber_prop.h"
 #include "classic_fiber_prop.h"
 #include "treadmilling_fiber_prop.h"
+#include "messages.h"
 #include "picket.h"
 #include "simul.h"
 #include "sim.h"
@@ -34,20 +34,14 @@ extern Random RNG;
  `classic`     | ClassicFiber        | @ref ClassicFiberPar
  `dynamic`     | DynamicFiber        | @ref DynamicFiberPar
  `treadmill`   | TreadmillingFiber   | @ref TreadmillingFiberPar
- `tubule`      | Tubule (deprecated) | @ref TubulePar
  
  */
 Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Glossary& opt) const
 {
-#ifdef BACKWARD_COMPATIBILITY
-    if ( kd == "tubule" )
-        return new TubuleProp(nm);   
-#endif
-    
     if ( kd == kind() )
     {
         std::string a;
-        if ( opt.query(a, "activity") )
+        if ( opt.peek(a, "activity") )
         {
             if ( a == "classic" )
                 return new ClassicFiberProp(nm);
@@ -55,8 +49,6 @@ Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Gl
                 return new DynamicFiberProp(nm);
             else if ( a == "treadmill" )
                 return new TreadmillingFiberProp(nm);
-            else if ( a == "tubule" )
-                return new TubuleProp(nm);
             else if ( a == "none" )
                 return new FiberProp(nm);
             else
@@ -187,14 +179,15 @@ ObjectList FiberSet::newObjects(const std::string& kd, const std::string& nm, Gl
             real len = fib->length();
             opt.set(len, "couple", 2);
             
-            real dabs = len / ( cnt - 1 );
-            real abs = 0;
             for ( int n = 0; n < cnt; ++n )
             {
-                Couple * cp = new Couple(cop, fib->posM(abs));
-                cp->attachTo1(fib, abs, MINUS_END);
-                res.push_back(cp);
-                abs += dabs;
+                real abs = fib->abscissa(len * n / (cnt-1), MINUS_END);
+                if ( fib->within(abs) )
+                {
+                    Couple * cp = new Couple(cop, fib->posM(abs));
+                    cp->attachTo1(fib, abs);
+                    res.push_back(cp);
+                }
             }
         }
         

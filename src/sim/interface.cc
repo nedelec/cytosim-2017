@@ -1,6 +1,8 @@
 // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
+#include "messages.h"
 #include "interface.h"
+#include "iowrapper.h"
 #include "glossary.h"
 #include "filepath.h"
 #include "tictoc.h"

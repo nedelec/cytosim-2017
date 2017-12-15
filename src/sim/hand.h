@@ -81,7 +81,7 @@ public:
     virtual bool   attachmentAllowed(FiberBinder& site);
     
     /// attach the hand at the position described by site
-    virtual void   attach(FiberBinder& site);
+    virtual void   attach(FiberBinder const& site);
     
     /// detach
     virtual void   detach();

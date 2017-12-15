@@ -107,7 +107,7 @@ public:
     void         updateBinder()                    { inter = fbFiber->interpolate(fbAbs); }
   
     /// attach at position `fb`
-    virtual void attach(FiberBinder & fb);
+    virtual void attach(FiberBinder const& fb);
     
     /// detach from Fiber (can be changed in derived Classes to allow updating)
     virtual void detach();

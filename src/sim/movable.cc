@@ -124,6 +124,18 @@ Vector Movable::readPrimitive(std::istream& is, const Space* spc)
             return Vector::randUnit(R) + Vector::randUnit(T*0.5);
         }
         
+        if ( tok == "equator" )
+        {
+            real R = 0, T = 0;
+            is >> R >> T;
+            if ( R < 0 )
+                throw InvalidParameter("you must specify a radius R >= 0 in `equator R T`");
+            if ( T < 0 )
+                throw InvalidParameter("the thickness T must be >= 0 in `equator R T`");
+            Vector2 vec2 = Vector2::randBall();
+            return Vector(R*vec2.XX, R*vec2.YY, T*0.5*RNG.sreal());
+        }
+
         if ( tok == "cylinder" || tok == "discYZ"  )
         {
             real L = 0, R = 0;

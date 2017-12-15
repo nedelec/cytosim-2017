@@ -19,8 +19,6 @@ void TreadmillingFiberProp::clear()
 {
     FiberProp::clear();
     
-    min_length = 0.01;
-    
     for ( int i = 0; i < 2; ++i )
     {
         growing_force[i]   = INFINITY;
@@ -37,7 +35,6 @@ void TreadmillingFiberProp::read(Glossary& glos)
     glos.set(growing_speed, 2,    "growing_speed");
     glos.set(growing_force, 2,    "growing_force");
     glos.set(shrinking_speed, 2,  "shrinking_speed");
-    glos.set(min_length,          "min_length");    
 }
 
 
@@ -67,6 +64,5 @@ void TreadmillingFiberProp::write_data(std::ostream & os) const
     write_param(os, "growing_force",   growing_force, 2);
     write_param(os, "growing_speed",   growing_speed, 2);
     write_param(os, "shrinking_speed", shrinking_speed, 2);
-    write_param(os, "min_length",      min_length);
 }
 

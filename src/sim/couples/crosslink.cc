@@ -4,6 +4,7 @@
 #include "crosslink_prop.h"
 #include "exceptions.h"
 #include "random.h"
+#include "space.h"
 
 extern Random RNG;
 

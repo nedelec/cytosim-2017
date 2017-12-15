@@ -49,7 +49,7 @@ Property* CoupleSet::newProperty(const std::string& kd, const std::string& nm, G
     if ( kd == kind() )
     {
         std::string a;
-        if ( opt.query(a, "activity") )
+        if ( opt.peek(a, "activity") )
         {
             if ( a == "fork" )
                 sp = new ForkProp(nm);

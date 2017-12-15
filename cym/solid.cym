@@ -37,18 +37,16 @@ set solid blob
 
 new 10 solid blob
 {
-    nb_points = 4
-    radius = 0.5
-    shape = surface
-    singles = 2 gprotein
+    point0 = center, 0.5
+    point1 = 3, sphere 0.5
+    attach = 2 gprotein
 }
 
 new 5 solid blob
 {
-    nb_points = 10
-    shape = inside
-    radius = 1.5
-    single = gprotein
+    point0 = center, 1.5
+    point1 = 3, sphere 1.5
+    attach = gprotein
 }
 
 new 10 solid blob
@@ -62,18 +60,15 @@ new 10 solid blob
 
 new 10 solid blob
 {
-    radius = 2
-    nb_points = 4
-    point0 = 0 0 0, 2
-    point1 = inside, 0.1, gprotein
-    point2 = inside, 0.1, gprotein
-    point3 = inside, 0.1
+    point0 = center, 2
+    point1 = ball 2, 0.1, gprotein
+    point2 = ball 2, 0.1, gprotein
+    point3 = ball 2, 0.1
 }
 
 new 3 solid blob
 {
-    nb_points = 3
-    point0 = 0 0 0, 1
+    point0 = center, 1
     point1 = 0.95  0.1 0, 0, 2 gprotein
     point2 = 0.95 -0.1 0, 0, 2 gprotein
 }

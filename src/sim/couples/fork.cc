@@ -3,6 +3,7 @@
 #include "fork.h"
 #include "fork_prop.h"
 #include "meca.h"
+#include "space.h"
 
 
 //------------------------------------------------------------------------------
@@ -72,5 +73,8 @@ void Fork::setInteractions(Meca & meca) const
     }
     
     meca.interTorque2D(pt1, pt2, prop->cosinus, flip * prop->sinus, prop->angular_stiffness);
+#else
+    std::cerr << "The Fork does not work in 3D (unfinished code)\n";
+    exit(0);
 #endif
 }

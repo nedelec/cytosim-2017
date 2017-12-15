@@ -168,6 +168,9 @@ Fiber* FiberProp::newFiber(Glossary& opt) const
 void FiberProp::clear()
 {
     length              = 1;
+    min_length          = 0;
+    total_polymer       = 0;
+    
     viscosity           = -1;
     surface_effect      = false;
     cylinder_height     = 0;
@@ -190,8 +193,6 @@ void FiberProp::clear()
     glue_prop           = 0;
     glue_set            = 0;
     
-    total_polymer       = 0;
-    
     hydrodynamic_radius[0] = 0.0125;
     hydrodynamic_radius[1] = 10;
     
@@ -207,6 +208,9 @@ void FiberProp::clear()
 void FiberProp::read(Glossary& glos)
 {
     glos.set(length,            "length");
+    glos.set(min_length,        "min_length");
+    glos.set(total_polymer,     "total_polymer");
+
     glos.set(viscosity,         "viscosity");
     glos.set(surface_effect,    "surface_effect");
     glos.set(cylinder_height,   "surface_effect", 1);
@@ -248,7 +252,6 @@ void FiberProp::read(Glossary& glos)
     glos.set(glue,              "glue");
     glos.set(glue_single,       "glue", 1);
     
-    glos.set(total_polymer,       "total_polymer");
     glos.set(hydrodynamic_radius, 2, "hydrodynamic_radius");
         
     glos.set(display,  "display");
@@ -321,11 +324,13 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
 void FiberProp::write_data(std::ostream & os) const
 {
     write_param(os, "length",              length);
+    write_param(os, "min_length",          min_length);
+    write_param(os, "total_polymer",       total_polymer);
+
     write_param(os, "viscosity",           viscosity);
     write_param(os, "surface_effect",      surface_effect, cylinder_height);
     write_param(os, "rigidity",            rigidity);
     write_param(os, "segmentation",        segmentation);
-    write_param(os, "total_polymer",       total_polymer);
 
     write_param(os, "hydrodynamic_radius", hydrodynamic_radius, 2);
     write_param(os, "binding_key",         binding_key);

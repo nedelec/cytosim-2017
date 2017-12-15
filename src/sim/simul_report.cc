@@ -18,7 +18,7 @@
 
 
 /// remove any 's' at the end of the argument
-void remove_trailing_s(std::string & str)
+void remove_plural(std::string & str)
 {
     if ( str.size() > 2  &&  str.at(str.size()-1) == 's' )
         str.resize(str.size()-1);
@@ -87,6 +87,8 @@ void Simul::report(std::ostream& out, std::string const& str, Glossary& opt) con
  `single:NAME`       | Position of singles of class NAME
  `couple:all`        | Position of couples
  `couple:NAME`       | Position of couples of class NAME
+ `couple:link`       | Links made by all couples
+ `couple:link:NAME`  | Links made by couples of class NAME
  
  */
 void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) const
@@ -102,14 +104,14 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
         std::string::size_type pas = who.find(':');
         if ( pas != std::string::npos )
         {
-            which = what.substr(pas+1);
+            which = who.substr(pas+1);
             who.resize(pas);
         }
     }
     
     // allow for approximate English:
-    remove_trailing_s(who);
-    remove_trailing_s(what);
+    remove_plural(who);
+    remove_plural(what);
 
     //std::clog << "report("<< what << "|" << who << "|" << which << ")\n";
 
@@ -196,8 +198,8 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportCouple(out);
         else if ( who == "position" || who == "all" )
             return reportCouplePosition(out);
-        else if ( who == "bridge" )
-            return reportCoupleBridge(out);
+        else if ( who == "bridge" ||  who == "link" )
+            return reportCoupleLink(out, which);
         else
             return reportCouplePosition(out, who);
         throw InvalidSyntax("I only know couple: all, NAME");
@@ -952,17 +954,31 @@ void Simul::reportCouplePosition(std::ostream& out, std::string const& who) cons
 /**
  Export information of Couples that are bound twice
  */
-void Simul::reportCoupleBridge(std::ostream& out) const
+void Simul::reportCoupleLink(std::ostream& out, std::string const& which) const
 {
+    Property * prop = 0;
+    
+    if ( which.size() )
+        prop = properties.find_or_die("couple", which);
+    
+    out << "%" << SEP << "class" << SEP << "identity";
+    out << SEP << "fiber1" << SEP << "abscissa1";
+    out << SEP << "fiber2" << SEP << "abscissa2";
+    out << SEP << "cos_angle\n";
+
     for ( Couple * obj=couples.firstAA(); obj ; obj = obj->next() )\
     {
-        out << obj->property()->index() << " " << std::setw(9) << obj->number();
-        out << " " << std::setw(9) << obj->fiber1()->number();
-        out << " " << std::setw(9) << obj->hand1()->abscissa();
-        out << " " << std::setw(9) << obj->fiber2()->number();
-        out << " " << std::setw(9) << obj->hand2()->abscissa();
-        real c = obj->hand1()->dir() * obj->hand2()->dir();
-        out << " " << std::setw(9) <<  c << std::endl;
+        if ( prop == 0  ||  obj->property() == prop )
+        {
+            out << std::setw(9) << obj->property()->index();
+            out << " " << std::setw(9) << obj->number();
+            out << " " << std::setw(9) << obj->fiber1()->number();
+            out << " " << std::setw(9) << obj->hand1()->abscissa();
+            out << " " << std::setw(9) << obj->fiber2()->number();
+            out << " " << std::setw(9) << obj->hand2()->abscissa();
+            real c = obj->hand1()->dir() * obj->hand2()->dir();
+            out << " " << std::setw(9) <<  c << "\n";
+        }
     }
 }
 

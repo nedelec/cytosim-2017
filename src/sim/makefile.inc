@@ -13,8 +13,7 @@ OBJ_HANDS := hand.o hand_prop.o\
 OBJ_FIBERS := fiber_naked.o fiber.o rigid_fiber.o fiber_prop.o fiber_set.o\
               dynamic_fiber.o dynamic_fiber_prop.o\
               classic_fiber.o classic_fiber_prop.o\
-              treadmilling_fiber.o treadmilling_fiber_prop.o\
-              tubule.o tubule_prop.o
+              treadmilling_fiber.o treadmilling_fiber_prop.o
 
 OBJ_SINGLES := single.o single_prop.o single_set.o\
                picket.o picket_long.o wrist.o wrist_long.o

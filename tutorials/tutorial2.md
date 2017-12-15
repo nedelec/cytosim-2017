@@ -50,12 +50,13 @@ It defines a class of fibers called *microtubule*:
 	    rigidity = 20
 	    segmentation = 0.5
 	    confine = inside, 100
-	    display = ( line_width=1; )
+	    display = ( line_width=1; end_style=2; )
 	}
 
 * `rigidity` is the bending elastic modululus (pN.um^2 )
 * `segmentation` defines the length at which filaments are subdivided in the simulation.
 * `confine = inside` sets that filaments are confined within the cell, here with a stiffness of 100 um/pN.
+* `display` sets the visualization option for the microtubules. Here the lines have a width of 1 and the option `end_style=2` displays the plus-end of the microtubule.
 
 Finally, it create 80 *microtubules* with length 14 um:
 
@@ -152,7 +153,7 @@ To check that the motors are behaving as expected, we will first create a motile
 
 Here the diffusion constant is `1 um^2/s`. This is in the lower range of the physiological values, but it makes things easier to see.
 
-With this setup, do you see the motor diffusing, binding and moving along microtubules?
+With this setup, do you see the motor diffusing, binding and moving along microtubules? Use a lower number of microtubules to better visualise the motors moving along the fibers.
 
 Change `max_speed` to a lower value, and to a negative value to define a minus-end directed motor.
 
@@ -179,23 +180,7 @@ To start the simulation with all the particles in the center, use this:
 
 This will not affect the system much, provided the diffusion constant is high enough.
 
-How much time is required until the motor distribute uniformly?
-
-### behavior at the end of microtubules
-
-Two parameters have a great influence on the outcome of the simulation:
-
-* `bind_also_end = 1` will allow the motors to bind directly to the end of the microtubules, and not only to the side.
-* with `hold_growing_end = 1`, motors reaching the end of a microtubule, by their movements, will stay there.
-
-Setting `bind_also_ends` extends the the capture region of the filaments: 
-
-![bind_end](data/bind_also_end.png)
-
-In what way is the motion of the particles affected, when you change these values?
-
-Tip: To check the effect of `bind_also_end = 0`, you should set the diffusion constant to zero, increase the `binding_range` and the number of particles.
-
+Remove the microtubules (new 0 fiber microtuble) and try this configuration. How much time is required until the motor distribute uniformly?
 
 # Step 3: Complexes of multiple motors
 
@@ -207,6 +192,7 @@ To organize microtubules, we need a motor *complex* that is able to bind two mic
 	    hand2 = kinesin
 	    stiffness = 100
 	    diffusion = 10
+        length = 0.01
 	}
 
 The *complex* are made of two identical *kinesin*.
@@ -232,18 +218,35 @@ The parameters are:
 
 In the *bound* state, the movements of the couple is defined by the *hand* that is bound.
 
+Make a simulation with two microtubles at the center of the cell and add a 10 of these complexes. Did they have any effect on the position or orientation of them?
 
 # Step 4: Self-organization
 
-Create 2000 *complex*, randomly in the cell:
+Create 100 microtubules of length 9 um randomly distributed in the cell and add 1000 *complex* to it:
 
-	new 2000 couple complex
+	new 1000 couple complex
 
 With this setup, do you see *complex* binding two microtubles?
 
 What is the effect on microtubules? 
 
 Do you see any sign of self-organization?
+
+## How motors behave at the end of microtubules
+
+Two parameters of the *hand* have a great influence on the outcome of the simulation:
+
+* `bind_also_end = 1` will allow the motors to bind directly to the end of the microtubules, and not only to the side.
+* with `hold_growing_end = 1`, motors reaching the end of a microtubule, by their movements, will stay there.
+
+Setting `bind_also_ends=1` extends the the capture region of the filaments: 
+
+![bind_also_end](data/bind_also_end.png)
+
+What is the effect of changing these values on the outcome of self-organization?
+
+Tip: start by changing both values to zero, as the effect is more dramatic.
+
 
 ## Influence of cell size
 
@@ -284,17 +287,6 @@ or
     {
         geometry = ( capsule 8 2 )
     }
-
-## The behavior of the motors at the end of microtubules
-
-Two parameters have a great influence on the outcome of the simulation:
-
-* `bind_also_end = 1` will allow the motors to bind directly to the end of the microtubules, and not only to the side.
-* with `hold_growing_end = 1`, motors that reach the end of a microtubules, by their movements, will stay there.
-
-What is the effect of changing these values on the outcome of self-organization?
-
-Tip: start by changing both values to zero, as the effect is more dramatic.
 
 
 # Step 5: Defining multiple types of molecules

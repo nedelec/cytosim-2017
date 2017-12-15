@@ -12,6 +12,7 @@
 #include "sphere_prop.h"
 #include "object_set.h"
 #include "space_prop.h"
+#include "iowrapper.h"
 #include "space.h"
 #include "modulo.h"
 #include "simul.h"

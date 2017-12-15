@@ -95,10 +95,10 @@ public:
     
     //--------------------------------------------------------------------------
     
-    /// write Tubule to OutputWrapper
+    /// write to OutputWrapper
     void        write(OutputWrapper&) const;
 
-    /// read Tubule from InputWrapper
+    /// read from InputWrapper
     void        read(InputWrapper&, Simul&);
     
 };

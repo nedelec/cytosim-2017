@@ -3,6 +3,7 @@
 #include "fiber_binder.h"
 #include "fiber_locus.h"
 #include "iowrapper.h"
+#include "messages.h"
 #include "simul.h"
 #include "sim.h"
 
@@ -78,7 +79,7 @@ void FiberBinder::moveTo(const real abs)
 //------------------------------------------------------------------------------
 #pragma mark -
 
-void FiberBinder::attach(FiberBinder & fb)
+void FiberBinder::attach(FiberBinder const& fb)
 {
     assert_true(fbFiber==0);
     assert_true(fb.fbFiber);

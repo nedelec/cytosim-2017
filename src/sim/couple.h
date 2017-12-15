@@ -161,9 +161,12 @@ public:
     /// position of Hand1 when attached (invalid call otherwise)
     Vector         pos1()                                const { return cHand1->pos(); }
     
-    /// Tubule to which Hand1 is attached, or zero if attached to another kind of Fiber
+    /// Fiber to which Hand1 is attached, or zero if attached to another kind of Fiber
     Fiber*         fiber1()                              const { return cHand1->fiber(); }
     
+    /// attach Hand1 at given abcissa
+    void           attachTo1(Fiber* f, real ab)                { cHand1->attach(FiberBinder(f, ab)); }
+
     /// attach Hand1 at the given position
     void           attachTo1(Fiber *f, real ab, FiberEnd from) { cHand1->attachTo(f, ab, from); }
     
@@ -171,7 +174,7 @@ public:
     void           attachToEnd1(Fiber *f, FiberEnd end)        { cHand1->attachToEnd(f, end); }
     
     /// attach Hand1 at the given FiberBinder
-    void           attach1(FiberBinder & fb)                   { cHand1->attach(fb); }
+    void           attach1(FiberBinder const& fb)              { cHand1->attach(fb); }
 
     //--------------------------------------------------------------------------
 
@@ -184,9 +187,12 @@ public:
     /// position of Hand2 when attached (invalid call otherwise)
     Vector         pos2()                                const { return cHand2->pos(); }
     
-    /// Tubule to which Hand2 is attached, or zero if attached to another kind of Fiber
+    /// Fiber to which Hand2 is attached, or zero if attached to another kind of Fiber
     Fiber*         fiber2()                              const { return cHand2->fiber(); }
     
+    /// attach Hand1 at given abcissa
+    void           attachTo2(Fiber* f, real ab)                { cHand2->attach(FiberBinder(f, ab)); }
+
     /// attach Hand2 at the given position
     void           attachTo2(Fiber *f, real ab, FiberEnd from) { cHand2->attachTo(f, ab, from); }
     
@@ -194,7 +200,7 @@ public:
     void           attachToEnd2(Fiber *f, FiberEnd end)        { cHand2->attachToEnd(f, end); }
     
     /// attach Hand2 at the given FiberBinder
-    void           attach2(FiberBinder & fb)                   { cHand2->attach(fb); }
+    void           attach2(FiberBinder const& fb)              { cHand2->attach(fb); }
 
     //--------------------------------------------------------------------------
 

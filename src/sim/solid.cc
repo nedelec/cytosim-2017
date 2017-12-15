@@ -232,8 +232,8 @@ Vector Solid::centroid()
  @code
  new solid blob
  {
- point0 = center, 1.0
- point1 = 10, sphere 1, 0, grafted
+  point0 = center, 1.0
+  point1 = 10, sphere 1, 0, grafted
  ...
  }
  @endcode
@@ -245,24 +245,6 @@ Vector Solid::centroid()
  - `equator RADIUS`
  .
  
- Another way to specify points of a Solid:
- 
- @code
- new solid NAME
- {
- sphere0 = POSITION, RADIUS [, SINGLE_SPEC]
- sphere1 = POSITION, RADIUS [, SINGLE_SPEC]
- etc.
- }
- @endcode
- 
- each `sphere#` specifies one sphere to be added.
- The first argument (`POSITION`) specifies the position with respect to the center.
- The keywords are the same as for other position in cytosim (see examples below).
- The second argument (`RADIUS`) specifies the radius of the bead attached at this point,
- and it should not be zero.
- 
- 
  <h3> Add Singles to a Solid </h3>
  
  The parameter 'attach' can be used to add Single to the points of a Solid:
@@ -270,13 +252,12 @@ Vector Solid::centroid()
  @code
  new solid NAME
  {
- point0   = ... , SINGLE_SPEC
- sphere0  = ... , SINGLE_SPEC
- etc.
- attach   = SINGLE_SPEC [, SINGLE_SPEC] ...
- attach0  = SINGLE_SPEC [, SINGLE_SPEC] ...
- attach1  = SINGLE_SPEC [, SINGLE_SPEC] ...
- etc.
+  point0   = ... , SINGLE_SPEC
+...
+  attach   = SINGLE_SPEC [, SINGLE_SPEC] ...
+  attach0  = SINGLE_SPEC [, SINGLE_SPEC] ...
+  attach1  = SINGLE_SPEC [, SINGLE_SPEC] ...
+...
  }
  @endcode
  
@@ -294,8 +275,8 @@ Vector Solid::centroid()
  @code
  new solid NAME
  {
- attach0 = 1 grafted each
- attach1 = 10 grafted
+  attach0 = 1 grafted each
+  attach1 = 10 grafted
  }
  @endcode
  */

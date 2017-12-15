@@ -42,13 +42,13 @@ set bead balls
 new 320 bead balls
 {
     radius = 0.05
-    single = grafted
+    attach = grafted
 }
 
 new 160 bead balls
 {
     radius = 0.1
-    single = grafted
+    attach = grafted
 }
 
 new 40 bead balls
@@ -58,9 +58,8 @@ new 40 bead balls
 
 new 10 solid balls
 {
-    nb_points = 10
-    shape = surface
-    radius = 0.5
+    point0 = center, 0.5
+    point1 = 10, sphere 0.5
 }
 
 run simul *

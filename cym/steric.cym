@@ -27,12 +27,14 @@ set fiber tube
     segmentation = 0.2
     steric = 1, 0.05
     
-    activity = tubule
-    dynamic_model = 1, 1
-    dynamic_speed1 = 0.2, -0.8,  0.2, -0.8
-    dynamic_trans1 = 0.02,   0, 0.02, 0
+    activity = classic
+    growing_speed = 0.2
+    shrinking_speed = -0.8
+    catastrophe_rate = 0.02
+    rescue_rate = 0
     fate = rescue
     growing_force = 1.7
+    min_length = 0.1
     
     display = ( line_width=6; coloring=1 )
 }

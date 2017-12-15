@@ -80,7 +80,7 @@ ObjectList BeadSet::newObjects(const std::string& kd, const std::string& nm, Glo
         unsigned inx = 0;
 
         /// attach different kinds of SINGLE
-        while ( opt.set(sn, "singles", inx) || opt.set(sn, "single", inx) )
+        while ( opt.set(sn, "attach", inx) || opt.set(sn, "single", inx) )
         {
             unsigned cnt = 1;
             Tokenizer::split_integer(sn, cnt);

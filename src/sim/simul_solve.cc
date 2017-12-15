@@ -98,7 +98,7 @@ void Simul::setStericGrid(Space const* spc) const
     if ( range <= 0 ) 
     {
         range = estimateStericRange();
-        MSG("auto setting simul:steric_max_range=%.3f\n", range);
+        //MSG("auto setting simul:steric_max_range=%.3f\n", range);
     }
     
     if ( range > 0 ) 

@@ -84,14 +84,6 @@ public:
     real    rescue_rate;
     
     
-    /// Minimum authorized length
-    /**
-     When the fiber becomes shorter than `min_length`,
-     the action specified by `fate` is applied.
-     */
-    real    min_length;
-    
-    
     /// Action that is taken when the fiber shrinks below `min_length`
     Fate    fate;
     

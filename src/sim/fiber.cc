@@ -12,10 +12,6 @@
 #include "sim.h"
 #include <algorithm>
 
-#ifdef BACKWARD_COMPATIBILITY
-    #include "tubule.h"
-#endif
-
 //#define SEVER_KINKED_FIBERS
 
 extern bool functionKey[];
@@ -764,7 +760,7 @@ void Fiber::setGlue(Single*& glue, const FiberEnd which, const Space * space, in
         case 1:  setGlue1(glue, which, space);  break;
         case 2:  setGlue2(glue, which, space);  break;
         case 3:  setGlue3(glue, which, space);  break;
-        default: throw InvalidParameter("invalid value of tubule:glue");
+        default: throw InvalidParameter("invalid value of fiber:glue");
     }
     
 #if ( 1 )

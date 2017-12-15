@@ -2,7 +2,6 @@
 
 #include "property_list.h"
 #include "nucleus_prop.h"
-#include "tubule_prop.h"
 #include "sphere_prop.h"
 #include "bundle_prop.h"
 #include "property_list.h"
