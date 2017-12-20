@@ -94,11 +94,11 @@ void ClassicFiberProp::complete(SimulProp const* sp, PropertyList* plist)
     }
     else
     {
-        if (  sp->strict  &&  growing_speed[0]+growing_speed[1] <= 0 )
-            throw InvalidParameter("fiber:growing_speed[0]+growing_speed[1] should be > 0");
-
-        cata_coef = ( catastrophe_rate[1]/catastrophe_rate[0] - 1.0 )
-        / ( ( growing_speed[0] + growing_speed[1] ) * sp->time_step );
+        if ( growing_speed[0]+growing_speed[1] <= 0 )
+            cata_coef = 0;
+        else
+            cata_coef = ( catastrophe_rate[1]/catastrophe_rate[0] - 1.0 )
+            / ( ( growing_speed[0] + growing_speed[1] ) * sp->time_step );
         
         if ( cata_coef < 0 )
             throw InvalidParameter("inconsistent fiber:dynamic parameters");

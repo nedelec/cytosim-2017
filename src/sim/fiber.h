@@ -181,7 +181,7 @@ public:
     void           setGlue2(Single* glue, FiberEnd which, const Space * space);
     
     /// set the box glue for pushing and pulling
-    void           setGlue3(Single* glue, FiberEnd which, const Space * space);
+    void           setGlue3(Single* glue, const Space * space);
     
     /// a setGlue to rule them all
     void           setGlue(Single*& glue, FiberEnd which, const Space * space, int glue_type);

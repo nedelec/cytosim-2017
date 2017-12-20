@@ -707,25 +707,38 @@ void Fiber::setGlue2(Single* glue, const FiberEnd which, const Space * spc)
 
 
 ///setGlue3 creates pulling and pushing force from the cortex
-void Fiber::setGlue3(Single* glue, const FiberEnd which, const Space * spc)
+void Fiber::setGlue3(Single* glue, const Space * spc)
 {
     assert_true(spc);
-    if ( glue->attached() )
+    /*
+     If the glue is not already attached, we first check if the fiber intersects
+     the edge of the Space:
+     */
+    if ( ! glue->attached() )
     {
-        //keep tracking the tip of the fiber while attached
-        glue->hand()->moveToEnd(which);
-    }
-    else
-    {
-        // Attach a new grafted if MT-tip is outside and growing:
-        if ( isGrowing(which) && spc->outside(posEnd(which)) )
+        bool in = spc->inside(posEnd(MINUS_END));
+        
+        if ( in == spc->inside(posEnd(PLUS_END)) )
+            return;
+        
+        // find a model point that is on the other side of the Space edge:
+        for ( int pp = 1; pp < nbPoints(); ++pp )
         {
-            //reposition the grafted base if the MT is freshly outside:
-            Vector P;
-            spc->project(posEnd(which), P);
-            glue->setPosition(P);
-            //attach to the MT-tip:
-            glue->attachToEnd(this, which);
+            if ( spc->inside(posPoint(pp)) != in )
+            {
+                // the abscissa is interpolated using the distances of P1 and P2 to the edge
+                real d1 = spc->distanceToEdge(posPoint(pp-1));
+                real d2 = spc->distanceToEdge(posPoint(pp));
+                if ( d1 + d2 > REAL_EPSILON )
+                {
+                    /* we find the abscissa corresponding to the intersection,
+                     assuming that the edge is locally straight */
+                    FiberBinder fs(this, abscissaP(pp-1+d1/(d2+d1)));
+                    glue->attach(fs);
+                    glue->setPosition(fs.pos());
+                    break;
+                }
+            }
         }
     }
 }
@@ -759,7 +772,7 @@ void Fiber::setGlue(Single*& glue, const FiberEnd which, const Space * space, in
     {
         case 1:  setGlue1(glue, which, space);  break;
         case 2:  setGlue2(glue, which, space);  break;
-        case 3:  setGlue3(glue, which, space);  break;
+        case 3:  setGlue3(glue, space);  break;
         default: throw InvalidParameter("invalid value of fiber:glue");
     }
     
