@@ -26,7 +26,7 @@ private:
     /// control switch to enable command 'run' (run simulation)
     bool      do_run;
     
-    /// control switch to enable command 'write' (write files)
+    /// control switch to enable command 'write' and 'report' (write files)
     bool      do_write;
     
     /// check validity of string for being the name of an object

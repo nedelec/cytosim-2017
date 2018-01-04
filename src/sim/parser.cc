@@ -204,10 +204,7 @@ void Parser::parse_set(std::istream & is)
     }
     
     if ( p && opt.warnings(std::cerr) )
-    {
-        std::cerr << "in" << std::endl;
         StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -260,10 +257,7 @@ void Parser::parse_change(std::istream & is)
     {
         execute_change(kind, name, opt);
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -336,7 +330,7 @@ void Parser::parse_new(std::istream & is)
             // we report here an error, but...
             throw InvalidSyntax("did you mean `new "+kind+" "+name+"' ?");
             // ...we could however have just given a warning:
-            std::cerr << "Assuming you meant `"<< kind << " " << name << "'" << std::endl;
+            std::cerr << "Assuming you meant `"<< kind << " " << name << "'\n";
             StreamFunc::show_line(std::cerr, is, is.tellg());
         }
     }
@@ -358,7 +352,7 @@ void Parser::parse_new(std::istream & is)
     if ( do_new  &&  cnt > 0 )
     {
 #if ( VERBOSE_PARSER > 0 )
-        std::cerr << "-NEW " << cnt << " " << kind << " `" << name << "'" << std::endl;
+        std::cerr << "-NEW " << cnt << " " << kind << " `" << name << "'\n";
 #endif
         
         if ( opt.nb_keys() == 0 )
@@ -402,16 +396,13 @@ void Parser::parse_new(std::istream & is)
             int required = 0;
             if ( opt.set(required, "required")  &&  created < required )
             {
-                std::cerr << "created  = " << created << std::endl;
-                std::cerr << "required = " << required << std::endl;
+                std::cerr << "created  = " << created << "\n";
+                std::cerr << "required = " << required << "\n";
                 throw InvalidSyntax("could not create enough "+kind+" `"+name+"'");
             }
             
             if ( opt.warnings(std::cerr, -1) )
-            {
-                std::cerr << "in" << std::endl;
                 StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-            }
         }
     }
 }
@@ -486,10 +477,7 @@ void Parser::parse_delete(std::istream & is)
         execute_delete(kind, name, opt, cnt);
 
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -530,10 +518,7 @@ void Parser::parse_mark(std::istream & is)
         execute_mark(kind, name, opt, cnt);
         
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -641,7 +626,7 @@ void Parser::parse_run(std::istream & is)
 #ifdef BACKWARD_COMPATIBILITY
         has_cnt = Tokenizer::get_integer(is, cnt);
         if ( has_cnt )
-            std::cerr << "deprecated syntax 'run simul * CNT' accepted" << std::endl;
+            std::cerr << "deprecated syntax 'run simul * CNT' accepted\n";
         else
 #endif
         throw InvalidSyntax("the number of simulation steps must be specified");
@@ -660,10 +645,7 @@ void Parser::parse_run(std::istream & is)
         execute_run(opt, cnt, do_write);
         
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -699,10 +681,7 @@ void Parser::parse_read(std::istream & is)
         Glossary opt(blok);
         opt.set(required, "required");
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
     
     std::ifstream fis(file.c_str());
@@ -760,10 +739,7 @@ void Parser::parse_import(std::istream & is)
     {
         execute_import(file, opt);
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -818,10 +794,7 @@ void Parser::parse_export(std::istream & is)
         //what = Tokenizer::strip_block(what);
         execute_export(file, what, opt);
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -867,15 +840,12 @@ void Parser::parse_report(std::istream & is)
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
-    if ( do_write )
+    if ( do_write || file == "*" )
     {
         execute_report(file, what, opt);
         
         if ( opt.warnings(std::cerr) )
-        {
-            std::cerr << "in" << std::endl;
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
-        }
     }
 }
 
@@ -1098,10 +1068,11 @@ void Parser::parse(std::istream & is, std::string const& msg)
             hold();
         }
     }
-    catch( Exception & e ) {
+    catch( Exception & e )
+    {
         if ( msg.size() )
             e << "\n " + msg + "\n";
-        e << StreamFunc::show_lines(is, fpos, is.tellg());
+        e << StreamFunc::get_lines(is, fpos, is.tellg());
         throw;
     }
 }

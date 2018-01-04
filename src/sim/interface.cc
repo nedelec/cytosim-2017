@@ -622,7 +622,7 @@ void Interface::execute_report(std::string& file, std::string const& what, Gloss
 {
     std::string str;
 #if ( VERBOSE_INTERFACE > 0 )
-    std::clog << "-WRITE " << what << " to " << file << std::endl;
+    std::clog << "-REPORT " << what << " to " << file << std::endl;
 #endif
     
     // a '*' designates the C-standard output:

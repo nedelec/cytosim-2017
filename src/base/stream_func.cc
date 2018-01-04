@@ -142,8 +142,8 @@ std::string StreamFunc::show_line(std::istream & is, std::streampos pos)
  Output enough lines to cover the area specified by [start, end].
  Each line is printed with a line number
  */
-void StreamFunc::show_lines(std::ostream & os, std::istream & is,
-                            std::streampos start, std::streampos end)
+void StreamFunc::print_lines(std::ostream & os, std::istream & is,
+                             std::streampos start, std::streampos end)
 {
     if ( !is.good() )
         is.clear();
@@ -172,13 +172,20 @@ void StreamFunc::show_lines(std::ostream & os, std::istream & is,
 }
 
 
-std::string StreamFunc::show_lines(std::istream & is, std::streampos s, std::streampos e)
+void StreamFunc::show_lines(std::ostream & os, std::istream & is,
+                            std::streampos start, std::streampos end)
 {
-    std::ostringstream oss;
-    show_lines(oss, is, s, e);
-    return oss.str();
+    os << "in\n";
+    print_lines(os, is, start, end);
 }
 
+
+std::string StreamFunc::get_lines(std::istream & is, std::streampos s, std::streampos e)
+{
+    std::ostringstream oss;
+    print_lines(oss, is, s, e);
+    return oss.str();
+}
 
 
 int StreamFunc::find_and_replace(std::string & src,
@@ -190,7 +197,7 @@ int StreamFunc::find_and_replace(std::string & src,
     size_t pos = src.find(fnd, 0);
     while ( pos != std::string::npos )
     {
-        num++;
+        ++num;
         src.replace(pos, fLen, rep);
         pos += rLen;
         pos = src.find(fnd, pos);
