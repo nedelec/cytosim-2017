@@ -325,7 +325,7 @@ void PointGrid::checkLL2(Meca& meca, PointGridParam const& pam, FatLocus const& 
                 {
                     const real len = aa.radius + bb.radius;
                     if ( d > len*len )
-                        meca.interLongLink(aa.fl.exact1(), bb.fl.exact2(), len, pam.stiff_push);
+                        meca.interLongLink(aa.fl.exact1(), bb.fl.exact2(), len, pam.stiff_pull);
                     else
                         meca.interLongLink(aa.fl.exact1(), bb.fl.exact2(), len, pam.stiff_push);
                 }
