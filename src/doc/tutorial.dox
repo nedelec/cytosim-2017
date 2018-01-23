@@ -10,8 +10,8 @@ Authors: Francois Nedelec (2002-2013), Beat Rupp (Oct 9, 2009), Sven Mesecke (Se
 
 Here is how you will run a simulation:
 
-1. Copy the example configuration to a file named `config.cym` in a directory containing the `play` executable
-2. From the console run ‘play live’. This will read `config.sym` and start a simulation
+1. Copy the example configuration to a file named `config.cym` in a directory containing the `play` executable,
+2. From the console type ‘./play live’ and press `return`. This will read `config.cym` and start a simulation,
 3. Restart the simulation using the ‘z’ character. This should be done when the configuration file has changed, e.g. as you progress through the tutorial
 
 
@@ -30,7 +30,7 @@ set simul tutorial
 
 set space cell 
 {
-    geometry = ( rectangle 10 10 )
+    geometry = rectangle 10 10
 }
 
 new space cell
@@ -59,7 +59,7 @@ defines the name of the simulation (`tutorial`), and the general parameters:
 ~~~~~~~~~~~~~~~
 set space cell 
 {
-    geometry = ( rectangle 10 10 )
+    geometry = rectangle 10 10
 }
 ~~~~~~~~~~~~~~~
 
@@ -90,7 +90,7 @@ set simul tutorial
 
 set space cell 
 {
-    geometry = ( rectangle 10 10 )
+    geometry = rectangle 10 10
 }
 
 new space cell
@@ -159,7 +159,7 @@ set simul tutorial
 
 set space cell 
 { 
-    geometry = ( rectangle 10 10 )
+    geometry = rectangle 10 10
 }
 
 new space cell
@@ -200,7 +200,7 @@ set simul tutorial
 
 set space cell 
 { 
-    geometry = ( rectangle 10 10 )
+    geometry = rectangle 10 10
 }
 
 new space cell
@@ -240,7 +240,7 @@ set simul tutorial
 
 set space cell 
 { 
-    geometry = ( rectangle 30 30 )
+    geometry = rectangle 30 30
 }
 
 new space cell
@@ -289,7 +289,7 @@ set simul tutorial
 
 set space cell 
 { 
-    geometry = ( rectangle 30 30 )
+    geometry = rectangle 30 30
 }
 
 new space cell
@@ -327,7 +327,7 @@ set simul tutorial
 
 set space cell 
 { 
-    geometry = ( rectangle 30 30 )
+    geometry = rectangle 30 30
 }
 
 new space cell

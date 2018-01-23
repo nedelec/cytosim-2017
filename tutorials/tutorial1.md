@@ -14,8 +14,8 @@ Here is how you will run the simulations:
 
 1. Create a new directory and perform all tasks within this directory.
 2. Copy the `play` executable from Cytosim.
-1. Copy the example configuration to a file named `config.cym`
-2. From the console run `play live`. This will read `config.sym` and start a live simulation.
+3. Copy the example configuration to a file named `config.cym`
+4. From the console type `./play live` and press `enter. This will read `config.sym` and start a live simulation.
 
 At any time, you can restart the simulation by pressing `z` on the keyboard. This should also be done if you change the configuration file, e.g. as you progress through the tutorial.
 The configuration file `config.cym` for Cytosim is a plain text file, and should be edited using a PLAIN text editor. You can use TextEdit, Geany or download TextMate; but do not use Word or Pages. 
