@@ -25,11 +25,12 @@ Start with a fresh empty directory and a new configuration file:
     {
         time_step = 0.001
         viscosity = 0.01
+        display = ( style=2; point_size=7 )
     }
     
     set space cell
     {
-        geometry = ( sphere 5 )
+        geometry = sphere 5
     }
     
     new space cell
@@ -40,7 +41,7 @@ Start with a fresh empty directory and a new configuration file:
         segmentation = 0.5
         confine = inside, 100
     
-        display = ( line_width = 4; )
+        display = ( line_width = 2 )
     }
     
     new 1 fiber microtubule
@@ -57,7 +58,8 @@ Check that this works as expected, and verify that the values of the parameters 
 
 ### Use growing microtubules
 
- Set the `activity` of the microtubule to make it grow smoothly, up to a maximum length of 10: 
+Set the `activity` of the microtubule to make it grow smoothly, up to a maximum length of 10.
+For this, add 4 lines to the paragraph that defines the fiber class:
 
     set fiber microtubule
     {
@@ -78,6 +80,7 @@ Where `free_polymer` is a number in [0,1], representing the fraction of free mon
     free_polymer = 1.0 - sum(all_fiber_length) / total_polymer
 
 You can press `i` in the live simulation to display detailed information about the length of the filaments.
+You will notice that the growth slows down as the length approaches the 'total_polymer' value of 10um.
 
 ### Frictionless boundaries
 
@@ -109,7 +112,7 @@ Remove the free microtubule:
 
     new 0 fiber microtubule
 
-and define a solid called `core` and the aster:
+and define a solid called `core` and the aster, by adding these paragraphs:
 
     set solid core
     {
@@ -219,7 +222,7 @@ Change cell size by modifying the geometry line:
 
     set space cell
     {
-        geometry = ( sphere 15 )
+        geometry = sphere 15
     }
 
 Place the centrosome 1 um away from the cell membrane by modifying the position line:
@@ -238,13 +241,13 @@ Try different shapes, while keeping the size similar:
     
     set space cell
     {
-        geometry = ( capsule 4 1 )
+        geometry = capsule 4 1
     }
     
     
     set space cell
     {
-        geometry = ( dice 4 4 1 )
+        geometry = dice 4 4 1
     }
     
 Do you find that centration is different when the cells has 'corners'?
@@ -300,7 +303,7 @@ Reset catastrophe rate to 0.1 and add 2000 motors distributed at fixed points th
         activity = move
         max_speed = -1
         stall_force = 5
-        display = ( color = blue )
+        display = ( color = green, dark_gray )
     }
     
     set single grafted

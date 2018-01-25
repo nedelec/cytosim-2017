@@ -70,6 +70,14 @@ public:
     /// color of object
     gle_color  color;
     
+    /// second color (set as color[1])
+    /**
+     This is used to display unattached Single and unbridging Couple,
+     and the inner surfaces of objects such as Sphere, Solid, Bead and Space.
+     Unless it is set directly as color[1], `color2` is set to be a darker tone of `color`.
+     */
+    gle_color  color2;
+
     /// if true, use various colors to display different objects
     int        coloring;
     

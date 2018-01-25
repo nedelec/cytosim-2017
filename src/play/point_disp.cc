@@ -28,6 +28,7 @@ PointDisp::PointDisp(PointDisp const& o) : Property(o)
 {
     visible      = o.visible;
     color        = o.color;
+    color2       = o.color2;
     coloring     = o.coloring;
     size         = o.size;
     width        = o.width;
@@ -48,6 +49,7 @@ PointDisp& PointDisp::operator =(PointDisp const& o)
 {
     visible      = o.visible;
     color        = o.color;
+    color2       = o.color2;
     coloring     = o.coloring;
     size         = o.size;
     width        = o.width;
@@ -91,6 +93,7 @@ void PointDisp::clear()
 {
     visible      = 1;
     color        = 0x888888FF;
+    color2       = 0x777777FF;
     coloring     = 0;
     size         = 4;
     width        = 2;
@@ -134,7 +137,7 @@ void PointDisp::drawVectorA() const
 
 void PointDisp::drawVectorI() const
 {
-    color.color();
+    color2.color();
     
     switch ( shape )
     {
@@ -297,6 +300,9 @@ void PointDisp::read(Glossary& glos)
 {
     glos.set(visible,      "visible", KeyList<int>("yes", 1, "no", 0, "transparent",  -1));
     glos.set(color,        "color");
+    if ( glos.set(color,   "color") )
+        color2 = color;
+    glos.set(color2,       "color", 1);
     glos.set(size,         "size");
     // alternative syntax:
     glos.set(size,         "point");
@@ -317,7 +323,7 @@ void PointDisp::read(Glossary& glos)
 void PointDisp::write_data(std::ostream & os) const
 {
     write_param(os, "visible",  visible);
-    write_param(os, "color",    color);
+    write_param(os, "color",    color, color2);
     write_param(os, "coloring", coloring);
     write_param(os, "size",     size);
     write_param(os, "width",    width);

@@ -145,24 +145,16 @@ void Display2::displayBall(Vector const& pos, real radius)
 }
 
 
-/// this version draws a bitmap object
+/// this version draws a sphere
 void Display2::displayPoint(Vector const& pos, PointDisp const* disp)
 {
     if ( disp->visible  &&  disp->size*uFactor > 1 )
     {
-        if ( disp->symbol )
-        {
-            gleRasterPos(pos);
-            disp->drawA();
-        }
-        else
-        {
-            glPushMatrix();
-            gleTranslate(pos);
-            gleScale(disp->size*sFactor);
-            gleSphere2B();
-            glPopMatrix();
-        }
+        glPushMatrix();
+        gleTranslate(pos);
+        gleScale(disp->size*sFactor);
+        gleSphere2B();
+        glPopMatrix();
     }
 }
 
@@ -764,6 +756,16 @@ void Display2::displayOrganizer(Organizer const& obj)
 //------------------------------------------------------------------------------
 #pragma mark -
 
+
+inline void drawVertex(const Vector & pos, const PointDisp* disp)
+{
+    if ( disp->size > 0 && disp->visible )
+    {
+        disp->color2.color();
+        gleVertex(pos);
+    }
+}
+
 #ifdef EXPLODE_DISPLAY
 
 inline void drawVertex(Vector const& pos, const Fiber * fib, const PointDisp* disp)
@@ -776,11 +778,11 @@ inline void drawVertex(Vector const& pos, const Fiber * fib, const PointDisp* di
 }
 
 
-inline void drawVertex(Vector const& pos, const Fiber * fib, const PointDisp* disp, int alpha)
+inline void drawVertex2(Vector const& pos, const Fiber * fib, const PointDisp* disp)
 {
     if ( disp->size > 0 && disp->visible && fib->disp->visible )
     {
-        disp->color.colorT(alpha);
+        disp->color.color();
         gleVertex(pos+fib->disp->explode_shift);
     }
 }
@@ -833,17 +835,6 @@ inline void drawVertex(Vector const& pos, const Fiber * fib, const PointDisp* di
     }
 }
 
-
-inline void drawVertex(Vector const& pos, const Fiber * fib, const PointDisp* disp, int alpha)
-{
-    if ( disp->size > 0 && disp->visible && fib->disp->visible )
-    {
-        disp->color.colorT(alpha);
-        gleVertex(pos);
-    }
-}
-
-
 inline void drawLink(const Vector & a, const Fiber * fib, const PointDisp* disp, const Vector & b)
 {
     if ( disp->visible && fib->disp->visible )
@@ -870,16 +861,6 @@ inline void drawLink(const Vector & a, const Fiber * fiba, const PointDisp* disp
 
 #endif
 
-
-inline void drawVertex(const Vector & pos, const PointDisp* disp, int alpha)
-{
-    if ( disp->size > 0 && disp->visible )
-    {
-        disp->color.colorT(alpha);
-        gleVertex(pos);
-    }
-}
-
 //------------------------------------------------------------------------------
 #pragma mark -
 
@@ -891,7 +872,7 @@ void Display2::displayFSingles(const SingleSet & set)
         glPointSize(prop->point_size*uFactor);
         glBegin(GL_POINTS);
         for ( Single * gh=set.firstF(); gh ; gh=gh->next() )
-            drawVertex(gh->posFoot(), gh->hand()->prop->disp, 1);
+            drawVertex(gh->posFoot(), gh->hand()->prop->disp);
         glEnd();
     }
 }
@@ -946,15 +927,15 @@ void Display2::displayFCouples(CoupleSet const& set)
         if ( set.sizeFF() % 2 )
         {
             nxt = obj->next();
-            drawVertex(obj->posFree(), obj->disp1(), 2);
+            drawVertex(obj->posFree(), obj->disp1());
             obj = nxt;
         }
         while ( obj )
         {
             nxt = obj->next();
-            drawVertex(obj->posFree(), obj->disp2(), 2);
+            drawVertex(obj->posFree(), obj->disp2());
             obj = nxt->next();
-            drawVertex(nxt->posFree(), nxt->disp1(), 2);
+            drawVertex(nxt->posFree(), nxt->disp1());
         }
         glEnd();
     }
@@ -970,10 +951,10 @@ void Display2::displayACouples(CoupleSet const& set)
         glBegin(GL_POINTS);
         
         for (Couple * cx=set.firstAF(); cx ; cx=cx->next() )
-            drawVertex(cx->pos1(), cx->fiber1(), cx->hand1()->prop->disp, 1);
+            drawVertex2(cx->pos1(), cx->fiber1(), cx->hand1()->prop->disp);
         
         for (Couple * cx=set.firstFA(); cx ; cx=cx->next() )
-            drawVertex(cx->pos2(), cx->fiber2(), cx->hand2()->prop->disp, 1);
+            drawVertex2(cx->pos2(), cx->fiber2(), cx->hand2()->prop->disp);
         
         glEnd();
     }

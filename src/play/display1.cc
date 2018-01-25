@@ -736,7 +736,6 @@ void Display1::displayFSingles(const SingleSet & set)
 {
     for ( Single * gh=set.firstF(); gh ; gh=gh->next() )
     {
-        //gh->hand()->prop->disp->color.colorT(1);
         displayPoint(gh->posFoot(), gh->hand()->prop->disp);
     }
 }
@@ -812,14 +811,12 @@ void Display1::displayACouples(CoupleSet const& set)
     for (Couple * cx=set.firstAF(); cx ; cx=cx->next() )
         if ( cx->fiber1()->disp->visible )
         {
-            //cx->disp1()->color.colorT(1);
             displayPoint(cx->pos1(), cx->disp1());
         }
     
     for (Couple * cx=set.firstFA(); cx ; cx=cx->next() )
         if ( cx->fiber2()->disp->visible )
         {
-            //cx->disp2()->color.colorT(1);
             displayPoint(cx->pos2(), cx->disp2());
         }
 }
