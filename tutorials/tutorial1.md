@@ -570,6 +570,7 @@ Can you check this by defining two class of motors?
 ### Force-velocity relationship
 
 Cytosim implements a linear force-velocity relationship, as measured for conventional kinesin. The speed of a motor is affected by the force that it experiences.
+The speed is calculated given the external force `f` and the direction `d` in which the motor would move on the filament if it was free. In this formula, f\_0 is the stall force and v\_0 is the max_speed. Note that `d` is a unit vector parallel to the filament, pointing either plus end or minus end, depending on the directionality of the motor, and the 'dot' is the scalar product.
 
 ![force_velocity](data/force_velocity.png)
 
