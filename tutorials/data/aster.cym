@@ -5,6 +5,7 @@ set simul aster
 {
     time_step = 0.001
     viscosity = 0.01
+	display = ( style = 2; point_size = 7 )
 }
 
 set space cell
@@ -26,7 +27,7 @@ set fiber microtubule
     total_polymer = 160
     fate = destroy
  
-    display = ( line_width = 4; )
+    display = ( line_width = 3; )
 }
 
 set solid core

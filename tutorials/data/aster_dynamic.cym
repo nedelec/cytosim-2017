@@ -5,6 +5,7 @@ set simul aster
 {
     time_step = 0.001
     viscosity = 0.01
+	display = ( style = 2; point_size = 7 )
 }
 
 set space cell
@@ -29,7 +30,7 @@ set fiber microtubule
     min_length       = 0.5
     fate = destroy
  
-    display = ( line_width = 4; )
+    display = ( line_width = 2; )
 }
 
 set solid core
@@ -63,7 +64,7 @@ set hand dynein
     activity = move
     max_speed = 1
     stall_force = 5
-    display = ( color = light_blue; size=7;  )
+    display = ( color = green, dark_gray; )
 }
 
 set single grafted
