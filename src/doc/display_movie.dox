@@ -21,7 +21,7 @@
  
  Cytosim is always able to generate <a href="http://en.wikipedia.org/wiki/Netpbm_format">PPM images</a>, 
  that can be read and converted with <a href="http://rsbweb.nih.gov/ij/">ImageJ</a>.
- In addition, Cytosim may be able to generate images in the GIF or PNG formats, if the required libraries were available during compilation.
+ In addition, Cytosim may be able to generate images in the PNG formats, if the required libraries were available during compilation.
 
 
 
@@ -46,8 +46,4 @@
  brew tap homebrew/dupes
  @endcode
 
- For the GIF library:
- @code
- brew install giflib
- @endcode
- */
+*/

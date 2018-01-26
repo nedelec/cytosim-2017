@@ -58,21 +58,7 @@
  - disable assertions,
  - compile with option \c fast
  .
- 
- 
-<h4>GIF support</h4>
- 
- You can install the GIF library (giflib) on your mac with <a href="http://www.macports.org">macPorts</a>: 
- @code 
- sudo port install giflib
- @endcode
- 
- You can then enable GIF support in cytosim by editing the \c makefile.inc:
- @code
- HAS_GIF = 1
- @endcode
- 
- 
+  
  <h4>PNG support</h4>
  
  You can install the PNG library (libpnb) on your mac with <a href="http://www.macports.org">macPorts</a>:

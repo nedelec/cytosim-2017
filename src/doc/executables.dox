@@ -40,7 +40,7 @@
 
  `play` generates a graphical representation of the system, and it is sometimes named \c cytosim.
  While `sim` can run on any computer, `play` requires OpenGL capabilities, 
- and some of its functionality (eg. GIF support) depends on external libraries.
+ and some of its functionality (eg. PNG support) depends on external libraries.
  
  The @ref DisplayParameters "Display parameters" that control the graphical output can be embedded in the config file.
  The properties of most object have a \c display parameter that `play` will read.
@@ -93,7 +93,7 @@
  
  Cytosim is always able to generate <a href="http://en.wikipedia.org/wiki/Netpbm_format">PPM images</a>, 
  that can be open with <a href="http://rsbweb.nih.gov/ij/">ImageJ</a>.
- Cytosim may be able to generate images in the GIF or PNG formats, 
+ Cytosim may be able to generate images in the PNG format, 
  if the required libraries were included during compilation.
  
  <h3> Keyboard controls </h3>

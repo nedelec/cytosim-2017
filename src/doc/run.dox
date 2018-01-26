@@ -99,12 +99,10 @@
  <h2> Visual Inspection </h2>
 
  You should now have many completed simulations, each in a different directory.
- You can look at them, using a few python scripts located in /python/look:
+ You can look at them, using a few python scripts:
 
  Script          |   Typical usage                      
  ----------------|----------------------------------------------------
- `make_image.py` | create one image in each directory
- `make_movie.py` | create a movie in each directory
  `make_page.py`  | create a HTML page to easily view all the images
  `scan.py`       | run a command in multiple directories
 
@@ -113,13 +111,16 @@
  
  Create HTML directory with a single image
  @code
- make_image.py 'play window_size=1024,128 frame=100' run*
+ scan.py '~/bin/play window_size=1024,128 frame=100 movie' run*
  make_page.py run*
  @endcode
- 
+
+ One needs to provide the full path for the executable to *scan.py*, and here we refer
+ to a copy of 'play' in the directory 'bin/' located in the Home directory.
+
  Create HTML directory with images every 100 frame:
  @code
- scan.py '../play movie period=100 size=256 label={}' run*
+ scan.py '~/bin/play movie period=100 size=256 label={}' run*
  make_page.py run*
  @endcode
  
@@ -128,15 +129,8 @@
  
  <h2> Analysis </h2>
 
- You can also analyse the runs in a non-visual way:
-
-  Program         |   Typical usage
- -----------------|-----------------------------------------------------------
- `report`         | extract data from trajectory files
- `get_data.py`    | collect data from the directories into one master file
- `make_plots.py`  | make a plot
-
- Cytosim's tool `report` will generate some output from the trajectory file of a completed simulation.
+ You can also analyse the runs in a non-visual way using 'report'.
+ This tool will generate text files from the trajectory file of a completed simulation.
  You may use `scan.py` to analyse a set of directories.
  It is however generally better to include some reporting directly into the config file,
  with the @ref SimCommands "command" `write`.
@@ -146,7 +140,7 @@
  The tools and python scripts should be able provide up-to-date help, for example:
  @code
  make_page.py help
- make_image.py help
+ scan.py help
  @endcode
 
 <h3> Restarting a Simulation </h3>
