@@ -568,8 +568,15 @@ If `max_speed` is set positive, the motor walks towards the plus-end of the micr
 In Cytosim, motors moving in opposite directions do not collide, and instead pass through each other like fantoms. 
 Can you check this by defining two classes of motors?
 
+### Force-velocity relationship
 
-### Motor reaching the end of a filament
+Cytosim implements a linear force-velocity relationship, as measured for conventional kinesin. The speed of a motor is affected by the force that it experiences.
+The speed is calculated given the external force `f` and the direction `d` in which the motor would move on the filament if it was free. In this formula, `f_0` is the stall force and `v_0` is the max_speed. Note that `d` is a unit vector parallel to the filament, pointing either toward the plus end or the minus end, depending on the directionality of the motor. The 'dot' is the scalar product between the two vectors, which is negative in this configuration.
+
+![force_velocity](data/force_velocity.png)
+
+
+### What happens when a motor reaches the end of a filament?
 
 Because it is moving, a motor may reach the end of a filament. It may then either stall, or unbind immediately. A motor will likely not stall forever, but its unbinding rate in the dangling configuration can be different from the unbinding rate that it had while it was moving. 
 The behavior of the motor upon reaching the end of a filament has a strong influence on the type of patterns that motor may impose to microtubules. If the motor is able to stall, radial patterns called aster may arise, but this is unlikely if the motor detach immediately. 
