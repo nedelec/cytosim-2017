@@ -18,11 +18,11 @@ Here is how you will run the simulations:
 4. In the console type `./play live` and press `enter`. This will start a live simulation, that will read its instructions from `config.cym`.
 
 At any time, you can restart the simulation by pressing `z` on the keyboard. This should also be done if you change the configuration file, e.g. as you progress through the tutorial.
-The configuration file `config.cym` for Cytosim is a plain text file, and should be edited using a PLAIN text editor. You can use TextEdit, Geany or download TextMate; but do not use Word or Pages. 
+The configuration file `config.cym` for Cytosim is a plain text file, and should be edited using a PLAIN text editor. You can use TextEdit, Geany, TextMate or any 'text code' editor, but do not use MS Word or Pages. 
 
-# Step 1 - The configuration file
+## Step 1 - The configuration file
 
-Cytosim reads a single configuration file, and executes the commands in the natural order, from top to bottom. By default, the configuration file is named `config.cym`.
+Cytosim reads a single configuration file, and executes its commands in the natural order, from top to bottom. By default, the configuration file is named `config.cym`.
 Let's start with a minimal configuration file. A square "cell" is defined, but it is kept empty.
 It is simulated for 1 second, and nothing happens.
 
@@ -33,7 +33,7 @@ It is simulated for 1 second, and nothing happens.
     
     set space cell 
     {
-        geometry = ( rectangle 10 10 )
+        geometry = rectangle 10 10
     }
     
     new space cell
@@ -43,23 +43,22 @@ It is simulated for 1 second, and nothing happens.
         nb_frames = 50
     }
 
-This defines the minimal components that are necessary to run a simulation with Cytosim.
-The command `set` defines physical entities, and `new` creates the objects following these definitions. More in detail:
+The first 3 commands define the minimal components that are necessary to run a simulation with Cytosim.
+The command `set` defines classes of objects, and `new` creates the objects following these classes. More in detail:
 
     set simul tutorial
     {
         time_step = 0.01
     }
 
-defines the name of the simulation (`tutorial`), and sets the time step to 0.01 seconds.
-
+defines the name of the simulation (*tutorial*), and sets the time step to 0.01 seconds.
 
     set space cell
     {
-        geometry = ( rectangle 10 10 )
+        geometry = rectangle 10 10
     }
 
-defines a rectangular space named `cell` with the dimension `(W, H)` of the box in micrometers, the total box is actually `2W` wide, and `2H` high with the origin in the center.
+defines a rectangular space named *cell* with dimensions `W = 10` and `H = 10` micrometers. The entire box is actually `2W` wide, and `2H` high, and the origin is placed in the center.
 
 Finally:
 
@@ -68,12 +67,12 @@ Finally:
         nb_frames = 50
     }
 
-instructs cytosim to simulate the system. Specifically, it will perform 100 iterations, and hence simulate a total time of `100 * 0.01 = 1 second`.  It will also record 50 frames at equal intervals, so in this case every 1 second / 50 = 0.02 second.
+instructs cytosim to simulate the system. Specifically, it will perform 100 iterations, and hence simulate a total time of `100 * 0.01 = 1 second`.  It will also record 50 frames at equal intervals, so in this case every 1 / 50 = 0.02 second.
 
 
-# Step 2 - Diffusing particule
+## Step 2 - Diffusing particule
 
-Let's add a diffusing particle into the "cell":
+Let's add a diffusing particle to the "cell":
 
     set simul tutorial
     {
@@ -82,7 +81,7 @@ Let's add a diffusing particle into the "cell":
     
     set space cell 
     {
-        geometry = ( rectangle 10 10 )
+        geometry = rectangle 10 10
     }
     
     new space cell
@@ -110,12 +109,12 @@ The new object is defined by two `set` and created by `new`:
     {
     }
 
-defines a new class of *hand*, which is an object that can bind to a fiber. 
-This new *hand* is called `kinesin`, but we could have used any other name.
-For now, the space within the brackets was left blank, intentionally. Hence the binding rate was not defined, and since it is equal to zero by default, the kinesin that we have defined cannot bind to anything.
-In addition, the simulation does not contain any fiber yet.
+defines a new class of *Hand*, which is an object that can bind to a fiber. 
+This new objection is called *kinesin*, but we could have used any other name.
+For now, the space within the brackets was left blank, intentionally. Hence the binding rate was not defined, and since it is equal to zero by default, the kinesin that we have defined will not bind.
+In addition, the simulation does not contain any fiber yet, so there is nothing it could bind to.
 
-An object of class Hand cannot be created directly, and must be included in another class 'single' or 'couple'. Here, we have defined a 'single' that contains one `kinesin`:
+An object of class *Hand* cannot be created directly, and must be included in another class: *single* or *couple*. Here, we define a *single* called "particle" that contains one *kinesin*:
 
     set single particle
     {
@@ -123,16 +122,16 @@ An object of class Hand cannot be created directly, and must be included in anot
         diffusion = 10
     }
 
-A `single` is a point-like particle, a diffusible entity, that has a position in space but no orientation.
-The parameter `diffusion = 10` in this section defines the [diffusion coefficient](http://en.wikipedia.org/wiki/Mass_diffusivity) in units of micro-meter squared per second (um^2/s).
+A *single* is a point-like particle, that has a position in space but no orientation. It will diffuse freely within the *space* as long as it is not bound to any filament.
+The parameter `diffusion = 10` in this section defines the [diffusion coefficient](http://en.wikipedia.org/wiki/Mass_diffusivity) in units of micro-meter squared per second (um^2/s). This is a typical value for a protein in the cytoplasm.
 
-The next command creates one `particle`:
+The next command creates one of these *particle*:
 
     new 1 single particle
 
-By running the simulation (`play live`), you should see that the particle is freely diffusing inside the box. We will now see some of these parameters in more detail. 
+By running the simulation (`play live`), you should see now that the particle is freely diffusing inside the rectangle that was defined in *cell*. We will now see some of these parameters in more detail. 
 
-### Change the number of particles
+### Changing the number of particles
 
 You can increase the number of particles by editing `config.cym`, to change the `new` command:
 
@@ -141,7 +140,7 @@ You can increase the number of particles by editing `config.cym`, to change the 
 Do not forget to save the file `config.cym` and to run `sim` again. This will erase any previous results.
 The simulation now has 100 particles... They are set initially uniformly and randomly inside the box, and all diffuse freely with the same diffusion coefficient.
 
-### Change the diffusion constant
+### Changing the diffusion constant
 
 You can change the diffusion constant of the particles, or any other parameter in the same way:
 
@@ -151,10 +150,10 @@ You can change the diffusion constant of the particles, or any other parameter i
         diffusion = 0.1
     }
 
-The diffusion coefficient has been reduced from 10 to 0.1 micro-meters squared per seconds... and the complexes diffuse now very slowly. There is no interaction between them, but they bounce off the walls of the box.
+The diffusion coefficient has been reduced to 0.1 micro-meters squared per seconds... and the particles now diffuse very slowly. There is no interaction between them, and they bounce off the walls of the *cell*.
 
 
-### Define the initial position of the particles
+### Defining the initial position of the particles
 
 We can start the simulation with all the particles in the center:
 
@@ -163,7 +162,7 @@ We can start the simulation with all the particles in the center:
         position = 0 0 0
     }
 
-All the particles are now initially at the origin, and you can see them spread in the live display. The profile of density is Gaussian. You can press 'z' on the keyboard to restart the simulation.
+All the particles are now initially at the origin, and you can see them spread in the live display. The profile of density is Gaussian. You can press 'z' on the keyboard to restart the simulation, and press 's' to stop the animation and trigger individual steps of the simulation.
 Cytosim has many options to define the positions of the objects, for example:
 
     position = X Y Z
@@ -171,7 +170,7 @@ Cytosim has many options to define the positions of the objects, for example:
     position = edge R
     position = ball R
 
-You can use multiple `new` to define complex initial conditions:
+You can use multiple `new` to define more complex initial conditions:
 
     new 100 single particle
     {
@@ -203,11 +202,11 @@ or
     }
 
 
-# Step 3 - The time step
+## Step 3 - The time step
 
 One of the most important parameter of the simulation is the time step.
 This defines the time interval corresponding to one step of cytosim's engine.
-Smaller time step yield more precise results, but consequently a larger number of simulation is needed to simulate the same interval, which requires more CPU time for the computer.
+Smaller time step yield more precise results, but consequently a larger number of calculation is needed to simulate the same interval, which requires more CPU time, and you may have to wait for the computer.
 The total simulated time can be controlled by the number of iterations:
 
     set simul tutorial
@@ -225,7 +224,7 @@ The unit of time in the simulation is the second, and `time_step` should be give
 
 ### Varying the time step
 
-One of the first control in any simulation is to check that the `time_step` does not affect the outcome of the calculation. This should be true as long as `time_step` is small enough. There is generally a certain value below which the numerical precision is sufficient. The value of this threshold is however different for each system, and one may not know it a priori. A usual strategy is then to run two simulations with different time steps, and to compare the outcome. If the result are different, then `time_step` is for sure is too big.
+One of the first control in any simulation is to check that the value of `time_step` does not affect the outcome of the calculation. This should be true as long as `time_step` is small enough. There is generally a certain value below which the numerical precision is sufficient. The value of this threshold is however different for each system, and one may not know it a priori. In fact, it really depends on how you analyze the outcome of the simulation. A usual strategy is then to run two simulations with different time steps, and to compare the outcome. If the result are different, then `time_step` is for sure is too big.
 Thus one can reduce the time step until this has no 'noticeable' effect on the outcome.
 
     set simul tutorial
@@ -239,11 +238,13 @@ Thus one can reduce the time step until this has no 'noticeable' effect on the o
     }
 
 Here the `time_step` was reduced by a factor 10, and the number of iterations multiplied by 10, to keep the same amount of total time. 
-Is the animation similar to the previous one obtained with `time_step = 0.01` seconds?
+Is the animation similar to the previous one obtained with the bigger time step?
 Can you decrease the time step even further?
 Does it take more time to simulate the system?
 
-# Step 4 - Filaments
+Note: if you are an experienced UNIX user, you can run two simulations in parallel.
+
+## Step 4 - Filaments
 
 Let's now define [microtubules](http://en.wikipedia.org/wiki/Microtubules)! 
 
@@ -298,7 +299,7 @@ For cytoskeletal filaments, the dominating forces are usually the [Brownian moti
 
 In the model, the drag is linear in the length of the microtubule. Longer ones are more difficult to move than shorter ones. The drag coefficient is calculated using a formula similar to Stoke's law, but which is derived for a cylinder instead of a sphere.
 
-Diffusion is calculated from the drag coefficient, using the [Einstein relation](http://en.wikipedia.org/wiki/Einstein_relation_%28kinetic_theory%29). The filament is diffusing both in translation and rotation, but this is usually quite slow. Temperature is set by kT, with 0.0042 corresponding to room temperature. 
+Diffusion is calculated from the drag coefficient, using the [Einstein relation](http://en.wikipedia.org/wiki/Einstein_relation_%28kinetic_theory%29). The filament is diffusing both in translation and rotation, but this is usually quite slow. Temperature is set by kT, with 0.0042 corresponding to room temperature (kT ~ 4.2 pN.nm). 
 
 
 ### Segmentation
@@ -332,7 +333,7 @@ You can fix this problem by reducing the `segmentation` parameter at the same ti
         confine = inside, 100
     }
     
-Lower values of the `segmentation` incurrs more points in the model, and the simulation thus takes more time to compute.
+Lower values of the `segmentation` incurs more points in the model, and the simulation thus takes more time to compute.
 
 ### Initial length
 
@@ -354,7 +355,7 @@ Cytosim has some (limited) options to generate a random length on the fly, such 
 
 ### Confinement
 
-These filaments are confined inside the `cell` with a stiffness of `100 pN/um`:
+These filaments are confined inside the *cell* with a stiffness `k = 100 pN/um`:
 
     set fiber microtubule
     {
@@ -368,12 +369,13 @@ With a lower value of the confinement stiffness `k`, the filament will appear to
         confine = inside, 1
     }
 
-This is expected, since the confiment is 'soft' and implemented with an Harmonic potential, which gives rises to a linear force. Hence if the filament sticks out by a distance `X` the force is `k*X`.
+This is expected, since the confiment is 'soft' and implemented with an Harmonic potential, which gives rises to a linear force. Hence if the filament sticks out by a distance `x` the force is `k*x`. This force is always directed perpendicular to the edge of the box, and thus corresponds to a frictionless boundary.
 
 In this case, the controlling parameter is the ratio of bending elasticity to confinement elasticity.
 
 
-# Step 5 - Microtubule-binding molecules 
+
+## Step 5 - Microtubule-binding molecules 
 
 Let's make the `kinesin` able to bind microtubule. We need to define two properties for binding, and two more for unbinding:
 
@@ -396,7 +398,7 @@ Let's make the `kinesin` able to bind microtubule. We need to define two propert
     
     new 1000 single particle
     
-Remember that the `kinesin` is of class `hand` and cannot exist by itself. It must be a part of a `single` or a `couple`. Here, the particle is defined as a `single` and it will thus contain one `kinesin`. The `kinesin` is not yet able to move, but it can bind and unbind, as we defined:
+Remember that the "kinesin" is of class *hand* and cannot exist by itself. It must be a part of a *single* or a *couple*. Here, the particle is defined as a *single* and it will thus contain one "kinesin". The "kinesin" is not yet able to move, but it can bind and unbind, as we defined:
 
 * `binding_range` and `binding_rate` are used to calculate the attachement of Hands onto filaments. A hand has a probability `binding_rate` per second to bind to any filament closer than `binding_range` (micro-meter) away.
 * `unbinding_rate` sets the frequencies per second at which attached Hands detach.
@@ -404,7 +406,7 @@ Remember that the `kinesin` is of class `hand` and cannot exist by itself. It mu
 
         unbinding_rate * exp(|force|/unbinding_force)
 
-Finally, we have specified that the `kinesin` should be displayed as a yellow dot of size 4 pixels. Chosing different colors is very useful if you want to define multiple types of hands.
+Finally, we have specified that each "kinesin" should be displayed as a yellow dot of size 4 pixels. Choosing different colors is very helpful if you want to define multiple types of hands.
 
 Do you see the molecules binding and unbinding from the filaments?
 Press `i` three times in the keyboard to display information about the states of the singles during the simulation.
@@ -465,7 +467,7 @@ As particles bind, this progressively clears the space.
 
 Any Hand can bind with a rate `binding_rate` per seconds to every filament closer than `binding_range`. If it binds, a Hand does so always to the closest position on a filament. The regions where particles are close to two or more filaments clear up faster. 
 
-### Binding to the filaments
+### End-binding
 
 By default hands will bind only to the side of the filaments, but the capture region can be extended with the parameter `bind_also_ends`. 
 
@@ -480,9 +482,9 @@ By default hands will bind only to the side of the filaments, but the capture re
 
 It extends the capture region to allow binding to the end:
 
-![bind_also_end](data/bind_also_end.png)
+![bind_end](data/bind_also_end.png)
 
-### Binding to the ends of the filaments
+### End-binding
 
 By default hands can bind anywhere in the filament, but you can restrict the binding site to a region near the filament ends. 
 All fiber objects in cytosim have an intrinsic polarity, with a plus-end and minus-end. These ends can have different properties. Dynamic microtubles, for example, grow and shrink primarily from the plus-ends.
@@ -506,12 +508,11 @@ The possible values for `bind_end` are `plus_end`, `minus_end` and `both_ends`:
 Add these features to the last example and check the difference.
 
 
-# Step 6 - Molecular motors 
+## Step 6 - Molecular motors 
 
-Let's make the `kinesin` behave like a [molecular motor](http://en.wikipedia.org/wiki/Molecular_motor):
+Let's make our *kinesin* behave like a [molecular motor](http://en.wikipedia.org/wiki/Molecular_motor):
 This is done by specifying an activity, and adding the necessary parameters for this activity:
 
-    ...
     set hand kinesin
     {
         ...
@@ -519,7 +520,6 @@ This is done by specifying an activity, and adding the necessary parameters for 
         max_speed = 1
         stall_force = 5
     }
-    ...
     
 * `activity = move` defines it to be a molecular motor that is able to move on the fibers
 * `max_speed` sets the speed of motion while bound on the microtubule. In the model, plus-end directed motor have positive speeds, and minus-end directed ones have negative speeds.
@@ -534,25 +534,27 @@ The movement of bound motors is more apparent on a larger time scale, such as 10
 The motors stay bound on average for `1 / unbinding_rate` seconds, during which they move by a distance `max_speed / unbinding_rate` micro-meters, here roughly 1 micro-meter. 
 This distance is informally called the processivity of the motor. You can increase it by decreasing the unbinding rate:
 
-    ...
     set hand kinesin
     {
         ...
         unbinding_rate = 0.1
         ...
     }
-    ...
 
 If the detachment rate `unbinding_rate` is very low, motors walk for a very long time, and are said to be very processive. Here they would walk on average for 10 micro-meters, but they usually reach the end of the filament before, where they unbind immediately. 
 
+
 ### Directionality
 
-We can change the direction in which the motor move, by changing the speed which can be positive or negative:
-Define another type of hands, for example a `dynein` that goes to the minus-end of microtubules.
-You can start by just copy-pasting the `set hand kinesin` paragraph, and rename it to `dynein`
-You then set `dynein` to move towards the minus-end by setting a negative speed (e.g. -1) .
+We can change the direction in which the motor move, by changing the speed which can be positive or negative.
+Define another type of hands, a "dynein" that goes to the minus-end of microtubules:
 
-    ...
+* Copy-paste the entire `set hand kinesin` paragraph,
+* Change "kinesin" into "dynein",
+* Set a negative speed (e.g. -1).
+
+The result will be a new definition:
+
     set hand dynein
     {
         ...
@@ -560,19 +562,11 @@ You then set `dynein` to move towards the minus-end by setting a negative speed 
         max_speed = -1
         stall_force = 5
     }
-    ...
 
 If `max_speed` is set positive, the motor walks towards the plus-end of the microtubules. If `max_speed` is set negative, the motor walks towards the minus-end of the microtubule. 
 
-In Cytosim, motors moving in opposite directly never collide, and instead pass through each other like fantoms. 
-Can you check this by defining two class of motors?
-
-### Force-velocity relationship
-
-Cytosim implements a linear force-velocity relationship, as measured for conventional kinesin. The speed of a motor is affected by the force that it experiences.
-The speed is calculated given the external force `f` and the direction `d` in which the motor would move on the filament if it was free. In this formula, f\_0 is the stall force and v\_0 is the max_speed. Note that `d` is a unit vector parallel to the filament, pointing either plus end or minus end, depending on the directionality of the motor, and the 'dot' is the scalar product.
-
-![force_velocity](data/force_velocity.png)
+In Cytosim, motors moving in opposite directions do not collide, and instead pass through each other like fantoms. 
+Can you check this by defining two classes of motors?
 
 
 ### Motor reaching the end of a filament
@@ -582,19 +576,17 @@ The behavior of the motor upon reaching the end of a filament has a strong influ
 
 In cytosim, this property of the motor is controlled by a specific parameter: 
 
-    ...
     set hand dynein
     {
         ...
         activity = move
         hold_growing_end = 1
     }
-    ...
 
 Do you see a difference with the default behavior (`hold_growing_end = 0`)? 
 
 
 ## The end
 
-Congratulation, you have completed the tutorial.
+Congratulation, you have completed the tutorial. If you have suggestions on this material, please email us at *feedback AT cytosim.org*
 
