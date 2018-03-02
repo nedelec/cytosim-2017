@@ -28,7 +28,7 @@ set fiber actin
 
 set hand activator
 {
-    binding = 10, 0.5
+    binding = 10, 0.1
     unbinding = 0, 4
     display = ( size=7; color=green; )
 }
