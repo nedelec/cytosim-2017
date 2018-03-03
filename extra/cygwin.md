@@ -1,8 +1,8 @@
-### Instructions to run Cytosim on Cygwin:
+## Instructions to run Cytosim on Cygwin
 
-Use the cytosim version provided (CytosimV) which has a modified makefile.inc and disabled offscreen rendering. If this verison is missing 
-any packages you need let me know and I can send you a more complete version that also includes some of my modifications to the base code.
+Cytosim runs on Cygwin, but this is not supported. Typically this mode is only used by third parties.
 
+### Installation
 
 Run the Cygwin installer with default settings until you get to the package selection screen. In order to properly compile and run Cytosim 
 several packages which are not default must be selected, do this by searching for the keywords provided and selecting items that mention
@@ -22,18 +22,24 @@ tools line by line, click on the icon between "Devel" and "Default" to change it
 for Cygwin, which is overkill and will take ~20-30 minutes, but is much easier than figuring out which tools are/aren't neccessary.
 After all packages are selected install Cygwin.  
 
-### Display
+### Compilation
 
-Finally, to run X11 display for simulations ('play' command) it may be necessary to install Xming and launch an X11 instance through XLaunch.
-Install Xming while Cygwin installation is running. Once Xming is installed run XLaunch to initiate an instance of X11 to "display 0" 
-which is the default. From the Cygwin command line run the following command:
+Modify the `makefile.inc` to set `MACHINE:=cygwin`, and disable offscreen rendering by setting `HAS_PNG:=0`. Recompile fresh using the toolchain (`gcc` and `make`) provided by cygwin. The procedure is the same as on other platforms (enter `make`). If you experience trouble, please let us know.
+
+### X11 display
+
+Finally, the 'play' command of cytosim will use X11 to open its display window, and you need to install and run a X11 window server on your local computer. Two X11 servers models can be used with Cygwin:
+
+[Cygwin/X](https://en.wikipedia.org/wiki/Cygwin/X)
+
+[Xming](https://en.wikipedia.org/wiki/Xming)
+
+We got things to work with the free 2007 version of Xming. Xming can be installed while Cygwin installation is running. 
+Once Xming is installed run XLaunch to start the X11 window server, and set the "display" of your application to this server. From the Cygwin command line run the following command:
 
     export DISPLAY=:0   
 
-This will allow 'play' to port display information to display 0 which will let Windows run it on the X11 instance. This command should be 
-run every time the cygwin command line is closed and opened again, otherwise the display will fail and 'play' command will do nothing. 
-Alternatively this command could be appended to the initiation commands for the cygwin command line (I don't recall how to do this, but it 
-should be easy to figure out). 
+This will allow 'play' to send display information to display 0 which will address the default X11 server. This command should be run once every time a new cygwin terminal is opened, otherwise 'play' will fail with a message "failed to open display". 
 
 
-Author: Daniel Cortes, 16 Dec. 2017
+Author: Daniel Cortes and Francois Nedelec, 3 March 2018
