@@ -19,9 +19,11 @@ g++ test_glut.cc -lglut -lGL
 #include <cmath>
 
 #ifdef __APPLE__
-#include <GLUT/glut.h>
+  #include <OpenGL/gl.h>
+  #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>    //use this on Linux & PC
+  #include <GL/gl.h>
+  #include <GL/glut.h>    //use this on Linux & PC
 #endif
 
 ///------------ state of the simulated point
