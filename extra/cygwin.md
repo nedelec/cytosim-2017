@@ -42,4 +42,12 @@ Once Xming is installed run XLaunch to start the X11 window server, and set the 
 This will allow 'play' to send display information to display 0 which will address the default X11 server. This command should be run once every time a new cygwin terminal is opened, otherwise 'play' will fail with a message "failed to open display". 
 
 
+### Starting
+
+Cytosim will only work within Cygwin, and not directly under Windows.
+
+This means that Cytosim should be started from the Cygwin terminal window.
+It cannot be started from the Windows command line, and you can close the Windows/MS-DOS command prompt. 
+
+
 Author: Daniel Cortes and Francois Nedelec, 3 March 2018
