@@ -1,9 +1,8 @@
 // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
-
 /**
  This is a program to analyse simulation results:
  it reads a trajectory-file, and print some data from it.
-*/
+ */
 
 #include <fstream>
 #include <sstream>
@@ -19,112 +18,136 @@
 Simul simul;
 int verbose = 1;
 
+
+void splash(std::ostream & os = std::cout)
+{
+    os << "  ------------------------------------------------------------- \n";
+    os << " |  CytoSIM  -  www.cytosim.org  -  version PI  -  May  2017   |\n";
+    os << "  ------------------------------------------------------------- \n";
+}
+
+void help(std::ostream& os)
+{
+    os << "Synopsis:\n";
+    os << "       Generates reports/statistics about Cytosim's objects\n";
+    os << "       for DIM = " << DIM << "\n";
+    os << "Syntax:\n";
+    os << "       report [time] WHAT [OPTIONS]\n";
+    os << "Options:\n";
+    os << "       precision=INTEGER\n";
+    os << "       column=INTEGER\n";
+    os << "       verbose=0\n";
+    os << "       frame=INTEGER[,INTEGER[,INTEGER[,INTEGER]]]\n";
+    os << "       period=INTEGER\n";
+    os << "       input=FILE_NAME\n";
+    os << "       output=FILE_NAME\n";
+    os << "\n";
+    os << "  This tool must be invoked in a directory containing the simulation output,\n";
+    os << "  and it will generate reports by calling Simul::report(). The only required\n";
+    os << "  argument `WHAT` determines what data will be generated. Many options are\n";
+    os << "  available, but are not listed here. Please check the HTML documentation.\n";
+    os << "  By default, all frames in the file are processed in order, but a frame index,\n";
+    os << "  or multiple indices can be specified (the first frame has index 0).\n";
+    os << "  The input trajectory file is `objects.cmo` unless otherwise specified.\n";
+    os << "  The result is sent to standard output unless a file is specified as `output`\n";
+    os << "  Attention: there should be no whitespace in any of the option.\n";
+    os << "\n";
+    os << "Examples:\n";
+    os << "       report fiber:points\n";
+    os << "       report fiber:points frame=10 > fibers.txt\n";
+    os << "       report fiber:points frame=10,20 > fibers.txt\n";
+}
+
 //------------------------------------------------------------------------------
 
 void report_raw(std::ostream& os, std::string const& what, int frm, Glossary& opt)
 {
-    if ( verbose )
+    if ( verbose > 0 )
     {
-        os << "% frame " << frm << std::endl;
-        os << "% time " << simul.simTime() << std::endl;
+        os << "% frame   " << frm << '\n';
+        simul.report(os, what, opt);
     }
-    simul.report(os, what, opt);
+    else
+    {
+        std::stringstream ss;
+        simul.report(ss, what, opt);
+        StreamFunc::skip_lines(os, ss, '%');
+    }
 }
 
 
 void report_prefix(std::ostream& os, std::string const& what, int frm, Glossary& opt)
 {
+    char prefix[256] = { 0 };
+    snprintf(prefix, sizeof(prefix), "%9.3f ", simul.simTime());
+    
+    std::stringstream ss;
+    
     if ( verbose )
     {
-        os << "% frame " << frm << std::endl;
-        os << "% time " << simul.simTime() << std::endl;
+        os << "% frame   " << frm << '\n';
+        simul.report(ss, what, opt);
+        StreamFunc::prefix_lines(os, ss, prefix, '%', 0);
     }
-    
-    std::stringstream pss, ss;
-    pss << std::left << std::setw(8) << std::setprecision(3) << simul.simTime() << " ";
-    const std::string pre = pss.str();
-    simul.report(ss, what, opt);
-
-    if ( verbose )
-        StreamFunc::prefix_lines(os, ss, pre, 0, '%');
     else
-        StreamFunc::prefix_lines(os, ss, pre, '%', 0);
+    {
+        simul.report(ss, what, opt);
+        StreamFunc::prefix_lines(os, ss, prefix, 0, '%');
+    }
 }
 
 
 void report(std::ostream& os, std::string const& what, int frm, Glossary& opt)
 {
-    std::string prefix;
-    opt.set(prefix, "prefix");
-
-    if ( prefix == "time" )
-        report_prefix(os, what, frm, opt);
-    else
+    try
+    {
         report_raw(os, what, frm, opt);
+    }
+    catch( Exception & e )
+    {
+        std::cerr << "Aborted: " << e.what() << '\n';
+        exit(EXIT_FAILURE);
+    }
 }
 
-//------------------------------------------------------------------------------
-
-void help(std::ostream& os)
-{
-    os << "Synopsis: generate reports/statistics about cytosim's objects\n";
-    os << "\n";
-    os << "Syntax:\n";
-    os << "       report WHAT [prefix=time] [verbose=0] [frame=INTEGER] [output=FILE_NAME]\n";
-    os << "\n";
-    os << "This will generate reports using Simul::report()\n";
-    os << "See the documentation of Simul::report() for a list of possible values for WHAT\n";
-    os << "\n";
-    os << " Compiled at "<<__TIME__<< " on " <<__DATE__<< "\n";
-}
 
 //------------------------------------------------------------------------------
 
 
 int main(int argc, char* argv[])
 {
-    MSG.silent();
-    
     if ( argc < 2 || strstr(argv[1], "help") )
     {
         help(std::cout);
         return EXIT_SUCCESS;
     }
     
-    if ( strstr(argv[1], "info") )
+    if ( strstr(argv[1], "info") || strstr(argv[1], "--version")  )
     {
-        std::cout << "www.cytosim.org" << std::endl;
-        std::cout << "   Compiled at "<<__TIME__<< " on " <<__DATE__<< std::endl;
-        std::cout << "   DIM = " << DIM << std::endl;
+        splash(std::cout);
+        std::cout << " DIM = " << DIM << '\n';
         return EXIT_SUCCESS;
     }
-
+    
+    Glossary arg;
+    
     std::string input = simul.prop->trajectory_file;
     std::string str, what = argv[1];
-    
     std::ostream * osp = &std::cout;
     std::ofstream ofs;
     
-    Glossary opt;
-    opt.readStrings(argc-1, argv+1);
-
-    opt.set(input,   ".cmo") || opt.set(input, "input");;
-    opt.set(verbose, "verbose");
-
-    if ( opt.set(str, "output") )
-    {
-        try {
-            ofs.open(str.c_str());
-        }
-        catch( ... )
-        {
-            std::cerr << "Cannot open output file" << std::endl;
-            return EXIT_FAILURE;
-        }
-        osp = &ofs;
-    }
+    arg.readStrings(argc-1, argv+1);
+    
+    unsigned frame = 0;
+    unsigned period = 1;
+    
+    arg.set(input, ".cmo") || arg.set(input, "input");;
+    arg.set(verbose, "verbose");
+    arg.set(period, "period");
     
     FrameReader reader;
+    RNG.seedTimer();
+    
     try
     {
         Parser(simul, 1, 1, 0, 0, 0).readProperties();
@@ -132,46 +155,61 @@ int main(int argc, char* argv[])
     }
     catch( Exception & e )
     {
-        std::cerr << "Aborted: " << e.what() << std::endl;
+        std::clog << "Aborted: " << e.what() << '\n';
         return EXIT_FAILURE;
     }
-
-    int frame = 0;
-    try
+    
+    if ( arg.set(str, "output") )
     {
-        if ( opt.set(frame, "frame") )
+        try {
+            ofs.open(str.c_str());
+        }
+        catch( ... )
+        {
+            std::clog << "Cannot open output file\n";
+            return EXIT_FAILURE;
+        }
+        osp = &ofs;
+    }
+    
+    MSG.silent();
+    
+    
+    if ( arg.has_key("frame") )
+    {
+        // multiple frame indices can be specified:
+        unsigned s = 0;
+        while ( arg.set(frame, "frame", s) )
         {
             // try to load the specified frame:
-            if ( reader.readFrame(simul, frame) )
+            if ( 0 == reader.readFrame(simul, frame) )
+                report(*osp, what, frame, arg);
+            else
             {
-                if ( 0 == reader.readFrame(simul, -1) )
-                {
-                    frame = reader.frame();
-                    std::cerr << "Warning: only found frame " << frame << std::endl;
-                }
-                else
-                {
-                    std::cerr << "Error: missing frame " << frame << std::endl;
-                    return EXIT_FAILURE;
-                }
+                std::cerr << "Error: missing frame " << frame << '\n';
+                return EXIT_FAILURE;
             }
-            report(*osp, what, frame, opt);
-        }
-        else
-        {
-            // load all frames in the file:
-            while ( 0 == reader.readNextFrame(simul) )
-            {
-                report(*osp, what, frame, opt);
-                ++frame;
-            }
-        }
+            ++s;
+        };
     }
-    catch( Exception & e )
+    else
     {
-        std::cerr << "Aborted: " << e.what() << std::endl;
-        return EXIT_FAILURE;
+        // process every 'period' frame in the file:
+        while ( 0 == reader.readNextFrame(simul) )
+        {
+            if ( 0 == frame % period )
+                report(*osp, what, frame, arg);
+            ++frame;
+        }
     }
+    
+    if ( ofs.is_open() )
+        ofs.close();
+    
+    /// check that all specified parameters have been used:
+    std::stringstream ss;
+    if ( arg.warnings(ss) > 1 )
+        std::cerr << ss.str() << '\n';
     
     return EXIT_SUCCESS;
 }
