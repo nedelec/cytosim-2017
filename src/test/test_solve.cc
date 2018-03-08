@@ -60,7 +60,7 @@ void timerFunction(int value)
     
     //adding the projector in the dynamic matrix
     rhs = px + h * ( P * ( pg + random_force ));
-    pc = (I + h * P).inverted() * rhs;
+    pc = Matrix2(I + h * P).inverted() * rhs;
     printf("const : "); pc.println();
     
     f = ( pg - px );

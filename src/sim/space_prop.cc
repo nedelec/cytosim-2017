@@ -21,6 +21,9 @@
 #include "space_cylinderZ.h"
 #include "space_cylinderP.h"
 
+#if NEW_DYNAMIC_SPACES
+#include "space_dynamic_ellipse.h"
+#endif
 
 /**
  @defgroup SpaceGroup Space and Geometry
@@ -55,6 +58,12 @@
  `cylinder`    | SpaceCylinder    | half_length radius
  `cylinderZ`   | SpaceCylinderZ   | half_length radius
  `cylinderP`   | SpaceCylinderP   | half_length radius
+ 
+ Dynamic Space with variable geometry:
+ 
+ GEOMETRY           |   Class              | DIMENSIONS
+ -------------------|----------------------|-------------------------
+ `dynamic_ellipse`  | SpaceDynamicEllipse  | sizeX sizeY sizeZ
 
  
  Example:
@@ -85,6 +94,10 @@ Space * SpaceProp::newSpace() const
     if ( s=="cylinderZ" )                      spc = new SpaceCylinderZ(this);
     if ( s=="cylinderP" )                      spc = new SpaceCylinderP(this);
     
+#if NEW_DYNAMIC_SPACES
+    if ( s=="dynamic_ellipse" )                spc = new SpaceDynamicEllipse(this);
+#endif
+    
     if ( spc == 0 )
         throw InvalidParameter("unknown space:shape `"+shape+"'");
     
@@ -104,6 +117,13 @@ void SpaceProp::clear()
     dimensions = "";
     file       = "";
     display    = "";
+    
+#if NEW_DYNAMIC_SPACES
+    tension    = 0;
+    volume     = 0;
+    viscosity  = INFINITY;
+    viscosity_rot = INFINITY;
+#endif
 }
 
 void SpaceProp::read(Glossary& glos)
@@ -115,6 +135,13 @@ void SpaceProp::read(Glossary& glos)
 #endif
     glos.set(geometry,   "geometry");
     glos.set(display,    "display");
+    
+#if NEW_DYNAMIC_SPACES
+    glos.set(tension,       "tension");
+    glos.set(volume,        "volume");
+    glos.set(viscosity,     "viscosity");
+    glos.set(viscosity_rot, "viscosity", 1);
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -142,6 +169,21 @@ void SpaceProp::complete(SimulProp const* sp, PropertyList*)
         if ( iss.good() )
             dimensions = geometry.substr(iss.tellg());
     }
+    
+#if NEW_DYNAMIC_SPACES
+    if ( sp )
+    {
+        if ( viscosity > 0 )
+            mobility_dt = sp->time_step / viscosity;
+        else
+            throw InvalidParameter("space:viscosity must be > 0");
+        
+        if ( viscosity_rot > 0 )
+            mobility_rot_dt = sp->time_step / viscosity_rot;
+        else
+            throw InvalidParameter("space:viscosity[1] (rotational viscosity) must be > 0");
+    }
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -151,6 +193,11 @@ void SpaceProp::write_data(std::ostream & os) const
     write_param(os, "geometry",   geometry);
     write_param(os, "shape",      shape);
     write_param(os, "dimensions", dimensions);
+#if NEW_DYNAMIC_SPACES
+    write_param(os, "tension",    tension);
+    write_param(os, "volume",     volume);
+    write_param(os, "viscosity",  viscosity, viscosity_rot);
+#endif
     write_param(os, "display",    "("+display+")");
 }
 

@@ -81,46 +81,24 @@ public:
         return val[ii + SZ * jj];
     }
     
-    /// access to modifiable elements by index in the array
+    /// access to constant elements of the matrix by (line, column)
+    real const& operator()(const unsigned ii, const unsigned jj) const
+    {
+        return val[ii + SZ * jj];
+    }
+    
+    /// ii-th modifiable elements in the matrix
     real& operator[](const unsigned ii)
     {
         return val[ii];
     }
     
-    
-    /// extract column vector at index \a jj
-    void getColumn(const unsigned jj, real vec[SZ]) const
+    /// ii-th constant element in the matrix
+    real operator[](const unsigned ii) const
     {
-        const real * v = val + jj * SZ;
-        for ( unsigned ii = 0; ii < SZ; ++ii )
-            vec[ii] = v[ii];
-    }
-    
-    /// set column vector at index \a jj
-    void setColumn(const unsigned jj, const real vec[SZ])
-    {
-        real * v = val + jj * SZ;
-        for ( unsigned ii = 0; ii < SZ; ++ii )
-            v[ii] = vec[ii];
-    }
-    
-    /// extract line vector at index \a ii
-    void getLine(const unsigned ii, real vec[SZ]) const
-    {
-        const real * v = val + ii;
-        for ( unsigned jj = 0; jj < SZ; ++jj )
-            vec[jj] = v[SZ*jj];
-    }
-    
-    /// set line vector at index \a ii
-    void setLine(const unsigned ii, const real vec[SZ])
-    {
-        real * v = val + ii;
-        for ( unsigned jj = 0; jj < SZ; ++jj )
-            v[SZ*jj] = vec[jj];
+        return val[ii];
     }
 
-    
     /// return the transposed matrix
     MatrixBase transposed() const 
     {
@@ -143,19 +121,6 @@ public:
                 val[jj + SZ*ii] = x;
             }
     }
-    
-    /// return the determinant of the matrix
-    real determinant() const;
-    
-    /// return the inverse of the matrix
-    MatrixBase inverted() const;
-    
-    /// replace by the inverse
-    void inverse() 
-    {
-        *this = inverted();
-    }
-    
     
     /// maximum of all fabs(element)
     real maxNorm() const 

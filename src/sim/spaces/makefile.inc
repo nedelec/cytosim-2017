@@ -3,7 +3,7 @@
 OBJ_SPACE=modulo.o space.o space_prop.o space_square.o space_sphere.o \
           space_dice.o space_torus.o space_polygon.o space_banana.o\
           space_ellipse.o space_cylinder.o space_cylinderZ.o space_capsule.o \
-          space_strip.o space_periodic.o space_cylinderP.o
+          space_strip.o space_periodic.o space_cylinderP.o space_dynamic_ellipse.o
 
 OBJ_SPACE1D=$(OBJ_SPACE:.o=1D.o)
 OBJ_SPACE2D=$(OBJ_SPACE:.o=2D.o)

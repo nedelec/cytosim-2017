@@ -17,6 +17,52 @@ public:
     Matrix3(MatrixBase<3> const& m) : MatrixBase<3>(m) { }
     
     
+    /// extract column vector at index `n`
+    Vector3 getColumn(const unsigned n) const
+    {
+        assert_true(n < 3);
+        real const* v = val + n*3;
+        return Vector3(v[0], v[1], v[2]);
+    }
+    
+    /// set line vectors
+    void setLines(Vector3 const& vec1, Vector3 const& vec2, Vector3 const& vec3)
+    {
+        val[0] = vec1.XX;
+        val[3] = vec1.YY;
+        val[6] = vec1.ZZ;
+        
+        val[1] = vec2.XX;
+        val[4] = vec2.YY;
+        val[7] = vec2.ZZ;
+        
+        val[2] = vec3.XX;
+        val[5] = vec3.YY;
+        val[8] = vec3.ZZ;
+    }
+    
+    /// set column vectors
+    void setColumns(Vector3 const& vec1, Vector3 const& vec2, Vector3 const& vec3)
+    {
+        val[0] = vec1.XX;
+        val[1] = vec1.YY;
+        val[2] = vec1.ZZ;
+        
+        val[3] = vec2.XX;
+        val[4] = vec2.YY;
+        val[5] = vec2.ZZ;
+        
+        val[6] = vec3.XX;
+        val[7] = vec3.YY;
+        val[8] = vec3.ZZ;
+    }
+
+    /// return the determinant of the matrix
+    real determinant() const;
+    
+    /// return the inverse of the matrix
+    Matrix3 inverted() const;
+
     /// rotation angle
     real rotationAngle() const;
 

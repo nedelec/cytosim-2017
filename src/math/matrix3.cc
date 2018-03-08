@@ -8,32 +8,22 @@
 
 //-----------------------------------------------------------------------------------
 
-template <>
-real MatrixBase<3>::determinant() const
+real Matrix3::determinant() const
 {
     return ( + val[0]*val[4]*val[8] + val[2]*val[3]*val[7] + val[1]*val[5]*val[6]
              - val[2]*val[4]*val[6] - val[1]*val[3]*val[8] - val[0]*val[5]*val[7] );
 }
 
 
-template <>
-MatrixBase<3> MatrixBase<3>::inverted() const
+Matrix3 Matrix3::inverted() const
 {
     Matrix3 res;
     real det = determinant();
-    if ( det != 0 )
-    {
-        det = 1.0 / det;
-        Vector3 x0,x1,x2;
-        getColumn(0, x0);
-        getColumn(1, x1);
-        getColumn(2, x2);
-        res.setLine(0, vecProd(x1,x2)*det);
-        res.setLine(1, vecProd(x2,x0)*det);
-        res.setLine(2, vecProd(x0,x1)*det);
-    }
-    else
-        res.makeZero();
+    det = 1.0 / det;
+    Vector3 v0 = getColumn(0);
+    Vector3 v1 = getColumn(1);
+    Vector3 v2 = getColumn(2);
+    res.setLines(vecProd(v1,v2)*det, vecProd(v2,v0)*det, vecProd(v0,v1)*det);
     return res;
 }
 
@@ -184,9 +174,7 @@ Matrix3 Matrix3::rotationAroundAxis(const Vector3& axis, const real angle)
     Vector3 X = axis.normalized();
     Vector3 Y = X.orthogonal(1);
     Vector3 Z = vecProd(X,Y);
-    R.setColumn(0, X);
-    R.setColumn(1, Y);
-    R.setColumn(2, Z);
+    R.setColumns(X, Y, Z);
     return R * rotationAroundX(angle) * R.transposed();
 }
 
@@ -198,9 +186,7 @@ Matrix3 Matrix3::rotationAroundAxis(const Vector3& axis)
     Vector3 X = axis / n;
     Vector3 Y = X.orthogonal(1);
     Vector3 Z = vecProd(X,Y);
-    R.setColumn(0, X);
-    R.setColumn(1, Y);
-    R.setColumn(2, Z);
+    R.setColumns(X, Y, Z);
     return R * rotationAroundX(n) * R.transposed();
 }
 
@@ -222,9 +208,7 @@ Matrix3 Matrix3::rotationToVector(const Vector3& vec)
     Vector3 V1 = vec.normalized();
     Vector3 V2 = V1.orthogonal(1);
     Vector3 V3 = vecProd(V1, V2);
-    res.setColumn(0, V1);
-    res.setColumn(1, V2);
-    res.setColumn(2, V3);
+    res.setColumns(V1, V2, V3);
     return res;
 }
 

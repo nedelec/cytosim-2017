@@ -11,6 +11,8 @@ class Glossary;
 class Space;
 class Simul;
 
+#define NEW_DYNAMIC_SPACES 1
+
 /// Property for Space
 /**
  @ingroup Properties
@@ -39,8 +41,27 @@ public:
     /// display string (see @ref PointDispPar)
     std::string  display;
     
+#if NEW_DYNAMIC_SPACES
+    
+    /// Surface tension
+    real		 tension;
+    
+    /// Target volume
+    real         volume;
+    
+    /// Viscosity
+    real		 viscosity;
+    
+    /// Viscosity for rotation
+    real		 viscosity_rot;
+
+#endif
+
     /// @}
     //------------------ derived variables below ----------------
+    
+    /// equal to time_step / viscosity
+    real         mobility_dt, mobility_rot_dt;
 
     /// a word present in geometry
     std::string  spec;

@@ -34,5 +34,7 @@
 /// REAL_EPSILON is a multiple of the round-off error associated with \c real
 const real REAL_EPSILON = 4096 * std::numeric_limits<real>::epsilon();
 
+/// square of the argument: `x * x`
+inline real square(const real x) { return x * x; }
 
 #endif

@@ -17,6 +17,12 @@ public:
     Matrix1(MatrixBase<1> const& m) : MatrixBase<1>(m) {}
 
     
+    /// extract column vector at index `jj`
+    Vector1 getColumn(const unsigned) const
+    {
+        return Vector1(val[0], 0);
+    }
+
     /// rotation angle
     real rotationAngle() const;
     

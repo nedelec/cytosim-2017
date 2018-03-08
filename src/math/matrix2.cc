@@ -8,31 +8,23 @@
 
 //-----------------------------------------------------------------------------------
 
-template <>
-real MatrixBase<2>::determinant() const
+real Matrix2::determinant() const
 {
     return ( val[0] * val[3] - val[1] * val[2] );
 }
 
 
-template <>
-MatrixBase<2> MatrixBase<2>::inverted() const
+Matrix2 Matrix2::inverted() const
 {
     Matrix2 res;
     real det = determinant();
-    if ( det != 0 )
-    {
-        det = 1.0 / det;
-        res.val[0] =  det * val[3];
-        res.val[1] = -det * val[1];
-        res.val[2] = -det * val[2];
-        res.val[3] =  det * val[0];
-    }
-    else
-        res.makeZero();
+    det = 1.0 / det;
+    res.val[0] =  det * val[3];
+    res.val[1] = -det * val[1];
+    res.val[2] = -det * val[2];
+    res.val[3] =  det * val[0];
     return res;
 }
-
 
 //-----------------------------------------------------------------------------------
 

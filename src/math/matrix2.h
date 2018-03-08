@@ -18,6 +18,21 @@ public:
     Matrix2(MatrixBase<2> const& m) : MatrixBase<2>(m) { }
     
     
+    /// extract column vector at index `n`
+    Vector2 getColumn(const unsigned n) const
+    {
+        if ( n == 0 )
+            return Vector2(val[0], val[1]);
+        else
+            return Vector2(val[2], val[3]);
+    }
+    
+    /// return the determinant of the matrix
+    real determinant() const;
+    
+    /// return the inverse of the matrix
+    Matrix2 inverted() const;
+
     /// rotation angle
     real rotationAngle() const;
     
