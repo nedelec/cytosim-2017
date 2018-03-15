@@ -754,7 +754,7 @@ void Display3::displayFCouples(CoupleSet const& set)
     if ( set.sizeFF() % 2 )
     {
         nxt = obj->next();
-        nxt->disp1()->color2.color();
+        obj->disp1()->color2.color();
         displayPoint(obj->posFree(), obj->disp1());
         obj = nxt;
     }
