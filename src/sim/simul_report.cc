@@ -476,13 +476,12 @@ void Simul::reportFiberPoints(std::ostream& out) const
     
     while ( fib )
     {
-        out << "% fiber " << fib->reference() << std::endl;
+        out << "% fiber " << fib->reference() << '\n';
         for ( unsigned p = 0; p < fib->nbPoints(); ++p )
         {
-            out << std::endl << " " << fib->number();
-            out << " " << std::setw(9) << fib->posPoint(p);
+            out << " " << fib->number();
+            out << " " << std::setw(9) << fib->posPoint(p) << '\n';
         }
-        out << std::endl;
         fib = static_cast<Fiber*>(fibers.inventory.next(fib));
     }
 }

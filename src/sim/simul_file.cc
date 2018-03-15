@@ -412,14 +412,14 @@ void Simul::writeObjects(OutputWrapper & out) const
     // lock file:
     out.lock();
     // write a line identifying a new frame:
-    fprintf(out, "\n\n%s %s\n", FRAME_TAG, date);
+    fprintf(out, "\n\n%s %s", FRAME_TAG, date);
     
     // record the simulated time:
-    fprintf(out, "#time %.6f, dim %i, format %i\n", simTime(), DIM, currentFormatID);
+    fprintf(out, "\n#time %.6f, dim %i, format %i", simTime(), DIM, currentFormatID);
     
     // record a signature to identify binary file, and endianess:
     if ( out.binary() )
-        out.writeBinarySignature("#binary ");
+        out.writeBinarySignature("\n#binary ");
     
     /*
      An object should be written after any other objects that it refers to.
