@@ -30,7 +30,7 @@ Bead::Bead(BeadProp const* p, Vector pos, real rad)
 
 Bead::~Bead()
 {
-    //MSG(32, "destroying %c%lu\n", TAG, number());
+    //Cytosim::MSG(32, "destroying %c%lu\n", TAG, number());
     prop = 0;
 }
 

@@ -339,7 +339,7 @@ int Player::saveImage(const char* name, const char* format)
     int err = SaveImage::saveImage(format, name, 0, 0, W, H);
     
     if ( err == 0 )
-        MSG("Cytosim: %ix%i image saved in %s\n", W, H, name);
+        Cytosim::MSG("Cytosim: %ix%i image saved in %s\n", W, H, name);
     else
         std::cerr << "Error while creating file `" << name << "'" << std::endl;
     return err;
@@ -406,7 +406,7 @@ int Player::saveMagnifiedImage(const int mag, const char* name, const char* form
     glApp::endDisplay(view, false);
     
     if ( err == 0 )
-        MSG("Cytosim saved %ix image `%s'\n", mag, name);
+        Cytosim::MSG("Cytosim saved %ix image `%s'\n", mag, name);
     return err;
 }
 

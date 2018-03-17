@@ -124,7 +124,7 @@ void Nucleator::nucleate(Vector pos)
         std::cerr << "in nucleation:spec" << std::endl;
         std::cerr << prop->spec << std::endl;
     }
-    //MSG("Nucleation at %.2fs,  X = %.2f\n", sim.simTime(), pos.XX);
+    //Cytosim::MSG("Nucleation at %.2fs,  X = %.2f\n", sim.simTime(), pos.XX);
 }
 
 

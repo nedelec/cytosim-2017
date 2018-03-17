@@ -540,7 +540,7 @@ int SaveImage::savePNG(FILE* file, void* pixels,
     
     int res = savePNG(file, rows, bit_depth, nb_colors, width, height);
     
-    delete(rows);
+    delete[] rows;
 
     return res;
 }

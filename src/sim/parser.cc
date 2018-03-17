@@ -697,7 +697,7 @@ void Parser::parse_read(std::istream & is)
         if ( required )
             throw InvalidSyntax("could not open file `"+file+"'");
         else
-            MSG.warning("could not open file `%s'\n", file.c_str());
+            Cytosim::warning("could not open file `%s'\n", file.c_str());
     }
 }
 

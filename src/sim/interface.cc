@@ -410,15 +410,15 @@ void reportCPUtime(int frame, real stime)
     {
         char date[26];
         TicToc::date(date, sizeof(date));
-        MSG("%s\n", date);
+        Cytosim::MSG("%s\n", date);
         hour = TicToc::hours_today();
     }
     
     char cpu[64];
     clock = TicToc::processor_time(cpu, sizeof(cpu), clock, cum);
     
-    MSG("F%-6i  %7.2fs  -  %s\n", frame, stime, cpu);
-    MSG.flush();
+    Cytosim::MSG("F%-6i  %7.2fs  -  %s\n", frame, stime, cpu);
+    Cytosim::flush();
 }
 
 

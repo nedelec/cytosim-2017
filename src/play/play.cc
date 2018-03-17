@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
     int  off_screen = 0;
     int  magnification = 1;
     
-    MSG.quiet();
+    Cytosim::quiet();
     Glossary glos;
     
     try {

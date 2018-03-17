@@ -9,7 +9,7 @@
 void NodeList::push_front(Node * n)
 {
     assert_true( n->nList == 0 );
-    //MSG("NodeList: pushFirst   %p in   %p\n", n, this);
+    //Cytosim::MSG("NodeList: pushFirst   %p in   %p\n", n, this);
 
     n->nPrev = 0;
     n->nNext = nFirst;
@@ -26,7 +26,7 @@ void NodeList::push_front(Node * n)
 void NodeList::push_back(Node * n)
 {
     assert_true( n->nList == 0 );
-    //MSG("NodeList: pushLast   %p in   %p\n", n, this);
+    //Cytosim::MSG("NodeList: pushLast   %p in   %p\n", n, this);
     
     n->nPrev = nLast;
     n->nNext = 0;

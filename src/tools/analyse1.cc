@@ -47,7 +47,7 @@ void help(std::ostream& os)
 
 int main(int argc, char* argv[])
 {
-    MSG.silent();
+    Cytosim::silent();
     
     if ( argc < 2 || strstr(argv[1], "help") )
     {

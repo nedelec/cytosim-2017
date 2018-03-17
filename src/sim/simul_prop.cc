@@ -75,7 +75,7 @@ void SimulProp::read(Glossary& glos)
     // these parameters are not written:
     glos.set(strict,            "strict");
     glos.set(verbose,           "verbose");
-    MSG.setVerbose(verbose);
+    Cytosim::setVerbose(verbose);
     
     glos.set(functionKey, 17,   "function");
     
@@ -127,7 +127,7 @@ void SimulProp::complete(SimulProp const* sp, PropertyList* plist)
         if ( random_seed == 0 )
         {
             random_seed = RNG.seedTimer();
-            MSG(5, "Cytosim: time-generated random seed 0x%lx\n", random_seed);
+            Cytosim::MSG(5, "Cytosim: time-generated random seed 0x%lx\n", random_seed);
         }
         
         /* 

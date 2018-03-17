@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
         osp = &ofs;
     }
     
-    MSG.silent();
+    Cytosim::silent();
     
     
     if ( arg.has_key("frame") )

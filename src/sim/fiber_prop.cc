@@ -309,12 +309,12 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
     real stiffness = 100;
     real coef1 = mob_dt * stiffness;
 
-    MSG(5, "Numerical hardness (stiffness=%.1f): %7.2f\n", stiffness, coef1);
+    Cytosim::MSG(5, "Numerical hardness (stiffness=%.1f): %7.2f\n", stiffness, coef1);
 
     real rod   = segmentation;
     real coef2 = mob_dt * rigidity / ( rod * rod * rod );
     
-    MSG(5, "Numerical hardness (rigidity=%.1f): %7.2f\n", rigidity, coef2);
+    Cytosim::MSG(5, "Numerical hardness (rigidity=%.1f): %7.2f\n", rigidity, coef2);
 #endif
 }
 

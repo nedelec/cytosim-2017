@@ -87,10 +87,10 @@ int FiberGrid::setGrid(const Space * space, const Modulo * mod, real max_step, u
     mGrid.createCells();
     
     //report the grid size used
-    MSG(5, "FiberGrid set with %i cells", mGrid.nbCells());
+    Cytosim::MSG(5, "FiberGrid set with %i cells", mGrid.nbCells());
     for ( int ii = 0; ii < DIM; ++ii )
-        MSG(5, ",  %.1fum / %i bins", 2*range[ii], nCells[ii]);
-    MSG(5, " (binding_grid_step=%.3f)\n", max_step);
+        Cytosim::MSG(5, ",  %.1fum / %i bins", 2*range[ii], nCells[ii]);
+    Cytosim::MSG(5, " (binding_grid_step=%.3f)\n", max_step);
         
     return 0;
 }

@@ -53,9 +53,9 @@ void CrosslinkProp::complete(SimulProp const* sp, PropertyList* plist)
 
     //Attachment is impossible if Couple:length is bigger than binding_range
     if ( length > hand_prop1->binding_range )
-        MSG.warning("crosslink:length > hand1:binding_range\n");
+        Cytosim::warning("crosslink:length > hand1:binding_range\n");
     if ( length > hand_prop2->binding_range )
-        MSG.warning("crosslink:length > hand2:binding_range\n");    
+        Cytosim::warning("crosslink:length > hand2:binding_range\n");    
 }
 
 //------------------------------------------------------------------------------

@@ -81,7 +81,7 @@ void MotorProp::checkStiffness(real stiff, real len, real mul, real kT) const
         oss << "motor `" << name() << "' can be unstable:" << std::endl;
         oss << PREF << "time_step * stiffness * max_speed / stall_force = " << ef << std::endl;
         oss << PREF << "reduce time_step" << std::endl;
-        MSG.warning(oss.str().c_str());
+        Cytosim::warning(oss.str().c_str());
         //throw InvalidParameter(oss.str());
     }
     
@@ -96,7 +96,7 @@ void MotorProp::checkStiffness(real stiff, real len, real mul, real kT) const
         oss << "The stall force of `" << name() << "' is too small:" << std::endl;
         oss << PREF << "DIM * kT * stiffness > stall_force" << std::endl;
         oss << PREF << "reduce stiffness or increase stall_force" << std::endl;
-        MSG.warning(oss.str().c_str());
+        Cytosim::warning(oss.str().c_str());
     }
     
     /*
@@ -110,14 +110,14 @@ void MotorProp::checkStiffness(real stiff, real len, real mul, real kT) const
         std::ostringstream oss;
         oss << "The efficiency of `" << name() << "' is low:" << std::endl;
         oss << PREF << "stiffness * max_speed / stall_force * unbinding_rate = " << ef << std::endl;
-        MSG.warning(oss.str().c_str());
+        Cytosim::warning(oss.str().c_str());
     }
     
     /*
      Compare detachment rate at stall-force, with detachment rate at rest
      */
     if ( exp( stall_force * unbinding_force_inv ) > 100 )
-        MSG.warning("Hand:exp( stall_force / unbinding_force ) is greater than 100\n");
+        Cytosim::warning("Hand:exp( stall_force / unbinding_force ) is greater than 100\n");
     
 }
 

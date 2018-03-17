@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     
     int verbose = 0;
     glos.set(verbose, "verbose");
-    MSG.setVerbose(verbose);
+    Cytosim::setVerbose(verbose);
 
     Simul simul;
     FrameReader reader;

@@ -24,7 +24,7 @@ void help(std::ostream & os = std::cout)
 {
     os << " Command line options:" << endl;
     os << "    FILENAME   set config file if FILENAME ends by `.cym'" << endl;
-    os << "    terminal   send messages to terminal instead of `messages.cmo'" << endl;
+    os << "    *          send messages to terminal instead of `messages.cmo'" << endl;
     os << "    info       print build options" << endl;
     os << "    help       print this message" << endl;
     os << "    -          do not splash standard output" << endl;
@@ -50,7 +50,7 @@ void info(std::ostream & os = std::cout)
 
 void killed_handler(int sig)
 {
-    MSG("killed\n");
+    Cytosim::MSG("killed\n");
     exit(sig);
 }
 
@@ -86,9 +86,9 @@ int main(int argc, char* argv[])
         return EXIT_SUCCESS;
     }
     
-    if ( ! glos.use_key("terminal") )
+    if ( ! glos.use_key("*") )
     {
-        MSG.open("messages.cmo", "w");
+        Cytosim::open("messages.cmo");
     }        
     
     if ( !glos.use_key("-") )
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
     
     char date[26];
     TicToc::date(date, sizeof(date));
-    MSG("CYTOSIM started %s\n", date);
+    Cytosim::MSG("CYTOSIM started %s\n", date);
     
     
     try {
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
     
     glos.warnings(std::cerr);
 
-    MSG("============================== RUNNING ================================\n");
+    Cytosim::MSG("============================== RUNNING ================================\n");
 
     try {
         Parser(simul, 1, 1, 1, 1, 1).readConfig(simul.prop->config);
@@ -128,8 +128,8 @@ int main(int argc, char* argv[])
     }
     
     TicToc::date(date, sizeof(date));
-    MSG("%s\n", date);
-    MSG("end\n");
-    MSG.close();
+    Cytosim::MSG("%s\n", date);
+    Cytosim::MSG("end\n");
+    Cytosim::close();
     return EXIT_SUCCESS;
 }

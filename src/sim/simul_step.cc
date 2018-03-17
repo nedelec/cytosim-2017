@@ -40,7 +40,7 @@ void Simul::setFiberGrid(Space * spc) const
     if ( step <= 0 )
     {
         step = estimateFiberGridStep();
-        //MSG("auto setting simul:binding_grid_step=%.3f\n", step);
+        //Cytosim::MSG("auto setting simul:binding_grid_step=%.3f\n", step);
     }
 
     assert_true( step > 0 );
@@ -51,7 +51,7 @@ void Simul::setFiberGrid(Space * spc) const
         if ( res )
         {
             step *= 2;
-            //MSG("auto adjust simul:binding_grid_step=%.3f\n", step);
+            //Cytosim::MSG("auto adjust simul:binding_grid_step=%.3f\n", step);
         }
     } while ( res != 0 );
     
@@ -99,7 +99,7 @@ void Simul::step()
     if ( !fiberGrid.hasGrid() )
         setFiberGrid(space());
     
-    //MSG(9, "grid range = %.2f nm\n", 1000 * HandProp::binding_range_max);
+    //Cytosim::MSG(9, "grid range = %.2f nm\n", 1000 * HandProp::binding_range_max);
     fiberGrid.paintGrid(fibers.first(), 0, HandProp::binding_range_max);
     
     

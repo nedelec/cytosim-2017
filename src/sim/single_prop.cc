@@ -141,7 +141,7 @@ void SingleProp::complete(SimulProp const* sp, PropertyList* plist)
     
     // Attachment is impossible if Single::length is bigger than binding_range
     if ( length > hand_prop->binding_range )
-        MSG.warning("Single:length > Hand1:binding_range\n");    
+        Cytosim::warning("Single:length > Hand1:binding_range\n");    
 }
 
 

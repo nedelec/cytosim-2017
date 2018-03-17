@@ -158,7 +158,7 @@ void HandProp::read(Glossary& glos)
     
 #ifdef BACKWARD_COMPATIBILITY
     if ( glos.set(hold_growing_end, "hold_growing_ends") )
-        MSG.warning("hand:hold_growing_ends was renamed hold_growing_end\n");
+        Cytosim::warning("hand:hold_growing_ends was renamed hold_growing_end\n");
 #endif
 }
 
@@ -181,12 +181,12 @@ void HandProp::complete(SimulProp const* sp, PropertyList*)
     if ( binding_rate < 0 )
         throw InvalidParameter("hand:binding_rate must be positive");
     if ( binding_rate_dt > sp->acceptable_rate )
-        MSG.warning("hand:binding_rate is too high: decrease time_step\n");
+        Cytosim::warning("hand:binding_rate is too high: decrease time_step\n");
     
     if ( unbinding_rate < 0 )
         throw InvalidParameter("hand:unbinding_rate must be positive");
     if ( unbinding_rate_dt > sp->acceptable_rate )
-        MSG.warning("hand:unbinding_rate is too high: decrease time_step\n");
+        Cytosim::warning("hand:unbinding_rate is too high: decrease time_step\n");
     
     if ( unbinding_force < 0 )
         throw InvalidParameter("hand:unbinding_force must be specified and > 0");
@@ -217,7 +217,7 @@ void HandProp::checkStiffness(real stiff, real len, real mul, real kT) const
         oss << "hand `" << name() << "' overcomes high energy when binding:" << std::endl;
         oss << PREF << "stiffness * binding_range^2 = " << en << " kT" << std::endl;
         //oss << PREF << "you could decrease stiffness or binding_range" << std::endl;
-        MSG.warning(oss.str().c_str());
+        Cytosim::warning(oss.str().c_str());
     }
     
     
@@ -229,7 +229,7 @@ void HandProp::checkStiffness(real stiff, real len, real mul, real kT) const
         oss << "hand `" << name() << "' may unbind immediately after binding:" << std::endl;
         oss << PREF << "exp( stiffness * binding_range / unbinding_force ) = " << ap << std::endl;
         //oss << PREF << "you could decrease stiffness * binding_range / unbinding_force" << std::endl;
-        MSG.warning(oss.str().c_str());
+        Cytosim::warning(oss.str().c_str());
     }
 }
 

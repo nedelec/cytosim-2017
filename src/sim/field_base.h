@@ -93,8 +93,8 @@ private:
             real dif = FieldGrid::delta(d)*prop->step - 1.0;
             if ( fabs(dif) > 1e-6 )
             {
-                MSG.warning("Field:step[%i] is not as expected:\n", d);
-                MSG.warning("  field: %f  prop: %f\n", FieldGrid::cellWidth(d), prop->step);
+                Cytosim::warning("Field:step[%i] is not as expected:\n", d);
+                Cytosim::warning("  field: %f  prop: %f\n", FieldGrid::cellWidth(d), prop->step);
             }
         }            
     }
@@ -131,7 +131,7 @@ public:
             setGrid(range);
             
             //std::cerr << "setField() step="<< prop->step<< " nCells="<< FieldGrid::nbCells()<<std::endl;
-            MSG(4, "Field %lx set with %i cells of size %.3f um\n", this, FieldGrid::nbCells(), prop->step);
+            Cytosim::MSG(4, "Field %lx set with %i cells of size %.3f um\n", this, FieldGrid::nbCells(), prop->step);
         }
     }
     
@@ -251,8 +251,8 @@ public:
                 real dif = FieldGrid::delta(d)*prop->step - 1.0;
                 if ( fabs(dif) > 1e-6 )
                 {
-                    MSG.warning("Field:step[%i] has changed:\n", d);
-                    MSG.warning("  file: %f  prop: %f\n", FieldGrid::cellWidth(d), prop->step);
+                    Cytosim::warning("Field:step[%i] has changed:\n", d);
+                    Cytosim::warning("  file: %f  prop: %f\n", FieldGrid::cellWidth(d), prop->step);
                 }
             }
             

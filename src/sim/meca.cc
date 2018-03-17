@@ -748,7 +748,7 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
     
     if ( !monitor.converged() )
     {
-        MSG("Solver failed: precond %i flag %i, nb_iter %3i residual %.2e\n", 
+        Cytosim::MSG("Solver failed: precond %i flag %i, nb_iter %3i residual %.2e\n", 
             precondition, monitor.flag(), monitor.iterations(), monitor.residual());
         
         //---we try vRHS as a different initial seed:
@@ -765,7 +765,7 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
         
         //---check again for convergence:
         if ( monitor.converged() )
-            MSG("Solver rescued by changing seed: nb_iter %3i residual %.2e\n", monitor.iterations(), monitor.residual());
+            Cytosim::MSG("Solver rescued by changing seed: nb_iter %3i residual %.2e\n", monitor.iterations(), monitor.residual());
         else 
         {
             //---use zero as an initial guess:
@@ -782,16 +782,16 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
                 if ( 0 == computePreconditionner() )
                     Solver::BCGSP(*this, vRHS, vSOL, monitor, allocator);
                 else
-                    MSG("Failed to compute precondionner");
+                    Cytosim::MSG("Failed to compute precondionner");
             }
             
             //---check again for convergence:
             if ( monitor.converged() )
-                MSG("Solver rescued by changing precond: nb_iter %3i residual %.2e\n", monitor.iterations(), monitor.residual());
+                Cytosim::MSG("Solver rescued by changing precond: nb_iter %3i residual %.2e\n", monitor.iterations(), monitor.residual());
             else {
                 //no solver could converge... this is really bad!
                 //we could still try to change the initial guess, to recover convergence
-                MSG("Solver dead nb_iter %i residual %.2e\n", monitor.iterations(), monitor.residual());
+                Cytosim::MSG("Solver dead nb_iter %i residual %.2e\n", monitor.iterations(), monitor.residual());
                 throw Exception("convergence failure in solver");
                 return;
             }
@@ -837,10 +837,10 @@ void Meca::solve(SimulProp const* prop, const bool precondition)
     //report on the matrix type and size, sparsity, and the number of iterations
     if ( prop->verbose )
     {
-        MSG("Meca degree %i*%-5i", DIM, nbPts);
-        if ( use_mB ) MSG(" iso: %s ", mB.what().c_str());
-        if ( use_mC ) MSG(" mat: %s ", mC.what().c_str());
-        MSG(" precond %i  nb_iter %i  residual %.2e\n", precondition, monitor.iterations(), monitor.residual());
+        Cytosim::MSG("Meca degree %i*%-5i", DIM, nbPts);
+        if ( use_mB ) Cytosim::MSG(" iso: %s ", mB.what().c_str());
+        if ( use_mC ) Cytosim::MSG(" mat: %s ", mC.what().c_str());
+        Cytosim::MSG(" precond %i  nb_iter %i  residual %.2e\n", precondition, monitor.iterations(), monitor.residual());
     }
 }
 

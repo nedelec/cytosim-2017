@@ -243,7 +243,7 @@ void FiberSet::step()
             
             if ( p->free_polymer < 0 )
             {
-                MSG.warning("Uhoo: The free monomer concentration is negative!!!\n");
+                Cytosim::warning("Uhoo: The free monomer concentration is negative!!!\n");
                 //this should not happen
                 p->free_polymer = 0;
             }

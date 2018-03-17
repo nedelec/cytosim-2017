@@ -98,7 +98,7 @@ ObjectList Fake::build(Glossary& opt, Simul& simul)
 
 Fake::~Fake()
 {
-    //MSG(31, "destroying %s\n", reference().c_str() );
+    //Cytosim::MSG(31, "destroying %s\n", reference().c_str() );
     prop = 0;
 }
 

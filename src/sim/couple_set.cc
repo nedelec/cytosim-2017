@@ -96,7 +96,7 @@ void CoupleSet::step(FiberSet const& fibers, FiberGrid const& fgrid)
      */
     
     /*
-     MSG(9,"CoupleSet::stepCouple entry :  free %5i, bound %5i, bridge %5i\n", 
+     Cytosim::MSG(9,"CoupleSet::stepCouple entry :  free %5i, bound %5i, bridge %5i\n", 
          fList.size(), aList.size(), bList.size());
      */
     

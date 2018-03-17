@@ -357,7 +357,7 @@ real Fiber::dragCoefficientVolume()
     // use largest drag coefficient
     real drag = M_PI * prop->viscosity * ( drag_cylinder > drag_sphere ? drag_cylinder : drag_sphere );
 
-    //MSG("Drag coefficient of Fiber in infinite fluid = %.1e\n", drag);
+    //Cytosim::MSG("Drag coefficient of Fiber in infinite fluid = %.1e\n", drag);
     //std::clog << "Fiber " << reference() << " has drag " << drag << "\n";
 
     return drag;
@@ -409,7 +409,7 @@ real Fiber::dragCoefficientSurface()
     // use the higher drag: perpendicular to the cylinder (factor 2)
     real drag = 2 * M_PI * prop->viscosity * len / acosh( 1 + prop->cylinder_height/prop->hydrodynamic_radius[0] );
     
-    //MSG("Drag coefficient of Fiber near a planar surface = %.1e\n", drag);
+    //Cytosim::MSG("Drag coefficient of Fiber near a planar surface = %.1e\n", drag);
     //std::cerr << "Drag coefficient of Fiber near a planar surface = " << drag << std::endl;
 
     return drag;

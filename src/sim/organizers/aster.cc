@@ -121,7 +121,7 @@ ObjectList Aster::build(Glossary& opt, Simul& simul)
 
 Aster::~Aster()
 {
-    //MSG(31, "destroying %c%lu\n", TAG, number() );
+    //Cytosim::MSG(31, "destroying %c%lu\n", TAG, number() );
     prop = 0;
 }
 

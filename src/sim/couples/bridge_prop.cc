@@ -51,9 +51,9 @@ void BridgeProp::complete(SimulProp const* sp, PropertyList* plist)
     
     //Attachment is impossible if Couple:length is bigger than binding_range
     if ( length > hand_prop1->binding_range )
-        MSG.warning("bridge:length > Hand1:binding_range\n");
+        Cytosim::warning("bridge:length > Hand1:binding_range\n");
     if ( length > hand_prop2->binding_range )
-        MSG.warning("bridge:length > Hand2:binding_range\n");    
+        Cytosim::warning("bridge:length > Hand2:binding_range\n");    
 }
 
 //------------------------------------------------------------------------------

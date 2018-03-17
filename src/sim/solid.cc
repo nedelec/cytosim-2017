@@ -32,7 +32,7 @@ Solid::Solid (SolidProp const* p)
 
 Solid::~Solid()
 {
-    //MSG(32, "destroying %c%lu\n", TAG, number());
+    //Cytosim::MSG(32, "destroying %c%lu\n", TAG, number());
     deallocatePoints();
     prop = 0;
 }
@@ -598,8 +598,8 @@ void Solid::reshape()
     lapack_xsyevx('V','I','U', 4, N, 4, 0, 0, 4, 4, REAL_EPSILON,
                   &nbvalues, eValue, quat, 4, work, 8*4, iwork, ifail, &info );
     
-    //MSG("optimal LWORK = %i\n", work[0] );
-    //MSG("eigenvalue %6.2f,", eValue[0]);
+    //Cytosim::MSG("optimal LWORK = %i\n", work[0] );
+    //Cytosim::MSG("eigenvalue %6.2f,", eValue[0]);
     //quat.println();
     
     if ( info ) {

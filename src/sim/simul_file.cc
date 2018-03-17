@@ -360,7 +360,7 @@ int Simul::readObjects(InputWrapper & in)
                 
                 in.inputDIM(d);
                 if ( d != DIM )
-                    MSG.warning("Mismatch between file (%iD) and executable (%iD)\n", d, DIM);
+                    Cytosim::warning("Mismatch between file (%iD) and executable (%iD)\n", d, DIM);
 
                 in.formatID(f);
                 continue;

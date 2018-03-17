@@ -47,13 +47,13 @@ void DynamicFiberProp::read(Glossary& glos)
 #ifdef BACKWARD_COMPATIBILITY
     
     if ( glos.set(growing_force, "dynamic_force") )
-        MSG.warning("fiber:dynamic_force was renamed growing_force\n");
+        Cytosim::warning("fiber:dynamic_force was renamed growing_force\n");
     
     if ( glos.set(fate, "dynamic_fate", KeyList<Fate>("destroy", FATE_DESTROY, "rescue", FATE_RESCUE, "none", FATE_NONE)) )
-        MSG.warning("fiber:dynamic_fate was renamed fate\n");
+        Cytosim::warning("fiber:dynamic_fate was renamed fate\n");
     
     if ( glos.set(fate, "shrinking_fate", KeyList<Fate>("destroy", FATE_DESTROY, "rescue", FATE_RESCUE, "none", FATE_NONE)) )
-        MSG.warning("fiber:shrinking_fate was renamed fate\n");
+        Cytosim::warning("fiber:shrinking_fate was renamed fate\n");
     
 #endif
 }

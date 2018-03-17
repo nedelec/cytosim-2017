@@ -111,7 +111,7 @@ Vector Space::randomPlace() const
         if ( ++ouf > 10000 )
         {
             return Vector(0,0,0);
-            MSG.warning("placement failed after 10000 trials in Space::randomPlace()\n");
+            Cytosim::warning("placement failed after 10000 trials in Space::randomPlace()\n");
             //throw InvalidParameter("placement failed after 10000 trials in Space::randomPlace()");            
         }
         
@@ -279,7 +279,7 @@ real Space::estimateVolume(unsigned long cnt) const
     
     vol *= in / real(cnt);
     
-    MSG(0, "Monte-Carlo estimated volume = %.6f +/- %.6f\n", vol, sqrt(in)/real(cnt) );
+    Cytosim::MSG(0, "Monte-Carlo estimated volume = %.6f +/- %.6f\n", vol, sqrt(in)/real(cnt) );
 
     return vol;
 }

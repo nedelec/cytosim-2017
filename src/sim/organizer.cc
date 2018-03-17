@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 Organizer::~Organizer()
 {
-    //MSG(31, "destroying Organizer %p\n", this);
+    //Cytosim::MSG(31, "destroying Organizer %p\n", this);
 }
 
 

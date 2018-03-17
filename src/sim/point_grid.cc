@@ -64,10 +64,10 @@ void PointGrid::setGrid(Space const* space, Modulo const* modulo, real min_step)
     max_diameter = mGrid.minimumWidth(1);
 
     //report the grid size used
-    MSG(5, "PointGrid set with %i cells:", mGrid.nbCells());
+    Cytosim::MSG(5, "PointGrid set with %i cells:", mGrid.nbCells());
     for ( int ii = 0; ii < DIM; ++ii )
-        MSG(5, "  %.1fum / %i bins,", 2*ext[ii], cellNb[ii]);
-    MSG(5, "  max_diameter %.3f\n", max_diameter);
+        Cytosim::MSG(5, "  %.1fum / %i bins,", 2*ext[ii], cellNb[ii]);
+    Cytosim::MSG(5, "  max_diameter %.3f\n", max_diameter);
 }
 
 

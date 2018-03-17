@@ -215,10 +215,10 @@ void FiberBinder::checkAbscissa() const
     assert_true(fbFiber);
     
     if ( fbAbs < fbFiber->abscissaM() - 1e-2 )
-        MSG.warning("FiberBinder:abscissa < fiber:abscissa(MINUS_END) :  %e\n", fbFiber->abscissaM()-fbAbs );
+        Cytosim::warning("FiberBinder:abscissa < fiber:abscissa(MINUS_END) :  %e\n", fbFiber->abscissaM()-fbAbs );
     
     if ( fbAbs > fbFiber->abscissaP() + 1e-2 )
-        MSG.warning("FiberBinder:abscissa > fiber:abscissa(PLUS_END)  :  %e\n", fbAbs-fbFiber->abscissaP() );
+        Cytosim::warning("FiberBinder:abscissa > fiber:abscissa(PLUS_END)  :  %e\n", fbAbs-fbFiber->abscissaP() );
 }
 
 
