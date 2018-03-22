@@ -7,7 +7,6 @@
 #include "gle.h"
 #include <cctype>
 
-//#define POINTDISP_SAVES_BITMAP
 //#define POINTDISP_USES_PIXEL_BUFFERS
 
 
@@ -209,21 +208,6 @@ void PointDisp::drawBitmap(GLubyte* bitmap, GLuint pbi) const
 }
 
 
-#ifdef POINTDISP_SAVES_BITMAP
-
-#include "saveimage.h"
-
-void PointDisp::saveBitmaps()
-{
-    FILE * file = fopen("bitmap.png", "w");
-    SaveImage::saveAlphaPNG(file, bmA, bmD, bmD*2);
-    fclose(file);    
-    std::cerr << "saved bitmap (size=%i) " << bmD << std::endl;
-}
-
-#endif
-
-
 void PointDisp::makeBitmaps(real uFactor)
 {
     glPushAttrib(GL_ENABLE_BIT);
@@ -231,7 +215,6 @@ void PointDisp::makeBitmaps(real uFactor)
     glDisable(GL_LIGHTING);
     glDisable(GL_BLEND);
     glEnable(GL_MULTISAMPLE);
-    
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
@@ -269,10 +252,6 @@ void PointDisp::makeBitmaps(real uFactor)
     gle::gleReportErrors(stderr, "PointDisp::prepare()");
 
     //std::cerr << name() << " has bitmaps of size " << bmD << "  " << bmR << std::endl;
-
-#ifdef POINTDISP_SAVES_BITMAP
-    saveBitmap();
-#endif
 }
 
 

@@ -38,9 +38,6 @@ View::~View()
 //------------------------------------------------------------------------------
 #pragma mark -
 
-/// GL_DEPTH_CLAMP_NV should be defined in OpenGL/glext.h
-#define GL_DEPTH_CLAMP 0x864F
-
 void View::initGL(int depth_test, int multisample, int depth_clamp) const
 {
     glDisable(GL_STENCIL_TEST);

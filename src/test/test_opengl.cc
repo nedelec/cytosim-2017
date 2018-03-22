@@ -19,9 +19,18 @@
   #include <GLUT/glut.h>
   #include <AGL/agl.h>
 #else
-  #include <GL/gl.h>
+  #include <GL/glew.h>
   #include <GL/glext.h>
   #include <GL/glut.h>
+#endif
+
+
+#ifndef GL_DEPTH_CLAMP
+#define GL_DEPTH_CLAMP 0x864F
+#endif
+
+#ifndef GL_MULTISAMPLE
+#define GL_MULTISAMPLE 0x809D
 #endif
 
 unsigned int delay          = 13;       //delay 13 == 75 Hz display
@@ -38,7 +47,7 @@ void printCaps()
     glGetIntegerv( GL_BLEND,          &blend );
     glGetIntegerv( GL_FOG,            &fog );
     glGetIntegerv( GL_DEPTH_TEST,     &depth );
-    glGetIntegerv( GL_DEPTH_CLAMP_NV, &clamp );
+    glGetIntegerv( GL_DEPTH_CLAMP,    &clamp );
     printf("transparency %i - blend %i - fog %i - depth %i - clamp %i",
            transparency, int(blend), int(fog), int(depth), int(clamp));
 
@@ -89,7 +98,7 @@ void processNormalKey(unsigned char c, int x, int y)
             return;
             
         case 'c':
-            flip_cap( GL_DEPTH_CLAMP_NV );
+            flip_cap( GL_DEPTH_CLAMP );
             break;
         case 'd':
             flip_cap( GL_DEPTH_TEST );

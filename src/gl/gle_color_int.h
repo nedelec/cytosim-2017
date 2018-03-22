@@ -93,14 +93,14 @@ public:
     /// set current color, with alpha = 7F
     void colorT() const
     {
-        GLubyte ub[] = { red(), green(), blue(), alpha()/2 };
+        GLubyte ub[] = { red(), green(), blue(), alpha()>>1 };
         glColor4ubv(ub);
     }
     
     /// set current color, but divide alpha component by \c 2^s
     void colorT(short s) const
     {
-        GLubyte ub[] = { red(), green(), blue(), alpha()/2 };
+        GLubyte ub[] = { red(), green(), blue(), alpha()>>1 };
         glColor4ubv(ub);
     }
     
