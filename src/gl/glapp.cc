@@ -1274,9 +1274,10 @@ void glApp::drawROI(Vector3 roi[2])
 
 void glApp::setDisplay(View const& view)
 {
+    view.setModelView();
     view.setFog();
     view.setLights();
-    view.setClipPlanes();    
+    view.setClipPlanes();
 }
 
 
