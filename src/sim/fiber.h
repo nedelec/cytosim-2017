@@ -67,7 +67,7 @@ public:
     virtual Fiber* severPoint(unsigned int pti);
     
     /// cut fiber at points where consecutive segments make a kink
-    void           severKinkedFibers(FiberSet * set);
+    void           severKinks();
 
     
     /// viscous drag coefficient for a cylinder moving close to a surface

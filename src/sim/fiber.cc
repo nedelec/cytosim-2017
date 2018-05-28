@@ -131,11 +131,9 @@ Fiber* Fiber::severPoint(unsigned int pti)
         FiberBinder* ha = static_cast<FiberBinder*>(nd);
         nd = nd->next();
         if ( ha->abscissa() > abs )
-        {
-            removeBinder(ha);
             ha->relocate(fib);
-        }
-        ha->updateBinder();
+        else
+            ha->updateBinder();
     }
     
     return fib;
@@ -231,8 +229,9 @@ void Fiber::delayedSevering()
  ie. if the angle 90 degrees or less.
  Multiple cuts can occur. Fiber parts are added to \a set.
  */
-void Fiber::severKinkedFibers(FiberSet * set)
+void Fiber::severKinks()
 {
+    FiberSet * set = static_cast<FiberSet*>(objset());
     // we sweep down, because severPoint() removes the distal part
     for ( unsigned int p = lastPoint()-1; p > 1 ; --p )
     {
@@ -524,11 +523,15 @@ void Fiber::setInteractions(Meca & meca) const
 
 
 void Fiber::step()
-{   
+{
+#if ( 0 )
+    assert_true(linked());
+    // sever fiber at joints that make an angle above 90 degrees:
+    severKinks();
+#endif
     
     // perform the cuts that were registered by sever()
     delayedSevering();
-    
     
     //add single that act like glue
     if ( prop->glue )

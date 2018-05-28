@@ -19,19 +19,18 @@ FiberBinder::FiberBinder(Fiber* f, real a)
 
 void FiberBinder::relocate(Fiber* f)
 {
-    if ( f != fbFiber )
-    {
-        if ( fbFiber )
-            fbFiber->removeBinder(this);
-        f->addBinder(this);
-        fbFiber = f;
-        updateBinder();
-    }
+    assert_true(f);
+    if ( fbFiber )
+        fbFiber->removeBinder(this);
+    fbFiber = f;
+    f->addBinder(this);
+    updateBinder();
 }
 
 
 void FiberBinder::relocate(Fiber* f, real a)
 {
+    assert_true(f);
     if ( f != fbFiber )
     {
         if ( fbFiber )
