@@ -295,7 +295,7 @@ void InputWrapper::readFloatVector(double a[], const unsigned n, const unsigned 
     {
         if ( nd != fread(v, 4, nd, mFile) )
         {
-            delete(v);
+            delete[] v;
             throw InvalidIO("fread failed");
         }
         if ( inBinary == 2 )
@@ -307,7 +307,7 @@ void InputWrapper::readFloatVector(double a[], const unsigned n, const unsigned 
         for ( unsigned u = 0; u < nd; ++u )
             if ( 1 != fscanf(mFile, " %f", v+u) )
             {
-                delete(v);
+                delete[] v;
                 throw InvalidIO("readFloat() failed");
             }
     }
@@ -323,7 +323,7 @@ void InputWrapper::readFloatVector(double a[], const unsigned n, const unsigned 
             a[D*u+d] = 0;
     }
     
-    delete(v);
+    delete[] v;
 }
 
 //============================================================================

@@ -231,7 +231,7 @@ void Fiber::delayedSevering()
  */
 void Fiber::severKinks()
 {
-    FiberSet * set = static_cast<FiberSet*>(objset());
+    ObjectSet * set = objset();
     // we sweep down, because severPoint() removes the distal part
     for ( unsigned int p = lastPoint()-1; p > 1 ; --p )
     {

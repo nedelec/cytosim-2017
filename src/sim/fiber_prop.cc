@@ -131,7 +131,7 @@ Fiber* FiberProp::newFiber(Glossary& opt) const
         }
         fib->setShape(tmp, nbp, 0);
         fib->reshape();
-        delete(tmp);
+        delete[] tmp;
     }
     else
     {

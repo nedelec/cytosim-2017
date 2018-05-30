@@ -327,7 +327,7 @@ void Simul::reportFiberLengthDistribution(std::ostream& out, real delta, real ma
             out << " " << std::setw(8) << cnt[u];
         out << std::endl;
     }
-    delete(cnt);
+    delete[] cnt;
 }
 
 
@@ -973,8 +973,12 @@ void Simul::reportCoupleLink(std::ostream& out, std::string const& which) const
             out << " " << std::setw(9) << obj->number();
             out << " " << std::setw(9) << obj->fiber1()->number();
             out << " " << std::setw(9) << obj->hand1()->abscissa();
+            //out << " " << std::setw(9) << obj->hand1()->pos();
+
             out << " " << std::setw(9) << obj->fiber2()->number();
             out << " " << std::setw(9) << obj->hand2()->abscissa();
+            //out << " " << std::setw(9) << obj->hand2()->pos();
+
             real c = obj->hand1()->dir() * obj->hand2()->dir();
             out << " " << std::setw(9) <<  c << "\n";
         }
