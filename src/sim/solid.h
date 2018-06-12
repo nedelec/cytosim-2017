@@ -82,7 +82,12 @@ private:
     /// second momentum of the reference shape
     real           soShapeSqr;
     
+    // attachment force    
+    mutable Vector force_attach;
+    
 public:
+    /// give attachment force
+    Vector getForces() const {return force_attach;}
     
     /// allocate memory to hold 'size' points
     virtual unsigned int allocatePoints(unsigned int size);

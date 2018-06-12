@@ -6,6 +6,8 @@
 #include "real.h"
 #include "property.h"
 #include "common.h"
+#include "dim.h"
+#include "vector.h"
 
 class Glossary;
 class PointDisp;
@@ -44,6 +46,12 @@ public:
     
     /// name of space for confinement (this is specified as \c confine[2])
     std::string   confine_space;
+    
+    /// attachment stiffness (this is specified as \c attach
+    real          attach_stiff;
+    
+    /// attachment position (this is specified as \c attach_point[0,0+DIM-1]
+    Vector        attach_pos;
     
     /// display string (see @ref PointDispPar)
     std::string   display;

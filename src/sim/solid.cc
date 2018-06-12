@@ -11,6 +11,7 @@
 #include "meca.h"
 #include "simul.h"
 #include "space.h"
+#include "vector.h"
 extern Random RNG;
 
 #if ( DIM == 3 )
@@ -22,6 +23,7 @@ extern Random RNG;
 Solid::Solid (SolidProp const* p)
 : prop(p), soRadius(0), soShape(0), soShapeSize(0)
 {
+    force_attach== Vector((double)0);
     soDrag = 0;
     soMom2D = 0;
     for ( int n = 0; n < DIM*DIM; ++n )
@@ -156,6 +158,13 @@ void Solid::setInteractions(Meca & meca) const
         default:
             throw InvalidParameter("Invalid solid::confine");            
     }
+    
+       // std::cout << "setting interactions" << std::endl;
+    if (prop->attach_stiff>0) 
+    {
+        force_attach=meca.interClampMeasured( PointExact(this, 0), prop->attach_pos, prop->attach_stiff);  
+    }
+    
 }
 
 
@@ -902,6 +911,7 @@ void Solid::write(OutputWrapper& out) const
         out.writeSoftSpace(2);
         out.writeFloat(soRadius[pp]);
     }
+    out.writeFloatVector(force_attach, DIM, '\n');
 }
 
 
@@ -916,7 +926,7 @@ void Solid::read(InputWrapper & in, Simul&)
             in.readFloatVector(psPos+DIM*pp, DIM);
             soRadius[pp] = in.readFloat();
         }
-        
+        in.readFloatVector(force_attach, DIM);
     }
     catch( Exception & e ) {
         
