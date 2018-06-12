@@ -9,6 +9,7 @@
 #include "fiber_prop.h"
 #include "simul_prop.h"
 #include "simul.h"
+//#include "meca.h"
 #include "sim.h"
 #include <algorithm>
 
@@ -463,6 +464,25 @@ void Fiber::prepareMecable()
 
 void Fiber::setInteractions(Meca & meca) const
 {
+    #if NEW_COLINEAR_FORCE
+    /*
+     add a length-dependent force acting parallel to the filament.
+     A force proportional to the length of the segments is applied 
+     on the model-points.
+     */
+    if ( prop->colinear_force )
+    {
+        Matrix::index_type inx = DIM * matIndex();
+        real s = 0.5 * prop->colinear_force * segmentation();
+        for ( unsigned pp = 0; pp < nbSegments(); ++pp )
+        {
+            Vector f = s * pow(abscissaP(pp),prop->colinear_power-1.0) * dirPoint(pp) ;
+            meca.addPureForce(inx+DIM*pp    , f);
+            meca.addPureForce(inx+DIM*pp+DIM, f);
+        }
+    }
+    #endif
+    
     switch ( prop->confine )
     {
         case CONFINE_NOT:

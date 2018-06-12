@@ -114,7 +114,15 @@ void ClassicFiber::step()
             cata *= length() / prop->catastrophe_length;
         }
 #endif
-        
+#ifdef NEW_CATASTROPHE_OUTSIDE
+        /*
+         Catastrophe will be triggered immediately if the PLUS_END is outside
+         */
+        if ( prop->catastrophe_outside && prop->confine_space_ptr->outside(posPoint(lastPoint())) )
+        {
+            mState = STATE_RED;
+        }
+#endif   
         if ( RNG.test(cata) )
             mState = STATE_RED;
         

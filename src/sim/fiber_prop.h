@@ -15,7 +15,7 @@ class SingleSet;
 class Space;
 
 typedef char Tag;
-
+#define NEW_COLINEAR_FORCE 1
 
 /// Property for a Fiber
 /**
@@ -172,6 +172,12 @@ public:
 
     /// used for confinement
     Space const* confine_space_ptr;
+    
+    #if NEW_COLINEAR_FORCE
+    real colinear_force;
+    real colinear_power;    
+    #endif
+    
     
 protected:
     
