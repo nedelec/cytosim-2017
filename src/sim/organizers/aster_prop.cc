@@ -40,6 +40,10 @@ void AsterProp::complete(SimulProp const* sp, PropertyList* plist)
     fiber_set = &sp->simul->fibers;
     // make sure the fiber is defined:
     plist->find_or_die("fiber", fibers);
+    
+    //solid_set = &sp->simul->solids;
+    // make sure the fiber is defined:
+    //plist->find_or_die("fiber", fibers);
 
     if ( solid.empty() )
         throw InvalidParameter("aster:solid must be specified");
