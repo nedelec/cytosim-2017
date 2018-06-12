@@ -155,6 +155,19 @@ void Meca::addPureForce(const PointInterpolated & pti, const Vector & force)
 #endif
 }
 
+void Meca::addPureForce(const index_type inx, const Vector & force)
+{
+    
+    vBAS[inx  ] +=  force.XX;
+    
+#if ( DIM > 1 )
+    vBAS[inx+1] += force.YY;
+#endif
+#if ( DIM > 2 )
+    vBAS[inx+2] += force.ZZ;
+#endif
+}
+
 
 //==============================================================================
 #pragma mark -
@@ -1872,6 +1885,62 @@ void Meca::interTorque2D(const PointInterpolated & pt1,
 //==============================================================================
 #pragma mark -
 #pragma mark Clamps
+
+/**
+ Update Meca to include a link between a point A and a fixed position G
+ The force is linear:  
+ force_A = weight * ( G - A );
+ There is no counter-force in G, since G is immobile.
+ */
+
+Vector Meca::interClampMeasured(const PointExact & pta, 
+                      const real g[], 
+                      const real weight)
+{
+    Vector force;
+    assert_true( weight >= 0 );
+    const index_type inx = pta.matIndex();
+    
+    mB( inx, inx ) -=  weight;
+    real gm[DIM];
+    if ( modulo )
+    {
+
+        for ( int dd=0; dd < DIM; ++dd )
+            gm[dd] = g[dd];
+        modulo->fold( gm, pta.pos() );
+        
+        for ( unsigned int dd = 0; dd < DIM; ++dd )
+        {
+            vBAS[DIM*inx+dd] += weight * gm[dd];
+            
+        }
+ 
+            //std::cout << "force in inter " << force << std::endl;  
+    }
+    else
+    {
+        
+        Vector pp=pta.pos();
+        
+        for ( unsigned int dd = 0; dd < DIM; ++dd ) {
+            gm[dd]=g[dd]-pp[dd];
+            vBAS[DIM*inx+dd] += weight * g[dd];
+            
+            
+        }
+
+                
+    }
+               force.XX=weight * gm[0];
+#if DIM>1
+              force.YY=weight * gm[1];
+#endif
+#if DIM>2
+              force.ZZ=weight * gm[2];
+#endif
+    return force;
+}
 
 /**
  Update Meca to include a link between a point A and a fixed position G
