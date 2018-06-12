@@ -10,7 +10,7 @@
 #include "matsparse.h"
 #include "matsparsesym.h"
 #include "matsparsesym1.h"
-
+#include "vector.h"
 class Mecable;
 class PointExact;
 class PointInterpolated;
@@ -189,6 +189,8 @@ public:
     void  addPureForce(PointExact const&, Vector const& force);
     /// Add a constant force at a PointInterpolated
     void  addPureForce(PointInterpolated const&, Vector const& force);
+    /// Add a constant force at a point at index
+    void  addPureForce(index_type const, Vector const& force);
     /// Add a torque to a segment
     void  addPureTorque(PointInterpolated const&, Torque const& torque);
     /// Add a torque to constrain the segment in given direction
@@ -269,6 +271,8 @@ public:
 #if (DIM == 2)
     void interTorque2D(PointInterpolated const&, PointInterpolated const&, real cosinus, real sinus, real torque_weight);
 #endif
+    /// Force of stiffness weight with fixed position g
+    Vector  interClampMeasured(PointExact const&, const real g[], real weight);
     
     /// Force of stiffness weight with fixed position g
     void  interClamp(PointExact const&, const real g[], real weight);
