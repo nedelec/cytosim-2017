@@ -466,8 +466,8 @@ void Fiber::setInteractions(Meca & meca) const
 {
     #if NEW_COLINEAR_FORCE
     /*
-     add a length-dependent force acting parallel to the filament.
-     A force proportional to the length of the segments is applied 
+     add a force acting parallel to the filament propportional to length^p
+     A force proportional to the length of the segments * absissa^(p-1) is applied
      on the model-points.
      */
     if ( prop->colinear_force )

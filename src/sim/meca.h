@@ -271,7 +271,7 @@ public:
 #if (DIM == 2)
     void interTorque2D(PointInterpolated const&, PointInterpolated const&, real cosinus, real sinus, real torque_weight);
 #endif
-    /// Force of stiffness weight with fixed position g
+    /// Force of stiffness weight with fixed position g ; returns the force
     Vector  interClampMeasured(PointExact const&, const real g[], real weight);
     
     /// Force of stiffness weight with fixed position g

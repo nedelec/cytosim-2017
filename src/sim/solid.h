@@ -86,7 +86,7 @@ private:
     mutable Vector force_attach;
     
 public:
-    /// give attachment force
+    /// returns attachment force
     Vector getForces() const {return force_attach;}
     
     /// allocate memory to hold 'size' points
@@ -124,7 +124,7 @@ public:
     /// add contribution of Brownian forces
     real        addBrownianForces(real* rhs, real sc) const;
     
-    /// monte-carlo step
+    /// monte-carlo or langevin step
     void        step();
     
     //--------------------------------------------------------------------------

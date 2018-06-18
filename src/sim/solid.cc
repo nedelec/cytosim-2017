@@ -159,7 +159,7 @@ void Solid::setInteractions(Meca & meca) const
             throw InvalidParameter("Invalid solid::confine");            
     }
     
-       // std::cout << "setting interactions" << std::endl;
+    // Computes forces if the solid is attached to a point
     if (prop->attach_stiff>0) 
     {
         force_attach=meca.interClampMeasured( PointExact(this, 0), prop->attach_pos, prop->attach_stiff);  

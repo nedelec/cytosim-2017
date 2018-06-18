@@ -1891,6 +1891,7 @@ void Meca::interTorque2D(const PointInterpolated & pt1,
  The force is linear:  
  force_A = weight * ( G - A );
  There is no counter-force in G, since G is immobile.
+ Here we return the force applied
  */
 
 Vector Meca::interClampMeasured(const PointExact & pta, 
@@ -1916,7 +1917,7 @@ Vector Meca::interClampMeasured(const PointExact & pta,
             
         }
  
-            //std::cout << "force in inter " << force << std::endl;  
+  
     }
     else
     {
@@ -1926,18 +1927,16 @@ Vector Meca::interClampMeasured(const PointExact & pta,
         for ( unsigned int dd = 0; dd < DIM; ++dd ) {
             gm[dd]=g[dd]-pp[dd];
             vBAS[DIM*inx+dd] += weight * g[dd];
-            
-            
+     
         }
-
-                
+        
     }
-               force.XX=weight * gm[0];
+            force.XX=weight * gm[0];
 #if DIM>1
-              force.YY=weight * gm[1];
+            force.YY=weight * gm[1];
 #endif
 #if DIM>2
-              force.ZZ=weight * gm[2];
+            force.ZZ=weight * gm[2];
 #endif
     return force;
 }
