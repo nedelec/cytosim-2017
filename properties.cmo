@@ -1,0 +1,52 @@
+% Cytosim property file
+
+set simul 0 aster_pull
+{
+ time_step      = 0.001;
+ kT             = 1e-05;
+ viscosity      = 2;
+ random_seed    = 2902279694;
+ binding_grid_step = 0.05;
+}
+
+set space 0 cell
+{
+ geometry       = sphere 1;
+ shape          = sphere;
+ dimensions     = 1;
+ display        = (visible=1	;color=0xA5A5A555,0x000F0055 ;);
+}
+
+set fiber 0 microtubule
+{
+ min_length     = 0.01;
+ viscosity      = 2;
+ rigidity       = 0.25;
+ segmentation   = 0.05;
+ confine        = 1, 10, first;
+ activity       = classic;
+ display        = (line=4, 2;);
+ growing_speed  = 0.4, 0;
+ growing_force  = 1;
+ shrinking_speed = -0.5;
+ catastrophe_rate = 0.01, 100;
+ rescue_rate    = 30;
+ fate           = 2;
+}
+
+set bead 0 core
+{
+ viscosity      = 1000;
+ attach         = 10000;
+ attach_point   = -0.9 0 0;
+ display        = (style=3);
+}
+
+set aster 0 centrosome
+{
+ solid          = core;
+ fibers         = microtubule;
+ stiffness      = 500, 500;
+}
+
+

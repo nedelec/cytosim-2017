@@ -7,6 +7,6 @@
 #ifndef DIM
 
 /// DIM defines the number of dimensions in space: 1, 2 or 3
-#define DIM 2
+#define DIM 3
 
 #endif

@@ -159,7 +159,7 @@ void Solid::setInteractions(Meca & meca) const
             throw InvalidParameter("Invalid solid::confine");            
     }
     
-    // Here we compute the force if the solid is attached to a given point
+    // Computes forces if the solid is attached to a point
     if (prop->attach_stiff>0) 
     {
         Vector pp=PointExact(this, 0).pos();

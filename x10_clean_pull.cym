@@ -1,0 +1,101 @@
+% A confined aster with cortical pulling motors
+% F. Nedelec, April 2010
+
+set simul aster_pull 
+{
+ time_step = 0.001
+    viscosity = 0.05
+    }
+    
+
+set space cell
+{
+    geometry = ( sphere 10 )
+    display = (visible=3;color=0xA5A5A555,0x000F0055 ;)
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 10
+    segmentation = 1
+    display = ( line=4, 2; )
+     confine = inside, 10
+ 
+ 	    activity       = classic
+    growing_speed            =3
+   shrinking_speed          = -1
+    catastrophe_rate         = 0.01,10
+    rescue_rate            = 30
+    growing_force  = 1.0
+	fate=rescue    
+	min_length     =1
+    colinear_force = 1,1
+    catastrophe_outside=1
+ 
+ 	max_length=30
+}
+
+set solid core
+{
+    display = ( style=3 )
+}
+
+set aster centrosome
+{
+    solid = core
+    fibers = microtubule
+    stiffness = 1000, 1000
+}
+
+new aster centrosome
+{
+    radius = 1
+	fiber_separation=0.001
+   nb_fibers = 100
+    length = 1.5
+       position = -985 0 0
+}
+
+
+
+
+set solid core2
+{
+    display = ( style=3 )
+viscosity=10
+}
+
+
+set solid core3
+{
+    display = ( style=3 )
+viscosity=0.1
+}
+
+
+run simul * 
+{
+    nb_steps = 100
+    nb_frames = 100
+}
+
+change aster centrosome { solid=core2 }
+
+run simul *
+{
+    nb_steps = 10
+    nb_frames = 10
+}
+
+change aster centrosome { solid=core3 }
+
+run simul *
+{
+    nb_steps = 100
+    nb_frames = 100
+}
+
+
+

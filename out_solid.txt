@@ -1,0 +1,1920 @@
+% frame   0
+% start   0.03
+% class id position_centroid, force
+0        1   -0.900055 3.17014e-05 -3.52908e-06   0.55706 -0.516985 0.00805295
+% end
+
+% frame   1
+% start   0.06
+% class id position_centroid, force
+0        1   -0.900019 -1.59423e-05 -4.6183e-05   0.285797 0.198848 0.434413
+% end
+
+% frame   2
+% start   0.09
+% class id position_centroid, force
+0        1   -0.9 -1.13773e-06 -6.92731e-06   -0.126086 0.0118109 -0.0613142
+% end
+
+% frame   3
+% start   0.12
+% class id position_centroid, force
+0        1   -0.899945 -1.61104e-05 7.89163e-06   -0.34373 0.287274 -0.0353105
+% end
+
+% frame   4
+% start   0.15
+% class id position_centroid, force
+0        1   -0.89979 -7.71379e-05 4.45052e-05   -1.96762 0.816408 -0.378924
+% end
+
+% frame   5
+% start   0.18
+% class id position_centroid, force
+0        1   -0.899825 -3.50065e-05 3.06155e-05   -1.91471 0.256286 -0.257115
+% end
+
+% frame   6
+% start   0.21
+% class id position_centroid, force
+0        1   -0.899767 -4.21656e-05 -8.75141e-06   -2.34399 0.321687 0.140594
+% end
+
+% frame   7
+% start   0.24
+% class id position_centroid, force
+0        1   -0.899685 -3.87154e-05 -2.0353e-05   -3.06939 0.417634 0.252329
+% end
+
+% frame   8
+% start   0.27
+% class id position_centroid, force
+0        1   -0.899658 -4.12343e-05 -1.62976e-05   -3.44026 0.56439 0.148635
+% end
+
+% frame   9
+% start   0.3
+% class id position_centroid, force
+0        1   -0.899561 -6.19128e-06 3.36721e-05   -4.49754 0.140811 -0.276691
+% end
+
+% frame   10
+% start   0.33
+% class id position_centroid, force
+0        1   -0.899522 -2.65217e-05 2.25929e-05   -4.76089 0.263744 -0.337153
+% end
+
+% frame   11
+% start   0.36
+% class id position_centroid, force
+0        1   -0.899444 -2.49955e-06 -8.6426e-06   -5.57364 0.00231901 0.185882
+% end
+
+% frame   12
+% start   0.39
+% class id position_centroid, force
+0        1   -0.899445 -5.19865e-05 -6.59503e-06   -5.60782 0.420176 0.156539
+% end
+
+% frame   13
+% start   0.42
+% class id position_centroid, force
+0        1   -0.899379 -3.21833e-05 -2.27552e-05   -6.25983 0.227179 0.24319
+% end
+
+% frame   14
+% start   0.45
+% class id position_centroid, force
+0        1   -0.899363 -8.8648e-06 1.01457e-05   -6.35542 0.111859 -0.148055
+% end
+
+% frame   15
+% start   0.48
+% class id position_centroid, force
+0        1   -0.899294 4.73183e-05 2.15645e-05   -7.05265 -0.435345 -0.248831
+% end
+
+% frame   16
+% start   0.51
+% class id position_centroid, force
+0        1   -0.899223 1.94694e-06 1.06717e-05   -7.5823 0.0317818 -0.0354869
+% end
+
+% frame   17
+% start   0.54
+% class id position_centroid, force
+0        1   -0.89922 5.34173e-06 -2.03253e-05   -7.87496 -0.144083 0.184341
+% end
+
+% frame   18
+% start   0.57
+% class id position_centroid, force
+0        1   -0.899151 -6.96987e-06 6.11061e-05   -8.53411 0.196466 -0.621263
+% end
+
+% frame   19
+% start   0.6
+% class id position_centroid, force
+0        1   -0.899148 5.15152e-05 2.63052e-06   -8.48896 -0.510971 0.0806195
+% end
+
+% frame   20
+% start   0.63
+% class id position_centroid, force
+0        1   -0.899011 3.08851e-05 2.5767e-05   -9.72879 -0.372891 -0.34157
+% end
+
+% frame   21
+% start   0.66
+% class id position_centroid, force
+0        1   -0.898958 -5.87244e-05 3.80794e-05   -10.3899 0.671397 -0.317355
+% end
+
+% frame   22
+% start   0.69
+% class id position_centroid, force
+0        1   -0.898939 -2.55396e-05 5.22253e-06   -10.5934 0.13903 -0.116718
+% end
+
+% frame   23
+% start   0.72
+% class id position_centroid, force
+0        1   -0.898877 4.51284e-05 -2.8374e-05   -11.2201 -0.478637 0.105549
+% end
+
+% frame   24
+% start   0.75
+% class id position_centroid, force
+0        1   -0.898867 2.01936e-06 9.31338e-06   -11.4158 -0.122623 -0.186403
+% end
+
+% frame   25
+% start   0.78
+% class id position_centroid, force
+0        1   -0.898744 -9.28712e-07 3.18034e-05   -12.3798 0.0352633 -0.168443
+% end
+
+% frame   26
+% start   0.81
+% class id position_centroid, force
+0        1   -0.898696 6.09043e-05 1.57978e-05   -12.9899 -0.622067 -0.122134
+% end
+
+% frame   27
+% start   0.84
+% class id position_centroid, force
+0        1   -0.89867 3.12644e-05 3.79527e-05   -13.3575 -0.184589 -0.388048
+% end
+
+% frame   28
+% start   0.87
+% class id position_centroid, force
+0        1   -0.898618 -1.13182e-05 1.39264e-05   -13.8105 0.158204 -0.121663
+% end
+
+% frame   29
+% start   0.9
+% class id position_centroid, force
+0        1   -0.898582 -2.89389e-05 -1.04237e-06   -14.2966 0.22995 0.0214997
+% end
+
+% frame   30
+% start   0.93
+% class id position_centroid, force
+0        1   -0.898456 -4.75435e-05 1.50227e-05   -15.3521 0.359339 -0.0531946
+% end
+
+% frame   31
+% start   0.96
+% class id position_centroid, force
+0        1   -0.898354 1.57927e-05 1.3855e-05   -16.4309 0.00525014 -0.156331
+% end
+
+% frame   32
+% start   0.99
+% class id position_centroid, force
+0        1   -0.898326 7.70106e-05 3.02033e-05   -16.7842 -0.801402 -0.390184
+% end
+
+% frame   33
+% start   1.02
+% class id position_centroid, force
+0        1   -0.898223 3.58553e-05 -3.24451e-05   -17.6755 -0.348023 0.298456
+% end
+
+% frame   34
+% start   1.05
+% class id position_centroid, force
+0        1   -0.898141 -1.8951e-05 -4.61046e-05   -18.4514 0.275291 0.381246
+% end
+
+% frame   35
+% start   1.08
+% class id position_centroid, force
+0        1   -0.898156 1.51322e-06 2.18034e-05   -18.3147 -0.0356131 0.0550842
+% end
+
+% frame   36
+% start   1.11
+% class id position_centroid, force
+0        1   -0.898103 -4.77449e-06 -2.66712e-05   -18.9129 -0.0784403 0.225121
+% end
+
+% frame   37
+% start   1.14
+% class id position_centroid, force
+0        1   -0.898068 9.01803e-06 -6.28395e-05   -19.3002 -0.184267 0.665563
+% end
+
+% frame   38
+% start   1.17
+% class id position_centroid, force
+0        1   -0.898007 -1.59176e-05 -4.46174e-05   -19.8744 0.132972 0.479829
+% end
+
+% frame   39
+% start   1.2
+% class id position_centroid, force
+0        1   -0.897966 4.46321e-05 7.95563e-06   -20.2612 -0.49883 -0.0027848
+% end
+
+% frame   40
+% start   1.23
+% class id position_centroid, force
+0        1   -0.897922 -2.66801e-05 -3.81879e-05   -20.7374 0.321089 0.224694
+% end
+
+% frame   41
+% start   1.26
+% class id position_centroid, force
+0        1   -0.897853 -2.15277e-05 -5.66782e-05   -21.4502 0.187056 0.565782
+% end
+
+% frame   42
+% start   1.29
+% class id position_centroid, force
+0        1   -0.897705 -2.56415e-05 -3.07366e-05   -22.8755 0.302606 0.323626
+% end
+
+% frame   43
+% start   1.32
+% class id position_centroid, force
+0        1   -0.897665 -2.31795e-05 -2.29195e-05   -23.2892 0.18619 0.0912383
+% end
+
+% frame   44
+% start   1.35
+% class id position_centroid, force
+0        1   -0.897613 -5.31353e-05 4.03254e-05   -23.9012 0.45662 -0.284944
+% end
+
+% frame   45
+% start   1.38
+% class id position_centroid, force
+0        1   -0.89753 -3.5539e-05 5.2913e-05   -24.7391 0.516315 -0.38434
+% end
+
+% frame   46
+% start   1.41
+% class id position_centroid, force
+0        1   -0.897531 3.82016e-05 3.82486e-05   -24.7411 -0.526869 -0.173916
+% end
+
+% frame   47
+% start   1.44
+% class id position_centroid, force
+0        1   -0.897518 3.15147e-05 3.958e-05   -24.7894 -0.309431 -0.457676
+% end
+
+% frame   48
+% start   1.47
+% class id position_centroid, force
+0        1   -0.89745 3.82128e-05 5.50822e-05   -25.4038 -0.369049 -0.529436
+% end
+
+% frame   49
+% start   1.5
+% class id position_centroid, force
+0        1   -0.897339 9.00851e-06 4.07365e-05   -26.6101 -0.235088 -0.426222
+% end
+
+% frame   50
+% start   1.53
+% class id position_centroid, force
+0        1   -0.897253 5.08905e-05 2.41695e-05   -27.4793 -0.3903 -0.243085
+% end
+
+% frame   51
+% start   1.56
+% class id position_centroid, force
+0        1   -0.897185 6.35851e-05 4.93363e-05   -28.2337 -0.599908 -0.575868
+% end
+
+% frame   52
+% start   1.59
+% class id position_centroid, force
+0        1   -0.89717 4.9344e-05 2.31224e-05   -28.4388 -0.460931 -0.25843
+% end
+
+% frame   53
+% start   1.62
+% class id position_centroid, force
+0        1   -0.897133 4.82405e-05 3.59148e-05   -28.6412 -0.630985 -0.452046
+% end
+
+% frame   54
+% start   1.65
+% class id position_centroid, force
+0        1   -0.897097 8.06187e-05 3.93669e-05   -28.9874 -0.785509 -0.340188
+% end
+
+% frame   55
+% start   1.68
+% class id position_centroid, force
+0        1   -0.897025 0.000106758 4.14575e-05   -29.6592 -0.9687 -0.424361
+% end
+
+% frame   56
+% start   1.71
+% class id position_centroid, force
+0        1   -0.89697 9.63179e-05 1.78971e-05   -30.1644 -0.955535 -0.191749
+% end
+
+% frame   57
+% start   1.74
+% class id position_centroid, force
+0        1   -0.896981 1.96578e-05 7.48923e-05   -30.3161 -0.309078 -0.696736
+% end
+
+% frame   58
+% start   1.77
+% class id position_centroid, force
+0        1   -0.896946 2.1272e-05 5.30337e-05   -30.6101 -0.178118 -0.568929
+% end
+
+% frame   59
+% start   1.8
+% class id position_centroid, force
+0        1   -0.896898 7.53091e-05 3.9162e-06   -31.0608 -0.766115 -0.0371077
+% end
+
+% frame   60
+% start   1.83
+% class id position_centroid, force
+0        1   -0.896797 -2.5297e-05 -6.50123e-07   -31.95 0.256102 0.0536465
+% end
+
+% frame   61
+% start   1.86
+% class id position_centroid, force
+0        1   -0.896771 -2.9808e-05 4.9489e-05   -32.1841 0.376606 -0.627236
+% end
+
+% frame   62
+% start   1.89
+% class id position_centroid, force
+0        1   -0.896662 -1.28721e-05 6.12961e-05   -33.2553 0.298366 -0.640854
+% end
+
+% frame   63
+% start   1.92
+% class id position_centroid, force
+0        1   -0.896586 2.97687e-06 1.76799e-05   -34.1387 -0.0808352 -0.274423
+% end
+
+% frame   64
+% start   1.95
+% class id position_centroid, force
+0        1   -0.89658 7.03966e-05 -3.5126e-05   -34.3265 -0.648828 0.276702
+% end
+
+% frame   65
+% start   1.98
+% class id position_centroid, force
+0        1   -0.896533 4.73269e-05 3.54052e-05   -34.6065 -0.381501 -0.221091
+% end
+
+% frame   66
+% start   2.01
+% class id position_centroid, force
+0        1   -0.896428 2.86976e-05 -2.9314e-05   -35.6998 -0.272124 0.116265
+% end
+
+% frame   67
+% start   2.04
+% class id position_centroid, force
+0        1   -0.896412 -3.62348e-05 -2.6035e-05   -35.6709 0.254003 0.136357
+% end
+
+% frame   68
+% start   2.07
+% class id position_centroid, force
+0        1   -0.896413 -3.61399e-05 2.64894e-05   -35.9598 0.378714 -0.320073
+% end
+
+% frame   69
+% start   2.1
+% class id position_centroid, force
+0        1   -0.896337 1.39577e-05 -8.55692e-06   -36.6471 -0.236001 0.0748482
+% end
+
+% frame   70
+% start   2.13
+% class id position_centroid, force
+0        1   -0.896291 3.39209e-05 -3.07448e-05   -37.0231 -0.184725 0.270177
+% end
+
+% frame   71
+% start   2.16
+% class id position_centroid, force
+0        1   -0.896249 7.61416e-05 2.73084e-05   -37.4547 -0.738156 -0.281134
+% end
+
+% frame   72
+% start   2.19
+% class id position_centroid, force
+0        1   -0.896214 7.56642e-05 2.6088e-05   -37.8534 -0.612632 -0.266721
+% end
+
+% frame   73
+% start   2.22
+% class id position_centroid, force
+0        1   -0.896179 9.18227e-05 1.75255e-05   -38.2569 -0.894648 -0.1566
+% end
+
+% frame   74
+% start   2.25
+% class id position_centroid, force
+0        1   -0.896125 5.35224e-05 -3.41393e-05   -38.5483 -0.562887 0.379523
+% end
+
+% frame   75
+% start   2.28
+% class id position_centroid, force
+0        1   -0.896062 7.34836e-05 1.34122e-06   -39.2986 -0.752726 0.0783776
+% end
+
+% frame   76
+% start   2.31
+% class id position_centroid, force
+0        1   -0.896042 7.6483e-05 6.2603e-06   -39.5122 -0.705502 -0.0967821
+% end
+
+% frame   77
+% start   2.34
+% class id position_centroid, force
+0        1   -0.895988 0.000105597 -1.19511e-06   -40.0374 -0.910956 -0.0973355
+% end
+
+% frame   78
+% start   2.37
+% class id position_centroid, force
+0        1   -0.895966 7.68474e-05 5.93847e-05   -40.4212 -0.926485 -0.597677
+% end
+
+% frame   79
+% start   2.4
+% class id position_centroid, force
+0        1   -0.895887 4.78558e-05 1.80535e-05   -41.1967 -0.577016 -0.241958
+% end
+
+% frame   80
+% start   2.43
+% class id position_centroid, force
+0        1   -0.89586 2.87518e-05 5.15058e-05   -41.5992 -0.222115 -0.409114
+% end
+
+% frame   81
+% start   2.46
+% class id position_centroid, force
+0        1   -0.895809 5.30076e-05 2.17547e-05   -41.9098 -0.454944 -0.325638
+% end
+
+% frame   82
+% start   2.49
+% class id position_centroid, force
+0        1   -0.89575 -8.88107e-06 4.30775e-05   -42.5 -0.0220848 -0.260134
+% end
+
+% frame   83
+% start   2.52
+% class id position_centroid, force
+0        1   -0.895674 9.78231e-06 6.52503e-05   -43.2308 -0.121679 -0.590429
+% end
+
+% frame   84
+% start   2.55
+% class id position_centroid, force
+0        1   -0.895646 4.21962e-05 5.8154e-05   -43.5529 -0.327451 -0.577551
+% end
+
+% frame   85
+% start   2.58
+% class id position_centroid, force
+0        1   -0.895617 6.10989e-05 3.41425e-05   -43.7764 -0.538758 -0.408222
+% end
+
+% frame   86
+% start   2.61
+% class id position_centroid, force
+0        1   -0.895567 5.33884e-05 8.33336e-06   -44.2625 -0.589294 -0.140144
+% end
+
+% frame   87
+% start   2.64
+% class id position_centroid, force
+0        1   -0.89557 8.68472e-05 4.32542e-05   -44.416 -0.80363 -0.475589
+% end
+
+% frame   88
+% start   2.67
+% class id position_centroid, force
+0        1   -0.895548 6.03896e-05 5.26887e-05   -44.5158 -0.523508 -0.605589
+% end
+
+% frame   89
+% start   2.7
+% class id position_centroid, force
+0        1   -0.895443 5.98474e-05 7.03616e-05   -45.6339 -0.629661 -0.629868
+% end
+
+% frame   90
+% start   2.73
+% class id position_centroid, force
+0        1   -0.895411 7.64222e-05 4.04306e-05   -45.8393 -0.805823 -0.529227
+% end
+
+% frame   91
+% start   2.76
+% class id position_centroid, force
+0        1   -0.89539 7.12218e-05 3.09143e-05   -45.9863 -0.759653 -0.285995
+% end
+
+% frame   92
+% start   2.79
+% class id position_centroid, force
+0        1   -0.895351 5.65415e-05 4.1799e-05   -46.548 -0.584511 -0.418345
+% end
+
+% frame   93
+% start   2.82
+% class id position_centroid, force
+0        1   -0.89528 6.31081e-05 4.24168e-06   -47.2644 -0.727116 -0.132602
+% end
+
+% frame   94
+% start   2.85
+% class id position_centroid, force
+0        1   -0.895243 5.76018e-05 3.54073e-05   -47.6708 -0.555743 -0.441638
+% end
+
+% frame   95
+% start   2.88
+% class id position_centroid, force
+0        1   -0.895257 5.0204e-06 5.40361e-05   -47.2699 -0.152251 -0.373981
+% end
+
+% frame   96
+% start   2.91
+% class id position_centroid, force
+0        1   -0.895192 1.84292e-05 4.82908e-05   -48.1444 -0.224962 -0.336173
+% end
+
+% frame   97
+% start   2.94
+% class id position_centroid, force
+0        1   -0.895211 6.21646e-05 2.15743e-06   -47.8591 -0.440484 0.278586
+% end
+
+% frame   98
+% start   2.97
+% class id position_centroid, force
+0        1   -0.895135 4.35174e-05 -1.74441e-05   -48.6313 -0.501047 0.15184
+% end
+
+% frame   99
+% start   3
+% class id position_centroid, force
+0        1   -0.895057 3.91528e-05 -2.87377e-05   -49.3888 -0.468864 0.378313
+% end
+
+% frame   100
+% start   3.03
+% class id position_centroid, force
+0        1   -0.895061 1.78339e-05 -5.84673e-05   -49.4585 -0.0879775 0.569657
+% end
+
+% frame   101
+% start   3.06
+% class id position_centroid, force
+0        1   -0.89506 3.59522e-05 -5.79218e-05   -49.2979 -0.396183 0.630228
+% end
+
+% frame   102
+% start   3.09
+% class id position_centroid, force
+0        1   -0.894961 2.93169e-05 -1.66259e-05   -50.3024 -0.350523 0.238543
+% end
+
+% frame   103
+% start   3.12
+% class id position_centroid, force
+0        1   -0.894956 4.46715e-05 -1.38268e-05   -50.6812 -0.31885 0.0900909
+% end
+
+% frame   104
+% start   3.15
+% class id position_centroid, force
+0        1   -0.894908 -5.32243e-07 -3.09412e-05   -50.9306 -0.12103 0.219197
+% end
+
+% frame   105
+% start   3.18
+% class id position_centroid, force
+0        1   -0.894876 3.6067e-05 -2.31092e-05   -51.2653 -0.217391 0.212494
+% end
+
+% frame   106
+% start   3.21
+% class id position_centroid, force
+0        1   -0.894783 6.28056e-05 -7.75511e-05   -52.2599 -0.528391 0.634382
+% end
+
+% frame   107
+% start   3.24
+% class id position_centroid, force
+0        1   -0.89484 6.55937e-05 -8.59152e-05   -51.6661 -0.614379 0.910292
+% end
+
+% frame   108
+% start   3.27
+% class id position_centroid, force
+0        1   -0.894846 5.19179e-05 -7.20493e-05   -51.6236 -0.541715 0.716602
+% end
+
+% frame   109
+% start   3.3
+% class id position_centroid, force
+0        1   -0.894738 8.17046e-05 -6.30283e-05   -52.6508 -0.819232 0.754944
+% end
+
+% frame   110
+% start   3.33
+% class id position_centroid, force
+0        1   -0.894776 7.06434e-05 -2.98422e-06   -52.2348 -0.581317 0.0911538
+% end
+
+% frame   111
+% start   3.36
+% class id position_centroid, force
+0        1   -0.894701 7.66228e-05 -2.47547e-05   -52.9996 -0.816741 0.240765
+% end
+
+% frame   112
+% start   3.39
+% class id position_centroid, force
+0        1   -0.894646 4.34978e-05 4.63303e-05   -53.4048 -0.439642 -0.487441
+% end
+
+% frame   113
+% start   3.42
+% class id position_centroid, force
+0        1   -0.894674 6.65421e-05 5.42574e-05   -53.2512 -0.657647 -0.648616
+% end
+
+% frame   114
+% start   3.45
+% class id position_centroid, force
+0        1   -0.89464 7.46398e-05 2.96469e-05   -53.467 -0.888303 -0.329584
+% end
+
+% frame   115
+% start   3.48
+% class id position_centroid, force
+0        1   -0.89463 3.01417e-05 2.32594e-05   -53.7104 -0.352126 -0.273969
+% end
+
+% frame   116
+% start   3.51
+% class id position_centroid, force
+0        1   -0.894569 4.29584e-05 3.72302e-05   -54.299 -0.505765 -0.389138
+% end
+
+% frame   117
+% start   3.54
+% class id position_centroid, force
+0        1   -0.894595 3.46118e-05 9.23939e-05   -54.1154 -0.318522 -0.989431
+% end
+
+% frame   118
+% start   3.57
+% class id position_centroid, force
+0        1   -0.894593 6.05308e-05 0.000116281   -53.9917 -0.49002 -1.12035
+% end
+
+% frame   119
+% start   3.6
+% class id position_centroid, force
+0        1   -0.894571 3.43491e-05 9.12085e-05   -54.2083 -0.262667 -0.946358
+% end
+
+% frame   120
+% start   3.63
+% class id position_centroid, force
+0        1   -0.894537 2.33279e-05 6.99573e-05   -54.7721 -0.365862 -0.698775
+% end
+
+% frame   121
+% start   3.66
+% class id position_centroid, force
+0        1   -0.894552 4.10368e-05 -2.03344e-05   -54.3925 -0.466281 0.366067
+% end
+
+% frame   122
+% start   3.69
+% class id position_centroid, force
+0        1   -0.89452 -1.91247e-06 -1.00971e-05   -54.8529 -0.0115032 0.190403
+% end
+
+% frame   123
+% start   3.72
+% class id position_centroid, force
+0        1   -0.89453 -2.26055e-05 -1.18606e-05   -54.5249 0.21877 0.121487
+% end
+
+% frame   124
+% start   3.75
+% class id position_centroid, force
+0        1   -0.894506 -3.48154e-06 -5.96522e-06   -54.8771 0.105418 0.174347
+% end
+
+% frame   125
+% start   3.78
+% class id position_centroid, force
+0        1   -0.894377 1.30044e-05 -7.96234e-06   -56.065 -0.0940423 -0.0971914
+% end
+
+% frame   126
+% start   3.81
+% class id position_centroid, force
+0        1   -0.894407 2.60133e-05 2.08857e-05   -55.9095 -0.190047 -0.2291
+% end
+
+% frame   127
+% start   3.84
+% class id position_centroid, force
+0        1   -0.894399 4.2918e-05 5.19169e-05   -55.8963 -0.343479 -0.607178
+% end
+
+% frame   128
+% start   3.87
+% class id position_centroid, force
+0        1   -0.894394 2.71858e-05 2.18844e-05   -56.1092 -0.253958 -0.11546
+% end
+
+% frame   129
+% start   3.9
+% class id position_centroid, force
+0        1   -0.894376 1.68411e-05 4.08444e-06   -56.2368 -0.0883188 0.0650022
+% end
+
+% frame   130
+% start   3.93
+% class id position_centroid, force
+0        1   -0.894366 4.21593e-05 7.92599e-06   -56.2959 -0.337701 -0.0919219
+% end
+
+% frame   131
+% start   3.96
+% class id position_centroid, force
+0        1   -0.894345 7.36956e-05 7.16945e-06   -56.6192 -0.771933 -0.144298
+% end
+
+% frame   132
+% start   3.99
+% class id position_centroid, force
+0        1   -0.894297 8.01869e-05 2.22642e-05   -57.0989 -0.857762 -0.22018
+% end
+
+% frame   133
+% start   4.02
+% class id position_centroid, force
+0        1   -0.894331 7.19107e-05 -5.02944e-05   -56.7556 -0.660958 0.45625
+% end
+
+% frame   134
+% start   4.05
+% class id position_centroid, force
+0        1   -0.894325 6.40968e-05 -5.5408e-05   -56.7099 -0.734183 0.442208
+% end
+
+% frame   135
+% start   4.08
+% class id position_centroid, force
+0        1   -0.894253 4.49214e-05 -2.90308e-05   -57.3619 -0.437703 0.293258
+% end
+
+% frame   136
+% start   4.11
+% class id position_centroid, force
+0        1   -0.894313 2.10796e-05 -2.49072e-05   -56.8615 -0.282702 0.216261
+% end
+
+% frame   137
+% start   4.14
+% class id position_centroid, force
+0        1   -0.894328 5.23923e-05 -3.65831e-05   -56.7021 -0.491932 0.300011
+% end
+
+% frame   138
+% start   4.17
+% class id position_centroid, force
+0        1   -0.894312 3.50771e-05 -1.43866e-05   -57.0268 -0.334805 0.192204
+% end
+
+% frame   139
+% start   4.2
+% class id position_centroid, force
+0        1   -0.894275 4.46262e-05 -4.69994e-05   -57.1926 -0.367623 0.452328
+% end
+
+% frame   140
+% start   4.23
+% class id position_centroid, force
+0        1   -0.894271 6.70379e-05 -4.21885e-05   -57.3956 -0.699854 0.429766
+% end
+
+% frame   141
+% start   4.26
+% class id position_centroid, force
+0        1   -0.894247 2.23773e-05 -1.26852e-05   -57.5372 -0.236463 0.151497
+% end
+
+% frame   142
+% start   4.29
+% class id position_centroid, force
+0        1   -0.894231 3.89321e-06 1.83911e-05   -57.517 -0.0469779 -0.178986
+% end
+
+% frame   143
+% start   4.32
+% class id position_centroid, force
+0        1   -0.894212 3.26431e-05 -3.43397e-06   -57.8913 -0.335937 0.0426149
+% end
+
+% frame   144
+% start   4.35
+% class id position_centroid, force
+0        1   -0.894221 -2.09461e-06 -1.27299e-05   -57.6348 0.0148774 0.22952
+% end
+
+% frame   145
+% start   4.38
+% class id position_centroid, force
+0        1   -0.894224 -1.94425e-05 2.19884e-05   -57.8799 0.158519 -0.150618
+% end
+
+% frame   146
+% start   4.41
+% class id position_centroid, force
+0        1   -0.894169 1.46906e-07 2.47102e-05   -58.2627 0.00245786 -0.201569
+% end
+
+% frame   147
+% start   4.44
+% class id position_centroid, force
+0        1   -0.894216 1.168e-05 -1.21578e-05   -57.874 -0.0712636 0.0907919
+% end
+
+% frame   148
+% start   4.47
+% class id position_centroid, force
+0        1   -0.894218 2.3483e-05 -1.08326e-05   -57.7663 -0.189094 0.275028
+% end
+
+% frame   149
+% start   4.5
+% class id position_centroid, force
+0        1   -0.894218 6.26701e-05 6.24321e-06   -57.9004 -0.624159 -0.119788
+% end
+
+% frame   150
+% start   4.53
+% class id position_centroid, force
+0        1   -0.894255 1.25278e-06 3.54756e-05   -57.575 -0.0686045 -0.265982
+% end
+
+% frame   151
+% start   4.56
+% class id position_centroid, force
+0        1   -0.894226 -4.16556e-05 1.71078e-05   -57.7029 0.362816 -0.202068
+% end
+
+% frame   152
+% start   4.59
+% class id position_centroid, force
+0        1   -0.894223 4.70429e-05 4.21913e-05   -57.8243 -0.451651 -0.40488
+% end
+
+% frame   153
+% start   4.62
+% class id position_centroid, force
+0        1   -0.894169 2.7685e-05 6.51763e-05   -58.3482 -0.221296 -0.440679
+% end
+
+% frame   154
+% start   4.65
+% class id position_centroid, force
+0        1   -0.894222 1.99159e-05 3.59085e-05   -57.8281 -0.131187 -0.194549
+% end
+
+% frame   155
+% start   4.68
+% class id position_centroid, force
+0        1   -0.894216 3.1321e-05 1.0269e-05   -57.8945 -0.341021 -0.152275
+% end
+
+% frame   156
+% start   4.71
+% class id position_centroid, force
+0        1   -0.894219 7.18236e-05 2.38245e-05   -57.8038 -0.534928 -0.221808
+% end
+
+% frame   157
+% start   4.74
+% class id position_centroid, force
+0        1   -0.894229 7.92691e-05 3.9338e-05   -57.7966 -0.779407 -0.385804
+% end
+
+% frame   158
+% start   4.77
+% class id position_centroid, force
+0        1   -0.894215 0.000122107 2.26972e-05   -57.835 -1.2095 -0.409403
+% end
+
+% frame   159
+% start   4.8
+% class id position_centroid, force
+0        1   -0.894248 6.15505e-05 -3.41936e-05   -57.4448 -0.725868 0.305675
+% end
+
+% frame   160
+% start   4.83
+% class id position_centroid, force
+0        1   -0.894217 7.31673e-05 -3.48022e-05   -57.8392 -0.772263 0.303202
+% end
+
+% frame   161
+% start   4.86
+% class id position_centroid, force
+0        1   -0.894186 -3.95097e-05 -3.03604e-05   -58.0518 0.381846 0.300796
+% end
+
+% frame   162
+% start   4.89
+% class id position_centroid, force
+0        1   -0.894188 -3.46777e-05 3.29101e-05   -58.2225 0.39312 -0.34239
+% end
+
+% frame   163
+% start   4.92
+% class id position_centroid, force
+0        1   -0.894192 4.64953e-06 3.76766e-05   -58.1114 -0.00566356 -0.167729
+% end
+
+% frame   164
+% start   4.95
+% class id position_centroid, force
+0        1   -0.894227 3.75854e-05 1.66892e-05   -57.7718 -0.147106 -0.180261
+% end
+
+% frame   165
+% start   4.98
+% class id position_centroid, force
+0        1   -0.894236 1.40037e-05 -3.5074e-05   -57.6054 -0.0778263 0.149727
+% end
+
+% frame   166
+% start   5.01
+% class id position_centroid, force
+0        1   -0.89421 -3.18299e-06 -3.45979e-05   -57.8468 -0.160047 0.341184
+% end
+
+% frame   167
+% start   5.04
+% class id position_centroid, force
+0        1   -0.894231 5.36793e-05 -6.4633e-05   -57.7362 -0.527395 0.513301
+% end
+
+% frame   168
+% start   5.07
+% class id position_centroid, force
+0        1   -0.894217 4.2652e-06 -3.74346e-05   -57.8967 -0.0995912 0.278184
+% end
+
+% frame   169
+% start   5.1
+% class id position_centroid, force
+0        1   -0.894197 2.75866e-05 -5.24573e-05   -58.1671 -0.372596 0.468306
+% end
+
+% frame   170
+% start   5.13
+% class id position_centroid, force
+0        1   -0.894196 2.50217e-06 -4.31275e-05   -58.0724 -0.0865617 0.492598
+% end
+
+% frame   171
+% start   5.16
+% class id position_centroid, force
+0        1   -0.894217 -2.69781e-05 -4.63758e-05   -57.7846 0.320933 0.472926
+% end
+
+% frame   172
+% start   5.19
+% class id position_centroid, force
+0        1   -0.894196 2.45207e-05 -1.84053e-05   -58.0051 -0.245935 0.184401
+% end
+
+% frame   173
+% start   5.22
+% class id position_centroid, force
+0        1   -0.894187 7.39802e-05 -2.25753e-05   -58.0162 -0.738948 0.303417
+% end
+
+% frame   174
+% start   5.25
+% class id position_centroid, force
+0        1   -0.89416 3.06752e-05 -1.22222e-07   -58.3744 -0.484806 -0.0162287
+% end
+
+% frame   175
+% start   5.28
+% class id position_centroid, force
+0        1   -0.894153 8.11443e-05 -1.10302e-05   -58.5429 -0.666637 0.171276
+% end
+
+% frame   176
+% start   5.31
+% class id position_centroid, force
+0        1   -0.894155 5.7976e-05 2.85375e-06   -58.4059 -0.770601 -0.141094
+% end
+
+% frame   177
+% start   5.34
+% class id position_centroid, force
+0        1   -0.894181 5.15955e-05 6.70718e-06   -58.2303 -0.516927 -0.0107492
+% end
+
+% frame   178
+% start   5.37
+% class id position_centroid, force
+0        1   -0.894185 6.91031e-05 -3.91248e-05   -58.2368 -0.730029 0.508841
+% end
+
+% frame   179
+% start   5.4
+% class id position_centroid, force
+0        1   -0.894184 5.21178e-05 -4.90898e-05   -58.121 -0.599706 0.538266
+% end
+
+% frame   180
+% start   5.43
+% class id position_centroid, force
+0        1   -0.894202 8.98615e-05 -4.08194e-05   -58.0369 -0.854728 0.427828
+% end
+
+% frame   181
+% start   5.46
+% class id position_centroid, force
+0        1   -0.894205 5.70077e-05 -3.22684e-06   -57.9652 -0.612329 -0.159808
+% end
+
+% frame   182
+% start   5.49
+% class id position_centroid, force
+0        1   -0.894203 8.72438e-05 2.96935e-05   -58.026 -0.972936 -0.439577
+% end
+
+% frame   183
+% start   5.52
+% class id position_centroid, force
+0        1   -0.894202 -2.19877e-05 3.17249e-05   -57.9255 0.168735 -0.175009
+% end
+
+% frame   184
+% start   5.55
+% class id position_centroid, force
+0        1   -0.89419 -5.53504e-05 -3.35849e-05   -57.9751 0.619213 0.419632
+% end
+
+% frame   185
+% start   5.58
+% class id position_centroid, force
+0        1   -0.894151 1.59999e-06 2.35023e-05   -58.3902 -0.015082 -0.160157
+% end
+
+% frame   186
+% start   5.61
+% class id position_centroid, force
+0        1   -0.894176 3.71735e-05 4.95601e-05   -58.309 -0.178258 -0.264362
+% end
+
+% frame   187
+% start   5.64
+% class id position_centroid, force
+0        1   -0.894217 0.000102036 -3.24162e-06   -57.8411 -1.07871 -0.1314
+% end
+
+% frame   188
+% start   5.67
+% class id position_centroid, force
+0        1   -0.894181 7.15376e-05 6.91875e-06   -58.0214 -0.522818 -0.132714
+% end
+
+% frame   189
+% start   5.7
+% class id position_centroid, force
+0        1   -0.894189 7.91383e-05 -3.10827e-05   -58.0307 -0.58873 0.273941
+% end
+
+% frame   190
+% start   5.73
+% class id position_centroid, force
+0        1   -0.894164 5.36711e-05 2.04595e-05   -58.3177 -0.630219 -0.223726
+% end
+
+% frame   191
+% start   5.76
+% class id position_centroid, force
+0        1   -0.894227 4.87179e-05 -5.00695e-05   -57.7439 -0.632093 0.403879
+% end
+
+% frame   192
+% start   5.79
+% class id position_centroid, force
+0        1   -0.894121 5.97001e-05 -2.10015e-05   -58.7642 -0.523039 0.301931
+% end
+
+% frame   193
+% start   5.82
+% class id position_centroid, force
+0        1   -0.894193 8.85465e-05 3.92899e-07   -58.2796 -0.897049 0.0829237
+% end
+
+% frame   194
+% start   5.85
+% class id position_centroid, force
+0        1   -0.894177 7.61722e-05 -1.34878e-05   -58.156 -0.727755 0.0872663
+% end
+
+% frame   195
+% start   5.88
+% class id position_centroid, force
+0        1   -0.894109 5.66936e-05 1.78516e-05   -58.8859 -0.583464 -0.193492
+% end
+
+% frame   196
+% start   5.91
+% class id position_centroid, force
+0        1   -0.894171 8.65686e-05 6.57993e-06   -58.2829 -1.03514 -0.064535
+% end
+
+% frame   197
+% start   5.94
+% class id position_centroid, force
+0        1   -0.894194 9.54944e-05 -5.39513e-06   -58.1449 -0.878558 0.0183556
+% end
+
+% frame   198
+% start   5.97
+% class id position_centroid, force
+0        1   -0.894167 3.54861e-05 1.25812e-05   -58.3509 -0.212948 -0.258029
+% end
+
+% frame   199
+% start   6
+% class id position_centroid, force
+0        1   -0.894176 5.48405e-05 4.17362e-06   -58.2827 -0.474592 -0.0055799
+% end
+
+% frame   200
+% start   6.03
+% class id position_centroid, force
+0        1   -0.894199 3.73502e-05 -1.12633e-05   -58.0542 -0.457046 0.0951124
+% end
+
+% frame   201
+% start   6.06
+% class id position_centroid, force
+0        1   -0.894226 3.00622e-05 -0.000117644   -57.7998 -0.3966 1.07245
+% end
+
+% frame   202
+% start   6.09
+% class id position_centroid, force
+0        1   -0.894204 4.0777e-05 -8.87651e-05   -58.0626 -0.361634 0.923641
+% end
+
+% frame   203
+% start   6.12
+% class id position_centroid, force
+0        1   -0.894173 1.71296e-05 -6.33704e-05   -58.364 -0.101257 0.665548
+% end
+
+% frame   204
+% start   6.15
+% class id position_centroid, force
+0        1   -0.894213 -2.89118e-05 -7.09707e-05   -57.9642 0.337081 0.700833
+% end
+
+% frame   205
+% start   6.18
+% class id position_centroid, force
+0        1   -0.894203 -1.91984e-06 -6.87547e-05   -57.9173 -0.0100995 0.665367
+% end
+
+% frame   206
+% start   6.21
+% class id position_centroid, force
+0        1   -0.894237 -9.78767e-06 -5.98514e-05   -57.6721 0.127957 0.575803
+% end
+
+% frame   207
+% start   6.24
+% class id position_centroid, force
+0        1   -0.894231 2.8318e-05 -4.45582e-05   -57.5765 -0.312279 0.577673
+% end
+
+% frame   208
+% start   6.27
+% class id position_centroid, force
+0        1   -0.89422 4.72637e-05 -0.000106791   -57.7278 -0.41951 0.955252
+% end
+
+% frame   209
+% start   6.3
+% class id position_centroid, force
+0        1   -0.894214 3.31612e-05 -4.21907e-05   -57.8985 -0.340424 0.464602
+% end
+
+% frame   210
+% start   6.33
+% class id position_centroid, force
+0        1   -0.894183 3.5537e-05 4.07201e-06   -58.2596 -0.204127 0.124023
+% end
+
+% frame   211
+% start   6.36
+% class id position_centroid, force
+0        1   -0.894222 5.56254e-05 -1.42596e-06   -57.697 -0.540804 0.145938
+% end
+
+% frame   212
+% start   6.39
+% class id position_centroid, force
+0        1   -0.894268 6.31235e-05 3.86369e-05   -57.3727 -0.780845 -0.231849
+% end
+
+% frame   213
+% start   6.42
+% class id position_centroid, force
+0        1   -0.894241 5.23643e-05 -4.44923e-05   -57.6921 -0.538358 0.476979
+% end
+
+% frame   214
+% start   6.45
+% class id position_centroid, force
+0        1   -0.894193 5.73702e-05 -2.51544e-05   -58.1242 -0.639804 0.309823
+% end
+
+% frame   215
+% start   6.48
+% class id position_centroid, force
+0        1   -0.894199 9.8765e-06 1.28147e-05   -57.9103 -0.0655892 0.127046
+% end
+
+% frame   216
+% start   6.51
+% class id position_centroid, force
+0        1   -0.894238 8.59261e-05 3.57774e-06   -57.765 -0.839583 0.198093
+% end
+
+% frame   217
+% start   6.54
+% class id position_centroid, force
+0        1   -0.894167 6.74898e-05 -2.91989e-05   -58.2907 -0.710321 0.386105
+% end
+
+% frame   218
+% start   6.57
+% class id position_centroid, force
+0        1   -0.89423 5.54595e-05 3.84518e-05   -57.6622 -0.402939 -0.313953
+% end
+
+% frame   219
+% start   6.6
+% class id position_centroid, force
+0        1   -0.894235 0.000123323 1.92527e-05   -57.6246 -1.31142 -0.239255
+% end
+
+% frame   220
+% start   6.63
+% class id position_centroid, force
+0        1   -0.89423 4.0595e-05 4.22042e-05   -57.6934 -0.482079 -0.425078
+% end
+
+% frame   221
+% start   6.66
+% class id position_centroid, force
+0        1   -0.894189 -3.12435e-05 1.96639e-05   -58.0013 0.290279 -0.203957
+% end
+
+% frame   222
+% start   6.69
+% class id position_centroid, force
+0        1   -0.894214 -6.11829e-06 3.71968e-05   -57.8762 -0.0685855 -0.256305
+% end
+
+% frame   223
+% start   6.72
+% class id position_centroid, force
+0        1   -0.894202 1.44932e-05 -2.93994e-05   -58.0348 -0.0871515 0.24894
+% end
+
+% frame   224
+% start   6.75
+% class id position_centroid, force
+0        1   -0.894176 5.3374e-05 -4.55763e-06   -58.2896 -0.537262 0.0665887
+% end
+
+% frame   225
+% start   6.78
+% class id position_centroid, force
+0        1   -0.894123 6.92221e-05 -7.66888e-08   -58.7809 -0.690113 0.0330135
+% end
+
+% frame   226
+% start   6.81
+% class id position_centroid, force
+0        1   -0.894187 5.70218e-05 5.60896e-06   -58.2292 -0.484533 -0.109972
+% end
+
+% frame   227
+% start   6.84
+% class id position_centroid, force
+0        1   -0.894208 6.00088e-05 -2.65306e-06   -57.8642 -0.523764 0.0175895
+% end
+
+% frame   228
+% start   6.87
+% class id position_centroid, force
+0        1   -0.89427 6.63553e-05 -5.30564e-05   -57.1452 -0.623882 0.497192
+% end
+
+% frame   229
+% start   6.9
+% class id position_centroid, force
+0        1   -0.894264 7.01847e-05 -3.13314e-05   -57.3197 -0.544218 0.2353
+% end
+
+% frame   230
+% start   6.93
+% class id position_centroid, force
+0        1   -0.89426 6.81438e-05 -3.72777e-05   -57.3718 -0.710128 0.377305
+% end
+
+% frame   231
+% start   6.96
+% class id position_centroid, force
+0        1   -0.894232 3.98931e-05 -3.04017e-06   -57.7161 -0.441733 0.139004
+% end
+
+% frame   232
+% start   6.99
+% class id position_centroid, force
+0        1   -0.894192 4.4461e-05 -2.47229e-05   -58.0648 -0.496397 0.299853
+% end
+
+% frame   233
+% start   7.02
+% class id position_centroid, force
+0        1   -0.894199 3.96825e-05 4.89674e-06   -57.9331 -0.443281 -0.0255368
+% end
+
+% frame   234
+% start   7.05
+% class id position_centroid, force
+0        1   -0.894161 2.55145e-05 3.86514e-05   -58.4018 -0.155794 -0.190066
+% end
+
+% frame   235
+% start   7.08
+% class id position_centroid, force
+0        1   -0.894149 1.49992e-05 -1.35276e-05   -58.4885 -0.320015 0.135634
+% end
+
+% frame   236
+% start   7.11
+% class id position_centroid, force
+0        1   -0.894165 5.83556e-05 -7.6467e-06   -58.3875 -0.54526 0.208978
+% end
+
+% frame   237
+% start   7.14
+% class id position_centroid, force
+0        1   -0.89417 -1.33281e-05 3.47133e-06   -58.3008 0.154569 0.023618
+% end
+
+% frame   238
+% start   7.17
+% class id position_centroid, force
+0        1   -0.894214 -4.16836e-05 -4.0287e-05   -57.877 0.402374 0.282283
+% end
+
+% frame   239
+% start   7.2
+% class id position_centroid, force
+0        1   -0.894226 -4.0599e-06 1.12245e-05   -57.8335 0.07313 -0.206397
+% end
+
+% frame   240
+% start   7.23
+% class id position_centroid, force
+0        1   -0.894174 5.26889e-06 -6.63704e-07   -58.2095 -0.0744244 0.162284
+% end
+
+% frame   241
+% start   7.26
+% class id position_centroid, force
+0        1   -0.894098 1.9862e-05 -2.09137e-05   -59.1161 -0.209965 0.252799
+% end
+
+% frame   242
+% start   7.29
+% class id position_centroid, force
+0        1   -0.894102 2.44533e-05 2.87267e-05   -59.0356 -0.203646 -0.434455
+% end
+
+% frame   243
+% start   7.32
+% class id position_centroid, force
+0        1   -0.894161 8.2576e-05 4.89729e-05   -58.3768 -0.866986 -0.530318
+% end
+
+% frame   244
+% start   7.35
+% class id position_centroid, force
+0        1   -0.89419 1.55998e-05 3.34184e-05   -57.8945 -0.298867 -0.260768
+% end
+
+% frame   245
+% start   7.38
+% class id position_centroid, force
+0        1   -0.894224 -1.18993e-05 2.49603e-05   -57.6926 0.192549 -0.174255
+% end
+
+% frame   246
+% start   7.41
+% class id position_centroid, force
+0        1   -0.894211 2.85365e-05 6.31534e-05   -57.8344 -0.153811 -0.65298
+% end
+
+% frame   247
+% start   7.44
+% class id position_centroid, force
+0        1   -0.894232 2.72624e-05 2.47185e-05   -57.7276 -0.385046 -0.238957
+% end
+
+% frame   248
+% start   7.47
+% class id position_centroid, force
+0        1   -0.894198 1.38056e-05 2.67659e-05   -58.0905 -0.182173 -0.216268
+% end
+
+% frame   249
+% start   7.5
+% class id position_centroid, force
+0        1   -0.894205 8.12183e-05 1.3577e-05   -57.996 -0.764836 -0.156294
+% end
+
+% frame   250
+% start   7.53
+% class id position_centroid, force
+0        1   -0.89414 4.34579e-05 3.17015e-08   -58.6916 -0.610293 0.0466015
+% end
+
+% frame   251
+% start   7.56
+% class id position_centroid, force
+0        1   -0.894171 1.07028e-05 1.66934e-05   -58.3369 -0.196047 -0.141859
+% end
+
+% frame   252
+% start   7.59
+% class id position_centroid, force
+0        1   -0.894187 2.48654e-05 -3.2306e-05   -58.1342 -0.238745 0.356337
+% end
+
+% frame   253
+% start   7.62
+% class id position_centroid, force
+0        1   -0.894145 5.64187e-05 -1.20583e-05   -58.5488 -0.644684 0.0500698
+% end
+
+% frame   254
+% start   7.65
+% class id position_centroid, force
+0        1   -0.894139 1.04258e-05 9.60888e-06   -58.48 -0.0145119 -0.132681
+% end
+
+% frame   255
+% start   7.68
+% class id position_centroid, force
+0        1   -0.894098 1.64817e-06 -5.1516e-05   -58.8817 -0.0634913 0.539478
+% end
+
+% frame   256
+% start   7.71
+% class id position_centroid, force
+0        1   -0.894119 -3.3735e-05 2.14634e-05   -58.8167 0.220422 -0.178405
+% end
+
+% frame   257
+% start   7.74
+% class id position_centroid, force
+0        1   -0.894192 3.97373e-05 -3.42147e-05   -58.0943 -0.461265 0.267166
+% end
+
+% frame   258
+% start   7.77
+% class id position_centroid, force
+0        1   -0.894202 -1.4208e-05 -4.13031e-05   -58.0313 0.262317 0.462194
+% end
+
+% frame   259
+% start   7.8
+% class id position_centroid, force
+0        1   -0.894177 -2.28086e-05 4.78848e-05   -58.1361 0.127429 -0.340474
+% end
+
+% frame   260
+% start   7.83
+% class id position_centroid, force
+0        1   -0.894129 1.49682e-05 7.76646e-05   -58.6274 -0.135102 -0.684748
+% end
+
+% frame   261
+% start   7.86
+% class id position_centroid, force
+0        1   -0.894158 8.81944e-06 -1.41246e-05   -58.4053 -0.0841149 0.145577
+% end
+
+% frame   262
+% start   7.89
+% class id position_centroid, force
+0        1   -0.894179 5.129e-06 2.64642e-05   -58.1996 -0.0658827 -0.145476
+% end
+
+% frame   263
+% start   7.92
+% class id position_centroid, force
+0        1   -0.894174 -1.54209e-05 2.58593e-05   -58.2658 0.211302 -0.249487
+% end
+
+% frame   264
+% start   7.95
+% class id position_centroid, force
+0        1   -0.894142 1.74374e-05 8.13952e-07   -58.4516 -0.320078 0.0408792
+% end
+
+% frame   265
+% start   7.98
+% class id position_centroid, force
+0        1   -0.894186 4.79363e-05 1.78045e-05   -58.0624 -0.373751 -0.192838
+% end
+
+% frame   266
+% start   8.01
+% class id position_centroid, force
+0        1   -0.89416 2.52241e-05 -2.04939e-05   -58.3474 -0.237182 0.173258
+% end
+
+% frame   267
+% start   8.04
+% class id position_centroid, force
+0        1   -0.894181 -8.17449e-08 -6.15725e-06   -58.2943 0.120349 0.167049
+% end
+
+% frame   268
+% start   8.07
+% class id position_centroid, force
+0        1   -0.894239 -2.92339e-05 -2.47887e-06   -57.6282 -0.0367099 0.0778963
+% end
+
+% frame   269
+% start   8.1
+% class id position_centroid, force
+0        1   -0.89418 -3.36608e-05 -3.09751e-05   -58.0688 0.324259 0.273607
+% end
+
+% frame   270
+% start   8.13
+% class id position_centroid, force
+0        1   -0.894161 -1.73626e-05 2.95057e-06   -58.2657 0.0762907 0.0302181
+% end
+
+% frame   271
+% start   8.16
+% class id position_centroid, force
+0        1   -0.894218 1.12001e-05 2.40012e-05   -57.8031 -0.191359 -0.0817205
+% end
+
+% frame   272
+% start   8.19
+% class id position_centroid, force
+0        1   -0.894185 -2.25805e-06 -3.10828e-05   -58.0861 -0.0140818 0.314146
+% end
+
+% frame   273
+% start   8.22
+% class id position_centroid, force
+0        1   -0.894253 3.39834e-05 -4.3703e-05   -57.6222 -0.249211 0.462285
+% end
+
+% frame   274
+% start   8.25
+% class id position_centroid, force
+0        1   -0.894216 4.6161e-05 -6.28704e-05   -57.7643 -0.510173 0.586609
+% end
+
+% frame   275
+% start   8.28
+% class id position_centroid, force
+0        1   -0.894144 1.06328e-05 -4.47078e-05   -58.6637 -0.0597956 0.390867
+% end
+
+% frame   276
+% start   8.31
+% class id position_centroid, force
+0        1   -0.894161 3.87598e-05 -4.67045e-05   -58.2901 -0.623496 0.458604
+% end
+
+% frame   277
+% start   8.34
+% class id position_centroid, force
+0        1   -0.894159 7.46919e-05 -1.66936e-05   -58.5025 -0.769431 0.12406
+% end
+
+% frame   278
+% start   8.37
+% class id position_centroid, force
+0        1   -0.894154 4.10196e-05 -4.88596e-05   -58.482 -0.471808 0.396128
+% end
+
+% frame   279
+% start   8.4
+% class id position_centroid, force
+0        1   -0.89417 6.3052e-05 -6.11149e-05   -58.4632 -0.686072 0.659947
+% end
+
+% frame   280
+% start   8.43
+% class id position_centroid, force
+0        1   -0.894213 2.1857e-05 -5.46998e-05   -57.9774 -0.248394 0.554755
+% end
+
+% frame   281
+% start   8.46
+% class id position_centroid, force
+0        1   -0.894196 3.44281e-05 -3.9394e-05   -58.0428 -0.324287 0.465501
+% end
+
+% frame   282
+% start   8.49
+% class id position_centroid, force
+0        1   -0.894203 4.88362e-06 -5.4978e-05   -58.0752 -0.117492 0.47401
+% end
+
+% frame   283
+% start   8.52
+% class id position_centroid, force
+0        1   -0.894204 1.08185e-05 2.90968e-05   -57.9598 -0.116475 -0.275307
+% end
+
+% frame   284
+% start   8.55
+% class id position_centroid, force
+0        1   -0.894228 2.16327e-05 3.94347e-06   -57.8518 -0.165393 -0.10908
+% end
+
+% frame   285
+% start   8.58
+% class id position_centroid, force
+0        1   -0.89419 -4.61364e-05 5.73166e-06   -58.0844 0.418032 0.0125986
+% end
+
+% frame   286
+% start   8.61
+% class id position_centroid, force
+0        1   -0.894183 2.90618e-05 -1.05161e-05   -58.0103 -0.263142 0.0261567
+% end
+
+% frame   287
+% start   8.64
+% class id position_centroid, force
+0        1   -0.89416 9.85823e-05 -1.29224e-05   -58.3683 -0.854769 0.1995
+% end
+
+% frame   288
+% start   8.67
+% class id position_centroid, force
+0        1   -0.894156 6.41822e-05 -1.81139e-05   -58.2569 -0.671771 0.214841
+% end
+
+% frame   289
+% start   8.7
+% class id position_centroid, force
+0        1   -0.89421 6.41769e-05 -2.31501e-05   -57.9807 -0.563604 0.151362
+% end
+
+% frame   290
+% start   8.73
+% class id position_centroid, force
+0        1   -0.894216 6.28079e-05 3.17528e-05   -57.8503 -0.615648 -0.31167
+% end
+
+% frame   291
+% start   8.76
+% class id position_centroid, force
+0        1   -0.894198 5.23729e-05 -2.51661e-05   -58.0741 -0.392737 0.4693
+% end
+
+% frame   292
+% start   8.79
+% class id position_centroid, force
+0        1   -0.894198 3.18892e-05 -3.47636e-05   -57.972 -0.315609 0.189439
+% end
+
+% frame   293
+% start   8.82
+% class id position_centroid, force
+0        1   -0.894232 4.94077e-05 -3.66115e-05   -57.5591 -0.534986 0.284064
+% end
+
+% frame   294
+% start   8.85
+% class id position_centroid, force
+0        1   -0.894206 4.40145e-05 -5.94522e-05   -57.9649 -0.42862 0.47548
+% end
+
+% frame   295
+% start   8.88
+% class id position_centroid, force
+0        1   -0.894207 9.0042e-05 -4.99146e-05   -57.8122 -0.892408 0.419606
+% end
+
+% frame   296
+% start   8.91
+% class id position_centroid, force
+0        1   -0.894205 5.5552e-05 1.44797e-05   -57.8116 -0.543565 -0.192769
+% end
+
+% frame   297
+% start   8.94
+% class id position_centroid, force
+0        1   -0.89419 4.45982e-05 5.48721e-05   -58.1386 -0.487517 -0.500934
+% end
+
+% frame   298
+% start   8.97
+% class id position_centroid, force
+0        1   -0.894169 4.04662e-05 1.79723e-06   -58.2282 -0.205038 -0.0538924
+% end
+
+% frame   299
+% start   9
+% class id position_centroid, force
+0        1   -0.89424 3.47896e-05 1.01804e-05   -57.6867 -0.241267 -0.170737
+% end
+
+% frame   300
+% start   9.001
+% class id position_centroid, force
+0        1   -0.894252 3.71498e-05 1.69792e-06   -57.6023 -0.347896 -0.101804
+% end
+
+% frame   301
+% start   9.002
+% class id position_centroid, force
+0        1   -0.894251 4.3914e-05 -3.12615e-06   -57.4836 -0.371498 -0.0169792
+% end
+
+% frame   302
+% start   9.003
+% class id position_centroid, force
+0        1   -0.894241 4.88837e-05 -5.58061e-06   -57.4852 -0.43914 0.0312615
+% end
+
+% frame   303
+% start   9.004
+% class id position_centroid, force
+0        1   -0.894231 3.52777e-05 -5.2233e-06   -57.5876 -0.488837 0.0558061
+% end
+
+% frame   304
+% start   9.005
+% class id position_centroid, force
+0        1   -0.894225 2.87646e-05 -3.95776e-06   -57.6901 -0.352777 0.052233
+% end
+
+% frame   305
+% start   9.006
+% class id position_centroid, force
+0        1   -0.894227 2.94203e-05 -2.95497e-06   -57.7516 -0.287646 0.0395776
+% end
+
+% frame   306
+% start   9.007
+% class id position_centroid, force
+0        1   -0.894224 1.99057e-05 -8.62381e-06   -57.7298 -0.294203 0.0295497
+% end
+
+% frame   307
+% start   9.008
+% class id position_centroid, force
+0        1   -0.894229 2.02418e-05 -2.09895e-06   -57.759 -0.199057 0.0862381
+% end
+
+% frame   308
+% start   9.009
+% class id position_centroid, force
+0        1   -0.894225 2.42506e-05 -5.69321e-06   -57.7138 -0.202418 0.0209895
+% end
+
+% frame   309
+% start   9.01
+% class id position_centroid, force
+0        1   -0.894221 1.70721e-05 2.72381e-06   -57.7544 -0.242506 0.0569321
+% end
+
+% frame   310
+% start   9.011
+% class id position_centroid, force
+0        1   -0.894213 1.36877e-05 1.95545e-05   -57.7896 -0.170721 -0.0272381
+% end
+
+% frame   311
+% start   9.012
+% class id position_centroid, force
+0        1   -0.894204 8.98326e-06 1.72068e-05   -57.8675 -0.136877 -0.195545
+% end
+
+% frame   312
+% start   9.013
+% class id position_centroid, force
+0        1   -0.894211 1.31444e-05 2.61282e-05   -57.961 -0.0898326 -0.172068
+% end
+
+% frame   313
+% start   9.014
+% class id position_centroid, force
+0        1   -0.894208 1.83125e-05 3.52353e-05   -57.8927 -0.131444 -0.261282
+% end
+
+% frame   314
+% start   9.015
+% class id position_centroid, force
+0        1   -0.894204 1.3995e-05 4.6501e-05   -57.9213 -0.183125 -0.352353
+% end
+
+% frame   315
+% start   9.016
+% class id position_centroid, force
+0        1   -0.894201 1.31622e-05 5.29136e-05   -57.958 -0.13995 -0.46501
+% end
+
+% frame   316
+% start   9.017
+% class id position_centroid, force
+0        1   -0.894195 2.18713e-05 5.64645e-05   -57.9948 -0.131622 -0.529136
+% end
+
+% frame   317
+% start   9.018
+% class id position_centroid, force
+0        1   -0.894204 2.89641e-05 5.40475e-05   -58.0533 -0.218713 -0.564645
+% end
+
+% frame   318
+% start   9.019
+% class id position_centroid, force
+0        1   -0.894201 2.88671e-05 5.06301e-05   -57.9592 -0.289641 -0.540475
+% end
+
+% frame   319
+% start   9.02
+% class id position_centroid, force
+0        1   -0.894205 3.05187e-05 4.11471e-05   -57.9925 -0.288671 -0.506301
+% end
+

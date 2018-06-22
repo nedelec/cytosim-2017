@@ -1891,6 +1891,7 @@ void Meca::interTorque2D(const PointInterpolated & pt1,
  The force is linear:  
  force_A = weight * ( G - A );
  There is no counter-force in G, since G is immobile.
+ Here we return the force applied
  */
 
 void Meca::interClamp(const PointExact & pta, 

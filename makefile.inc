@@ -2,7 +2,7 @@
 
 
 #---------------- MACHINE = {mac, centos, ubuntu, cluster, cygwin}
-MACHINE := cygwin
+MACHINE := ubuntu
 
 #---------------- COMPILER = {gcc, icc, clang}
 COMPILER := gcc
@@ -21,7 +21,7 @@ MODE := F
 #     HAS_MKL = 2 for static linking
 # otherwise, use HAS_MKL = 0;
 
-HAS_MKL := 0
+HAS_MKL := 1
 
 #---------------- PNG image export support
 # `libpng` needs to be installed to save PNG images:
@@ -153,7 +153,8 @@ endif
 
 
 ifeq ($(MACHINE),ubuntu)
-
+	
+	MKLDIR := /opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64
     FlagsD := -O0 $(DEBUG) $(WARN)
     FlagsP := -O0 -fno-inline -pg $(ALIGN) $(FAST)
     FlagsC := -O0 -fprofile-arcs -ftest-coverage
@@ -262,15 +263,15 @@ MKL_EXT := _lp64
 
 
 ifeq ($(HAS_MKL),1)
-
-    # sequential dynamic linking:
-    MKL_LIBS := -lmkl_intel$(MKL_EXT) -lmkl_sequential -lmkl_core
+# sequential dynamic linking:
+    MKLLIB := -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
     
     # threaded dynamic linking:
-    #MKL_LIBS := -lmkl_intel$(MKL_EXT) -lmkl_intel_thread -lmkl_core -liomp5
+    #MKLLIB := -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
     # modify the linking command:
-    LINK := -L$(MKL_PATH) $(MKL_LIBS) -lpthread    
+    LINK := -L$(MKLDIR) $(MKLLIB) -lpthread
+    
 
 endif
 
