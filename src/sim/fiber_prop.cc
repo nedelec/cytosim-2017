@@ -309,6 +309,11 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( hydrodynamic_radius[1] <= 0 )
         throw InvalidParameter("fiber:hydrodynamic_radius[1] must be > 0");
 
+     #if NEW_COLINEAR_FORCE
+         if ( colinear_power <= 0 )
+              throw InvalidParameter("fiber:colinear_power must be > 0");
+    #endif
+    
 #if ( 0 )
     //print some information on the 'stiffness' of the matrix
     Fiber fib(this);

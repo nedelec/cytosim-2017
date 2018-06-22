@@ -473,7 +473,7 @@ void Fiber::setInteractions(Meca & meca) const
     if ( prop->colinear_force )
     {
         Matrix::index_type inx = DIM * matIndex();
-        real s = 0.5 * prop->colinear_force * segmentation();
+        real s = 0.5 * prop->colinear_power * prop->colinear_force * segmentation();
         for ( unsigned pp = 0; pp < nbSegments(); ++pp )
         {
             Vector f = s * pow(abscissaP(pp),prop->colinear_power-1.0) * dirPoint(pp) ;
