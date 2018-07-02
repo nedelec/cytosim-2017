@@ -639,8 +639,17 @@ void Parser::parse_run(std::istream & is)
         
         Glossary opt(blok);
         
-        if ( opt.set(cnt,"nb_steps") && has_cnt )
-            throw InvalidSyntax("the number of simulation steps was specified twice");;
+        if (has_cnt) {
+            if ( opt.set(cnt,"nb_steps") )
+                throw InvalidSyntax("the number of simulation steps was specified twice");;
+        }
+        else {
+             if (~opt.set(cnt,"nb_steps") ) {
+                 real duration=0;
+                 opt.set(duration,"duration");
+                 cnt=(unsigned)duration/simul.prop->time_step;
+             }
+        }
         
         execute_run(opt, cnt, do_write);
         
