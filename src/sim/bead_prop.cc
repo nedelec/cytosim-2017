@@ -16,7 +16,7 @@ void BeadProp::clear()
     confine_space     = "first";
     confine_space_ptr = 0;
     attach_stiff      = 0;
-    attach_pos        = Vector((double)0);
+    attach_pos        = Vector(0,0,0);
     display           = "";
 }
 

@@ -23,7 +23,7 @@ extern Random RNG;
 Solid::Solid (SolidProp const* p)
 : prop(p), soRadius(0), soShape(0), soShapeSize(0)
 {
-    force_attach== Vector((double)0);
+    force_attach = Vector(0,0,0);
     soDrag = 0;
     soMom2D = 0;
     for ( int n = 0; n < DIM*DIM; ++n )

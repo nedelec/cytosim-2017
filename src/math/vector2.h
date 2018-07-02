@@ -33,9 +33,6 @@ public:
     /// by default, coordinates are not initialized
     Vector2() {}
     
-    /// construct from single value
-    Vector2(const real x) : XX(x), YY(x) {}
-    
     /// construct from values
     Vector2(const real x, const real y) : XX(x), YY(y) {}
     
