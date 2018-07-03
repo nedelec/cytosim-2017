@@ -644,7 +644,7 @@ void Parser::parse_run(std::istream & is)
                 throw InvalidSyntax("the number of simulation steps was specified twice");;
         }
         else {
-             if (~opt.set(cnt,"nb_steps") ) {
+             if (opt.set(cnt,"nb_steps")==0) {
                  real duration=0;
                  opt.set(duration,"duration");
                  cnt=(unsigned)duration/simul.prop->time_step;
