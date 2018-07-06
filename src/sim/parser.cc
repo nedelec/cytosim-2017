@@ -327,11 +327,8 @@ void Parser::parse_new(std::istream & is)
         {
             name = kind;
             kind = pp->kind();
-            // we report here an error, but...
-            throw InvalidSyntax("did you mean `new "+kind+" "+name+"' ?");
-            // ...we could however have just given a warning:
-            std::cerr << "Assuming you meant `"<< kind << " " << name << "'\n";
-            StreamFunc::show_line(std::cerr, is, is.tellg());
+            //std::cerr << "Assuming you meant `"<< kind << " " << name << "'\n";
+            //StreamFunc::show_line(std::cerr, is, is.tellg());
         }
     }
     

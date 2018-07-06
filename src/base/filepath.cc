@@ -60,7 +60,7 @@ std::string FilePath::full_name(std::string const& dir, std::string const& file)
         std::string res = dir + file;
         
         //remove trailling '/' if present
-        const int x = res.size()-1;
+        const long x = res.size() - 1;
         if ( 0 <= x  &&  res[x] == '/' )
             res[x] = '\0';
         
