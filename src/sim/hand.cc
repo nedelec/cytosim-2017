@@ -148,6 +148,12 @@ bool Hand::testDetachment()
     /* 
      Attention: nextDetach should be set at each attachement.
      */
+#if NEW_END_DEPENDENT_DETACHMENT
+    // Hands within 10nm can hold onto the plus end
+    if ( abscissaFrom(PLUS_END) < 0.010 )
+        nextDetach -= prop->unbinding_rate_end_dt;
+    else
+#endif
     nextDetach -= prop->unbinding_rate_dt;
     
     if ( nextDetach <= 0 )
@@ -174,9 +180,17 @@ bool Hand::testKramersDetachment(const real force)
      mul can be infinite, because it is the exponential of force,
      and we avoid the case ( rate==0 ) since zero * infinite is undefined
      */
-    if ( prop->unbinding_rate_dt > 0 )
+    real rate = prop->unbinding_rate_dt;
+
+#if NEW_END_DEPENDENT_DETACHMENT
+    // Hands within 10nm can hold onto the plus end
+    if ( abscissaFrom(PLUS_END) < 0.010 )
+        rate = prop->unbinding_rate_end_dt;
+#endif
+
+    if ( rate > 0 )
     {
-        nextDetach -= prop->unbinding_rate_dt * exp(force*prop->unbinding_force_inv);
+        nextDetach -= rate * exp(force*prop->unbinding_force_inv);
         if ( nextDetach <= 0 )
         {
             nextDetach = RNG.exponential();

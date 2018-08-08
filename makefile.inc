@@ -2,7 +2,7 @@
 
 
 #---------------- MACHINE = {mac, centos, ubuntu, cluster, cygwin}
-MACHINE := cygwin
+MACHINE := mac
 
 #---------------- COMPILER = {gcc, icc, clang}
 COMPILER := gcc
@@ -38,7 +38,7 @@ HAS_MKL := 0
 #     1 : macport installation
 #     2 : homebrew installation
 
-HAS_PNG := 0
+HAS_PNG := 2
 
 #------------------------------------------------------------------------------------
 #---------------------------  Compiler Specifications  ------------------------------

@@ -1,0 +1,27 @@
+var class_matrix =
+[
+    [ "index_type", "class_matrix.html#a60e0d2e3271d241212bd8ee4512c383f", null ],
+    [ "Matrix", "class_matrix.html#a3aede62f513da27e6f61ae7a972b4f96", null ],
+    [ "~Matrix", "class_matrix.html#a50937512a2aece401826a35ccdf69f3b", null ],
+    [ "addDiagonalBlock", "class_matrix.html#a1025a889ae8bbd1b2cb25613e77bdf6d", null ],
+    [ "addr", "class_matrix.html#ac6eb72f3b2a7f87f20414839cd01c651", null ],
+    [ "addTriangularBlock", "class_matrix.html#a0a00754cee0a68c040190ec477af592c", null ],
+    [ "allocate", "class_matrix.html#a955bf95d52fa1e2e5575dc820e41e643", null ],
+    [ "copyBlock", "class_matrix.html#abc0f1b8dd5f3cab20e9d6ce7cab0b80d", null ],
+    [ "makeZero", "class_matrix.html#a951b35dcf29657db7cac2eaa39182306", null ],
+    [ "maxNorm", "class_matrix.html#a39c1fa02431fca8c8fb70d02c0bf2b24", null ],
+    [ "nbNonZeroElements", "class_matrix.html#ac9749d8345650bec398b1cbd65309166", null ],
+    [ "nonZero", "class_matrix.html#ab10ec9ea549318b0e59ec65b6d0161e8", null ],
+    [ "operator()", "class_matrix.html#aab7419e4596ca392123c2297915332b6", null ],
+    [ "prepareForMultiply", "class_matrix.html#a9ca4648d0e1dab4330df74a69191eb6d", null ],
+    [ "printFull", "class_matrix.html#a7ef7aaf459228e1e787cd8b0bd8a60a6", null ],
+    [ "printSparse", "class_matrix.html#a7c575c794ac5e8fb838bc75944d6428e", null ],
+    [ "scale", "class_matrix.html#a46ae7578585cb8e96e9224cf188407b6", null ],
+    [ "size", "class_matrix.html#a12e97747c12cfd458d709f337b41cf73", null ],
+    [ "value", "class_matrix.html#abbbcd60b3b59a5d9b085eb609a119439", null ],
+    [ "vecMul", "class_matrix.html#a0b779f87ce2da3e994dcb6218f8eee58", null ],
+    [ "vecMulAdd", "class_matrix.html#a10a0da8554a8f757eafe198c590638b6", null ],
+    [ "vecMulAddIso2D", "class_matrix.html#aa86f1c00b5700002a39b77b2b1d9089c", null ],
+    [ "vecMulAddIso3D", "class_matrix.html#af8df56b02a455651a5845ab0690cd589", null ],
+    [ "what", "class_matrix.html#affcf0b4da37a3c18553034641f69d35b", null ]
+];

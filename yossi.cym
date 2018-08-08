@@ -1,0 +1,60 @@
+% 26.04.2018
+
+set simul yossi
+{
+	viscosity = 1
+	time_step = 0.001
+}
+
+set space cell
+{
+	geometry = sphere 5
+	display = ( visible = 2	)
+}
+
+new space cell
+
+set hand binder1
+{
+	binding = 10, 0.01
+}
+
+set hand binder2
+{
+	binding = 1, 0.02
+}
+
+set single grafted1
+{
+	hand = binder1
+}
+
+set single grafted2
+{
+	hand = binder2
+}
+
+set solid blob 
+{
+    confine = all_inside, 1
+    steric = 1
+    display = (coloring = 1; style = 7; visible = 1;)
+}
+
+new 10 solid blob 
+{
+    nb_points = 2
+    point0 = -1 0 0, 1, grafted1
+    point1 =  1 0 0, 1, grafted1
+}
+
+new 10 solid blob 
+{
+    nb_points = 2
+    point0 = -1 0 0, 1, grafted2
+    point1 =  1 0 0, 1, grafted2
+}
+
+run 1000 simul *
+{
+}

@@ -1,0 +1,57 @@
+% test file to demonstrate the problems with fast diffusion
+
+set simul fiber 
+{
+    steric = 0
+    time_step = 0.01
+    viscosity = 0.1
+}
+
+set space cell
+{
+  geometry = ( rectangle 10 10 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+	steric = 0
+    rigidity = 25
+    segmentation = 0.5
+    confine = inside, 100
+    activity        = none
+ }
+
+set hand bind_only
+{
+    binding_rate = 2.5
+    binding_range = 0.05
+    unbinding_rate = 0
+    activity = bind
+}
+
+set couple molecule
+{
+    hand1 = bind_only
+	hand2 = bind_only
+	stiffness = 100
+    fast_diffusion = 1
+}
+
+
+new  1 fiber microtubule
+{
+    length = 20
+	position = 0 0
+	
+}
+
+new 3000 couple molecule
+
+
+run 3000 simul *
+{
+    nb_frames = 300
+}
+
