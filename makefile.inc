@@ -83,7 +83,7 @@ else ifeq ($(COMPILER),icc)
 
 else ifeq ($(COMPILER),clang)
 
-    CXX      := c++ -ffinite-math-only -ftrapping-math -Wfatal-errors #-mmacosx-version-min=10.6
+    CXX      := c++ -ffinite-math-only -ftrapping-math -Wfatal-errors #-mmacosx-version-min=10.10
     FAST     := -O3 -ffast-math -funroll-loops #-floop-optimize2 -msse3
     FAST     := -O3 -ffast-math -funroll-loops
     DEBUG    := -g3 -ggdb
@@ -243,7 +243,7 @@ ifeq ($(MACHINE),cygwin)
     ifneq ($(HAS_PNG), 0)
     
         LIB_PNG := /lib/libpng.dll.a /lib/libz.a
-        LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
+        LIB_PNG := /usr/lib/libpng.dll.a /usr/lib/libz.a
         ING_PNG :=
     
     endif
