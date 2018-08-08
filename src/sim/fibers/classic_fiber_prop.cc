@@ -53,6 +53,10 @@ void ClassicFiberProp::read(Glossary& glos)
 
 #ifdef BACKWARD_COMPATIBILITY
     
+    int d = 0;
+    if ( glos.set(d, "delete_stub") && d )
+        fate = FATE_DESTROY;
+
     if ( glos.set(growing_force, "dynamic_force") )
         Cytosim::warning("fiber:dynamic_force was renamed growing_force\n");
     

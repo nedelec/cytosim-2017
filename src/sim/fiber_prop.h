@@ -103,7 +103,7 @@ public:
      When the fiber becomes shorter than \a min_length,
      the action specified by \a fate is applied.
      */
-    real    min_length;
+    real         min_length;
 
     /// radius used to calculate mobility
     /**

@@ -147,6 +147,8 @@ Fiber* FiberProp::newFiber(Glossary& opt) const
     // initialize state of the ends
     KeyList<int> keys("white",  STATE_WHITE,
                       "green",  STATE_GREEN,
+                      "grow",   STATE_GREEN,
+                      "shrink", STATE_RED,
                       "yellow", STATE_YELLOW,
                       "orange", STATE_ORANGE,
                       "red",    STATE_RED);
