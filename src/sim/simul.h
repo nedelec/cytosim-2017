@@ -378,6 +378,18 @@ public:
     /// print something
     void      reportCustom(std::ostream&) const;
 
+#ifndef JAMIE
+    /// print numbers of different links types for each couple
+    void    reportCoupleType(std::ostream&, std::string const&) const;
+    
+    // get link type for AA couples
+    int       whichLinkAA(Couple * obj) const;
+    
+    //get links type for AF couples
+    int       whichLinkAF(Couple * obj) const;
+#endif
+
+
     //-------------------------------------------------------------------------------
     
     /// custom function

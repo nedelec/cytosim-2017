@@ -1,0 +1,42 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D6D5BBAA415AFA94305A41ACA84D8D1F6EABAAA4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++7316" : {
+
+    },
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++2622" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D6D5BBAA415AFA94305A41ACA84D8D1F6EABAAA4" : 0,
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++7316" : 0,
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++2622" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "424D673B-F2DA-4B4A-AE7F-7D01CBDE4A10",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D6D5BBAA415AFA94305A41ACA84D8D1F6EABAAA4" : "cytosim\/",
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++7316" : "cytosim\/",
+    "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++2622" : "cytosim-public"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "cytosim",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "cytosim.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/biloba.embl.de\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++2622"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/biloba\/svn",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "517ae47e-0b92-4d2b-b5fe-ffcacd366ddf++7316"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/github.com\/nedelec\/cytosim",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D6D5BBAA415AFA94305A41ACA84D8D1F6EABAAA4"
+    }
+  ]
+}

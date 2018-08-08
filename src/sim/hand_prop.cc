@@ -120,6 +120,9 @@ void HandProp::clear()
     binding_key        = (~0);  //all bits at 1
     
     unbinding_rate     = 0;
+#if NEW_END_DEPENDENT_DETACHMENT
+    unbinding_rate_end = 0;
+#endif
     unbinding_force    = 0;
     unbinding_force_inv = 0;
 
@@ -143,6 +146,9 @@ void HandProp::read(Glossary& glos)
     glos.set(binding_key,        "binding", 2);
     
     glos.set(unbinding_rate,     "unbinding_rate");
+#if NEW_END_DEPENDENT_DETACHMENT
+    glos.set(unbinding_rate_end, "unbinding_rate_end");
+#endif
     glos.set(unbinding_force,    "unbinding_force");
     //alternative syntax:
     glos.set(unbinding_rate,     "unbinding", 0);
@@ -174,7 +180,13 @@ void HandProp::complete(SimulProp const* sp, PropertyList*)
     binding_range_sqr = binding_range * binding_range;
     binding_rate_dt   = binding_rate * sp->time_step;
     unbinding_rate_dt = unbinding_rate * sp->time_step;
-    
+#if NEW_END_DEPENDENT_DETACHMENT
+    if ( unbinding_rate_end > 0 )
+        unbinding_rate_end_dt = unbinding_rate_end * sp->time_step;
+    else
+        unbinding_rate_end_dt = unbinding_rate * sp->time_step;
+#endif
+
     if ( binding_range < 0 )
         throw InvalidParameter("hand:binding_range must be >= 0");
     
@@ -240,6 +252,9 @@ void HandProp::write_data(std::ostream & os) const
     write_param(os, "binding",            binding_rate, binding_range);
     write_param(os, "binding_key",        binding_key);
     write_param(os, "unbinding",          unbinding_rate, unbinding_force);
+#if NEW_END_DEPENDENT_DETACHMENT
+    write_param(os, "unbinding_rate_end", unbinding_rate_end);
+#endif
 
     write_param(os, "bind_also_ends",     bind_also_ends);
     write_param(os, "hold_growing_end",   hold_growing_end);

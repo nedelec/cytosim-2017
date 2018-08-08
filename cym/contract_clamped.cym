@@ -1,0 +1,96 @@
+% A contractile actin gel attached on its edges
+% F. Nedelec 12 May 2015
+
+set simul contract 
+{
+    time_step = 0.001
+    viscosity = 0.05
+}
+
+
+set space cell
+{
+    geometry = ( circle 8 )
+}
+
+new space cell
+
+set hand myosin
+{
+    binding_rate = 10
+    binding_range = 0.005
+    unbinding_rate = 0.02
+    unbinding_force = 3
+    
+    activity = move
+    unloaded_speed = 1
+    stall_force = 5
+    display = ( size=4; color=orange )
+}
+
+set hand binder
+{
+    binding_rate = 10
+    binding_range = 0.005
+    unbinding_rate = 0.02
+    unbinding_force = 3
+    display = ( size=4; color=gray )
+}
+
+set hand glue
+{
+    binding_rate = 10
+    binding_range = 0.005
+    unbinding_rate = 0
+    unbinding_force = inf
+    display = ( size=6; color=green )
+}
+
+set single anchor
+{
+    hand = glue
+    stiffness = 500
+    activity = fixed
+}
+
+set couple motor
+{
+    hand1 = myosin
+    hand2 = myosin
+    stiffness = 500
+    fast_diffusion = 1
+}
+
+set couple crosslinker
+{
+    hand1 = binder
+    hand2 = binder
+    stiffness = 500
+    fast_diffusion = 1
+}
+
+set fiber actin
+{
+    rigidity = 0.1
+    segmentation = 0.1
+    glue = 3, anchor
+    display = ( line=1, 2; )
+}
+
+new 300 fiber actin
+{
+    length = 5
+}
+
+run 5 simul *
+
+change fiber actin { glue = 0 }
+
+new 5000 couple motor
+new 5000 couple crosslinker
+
+run simul *
+{   
+    nb_frames = 100
+    nb_steps = 10000
+}
