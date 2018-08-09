@@ -10,7 +10,7 @@
 #include "matsparse.h"
 #include "matsparsesym.h"
 #include "matsparsesym1.h"
-#include "vector.h"
+
 class Mecable;
 class PointExact;
 class PointInterpolated;
