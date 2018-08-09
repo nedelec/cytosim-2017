@@ -359,12 +359,6 @@ public:
     /// print numbers of different types of link made by each couple
     void    reportCoupleType(std::ostream&, std::string const&) const;
     
-    /// get link type for doubly-attached couples
-    int       whichLinkAA(Couple * obj) const;
-    
-    /// get links type for singly-attached couples
-    int       whichLinkAF(Couple * obj) const;
-    
     /// print state of Singles
     void      reportSingle(std::ostream&) const;
     

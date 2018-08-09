@@ -1112,14 +1112,14 @@ void Simul::reportCoupleType(std::ostream& out, std::string const& which) const
     for ( Couple * obj=couples.firstAA(); obj ; obj=obj->next() )
         if ( obj->property() == prop )
         {
-            int link = whichLinkAA(obj);
+            int link = obj->whichLinkAA();
             AA[link] +=1;
         }
     
     for ( Couple * obj=couples.firstAF(); obj ; obj=obj->next() )
         if ( obj->property() == prop )
         {
-            int link = whichLinkAF(obj);
+            int link = obj->whichLinkAF();
             AF[link] +=1;
         }
     
@@ -1142,40 +1142,6 @@ void Simul::reportCoupleType(std::ostream& out, std::string const& which) const
     for ( unsigned int d = 0; d < 2; ++d )
         out << SEP << AF[d];
     out << std::endl;
-}
-
-int Simul::whichLinkAA(Couple * obj) const
-{
-    // Hands within 10nm are considered end-bound (see testDetachment() )
-    int endLinks = (obj->hand1()->abscissaFrom(PLUS_END) < 0.010) + (obj->hand2()->abscissaFrom(PLUS_END) < 0.010);
-    int linkType;
-    
-    if (endLinks == 0)
-        if (obj->cosAngle() > 0.5)
-            linkType = 0; // H-P: angle < PI/3
-        else if (obj->cosAngle() < -0.5)
-            linkType = 1; // H-AP: angle > 2PI/3
-        else
-            linkType = 2; // X
-        else if (endLinks == 1)
-            linkType = 3; // T
-        else if (endLinks == 2)
-            linkType = 4; // V
-        else
-            linkType = 5; // ?
-    
-    return linkType;
-}
-
-
-int Simul::whichLinkAF(Couple * obj) const
-{
-    int endLink = 0;
-    
-    // Hands within 10nm are considered end-bound (see testDetachment() )
-    if (obj->attachedHand()->abscissaFrom(PLUS_END) < 0.010)
-        endLink = 1;
-    return endLink;
 }
 
 /**

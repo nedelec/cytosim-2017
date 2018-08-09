@@ -232,6 +232,15 @@ public:
     
     /// return PointDisp of Hand2
     PointDisp *    disp2() const { return cHand2->prop->disp; }
+    
+    //--------------------------------------------------------------------------
+
+    /// return link type for doubly-attached couples
+    int       whichLinkAA() const;
+    
+    /// return link type for singly-attached couples
+    int       whichLinkAF() const;
+
 
 };
 
