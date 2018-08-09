@@ -200,6 +200,8 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportCouplePosition(out);
         else if ( who == "bridge" ||  who == "link" )
             return reportCoupleLink(out, which);
+        else if ( who == "type" )
+            return reportCoupleType(out, which);
         else
             return reportCouplePosition(out, who);
         throw InvalidSyntax("I only know couple: all, NAME");
@@ -233,8 +235,6 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
 
     throw InvalidSyntax("I do not know how to write `"+what+"'");
 }
-
-
 
 void Simul::reportTime(std::ostream& out) const
 {
@@ -1086,6 +1086,97 @@ void write(std::ostream& out, Single * obj, const char str[])
     out << std::endl;
 }
 
+/**
+ Custom report function by Jamie-Li Rickman for: "Determinants of polar versus nematic organization in networks of dynamic microtubules and mitotic motors" published in 2018 By J. Roostalu, J. Rickman, C. Thomas, F. Nedelec and T. Surrey
+ 
+ Export 'type' of singly and doubly-attached couples:
+    - Couples attached with both hands can form Hp, Hap, X, T and V links dependent on the geometry of the filaments they cross-link
+    - Couples attached with one hand can form L or E links depending on whether they are bound on the lattice or the end of the filament.
+ */
+
+void Simul::reportCoupleType(std::ostream& out, std::string const& which) const
+{
+    Property * prop = properties.find_or_die("couple", which);
+    
+    int AA[6];
+    int AF[2];
+    AF[0] = 0;
+    AF[1] = 0;
+    
+    for ( int ii = 0; ii < 6; ++ii )
+    {
+        AA[ii] = 0;
+        
+    }
+    
+    for ( Couple * obj=couples.firstAA(); obj ; obj=obj->next() )
+        if ( obj->property() == prop )
+        {
+            int link = whichLinkAA(obj);
+            AA[link] +=1;
+        }
+    
+    for ( Couple * obj=couples.firstAF(); obj ; obj=obj->next() )
+        if ( obj->property() == prop )
+        {
+            int link = whichLinkAF(obj);
+            AF[link] +=1;
+        }
+    
+    out << std::endl;
+    out << "% Link";
+    out << SEP << "H-P";
+    out << SEP << "H-AP";
+    out << SEP << "X";
+    out << SEP << "T";
+    out << SEP << "V";
+    out << SEP << "?" << std::endl;
+    out << "% AA";
+    for ( unsigned int d = 0; d < 6; ++d )
+        out << SEP << AA[d];
+    out << std::endl;
+    out << "% Link";
+    out << SEP << "L";
+    out << SEP << "E" << std::endl;
+    out << "% AF";
+    for ( unsigned int d = 0; d < 2; ++d )
+        out << SEP << AF[d];
+    out << std::endl;
+}
+
+int Simul::whichLinkAA(Couple * obj) const
+{
+    // Hands within 10nm are considered end-bound (see testDetachment() )
+    int endLinks = (obj->hand1()->abscissaFrom(PLUS_END) < 0.010) + (obj->hand2()->abscissaFrom(PLUS_END) < 0.010);
+    int linkType;
+    
+    if (endLinks == 0)
+        if (obj->cosAngle() > 0.5)
+            linkType = 0; // H-P: angle < PI/3
+        else if (obj->cosAngle() < -0.5)
+            linkType = 1; // H-AP: angle > 2PI/3
+        else
+            linkType = 2; // X
+        else if (endLinks == 1)
+            linkType = 3; // T
+        else if (endLinks == 2)
+            linkType = 4; // V
+        else
+            linkType = 5; // ?
+    
+    return linkType;
+}
+
+
+int Simul::whichLinkAF(Couple * obj) const
+{
+    int endLink = 0;
+    
+    // Hands within 10nm are considered end-bound (see testDetachment() )
+    if (obj->attachedHand()->abscissaFrom(PLUS_END) < 0.010)
+        endLink = 1;
+    return endLink;
+}
 
 /**
  Export position of Singles
