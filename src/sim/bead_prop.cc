@@ -36,8 +36,8 @@ void BeadProp::read(Glossary& glos)
     glos.set(confine_stiff,  "confine", 1);
     glos.set(confine_space,  "confine", 2);
     glos.set(attach_stiff,  "attach");
-    glos.set(attach_pos,  "attach_point");
     glos.set(attach_pos, "attach", 1);
+    glos.set(attach_pos,  "attach_point");
 
 #ifdef BACKWARD_COMPATIBILITY
     if ( confine_space == "current" )
