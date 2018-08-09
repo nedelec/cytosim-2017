@@ -36,7 +36,7 @@ void BeadProp::read(Glossary& glos)
     glos.set(confine_stiff,  "confine", 1);
     glos.set(confine_space,  "confine", 2);
     glos.set(attach_stiff,  "attach");
-    glos.set(attach_pos, "attach", 1);
+    glos.set(attach_pos,    "attach", 1);
     glos.set(attach_pos,  "attach_point");
 
 #ifdef BACKWARD_COMPATIBILITY
@@ -77,8 +77,7 @@ void BeadProp::write_data(std::ostream & os) const
     write_param(os, "viscosity", viscosity);
     write_param(os, "steric",    steric);
     write_param(os, "confine",   confine, confine_stiff, confine_space);
-    write_param(os, "attach",   attach_stiff);
-    write_param(os, "attach_point",   attach_pos);
+    write_param(os, "attach",    attach_stiff, attach_pos);
     write_param(os, "display",   "("+display+")");
 }
 
