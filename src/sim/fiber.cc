@@ -9,7 +9,6 @@
 #include "fiber_prop.h"
 #include "simul_prop.h"
 #include "simul.h"
-//#include "meca.h"
 #include "sim.h"
 #include <algorithm>
 
