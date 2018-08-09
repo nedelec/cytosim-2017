@@ -356,6 +356,8 @@ public:
     /// print info on doubly bound Couples 
     void      reportCoupleLink(std::ostream&, std::string const&) const;
     
+    /// print numbers of different types of link made by each couple
+    void    reportCoupleType(std::ostream&, std::string const&) const;
     
     /// print state of Singles
     void      reportSingle(std::ostream&) const;

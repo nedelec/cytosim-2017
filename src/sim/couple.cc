@@ -359,3 +359,38 @@ void Couple::read(InputWrapper & in, Simul& sim)
     }
 }
 
+//------------------------------------------------------------------------------
+
+int Couple::whichLinkAA() const
+{
+    // Hands within 10 nm are considered end-bound (see testDetachment() )
+    int endLinks = (hand1()->abscissaFrom(PLUS_END) < 0.010) + (hand2()->abscissaFrom(PLUS_END) < 0.010);
+    int linkType;
+    
+    if (endLinks == 0)
+        if (cosAngle() > 0.5)
+            linkType = 0; // H-P: angle < PI/3
+        else if (cosAngle() < -0.5)
+            linkType = 1; // H-AP: angle > 2PI/3
+        else
+            linkType = 2; // X
+        else if (endLinks == 1)
+            linkType = 3; // T
+        else if (endLinks == 2)
+            linkType = 4; // V
+        else
+            linkType = 5; // ?
+    
+    return linkType;
+}
+
+
+int Couple::whichLinkAF() const
+{
+    int endLink = 0;
+    
+    // Hands within 10 nm are considered end-bound (see testDetachment() )
+    if (attachedHand()->abscissaFrom(PLUS_END) < 0.010)
+        endLink = 1;
+    return endLink;
+}
