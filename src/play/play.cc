@@ -40,7 +40,7 @@ void splash(std::ostream & os = std::cout)
 void info(std::ostream & os = std::cout)
 {
     os << "www.cytosim.org - play" << endl;
-    os << " GIT version " << endl;
+    os << " https://github.com/nedelec/cytosim" << endl;
     os << " Compiled at "<<__TIME__<< " on " <<__DATE__<< endl;
     os << " Precision: " << sizeof(real) << " bytes,  epsilon = " << REAL_EPSILON << endl;
     
