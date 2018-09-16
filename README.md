@@ -54,13 +54,11 @@ You can now open `html/index.html` in a browser.
 
 In the documentation, you will find a module describing how to compile Cytosim. On Mac OS X and Linux this should be straightforward if you are familiar with compilation in general. On Windows, we suggest that you compile within Cygwin. More more information, please check src/doc/compile.dox.
 
-Here is the steps to compile it in GNU/Linux:
+Here are the steps to compile:
 
-~~~bash
-git clone https://github.com/nedelec/cytosim.git
-cd cytosim
-make
-~~~
+	git clone https://github.com/nedelec/cytosim.git
+	cd cytosim
+	make
 
 ## Usage
 
