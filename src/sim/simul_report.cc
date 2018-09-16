@@ -200,6 +200,8 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
             return reportCouplePosition(out);
         else if ( who == "bridge" ||  who == "link" )
             return reportCoupleLink(out, which);
+        else if ( who == "type" )
+            return reportCoupleType(out, which);
         else
             return reportCouplePosition(out, who);
         throw InvalidSyntax("I only know couple: all, NAME");
@@ -233,8 +235,6 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
 
     throw InvalidSyntax("I do not know how to write `"+what+"'");
 }
-
-
 
 void Simul::reportTime(std::ostream& out) const
 {
@@ -1086,6 +1086,63 @@ void write(std::ostream& out, Single * obj, const char str[])
     out << std::endl;
 }
 
+/**
+ Custom report function by Jamie-Li Rickman for: "Determinants of polar versus nematic organization in networks of dynamic microtubules and mitotic motors" published in 2018 By J. Roostalu, J. Rickman, C. Thomas, F. Nedelec and T. Surrey
+ 
+ Export 'type' of singly and doubly-attached couples:
+    - Couples attached with both hands can form Hp, Hap, X, T and V links dependent on the geometry of the filaments they cross-link
+    - Couples attached with one hand can form L or E links depending on whether they are bound on the lattice or the end of the filament.
+ */
+
+void Simul::reportCoupleType(std::ostream& out, std::string const& which) const
+{
+    Property * prop = properties.find_or_die("couple", which);
+    
+    int AA[6];
+    int AF[2];
+    AF[0] = 0;
+    AF[1] = 0;
+    
+    for ( int ii = 0; ii < 6; ++ii )
+    {
+        AA[ii] = 0;
+        
+    }
+    
+    for ( Couple * obj=couples.firstAA(); obj ; obj=obj->next() )
+        if ( obj->property() == prop )
+        {
+            int link = obj->whichLinkAA();
+            AA[link] +=1;
+        }
+    
+    for ( Couple * obj=couples.firstAF(); obj ; obj=obj->next() )
+        if ( obj->property() == prop )
+        {
+            int link = obj->whichLinkAF();
+            AF[link] +=1;
+        }
+    
+    out << std::endl;
+    out << "% Link";
+    out << SEP << "H-P";
+    out << SEP << "H-AP";
+    out << SEP << "X";
+    out << SEP << "T";
+    out << SEP << "V";
+    out << SEP << "?" << std::endl;
+    out << "% AA";
+    for ( unsigned int d = 0; d < 6; ++d )
+        out << SEP << AA[d];
+    out << std::endl;
+    out << "% Link";
+    out << SEP << "L";
+    out << SEP << "E" << std::endl;
+    out << "% AF";
+    for ( unsigned int d = 0; d < 2; ++d )
+        out << SEP << AF[d];
+    out << std::endl;
+}
 
 /**
  Export position of Singles
