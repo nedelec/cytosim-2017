@@ -21,7 +21,7 @@ class HandMonitor;
  of dynamic microtubules and mitotic motors" published in 2018
  By J. Roostalu, J. Rickman, C. Thomas, F. Nedelec and T. Surrey
  */
-#define NEW_END_DEPENDENT_DETACHMENT 1
+#define NEW_END_DEPENDENT_DETACHMENT 0
 
 
 /// Property for Hand
