@@ -20,7 +20,7 @@ TOOL_OBJ  = $(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $
 
 TOOL_INC  = $(addprefix -Isrc/, SFMT math base sim sim/spaces sim/fibers sim/singles sim/organizers gl play)
 
-TOOL_MAKE = $(CXXFLAGS) $(TOOL_INC) $(TOOL_OBJ) $(LINK) -o bin/$@
+TOOL_MAKE = $(COMPILE) $(TOOL_INC) $(TOOL_OBJ) $(LINK) -o bin/$@
 
 
 #-------------------targets----------------------------------------------------
@@ -39,7 +39,7 @@ vpath sieve bin
 
 
 frame_readerVB.o: frame_reader.cc frame_reader.h
-	$(CXXFLAGS) -c $(PLAY_INC) -DVERBOSE_READER $< -o build/$@
+	$(COMPILE) -c $(PLAY_INC) -DVERBOSE_READER $< -o build/$@
 vpath frame_readerVB.o build
 
 

@@ -51,7 +51,7 @@ OBJ_CYTOSIM_3D:=$(OBJ_CYTOSIM:.o=3D.o)
 #--- normal build:
 
 sim: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a) | bin
-	$(CXXFLAGS) $(INC_SIM) $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim  bin
 
@@ -67,17 +67,17 @@ vpath simd  bin
 #--- builds with specific dimension:
 
 sim1: sim.cc $(addprefix build/, libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=1 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=1 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim1  bin
 
 sim2: sim.cc $(addprefix build/, libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=2 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=2 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim2  bin
 
 sim3: sim.cc $(addprefix build/, libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a)
-	$(CXXFLAGS) $(INC_SIM) -DDIM=3 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=3 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim3  bin
 
@@ -109,14 +109,14 @@ INC_SIM=$(addprefix -Isrc/, SFMT math base sim sim/fibers sim/hands sim/singles 
 
 
 $(OBJ_CYTOSIM): %.o: %.cc %.h | build
-	$(CXXFLAGS) -c $(INC_SIM) $< -o build/$@
+	$(COMPILE) -c $(INC_SIM) $< -o build/$@
 
 $(OBJ_CYTOSIM_1D): %1D.o: %.cc %.h | build
-	$(CXXFLAGS) -c -DDIM=1 $(INC_SIM) $< -o build/$@
+	$(COMPILE) -c -DDIM=1 $(INC_SIM) $< -o build/$@
 
 $(OBJ_CYTOSIM_2D): %2D.o: %.cc %.h | build
-	$(CXXFLAGS) -c -DDIM=2 $(INC_SIM) $< -o build/$@
+	$(COMPILE) -c -DDIM=2 $(INC_SIM) $< -o build/$@
 
 $(OBJ_CYTOSIM_3D): %3D.o: %.cc %.h | build
-	$(CXXFLAGS) -c -DDIM=3 $(INC_SIM) $< -o build/$@
+	$(COMPILE) -c -DDIM=3 $(INC_SIM) $< -o build/$@
 

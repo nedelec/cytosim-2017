@@ -13,12 +13,12 @@ INC_MATH:=$(addprefix -Isrc/, SFMT math base)
 
 
 $(OBJ_MATH): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(INC_MATH) $< -o build/$@
+	$(COMPILE) -c $(INC_MATH) $< -o build/$@
 
 
 # this is for graphical debugging of the rasterizer:
 build/rasterizerGL.o: rasterizer.cc rasterizer.h
-	$(CXXFLAGS) -c $(INC_MATH) -Isrc/gl -DDISPLAY $< -o $@
+	$(COMPILE) -c $(INC_MATH) -Isrc/gl -DDISPLAY $< -o $@
 
 
 build/libcytomath.a: $(OBJ_MATH)

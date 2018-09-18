@@ -1,74 +1,62 @@
 # Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-OBJ_PLAY := fiber_disp.o line_disp.o point_disp.o display_prop.o\
-            display.o display1.o display2.o display3.o\
-            sim_thread.o frame_reader.o play_prop.o
 
-FILES_PLAY := play.cc play.h play_disp.cc play_keys.cc play_sim.cc play_mouse.cc play_menus.cc
+OBJ_PLAYER := fiber_disp.o line_disp.o point_disp.o display_prop.o\
+              display.o display1.o display2.o display3.o\
+              sim_thread.o frame_reader.o play_prop.o play.o
+
+FILES_PLAYER := play.h play.cc play_disp.cc play_keys.cc play_mouse.cc play_menus.cc
 
 
-OBJ_PLAYND := $(addprefix build/, $(OBJ_PLAY))
-OBJ_PLAY1D := $(addprefix build/, $(OBJ_PLAY:.o=1D.o))
-OBJ_PLAY2D := $(addprefix build/, $(OBJ_PLAY:.o=2D.o))
-OBJ_PLAY3D := $(addprefix build/, $(OBJ_PLAY:.o=3D.o))
+OBJ_PLAYER1D := $(OBJ_PLAYER:.o=1D.o)
+OBJ_PLAYER2D := $(OBJ_PLAYER:.o=2D.o)
+OBJ_PLAYER3D := $(OBJ_PLAYER:.o=3D.o)
 
 #----------------------------------------------------------------------
 
-PLAY_DEP  := build/libcytogl.a build/libcytomath.a build/libcytobase.a
 PLAY_LINK := $(IMAGE_LIB) $(LINKGL) $(LINK)
 PLAY_INC  := $(addprefix -Isrc/, SFMT math base sim gl play sim/organizers sim/singles)
 
 
+# need to fix the paths of libraries:
+PLAY_OBJS=$(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $^)))
 
-build/play.o: $(FILES_PLAY) | build
-	$(CXXFLAGS) -c $(PLAY_INC) $< -o $@
+$(OBJ_PLAYER): %.o: %.cc %.h
+	$(COMPILE) -c $(PLAY_INC) $< -o build/$@
 
-$(OBJ_PLAYND): build/%.o: %.cc %.h
-	$(CXXFLAGS) -c $(PLAY_INC) $< -o $@
-
-play: build/play.o $(OBJ_PLAYND) build/libcytosim.a build/libcytospaceGL.a $(PLAY_DEP) | bin
-	$(CXXFLAGS) $^ $(PLAY_LINK) -o bin/$@
+play: $(OBJ_PLAYER) libcytosim.a libcytospaceGL.a libcytogl.a libcytomath.a libcytobase.a | bin
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin/play
 	$(DONE)
 vpath play bin
 
 
 
-build/play1D.o: $(FILES_PLAY) | build
-	$(CXXFLAGS) -c -DDIM=1 $(PLAY_INC) $< -o $@
+$(OBJ_PLAYER1D): %1D.o: %.cc %.h
+	$(COMPILE) -c -DDIM=1 $(PLAY_INC) $< -o build/$@
 
-$(OBJ_PLAY1D): build/%1D.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=1 $(PLAY_INC) $< -o $@
-
-play1: build/play1D.o $(OBJ_PLAY1D) build/libcytosim1D.a build/libcytospace1DGL.a $(PLAY_DEP)
-	$(CXXFLAGS) $^ $(PLAY_LINK) -o bin/$@
+bin1/play: $(OBJ_PLAYER1D) libcytosim1D.a libcytospace1DGL.a libcytogl.a libcytomath1D.a libcytobase.a
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin1/play
 	$(DONE)
-vpath play1 bin
+vpath bin1/play bin1
 
 
 
-build/play2D.o: $(FILES_PLAY) | build
-	$(CXXFLAGS) -c -DDIM=2 $(PLAY_INC) $< -o $@
+$(OBJ_PLAYER2D): %2D.o: %.cc %.h
+	$(COMPILE) -c -DDIM=2 $(PLAY_INC) $< -o build/$@
 
-$(OBJ_PLAY2D): build/%2D.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=2 $(PLAY_INC) $< -o $@
-
-play2: build/play2D.o $(OBJ_PLAY2D) build/libcytosim2D.a build/libcytospace2DGL.a $(PLAY_DEP)
-	$(CXXFLAGS) $^ $(PLAY_LINK) -o bin/$@
+bin2/play: $(OBJ_PLAYER2D) libcytosim2D.a libcytospace2DGL.a libcytogl.a libcytomath2D.a libcytobase.a
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin2/play
 	$(DONE)
-vpath play2 bin
+vpath bin2/play bin2
 
 
 
-build/play3D.o: $(FILES_PLAY) | build
-	$(CXXFLAGS) -c -DDIM=3 $(PLAY_INC) $< -o $@
+$(OBJ_PLAYER3D): %3D.o: %.cc %.h
+	$(COMPILE) -c -DDIM=3 $(PLAY_INC) $< -o build/$@
 
-$(OBJ_PLAY3D): build/%3D.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=3 $(PLAY_INC) $< -o $@
-
-play3: build/play3D.o $(OBJ_PLAY3D) build/libcytosim3D.a build/libcytospace3DGL.a $(PLAY_DEP)
-	$(CXXFLAGS) $^ $(PLAY_LINK) -o bin/$@
+bin3/play: $(OBJ_PLAYER3D) libcytosim3D.a libcytospace3DGL.a libcytogl.a libcytomath3D.a libcytobase.a
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin3/play
 	$(DONE)
-vpath play3 bin
-
+vpath bin3/play bin3
 

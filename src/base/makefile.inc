@@ -10,7 +10,7 @@ OBJ_BASE:=messages.o filewrapper.o filepath.o iowrapper.o exceptions.o\
 INC_BASE:=$(addprefix -Isrc/, SFMT base math)
 
 $(OBJ_BASE): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(INC_BASE) $< -o build/$@
+	$(COMPILE) -c $(INC_BASE) $< -o build/$@
 
 #----------------------------targets--------------------------------------------
 

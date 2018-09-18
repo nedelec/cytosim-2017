@@ -65,27 +65,27 @@ build/libcytospace3DGL.a: $(OBJ_SPACE3DGL)
 INC_SPACE=$(addprefix -Isrc/, SFMT math base sim sim/spaces gl)
 
 $(OBJ_SPACE): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE1D): %1D.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=1 $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=1 $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE2D): %2D.o: %.cc %.h 
-	$(CXXFLAGS) -c -DDIM=2 $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=2 $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE3D): %3D.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=3 $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=3 $(INC_SPACE) $< -o build/$@
 
 
 $(OBJ_SPACEGL): %GL.o: %.cc %.h
-	$(CXXFLAGS) -c -DDISPLAY $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDISPLAY $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE1DGL): %1DGL.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=1 -DDISPLAY $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=1 -DDISPLAY $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE2DGL): %2DGL.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=2 -DDISPLAY $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=2 -DDISPLAY $(INC_SPACE) $< -o build/$@
 
 $(OBJ_SPACE3DGL): %3DGL.o: %.cc %.h
-	$(CXXFLAGS) -c -DDIM=3 -DDISPLAY $(INC_SPACE) $< -o build/$@
+	$(COMPILE) -c -DDIM=3 -DDISPLAY $(INC_SPACE) $< -o build/$@
 

@@ -35,14 +35,14 @@ build/libcytogl.a: $(OBJ_GL) build/offscreen.o build/saveimage.o
 
 
 build/saveimage.o: saveimage.cc saveimage.h
-	$(CXXFLAGS) -c $(IMAGE_DEF) $< -o $@
+	$(COMPILE) -c $(IMAGE_DEF) $< -o $@
 
 
 build/offscreen.o: offscreen.cc offscreen.h
-	$(CXXFLAGS) -c $< -o $@
+	$(COMPILE) -c $< -o $@
 
 
 $(OBJ_GL): %.o: %.cc %.h
-	$(CXXFLAGS) -c $(addprefix -Isrc/, SFMT math base) $< -o build/$@
+	$(COMPILE) -c $(addprefix -Isrc/, SFMT math base) $< -o build/$@
 
 

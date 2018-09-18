@@ -22,9 +22,9 @@ TEST_OBJ=$(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $^))
 
 TEST_INC=$(addprefix -Isrc/, SFMT math base sim sim/spaces sim/fibers sim/singles sim/organizers gl play)
 
-TEST_MAKE=$(CXXFLAGS) $(TEST_INC) $(TEST_OBJ) $(LINK) -o bin/$@
+TEST_MAKE=$(COMPILE) $(TEST_INC) $(TEST_OBJ) $(LINK) -o bin/$@
 
-TEST_MAKE_GL=$(CXXFLAGS) $(TEST_INC) $(TEST_OBJ) $(LINK) $(LINKGL) -o bin/$@
+TEST_MAKE_GL=$(COMPILE) $(TEST_INC) $(TEST_OBJ) $(LINK) $(LINKGL) -o bin/$@
 
 
 #----------------------------targets--------------------------------------------
@@ -60,7 +60,7 @@ test_random: test_random.cc random.o SFMT.o exceptions.o filewrapper.o messages.
 vpath test_random bin
 
 test_simd: test_simd.cc tictoc.o 
-	$(CXXFLAGS) -Isrc/base src/base/tictoc.cc $< -o bin/test_simd
+	$(COMPILE) -Isrc/base src/base/tictoc.cc $< -o bin/test_simd
 	$(DONE)
 vpath test_simd bin
 
