@@ -15,7 +15,11 @@ ifeq ($(Flags$(MODE)),)
    $(error No compiler-options defined for $$(MACHINE)=$(MACHINE) in mode $(MODE))
 endif
 
+#command to compile:
 COMPILE := $(CXX) $(Flags$(MODE))
+
+#command to make a library:
+MAKELIB = $(LIBTOOL) build/$@ $(addprefix build/, $(notdir $^))
 
 #-----------------prepare some useful variables---------------------------------
 

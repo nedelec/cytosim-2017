@@ -70,9 +70,9 @@ WARN    := -Wall -Wno-unknown-pragmas # -Wno-unused
 
 
 ifeq ($(MACHINE),mac)
-    MAKELIB := libtool -static -o
+    LIBTOOL := libtool -static -o
 else
-    MAKELIB := ar rcs
+    LIBTOOL := ar rcs
 endif
 
 

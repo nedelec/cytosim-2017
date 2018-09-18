@@ -14,8 +14,8 @@ $(OBJ_BASE): %.o: %.cc %.h
 
 #----------------------------targets--------------------------------------------
 
-build/libcytobase.a: $(OBJ_BASE) SFMT.o
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytobase.a: $(OBJ_BASE) SFMT.o
+	$(MAKELIB)
 	$(DONE)
 
 

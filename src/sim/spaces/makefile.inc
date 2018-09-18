@@ -16,48 +16,48 @@ OBJ_SPACE3DGL=$(OBJ_SPACE3D:.o=GL.o)
 
 #----------------------------targets--------------------------------------------
 
-build/libcytospace.a: $(OBJ_SPACE)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace.a: $(OBJ_SPACE)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytospace1D.a: $(OBJ_SPACE1D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace1D.a: $(OBJ_SPACE1D)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytospace2D.a: $(OBJ_SPACE2D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace2D.a: $(OBJ_SPACE2D)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytospace3D.a: $(OBJ_SPACE3D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace3D.a: $(OBJ_SPACE3D)
+	$(MAKELIB)
 	$(DONE)
 
 
 
 #library with display
-build/libcytospaceGL.a: $(OBJ_SPACEGL)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospaceGL.a: $(OBJ_SPACEGL)
+	$(MAKELIB)
 	$(DONE)
 
 
 #1D library with display
-build/libcytospace1DGL.a: $(OBJ_SPACE1DGL)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace1DGL.a: $(OBJ_SPACE1DGL)
+	$(MAKELIB)
 	$(DONE)
 
 
 #2D library with display
-build/libcytospace2DGL.a: $(OBJ_SPACE2DGL)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace2DGL.a: $(OBJ_SPACE2DGL)
+	$(MAKELIB)
 	$(DONE)
 
 
 #3D library with display
-build/libcytospace3DGL.a: $(OBJ_SPACE3DGL)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytospace3DGL.a: $(OBJ_SPACE3DGL)
+	$(MAKELIB)
 	$(DONE)
 
 

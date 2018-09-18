@@ -22,7 +22,7 @@ PLAY_INC  := $(addprefix -Isrc/, SFMT math base sim gl play sim/organizers sim/s
 # need to fix the paths of libraries:
 PLAY_OBJS=$(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $^)))
 
-$(OBJ_PLAYER): %.o: %.cc %.h
+$(OBJ_PLAYER): %.o: %.cc %.h | build
 	$(COMPILE) -c $(PLAY_INC) $< -o build/$@
 
 play: $(OBJ_PLAYER) libcytosim.a libcytospaceGL.a libcytogl.a libcytomath.a libcytobase.a | bin
@@ -32,30 +32,30 @@ vpath play bin
 
 
 
-$(OBJ_PLAYER1D): %1D.o: %.cc %.h
+$(OBJ_PLAYER1D): %1D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=1 $(PLAY_INC) $< -o build/$@
 
-bin1/play: $(OBJ_PLAYER1D) libcytosim1D.a libcytospace1DGL.a libcytogl.a libcytomath1D.a libcytobase.a
+bin1/play: $(OBJ_PLAYER1D) libcytosim1D.a libcytospace1DGL.a libcytogl.a libcytomath1D.a libcytobase.a | bin
 	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin1/play
 	$(DONE)
 vpath bin1/play bin1
 
 
 
-$(OBJ_PLAYER2D): %2D.o: %.cc %.h
+$(OBJ_PLAYER2D): %2D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=2 $(PLAY_INC) $< -o build/$@
 
-bin2/play: $(OBJ_PLAYER2D) libcytosim2D.a libcytospace2DGL.a libcytogl.a libcytomath2D.a libcytobase.a
+bin2/play: $(OBJ_PLAYER2D) libcytosim2D.a libcytospace2DGL.a libcytogl.a libcytomath2D.a libcytobase.a | bin
 	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin2/play
 	$(DONE)
 vpath bin2/play bin2
 
 
 
-$(OBJ_PLAYER3D): %3D.o: %.cc %.h
+$(OBJ_PLAYER3D): %3D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=3 $(PLAY_INC) $< -o build/$@
 
-bin3/play: $(OBJ_PLAYER3D) libcytosim3D.a libcytospace3DGL.a libcytogl.a libcytomath3D.a libcytobase.a
+bin3/play: $(OBJ_PLAYER3D) libcytosim3D.a libcytospace3DGL.a libcytogl.a libcytomath3D.a libcytobase.a | bin
 	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin3/play
 	$(DONE)
 vpath bin3/play bin3

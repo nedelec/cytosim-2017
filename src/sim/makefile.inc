@@ -50,7 +50,7 @@ OBJ_CYTOSIM_3D:=$(OBJ_CYTOSIM:.o=3D.o)
 
 #--- normal build:
 
-sim: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a) | bin
+sim: sim.cc libcytosim.a libcytospace.a libcytomath.a libcytobase.a | bin
 	$(COMPILE) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim  bin
@@ -58,7 +58,7 @@ vpath sim  bin
 
 #--- build with debuging flags:
 
-simd: sim.cc $(addprefix build/, libcytosim.a libcytospace.a libcytomath.a libcytobase.a) | bin
+simd: sim.cc libcytosim.a libcytospace.a libcytomath.a libcytobase.a | bin
 	$(CXX) $(FlagsD) $(INC_SIM) $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath simd  bin
@@ -66,40 +66,40 @@ vpath simd  bin
 
 #--- builds with specific dimension:
 
-sim1: sim.cc $(addprefix build/, libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a)
+sim1: sim.cc libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a
 	$(COMPILE) $(INC_SIM) -DDIM=1 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim1  bin
 
-sim2: sim.cc $(addprefix build/, libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a)
+sim2: sim.cc libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a
 	$(COMPILE) $(INC_SIM) -DDIM=2 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim2  bin
 
-sim3: sim.cc $(addprefix build/, libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a)
+sim3: sim.cc libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a
 	$(COMPILE) $(INC_SIM) -DDIM=3 $^ $(LINK) -o bin/$@
 	$(DONE)
 vpath sim3  bin
 
 
 
-build/libcytosim.a: $(OBJ_CYTOSIM)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytosim.a: $(OBJ_CYTOSIM)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytosim1D.a: $(OBJ_CYTOSIM_1D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytosim1D.a: $(OBJ_CYTOSIM_1D)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytosim2D.a: $(OBJ_CYTOSIM_2D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytosim2D.a: $(OBJ_CYTOSIM_2D)
+	$(MAKELIB)
 	$(DONE)
 
 
-build/libcytosim3D.a: $(OBJ_CYTOSIM_3D)
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytosim3D.a: $(OBJ_CYTOSIM_3D)
+	$(MAKELIB)
 	$(DONE)
 
 

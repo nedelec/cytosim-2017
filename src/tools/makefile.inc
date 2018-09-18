@@ -14,7 +14,7 @@ vpath %.cc src/tools
 
 #--------------------macros----------------------------------------------------
 
-TOOL_DEP := $(addprefix build/,libcytosim.a libcytospace.a libcytomath.a libcytobase.a)
+TOOL_DEP := libcytosim.a libcytospace.a libcytomath.a libcytobase.a
 
 TOOL_OBJ  = $(filter %.cc, $^) $(addprefix build/, $(notdir $(filter-out %.cc, $^)))
 

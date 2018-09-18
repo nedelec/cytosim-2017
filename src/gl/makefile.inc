@@ -29,17 +29,17 @@ endif
 #----------------------------targets--------------------------------------------
 
 
-build/libcytogl.a: $(OBJ_GL) build/offscreen.o build/saveimage.o
-	$(MAKELIB) $@ $(addprefix build/, $(notdir $^))
+libcytogl.a: $(OBJ_GL) offscreen.o saveimage.o
+	$(MAKELIB)
 	$(DONE)
 
 
-build/saveimage.o: saveimage.cc saveimage.h
-	$(COMPILE) -c $(IMAGE_DEF) $< -o $@
+saveimage.o: saveimage.cc saveimage.h
+	$(COMPILE) -c $(IMAGE_DEF) $< -o build/$@
 
 
-build/offscreen.o: offscreen.cc offscreen.h
-	$(COMPILE) -c $< -o $@
+offscreen.o: offscreen.cc offscreen.h
+	$(COMPILE) -c $< -o build/$@
 
 
 $(OBJ_GL): %.o: %.cc %.h
