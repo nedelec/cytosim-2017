@@ -11,10 +11,6 @@
  */
 #define ALLOW_WRITING
 
-
-/// amount added/subtracted to size/width when a key is pressed
-const real GRAIN = 0.5;
-
 //------------------------------------------------------------------------------
 /**
  Change size (add inc) for all PointDisp.
@@ -45,13 +41,13 @@ void changePointDispWidth(const PropertyList& plist, DisplayProp& DP, real inc)
     for ( unsigned int n = 0; n < plist.size(); ++n )
     {
         PointDisp * disp = static_cast<PointDisp*>(plist[n]);
-        real s = disp->width + inc;
+        real s = disp->width + 0.5 * inc;
         if ( s > 0 )
                disp->width = s;
     }
     
     // also change the global value:
-    real s = DP.line_width + inc;
+    real s = DP.line_width + 0.5 * inc;
     if ( s > 0 )
        DP.line_width = s;
 }
@@ -195,20 +191,20 @@ void changePointSize(FiberDisp* fd, real inc)
 }
 
 
-void changeLineWidth(FiberDisp* fd, real inc, bool scale_pointsize)
+void changeLineWidth(FiberDisp* fd, real inc)
 {
-    real s = fd->line_width + inc;
+    real s = fd->line_width + 0.5 * inc;
     
     if ( s > 0 )
     {
-        if ( scale_pointsize  &&  fd->line_width > 0 )
+        if ( fd->line_width > 0 )
         {
             real scale = s / fd->line_width;
             fd->point_size  *= scale;
             fd->end_size[0] *= scale;
             fd->end_size[1] *= scale;
         }
-        fd->line_width  = s;
+        fd->line_width = s;
         flashText("Fibers: line_width %0.2f", s);
     }
 }
@@ -583,9 +579,9 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             if ( FDisp ) 
             {
                 if ( glutGetModifiers() & GLUT_ACTIVE_ALT )
-                    changePointSize(FDisp, -GRAIN);
+                    changePointSize(FDisp, -1);
                 else
-                    changeLineWidth(FDisp, -GRAIN, true);
+                    changeLineWidth(FDisp, -1);
             }
             break;
             
@@ -593,9 +589,9 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             if ( FDisp )
             {
                 if ( glutGetModifiers() & GLUT_ACTIVE_ALT )
-                    changePointSize(FDisp, +GRAIN);
+                    changePointSize(FDisp, +1);
                 else
-                    changeLineWidth(FDisp, +GRAIN, true);
+                    changeLineWidth(FDisp, +1);
             }
             break;
             
@@ -608,12 +604,12 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             
         case '#':
             if ( FDisp )
-                changeTipSize(FDisp, -GRAIN);
+                changeTipSize(FDisp, -1);
             break;
                 
         case '$':
             if ( FDisp )
-                changeTipSize(FDisp, +GRAIN);
+                changeTipSize(FDisp, +1);
             break;
             
         //------------------------ Solid / Sphere ------------------------------
@@ -629,22 +625,22 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
         }  break;
             
         case '6':
-            changePointDispSize(dproperties.find_all("bead:display", "sphere:display"), DP, -GRAIN);
+            changePointDispSize(dproperties.find_all("bead:display", "sphere:display"), DP, -1);
             flashText("Point size %.1f", DP.point_size);
             break;
             
         case '7':
-            changePointDispSize(dproperties.find_all("bead:display", "sphere:display"), DP, +GRAIN);
+            changePointDispSize(dproperties.find_all("bead:display", "sphere:display"), DP, +1);
             flashText("Point size %.1f", DP.point_size);
             break;
             
         case '^':
-            changePointDispWidth(dproperties.find_all("bead:display", "sphere:display"), DP, -GRAIN);
+            changePointDispWidth(dproperties.find_all("bead:display", "sphere:display"), DP, -1);
             flashText("Line width %.1f", DP.line_width);
             break;
             
         case '&':
-            changePointDispWidth(dproperties.find_all("bead:display", "sphere:display"), DP, +GRAIN);
+            changePointDispWidth(dproperties.find_all("bead:display", "sphere:display"), DP, +1);
             flashText("Line width %.1f", DP.line_width);
             break;
             
@@ -662,22 +658,22 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
         //------------------------ Point-Size ------------------------------
 
         case '9':
-            changePointDispSize(dproperties.find_all("hand:display"), DP, -GRAIN);
+            changePointDispSize(dproperties.find_all("hand:display"), DP, -1);
             flashText("Point size %.1f", DP.point_size);
             break;
             
         case '0':
-            changePointDispSize(dproperties.find_all("hand:display"), DP, +GRAIN);
+            changePointDispSize(dproperties.find_all("hand:display"), DP, +1);
             flashText("Point size %.1f", DP.point_size);
             break;
             
         case '(':
-            changePointDispWidth(dproperties.find_all("hand:display"), DP, -GRAIN);
+            changePointDispWidth(dproperties.find_all("hand:display"), DP, -1);
             flashText("Line width %.1f", DP.line_width);
             break;
             
         case ')':
-            changePointDispWidth(dproperties.find_all("hand:display"), DP, +GRAIN);
+            changePointDispWidth(dproperties.find_all("hand:display"), DP, +1);
             flashText("Line width %.1f", DP.line_width);
             break;
             
