@@ -48,10 +48,13 @@ OBJ_CYTOSIM_3D:=$(OBJ_CYTOSIM:.o=3D.o)
 
 #----------------------------targets--------------------------------------------
 
+# need to fix the paths of libraries:
+SIM_OBJS=$< $(addprefix build/, $(notdir $(filter-out %.cc, $^)))
+
 #--- normal build:
 
 sim: sim.cc libcytosim.a libcytospace.a libcytomath.a libcytobase.a | bin
-	$(COMPILE) $(INC_SIM) $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM)  $(SIM_OBJS) $(LINK) -o bin/$@
 	$(DONE)
 vpath sim  bin
 
@@ -59,7 +62,7 @@ vpath sim  bin
 #--- build with debuging flags:
 
 simd: sim.cc libcytosim.a libcytospace.a libcytomath.a libcytobase.a | bin
-	$(CXX) $(FlagsD) $(INC_SIM) $^ $(LINK) -o bin/$@
+	$(CXX) $(FlagsD) $(INC_SIM) $(SIM_OBJS) $(LINK) -o bin/$@
 	$(DONE)
 vpath simd  bin
 
@@ -67,17 +70,17 @@ vpath simd  bin
 #--- builds with specific dimension:
 
 sim1: sim.cc libcytosim1D.a libcytospace1D.a libcytomath.a libcytobase.a
-	$(COMPILE) $(INC_SIM) -DDIM=1 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=1 $(SIM_OBJS) $(LINK) -o bin/$@
 	$(DONE)
 vpath sim1  bin
 
 sim2: sim.cc libcytosim2D.a libcytospace2D.a libcytomath.a libcytobase.a
-	$(COMPILE) $(INC_SIM) -DDIM=2 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=2 $(SIM_OBJS) $(LINK) -o bin/$@
 	$(DONE)
 vpath sim2  bin
 
 sim3: sim.cc libcytosim3D.a libcytospace3D.a libcytomath.a libcytobase.a
-	$(COMPILE) $(INC_SIM) -DDIM=3 $^ $(LINK) -o bin/$@
+	$(COMPILE) $(INC_SIM) -DDIM=3 $(SIM_OBJS) $(LINK) -o bin/$@
 	$(DONE)
 vpath sim3  bin
 

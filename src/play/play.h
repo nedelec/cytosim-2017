@@ -157,7 +157,7 @@ namespace Player
 
     //--------------------------------------------------------------------------
     
-    /// the different values for PP.dir
+    /// the different values for PP.play
     enum PlayMode
     {
         PLAY_REVERSE       = -1,

@@ -35,8 +35,8 @@ vpath play bin
 $(OBJ_PLAYER1D): %1D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=1 $(PLAY_INC) $< -o build/$@
 
-bin1/play: $(OBJ_PLAYER1D) libcytosim1D.a libcytospace1DGL.a libcytogl.a libcytomath1D.a libcytobase.a | bin
-	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin1/play
+play1: $(OBJ_PLAYER1D) libcytosim1D.a libcytospace1DGL.a libcytogl.a libcytomath.a libcytobase.a | bin
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin/play1
 	$(DONE)
 vpath bin1/play bin1
 
@@ -45,8 +45,8 @@ vpath bin1/play bin1
 $(OBJ_PLAYER2D): %2D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=2 $(PLAY_INC) $< -o build/$@
 
-bin2/play: $(OBJ_PLAYER2D) libcytosim2D.a libcytospace2DGL.a libcytogl.a libcytomath2D.a libcytobase.a | bin
-	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin2/play
+play2: $(OBJ_PLAYER2D) libcytosim2D.a libcytospace2DGL.a libcytogl.a libcytomath.a libcytobase.a | bin
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin/play2
 	$(DONE)
 vpath bin2/play bin2
 
@@ -55,8 +55,8 @@ vpath bin2/play bin2
 $(OBJ_PLAYER3D): %3D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=3 $(PLAY_INC) $< -o build/$@
 
-bin3/play: $(OBJ_PLAYER3D) libcytosim3D.a libcytospace3DGL.a libcytogl.a libcytomath3D.a libcytobase.a | bin
-	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin3/play
+play3: $(OBJ_PLAYER3D) libcytosim3D.a libcytospace3DGL.a libcytogl.a libcytomath.a libcytobase.a | bin
+	$(COMPILE) $(PLAY_OBJS) $(PLAY_LINK) -o bin/play3
 	$(DONE)
 vpath bin3/play bin3
 

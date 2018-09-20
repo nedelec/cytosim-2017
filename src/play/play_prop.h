@@ -30,9 +30,9 @@ public:
     /// index of displayed frame in trajectory file
     int            frame;
     
-    /// direction of replay { -1, 0, 1 }
-    int            dir;
-    
+    /// direction of replay: 1: forward and -1: reverse
+    int            play;
+
     /// if true, jump to first frame after last frame
     unsigned int   loop;
     

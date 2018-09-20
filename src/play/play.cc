@@ -151,11 +151,10 @@ int main(int argc, char* argv[])
     if ( glos.use_key("movie") )
         off_screen = OFFSCREEN_MOVIE;
 
-    std::string dir;
     // change working directory if specified:
-    if ( glos.set(dir, "dir") )
+    if ( glos.has_key("directory") )
     {
-        FilePath::change_dir(dir);
+        FilePath::change_dir(glos.value("directory", 0));
         //std::cerr << "Cytosim changed directory to " << FilePath::get_dir() << std::endl;
     }
 

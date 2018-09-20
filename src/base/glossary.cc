@@ -1,6 +1,7 @@
 // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 #include "glossary.h"
+#include "filepath.h"
 #include "stream_func.h"
 #include <fstream>
 #include <cctype>
@@ -355,16 +356,27 @@ void Glossary::readStrings(int argc, char* argv[], int no_overwrite)
             }
             else
             {
-                // identify a potential file name by the presence of an extension:
-                size_t spos = arg.rfind(".");
-                if ( spos != std::string::npos )
+                /*
+                 Here is a key specified without any value:
+                 */
+                if ( FilePath::is_dir(argv[ii]) )
                 {
-                    pair.first = arg.substr(spos);
+                    pair.first = "directory";
                     pair.second.push_back(arg);
                 }
                 else
                 {
-                    pair.first = arg;
+                    // identify a potential file name by the presence of an extension:
+                    size_t spos = arg.rfind(".");
+                    if ( spos != std::string::npos )
+                    {
+                        pair.first = arg.substr(spos);
+                        pair.second.push_back(arg);
+                    }
+                    else
+                    {
+                        pair.first = arg;
+                    }
                 }
                 add_pair(pair, no_overwrite);
             }

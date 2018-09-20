@@ -402,7 +402,7 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             
         case 'Y':
             //will save all frames (cf timer function).
-            PP.dir = PLAY_FORWARD_WRITE;
+            PP.play = PLAY_FORWARD_WRITE;
             break;
         
 #endif
@@ -478,8 +478,8 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
              
         case '<':
         case ',':
-            if ( PP.dir == PLAY_FORWARD )
-                PP.dir = PLAY_STOP;
+            if ( PP.play == PLAY_FORWARD )
+                PP.play = PLAY_STOP;
             else
                 previousFrame();
             glApp::postRedisplay();
@@ -487,8 +487,8 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             
         case '>':
         case '.':
-            if ( PP.dir == PLAY_REVERSE )
-                PP.dir = PLAY_STOP;
+            if ( PP.play == PLAY_REVERSE )
+                PP.play = PLAY_STOP;
             else
                 nextFrame();
             glApp::postRedisplay();

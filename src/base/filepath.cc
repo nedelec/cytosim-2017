@@ -2,6 +2,7 @@
 
 #include "filepath.h"
 #include <sys/param.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <libgen.h>
 #include <unistd.h>
@@ -16,6 +17,14 @@ std::string FilePath::get_dir()
     return cwd;
 }
 
+
+bool FilePath::is_dir(const char path[])
+{
+    struct stat s;
+    if ( 0 == stat(path, &s) )
+        return S_ISDIR(s.st_mode);
+    return false;
+}
 
 int FilePath::change_dir(std::string const& wd)
 {
