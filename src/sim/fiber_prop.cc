@@ -155,10 +155,10 @@ Fiber* FiberProp::newFiber(Glossary& opt) const
     
     int s = STATE_WHITE;
     
-    if ( opt.set(s, "plus_end_state") || opt.set(s, "end_state", keys) )
+    if ( opt.set(s, "plus_end", keys) || opt.set(s, "plus_end_state", keys) || opt.set(s, "end_state", keys) )
         fib->setDynamicState(PLUS_END, s);
     
-    if ( opt.set(s, "minus_end_state") || opt.set(s, "end_state", keys, 1) )
+    if ( opt.set(s, "minus_end", keys) || opt.set(s, "minus_end_state", keys) || opt.set(s, "end_state", keys, 1) )
         fib->setDynamicState(MINUS_END, s);
     
     return fib;

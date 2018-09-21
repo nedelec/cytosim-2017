@@ -427,7 +427,7 @@ real attachDensity(const HandProp * hp)
  */
 void CoupleSet::uniAttach(FiberSet const& fibers, CoupleList& reserve)
 {
-    const int rsize = reserve.size();
+    const size_t rsize = reserve.size();
     Couple * obj = reserve.top();
     assert_true( obj );
 

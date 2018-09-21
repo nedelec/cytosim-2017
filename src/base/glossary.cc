@@ -78,7 +78,7 @@ Glossary Glossary::extract(key_type const& key)
 //------------------------------------------------------------------------------
 #pragma mark -
 
-unsigned Glossary::nb_values(key_type const& k)
+size_t Glossary::nb_values(key_type const& k)
 {
     map_type::iterator w = mTerms.find(k);
     if ( w != mTerms.end() )

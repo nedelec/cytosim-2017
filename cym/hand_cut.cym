@@ -1,10 +1,9 @@
 /**
  @example hand_cut.cym
- We create a Cutter with `hand:activity=cut`
+ We create a Hand with `activity = cut`
 
  F. Nedelec, October 2011
 */
-
 
 set simul hand_cut 
 {
@@ -47,9 +46,11 @@ set hand cutter
     binding_range = 0.05
     unbinding_rate = 0
     unbinding_force = 3
+
     activity = cut
-    cutting_rate = 1
-    new_end_state = 4, 4
+    cutting_rate = 1         % rate of cutting when bound to a filament
+    new_end_state = 4, 4     % state of the new PLUS_END, and new MINUS_END
+
     display = ( size=6; color=green; )
 }
 

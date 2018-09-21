@@ -341,7 +341,7 @@ void Aster::read(InputWrapper & in, Simul& sim)
     
     try
     {
-        unsigned nc = nbOrganized() - 1;
+        size_t nc = nbOrganized() - 1;
         const Solid * so = solid();
 
         asClamp.resize(nc);

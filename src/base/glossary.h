@@ -195,7 +195,7 @@ public:
     Glossary     extract(key_type const&);
 
     /// return number of values associated with a key
-    unsigned     nb_values(key_type const&);
+    size_t       nb_values(key_type const&);
     
     /// gives a pointer to the values corresponding to a key, or null if the key is not present
     rec_type *   values(key_type const&);

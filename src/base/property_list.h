@@ -63,7 +63,7 @@ public:
     bool         empty() const    { return vec.empty(); }
     
     /// number of known Property
-    unsigned int size()  const    { return vec.size(); }
+    size_t       size()  const    { return vec.size(); }
 
     /// number of Property of that kind
     unsigned int number_of(std::string const& kind) const;

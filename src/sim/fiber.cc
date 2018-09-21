@@ -12,7 +12,7 @@
 #include "sim.h"
 #include <algorithm>
 
-//#define SEVER_KINKED_FIBERS
+#define SEVER_KINKED_FIBERS 0
 
 extern bool functionKey[];
 
@@ -524,7 +524,7 @@ void Fiber::setInteractions(Meca & meca) const
 
 void Fiber::step()
 {
-#if ( 0 )
+#if SEVER_KINKED_FIBERS
     assert_true(linked());
     // sever fiber at joints that make an angle above 90 degrees:
     severKinks();

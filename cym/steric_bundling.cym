@@ -1,0 +1,53 @@
+% A test for steric interaction with attractive component
+% run in 2D
+% F. Nedelec, 23 Jan 2010
+
+set simul system
+{
+    % The third argument of 'steric' specifies the extra-range of the interaction.
+	% which gives a attractive force, and induces filament bundling
+    steric = 1, 500, 100   % enable, stiffness_push, stiffness_pull
+    time_step = 0.005
+    
+    display = ( delay=8; period=8; point_value=0.01; zoom=0.6; )
+}
+
+set space cell
+{
+    geometry = ( sphere 3 )
+}
+
+new space cell
+
+set fiber microtubule
+{
+    rigidity = 1
+    confine = inside, 100
+    segmentation = 0.2
+    % The third argument of 'steric' specifies the extra-range of the interaction.
+	% which gives a attractive force, and induces filament bundling
+    steric = 1, 0.05, 0.025    % enable, radius, extra_radius
+
+    activity         = classic
+    growing_speed    = 0.2
+    shrinking_speed  = -0.5
+    catastrophe_rate = 0.05
+    rescue_rate      = 0
+    growing_force    = 1.67
+    min_length       = 0.01
+    
+    display = ( line_width=6; plus_end=12; )
+}
+
+new 5 fiber microtubule
+{
+    length = 0.05
+    plus_end_state = grow
+}
+
+run 40000 simul *
+{
+    nb_frames = 100
+    event = 1, ( new fiber microtubule { length=0.012; plus_end_state=grow; } )
+}
+

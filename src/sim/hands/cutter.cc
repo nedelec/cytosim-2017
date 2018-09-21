@@ -23,9 +23,6 @@ void Cutter::cut()
      Cutting the fiber can invalidate the FiberGrid used for attachment,
      and this becomes a problem if the Cutter is part of a Couple,
      because calls for attachments and actions are intermingled.
-     
-     This is why the call sever() here only register the cut,
-     and will perform it later.
      */
     Fiber * fib = fiber();
     ObjectSet * set = fib->objset();
@@ -46,7 +43,6 @@ void Cutter::cut()
         fib->setDynamicState(PLUS_END, prop->new_end_state[0]);
     }
 
- 
     detach();
 }
 

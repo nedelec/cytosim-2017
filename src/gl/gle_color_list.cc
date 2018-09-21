@@ -440,7 +440,7 @@ gle::named_color crayola_colors[] = {
 };
 
 
-gle_color gle::std_color(unsigned indx)
+gle_color gle::std_color(size_t indx)
 {
     const unsigned max = sizeof(common_colors) / sizeof(named_color);
     return common_colors[ indx % max ].hex;
@@ -509,7 +509,7 @@ int gle::select_colors(gle_color* array, unsigned asize,
 /**
  return `indx`-th color from the crayola list, that has a brightness between `minb` and `maxb`
  */
-gle_color gle::bright_color(unsigned indx, const GLfloat minb, const GLfloat maxb)
+gle_color gle::bright_color(size_t indx, const GLfloat minb, const GLfloat maxb)
 {
     const unsigned max = sizeof(crayola_colors) / sizeof(named_color);
 
@@ -528,7 +528,7 @@ gle_color gle::bright_color(unsigned indx, const GLfloat minb, const GLfloat max
 }
 
 
-gle_color gle::nice_color(unsigned indx)
+gle_color gle::nice_color(size_t indx)
 {
     const unsigned max = sizeof(nice_colors) / sizeof(gle_color);
     return nice_colors[ indx % max ];
