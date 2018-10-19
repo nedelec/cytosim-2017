@@ -402,9 +402,6 @@ void Interface::execute_cut(std::string const& kind, std::string const& name, Gl
 
 void reportCPUtime(int frame, real stime)
 {
-    static clock_t clk;
-    static double cum = 0;
-    
     static int hour = -1;
     int h = TicToc::hours_today();
     if ( hour != h )
@@ -415,11 +412,11 @@ void reportCPUtime(int frame, real stime)
         Cytosim::MSG("%s\n", date);
     }
     
-    clock_t now = clock();
-    double sec = double( now - clk ) / CLOCKS_PER_SEC;
-    cum += sec;
-    
-    Cytosim::MSG("F%-6i  %7.2fs   CPU %10.3fs  %10.0fs\n", frame, stime, sec, cum);
+    static double clk = 0;
+    double cpu = double(clock()) / CLOCKS_PER_SEC;
+    Cytosim::MSG("F%-6i  %7.2fs   CPU %10.3fs  %10.0fs\n", frame, stime, cpu-clk, cpu);
+    clk = cpu;
+
     Cytosim::flush();
 }
 

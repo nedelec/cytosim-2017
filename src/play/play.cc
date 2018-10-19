@@ -152,10 +152,11 @@ int main(int argc, char* argv[])
         off_screen = OFFSCREEN_MOVIE;
 
     // change working directory if specified:
-    if ( glos.has_key("directory") )
+    std::string dir;
+    if ( arg.set(dir, "directory") )
     {
-        FilePath::change_dir(glos.value("directory", 0));
-        //std::cerr << "Cytosim changed directory to " << FilePath::get_dir() << std::endl;
+        FilePath::change_dir(dir);
+        //std::clog << "Cytosim working directory is " << FilePath::get_cwd() << '\n';
     }
 
     glApp::build();
