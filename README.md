@@ -52,9 +52,9 @@ You can now open `html/index.html` in a browser.
 
 ## Installation and compilation
 
-In the documentation, you will find a module describing how to compile Cytosim. On Mac OS X and Linux this should be straightforward if you are familiar with compilation in general. On Windows, we suggest that you compile within Cygwin. More more information, please check src/doc/compile.dox.
+In the documentation, you will find a module describing how to compile Cytosim. On Mac OS X and Linux this should be straightforward if you are familiar with compilation in general. On Windows, we suggest that you compile within Cygwin. For more information, please check src/doc/compile.dox.
 
-Here are the steps to compile:
+After installing Apple's Xcode, enter these commands to compile:
 
 	git clone https://github.com/nedelec/cytosim.git
 	cd cytosim
