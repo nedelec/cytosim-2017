@@ -49,9 +49,6 @@ namespace Player
    
     ///adjust window to screen width and tightly around the visible space in 2D.
     void widenDisplay();
-    
-    /// reset view, without changing the current frame
-    void reset();
    
     /// start animation
     void startForward();
@@ -71,6 +68,9 @@ namespace Player
     /// start or stop the replay
     void startstop();
     
+    /// rewind file
+    void rewind();
+
     /// load specified frame
     void readFrame(int);
     

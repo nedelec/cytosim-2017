@@ -59,18 +59,13 @@ void Player::nextFrame()
 //------------------------------------------------------------------------------
 #pragma mark Commands
 
-
-void Player::reset()
+void Player::rewind()
 {
     if ( simThread.goodFile() )
     {
-        simThread.readFrame(0);
         PP.play = PLAY_STOP;
-    }
-    else
-    {
-        simThread.stop();
-        restart();
+        simThread.readFrame(0);
+        glApp::postRedisplay();
     }
 }
 
@@ -142,11 +137,11 @@ void Player::stop()
 void Player::restart()
 {
     try {
-        
+        simThread.stop();
         simThread.clear();
         dproperties.erase();
         FDisp = 0;
-        
+
         simThread.start();
         PP.live = 1;
     }

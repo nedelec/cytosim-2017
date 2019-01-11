@@ -423,13 +423,14 @@ void Player::processNormalKey(const unsigned char key, const int x, const int y)
             break;
             
         case 'z':
-            reset();
+            if ( simThread.goodFile() )
+                rewind();
+            else
+                restart();
             break;
             
         case 'Z':
-            //reset-back-to-file, stop everything
             simThread.cancel();
-            restart();
             PP.live = 0;
             break;
             

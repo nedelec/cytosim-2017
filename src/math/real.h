@@ -8,7 +8,7 @@
 #ifndef REAL
 #define REAL
 
-#include <limits>
+#include <float.h>
 
 /**
  It is possible to select double or single precision here: 
@@ -25,14 +25,13 @@
 //#define REAL_IS_FLOAT
 
 #ifdef REAL_IS_FLOAT
-    typedef float real;
+   typedef float real;
+   const real REAL_EPSILON = 128 * FLT_EPSILON;
 #else
-    typedef double real;
+   typedef double real;
+   const real REAL_EPSILON = 128 * DBL_EPSILON;
 #endif
 
-
-/// REAL_EPSILON is a multiple of the round-off error associated with \c real
-const real REAL_EPSILON = 4096 * std::numeric_limits<real>::epsilon();
 
 /// square of the argument: `x * x`
 inline real square(const real x) { return x * x; }
