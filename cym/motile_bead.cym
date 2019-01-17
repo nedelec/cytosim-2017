@@ -52,21 +52,21 @@ set sphere bead
 {
     point_mobility = 1
     steric = 1
-    display = { color=0xFFFF0055; style=8; size=8 }
+    display = { color=0xFFFF0055; style=7; size=8 }
 }
 
 new sphere bead
 {
     radius = 1
-    nb_points = 10
-    attach = 100 grafted
+	% add 2 points with 3 grafted per point:
+    point0 = 2, surface, 2 grafted
+	% add 10 points with 1 grafted per point:
+    point1 = 10, surface, 1 grafted
     position = ( 0 0 0 )
 }
 
-set simul:display * { track_fibers=1 }
-
 run simul *
 {
-    nb_steps = 2500
+    nb_steps = 25000
     nb_frames = 50
 }
