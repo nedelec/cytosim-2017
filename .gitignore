@@ -1,0 +1,4 @@
+# Ignore in source build results
+build/*
+bin/*
+html/*

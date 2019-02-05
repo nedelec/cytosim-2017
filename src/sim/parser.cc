@@ -32,17 +32,17 @@ Parser::Parser(Simul& s, bool ds, bool dc, bool dn, bool dr, bool dw)
 
 /**
  Read class and optional field
- 
+
  Syntax:
  @code
  CLASS
  @endcode
- 
+
  also accepts:
  @code
  CLASS:FIELD
  @endcode
- 
+
  The return value is true if the second syntax is found.
  */
 
@@ -50,20 +50,20 @@ bool Parser::read_class_name(std::istream & is, std::string & kd, std::string & 
 {
     bool res = false;
     kd = Tokenizer::get_identifier(is);
-    
+
     if ( ! simul.isProperty(kd) )
         throw InvalidSyntax("unknown class `"+kd+"'");
-    
+
     if ( ':' == is.peek() )
     {
         is.get();
         fd = Tokenizer::get_identifier(is);
-        
+
         if ( fd.empty() )
             throw InvalidSyntax("missing field in syntax `set class:field name'");
         if ( !isalpha(fd[0]) )
             throw InvalidSyntax("invalid field in syntax `set class:field name'");
-        
+
         res = true;
     }
     return res;
@@ -72,46 +72,46 @@ bool Parser::read_class_name(std::istream & is, std::string & kd, std::string & 
 
 /**
  Read Property name preceded by an optional property-index
- 
+
  Syntax:
  @code
  [INDEX] NAME
  @endcode
- 
+
  also accepts:
  @code
  [INDEX] *
  @endcode
- 
+
  */
 
 void Parser::read_property_name(std::istream & is, std::string& nm, const std::string& kd) const
 {
     int ix = -1;
     nm = Tokenizer::get_token(is);
-    
+
     if ( nm.empty() )
         throw InvalidSyntax("missing property name");
-    
+
     if ( isdigit(nm[0]) )
     {
         std::istringstream iss(nm);
         iss >> ix;
-        
+
         //check for leftover:
         iss.get();
         if ( iss.gcount() > 0 )
             throw InvalidSyntax("leftover characters in index specification `"+nm+"'");
-        
+
         nm = Tokenizer::get_token(is);
     }
-    
+
     // we accept '*' instead of the name
     if ( nm == "*" )
     {
         // try to substitute the correct name
         Property * p = simul.findProperty(kd, ix);
-        
+
         if ( p )
             nm = p->name();
     }
@@ -121,7 +121,7 @@ void Parser::read_property_name(std::istream & is, std::string& nm, const std::s
             throw InvalidSyntax("missing or invalid property name");
 
         Property * p = simul.findProperty(kd, nm);
-        
+
         if ( p  &&  ix > 0  &&  p->index() != ix )
         {
             std::cerr << "Property " << kd << "`" << nm << "' should have index " << p->index() << std::endl;
@@ -138,7 +138,7 @@ void Parser::read_property_name(std::istream & is, std::string& nm, const std::s
 
 /**
  Create a new Property (a set of parameters associated with a class).
- 
+
  @code
  set CLASS NAME
  {
@@ -146,7 +146,7 @@ void Parser::read_property_name(std::istream & is, std::string& nm, const std::s
    ...
  }
  @endcode
- 
+
  Short syntax:
  @code
  set CLASS:PARAMETER NAME VALUE
@@ -162,14 +162,14 @@ void Parser::parse_set(std::istream & is)
     std::string kind, field, name;
     bool has_field = read_class_name(is, kind, field);
     read_property_name(is, name, kind);
-    
+
     std::string blok = Tokenizer::get_token(is, true);
-    
+
     if ( blok.empty() )
         throw InvalidSyntax("missing/empty value block");
-    
+
     Glossary opt;
-    
+
     if ( has_field )
     {
         if ( blok[0] == '{' || field == "display" )
@@ -179,7 +179,7 @@ void Parser::parse_set(std::istream & is)
     }
     else
         opt.read(Tokenizer::strip_block(blok));
-    
+
     Property * p = 0;
     if ( has_field )
     {
@@ -202,7 +202,7 @@ void Parser::parse_set(std::istream & is)
         else if ( opt.has_key("display") )
             change_display(kind, name, opt);
     }
-    
+
     if ( p && opt.warnings(std::cerr) )
         StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
 }
@@ -218,13 +218,13 @@ void Parser::parse_set(std::istream & is)
    ...
  }
  @endcode
- 
+
  Short syntax:
- 
+
  @code
  change CLASS:PARAMETER NAME VALUE
  @endcode
- 
+
  The possible values of CLASS are in the @ref ObjectGroup.\n
  The NAME should have been defined previously in the same class with `set`,
  but it is possible to use a star (*) to change all properties of the class.
@@ -235,14 +235,14 @@ void Parser::parse_change(std::istream & is)
     std::string field, kind, name;
     bool has_field = read_class_name(is, kind, field);
     read_property_name(is, name, kind);
-    
+
     std::string blok = Tokenizer::get_token(is, true);
-    
+
     if ( blok.empty() )
         throw InvalidSyntax("missing/empty value block");
 
     Glossary opt;
-    
+
     if ( has_field )
     {
         if ( blok[0] == '{' )
@@ -252,7 +252,7 @@ void Parser::parse_change(std::istream & is)
     }
     else
         opt.read(Tokenizer::strip_block(blok));
-    
+
     if ( do_change )
     {
         execute_change(kind, name, opt);
@@ -264,7 +264,7 @@ void Parser::parse_change(std::istream & is)
 //------------------------------------------------------------------------------
 /**
  The command `new` creates one or more objects with given specifications:
- 
+
  @code
  new [MULTIPLICITY] CLASS NAME
  {
@@ -276,12 +276,12 @@ void Parser::parse_change(std::istream & is)
    required         = INTEGER
  }
  @endcode
- 
+
  The possible values of CLASS are in the @ref ObjectGroup.\n
  The NAME should have been defined previously in the same class with `set`.\n
 
  The other parameters are:
- 
+
  Parameter          | type      | Description
  -------------------|-----------|------------------------------------------------------------
  MULTIPLICITY       | INTEGER   | the number of objects, by default 1.
@@ -291,21 +291,21 @@ void Parser::parse_change(std::istream & is)
  `post_rotation`    | ROTATION  | a rotation applied every time after one object is created
  `mark`             | INTEGER   | this mark is given to all objects created (default = 0).
  `required`         | INTEGER   | cytosim will stop if it cannot create as many objects as specified (default=0)
- 
+
 
  Note that `position` only applies to movable objects, and `orientation` only applies to rotatable objects.
  In addition, `post_translation` and `post_rotation` are relevant only if `(MULTIPLICITY > 1)`,
  and do not apply to the first object.\n
- 
- 
+
+
  Short syntax:
- 
+
  @code
  new [MULTIPLICITY] CLASS NAME ( POSITION )
  @endcode
 
  Shorter syntax:
- 
+
  @code
  new [MULTIPLICITY] CLASS NAME
  @endcode
@@ -318,7 +318,7 @@ void Parser::parse_new(std::istream & is)
     Tokenizer::get_integer(is, cnt);
     std::string kind = Tokenizer::get_identifier(is);
     std::string name = Tokenizer::get_identifier(is);
-    
+
     // handle the case where the class name was not specified:
     if ( name.empty() )
     {
@@ -331,9 +331,9 @@ void Parser::parse_new(std::istream & is)
             //StreamFunc::show_line(std::cerr, is, is.tellg());
         }
     }
-    
+
     Glossary opt;
-    
+
     // Syntax sugar: () specify only position
     std::string blok = Tokenizer::get_block(is, '(');
     if ( blok.empty() )
@@ -344,14 +344,14 @@ void Parser::parse_new(std::istream & is)
     else {
         opt.set_values("position", blok);
     }
-    
-    
+
+
     if ( do_new  &&  cnt > 0 )
     {
 #if ( VERBOSE_PARSER > 0 )
         std::cerr << "-NEW " << cnt << " " << kind << " `" << name << "'\n";
 #endif
-        
+
         if ( opt.nb_keys() == 0 )
         {
             execute_new(kind, name, cnt);
@@ -363,7 +363,7 @@ void Parser::parse_new(std::istream & is)
             Vector trans(0,0,0);
             bool has_trans = opt.set(trans, "post_translation");
             bool has_rot = opt.set(str, "post_rotation");
-            
+
             if ( has_rot )
             {
                 Rotation rot, cum;
@@ -379,7 +379,7 @@ void Parser::parse_new(std::istream & is)
                     cum = cum * rot;
                 }
             }
-            else 
+            else
             {
                 for ( unsigned int n = 0; n < cnt; ++n )
                 {
@@ -389,7 +389,7 @@ void Parser::parse_new(std::istream & is)
                     created += objs.size();
                 }
             }
-            
+
             int required = 0;
             if ( opt.set(required, "required")  &&  created < required )
             {
@@ -397,7 +397,7 @@ void Parser::parse_new(std::istream & is)
                 std::cerr << "required = " << required << "\n";
                 throw InvalidSyntax("could not create enough "+kind+" `"+name+"'");
             }
-            
+
             if ( opt.warnings(std::cerr, -1) )
                 StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
         }
@@ -415,24 +415,24 @@ void Parser::parse_new(std::istream & is)
    position   = POSITION
  }
  @endcode
- 
+
  NAME can be '*', and the parameters \a mark and \a position are optional.
- 
+
  To delete all objects of the class:
  @code
  delete CLASS *
  @endcode
- 
+
  To delete all objects of specified NAME:
  @code
  delete CLASS NAME
  @endcode
- 
+
  To delete at most CNT objects of class NAME:
  @code
  delete CNT CLASS NAME
  @endcode
- 
+
  To delete all objects with a specified mark:
  @code
  delete CLASS *
@@ -448,7 +448,7 @@ void Parser::parse_new(std::istream & is)
    position = inside, SPACE
  }
  @endcode
- 
+
  The SPACE must be the name of an existing Space.
  Only 'inside' and 'outside' are valid specifications.
 */
@@ -459,15 +459,15 @@ void Parser::parse_delete(std::istream & is)
     Tokenizer::get_integer(is, cnt);
 
     std::string kind = Tokenizer::get_identifier(is);
-    
+
     if ( simul.findSet(kind) == 0 )
         throw InvalidSyntax("unknown class `"+kind+"'");
-    
+
     std::string name;
     read_property_name(is, name, kind);
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
-    
+
     if ( do_change )
     {
         Glossary opt(blok);
@@ -481,7 +481,7 @@ void Parser::parse_delete(std::istream & is)
 
 /**
  Mark objects:
- 
+
  @code
  mark [MULTIPLICITY] CLASS NAME
  {
@@ -489,7 +489,7 @@ void Parser::parse_delete(std::istream & is)
    position   = POSITION
  }
  @endcode
- 
+
  NAME can be '*', and the parameter position is optional.
  The syntax is the same as for command `delete`.
  */
@@ -498,22 +498,22 @@ void Parser::parse_mark(std::istream & is)
 {
     int cnt = -1;
     Tokenizer::get_integer(is, cnt);
-    
+
     std::string kind = Tokenizer::get_identifier(is);
-    
+
     if ( simul.findSet(kind) == 0 )
         throw InvalidSyntax("unknown class `"+kind+"'");
-    
+
     std::string name;
     read_property_name(is, name, kind);
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
-    
+
     if ( do_change )
     {
         Glossary opt(blok);
         execute_mark(kind, name, opt, cnt);
-        
+
         if ( opt.warnings(std::cerr) )
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
     }
@@ -522,28 +522,28 @@ void Parser::parse_mark(std::istream & is)
 //------------------------------------------------------------------------------
 /**
  Cut all fibers that intersect a given plane.
- 
+
  @code
  cut fiber NAME
  {
     plane = VECTOR, REAL
  }
  @endcode
- 
+
  NAME can be '*' to cut all fibers.
  The plane is specified by a normal vector \a n (VECTOR) and a scalar \a (REAL).
  The plane is defined by <em> n.x + a = 0 </em>
  */
 
 void Parser::parse_cut(std::istream & is)
-{    
+{
     std::string kind = Tokenizer::get_identifier(is);
-    std::string name = Tokenizer::get_token(is);    
+    std::string name = Tokenizer::get_token(is);
     std::string blok = Tokenizer::get_block(is, '{');
 
     if ( blok.empty() )
         throw InvalidSyntax("missing block after `cut'");
-    
+
     if ( do_change )
     {
         Glossary opt(blok);
@@ -568,7 +568,7 @@ void Parser::parse_cut(std::istream & is)
    prune     = BOOL
  }
  @endcode
- 
+
  The optional specification [NB_STEPS] enables the short syntax:
  @code
  run NB_STEPS simul *
@@ -582,26 +582,26 @@ void Parser::parse_cut(std::istream & is)
  `nb_frames`   |  0        | number of states written to trajectory file
  `prune`       |  true     | Print only parameters that are different from default
  \n
-  
+
  If set, `event` defines an event occuring at a rate specified by the positive real \c RATE.
- The action is defined by CODE, a string enclosed with parenthesis containing cytosim commands. 
+ The action is defined by CODE, a string enclosed with parenthesis containing cytosim commands.
  This code will be executed at stochastic times with the specified rate.
- 
+
  Example:
  @code
  event = 10, ( new fiber actin { position=(rectangle 1 6); length=0.1; } )
  @endcode
- 
+
  Calling `run` will not output the initial state, but this can be done with `write`:
  @code
  write state objects.cmo { append = 0 }
- 
+
  run 1000 simul *
  {
    nb_frames = 10
  }
  @endcode
- 
+
  @todo: add code executed at each time-step
  */
 
@@ -611,13 +611,13 @@ void Parser::parse_run(std::istream & is)
     bool has_cnt = Tokenizer::get_integer(is, cnt);
 
     std::string kind = Tokenizer::get_identifier(is);
-    
+
     if ( kind != "simul" )
         throw InvalidSyntax("only `run simul *' is supported");
-    
+
     std::string name = Tokenizer::get_token(is);
     std::string blok = Tokenizer::get_block(is, '{');
-    
+
     if ( blok.empty() && !has_cnt )
     {
 #ifdef BACKWARD_COMPATIBILITY
@@ -628,19 +628,19 @@ void Parser::parse_run(std::istream & is)
 #endif
         throw InvalidSyntax("the number of simulation steps must be specified");
     }
-    
+
     if ( do_run )
     {
         if ( name != simul.prop->name()  &&  name != "*" )
             throw InvalidSyntax("please, use `run CNT simul *'");
-        
+
         Glossary opt(blok);
-        
+
         if ( opt.set(cnt,"nb_steps") && has_cnt )
             throw InvalidSyntax("the number of simulation steps was specified twice");;
-        
+
         execute_run(opt, cnt, do_write);
-        
+
         if ( opt.warnings(std::cerr) )
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
     }
@@ -649,29 +649,29 @@ void Parser::parse_run(std::istream & is)
 //------------------------------------------------------------------------------
 /**
  Include another config file, and executes it.
- 
+
  @code
  include FILE_NAME
  {
    required = BOOL
  }
  @endcode
- 
+
  By default, required = 1, and execution will terminate if the file is not found.
- If required is set to 0, the file will be read, 
+ If required is set to 0, the file will be read,
  but execution will continue even if the file is not found.
- 
- \todo: able to specify do_set and do_new for command 'include' 
+
+ \todo: able to specify do_set and do_new for command 'include'
 */
 
 void Parser::parse_read(std::istream & is)
 {
     bool required = true;
     std::string file = Tokenizer::get_token(is);
-    
+
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'include'");
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
     if ( ! blok.empty() )
     {
@@ -680,7 +680,7 @@ void Parser::parse_read(std::istream & is)
         if ( opt.warnings(std::cerr) )
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
     }
-    
+
     std::ifstream fis(file.c_str());
     if ( ! fis.fail() )
     {
@@ -701,20 +701,20 @@ void Parser::parse_read(std::istream & is)
 //------------------------------------------------------------------------------
 /**
  Import a simulation snapshot from a trajectory file
- 
+
  The frame to be imported can be specified as an option: `frame=INTEGER`:
  @code
  import sim_objects.cmo { frame = 10 }
  @endcode
- 
+
  By default, this will replace the simulation state by the one loaded from file.
  To add the file objects to the simulation without deleting the current world,
  you should specify `keep=1`:
- 
+
  @code
  import sim_objects.cmo { keep = 1 }
  @endcode
- 
+
  Note that the simulation time will be changed to the one specified in the file,
  but it can be reset with:
  @code
@@ -725,13 +725,13 @@ void Parser::parse_read(std::istream & is)
 void Parser::parse_import(std::istream & is)
 {
     std::string file = Tokenizer::get_token(is);
-    
+
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'import'");
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
-    
+
     if ( do_new )
     {
         execute_import(file, opt);
@@ -744,7 +744,7 @@ void Parser::parse_import(std::istream & is)
 
 /**
  Export state to file. The general syntax is:
- 
+
  @code
  export WHAT FILE_NAME
  {
@@ -752,26 +752,26 @@ void Parser::parse_import(std::istream & is)
  binary = BOOL
  }
  @endcode
- 
+
  WHAT must be ``objects``, and by default, `binary` and `append` are both `true`.
  If `*` is specified instead of a file name, the current trajectory file will be used.
- 
- 
+
+
  Short syntax:
  @code
  export objects FILE_NAME
  @endcode
- 
- 
+
+
  Examples:
- 
+
  @code
  export objects sim_objects.cmo { append=0 }
  @code
  @endcode
  export objects sim_objects.txt { binary=0 }
  @endcode
- 
+
  Attention: this command is disabled for `play`.
  */
 
@@ -779,13 +779,13 @@ void Parser::parse_export(std::istream & is)
 {
     std::string what = Tokenizer::get_token(is);
     std::string file = Tokenizer::get_token(is);
-    
+
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'export'");
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
-    
+
     if ( do_write )
     {
         //what = Tokenizer::strip_block(what);
@@ -797,32 +797,32 @@ void Parser::parse_export(std::istream & is)
 
 /**
  Export formatted data to file. The general syntax is:
- 
+
  @code
  report WHAT FILE_NAME
  {
  append = BOOL
  }
  @endcode
- 
+
  Short syntax:
  @code
  report WHAT FILE_NAME
  @endcode
- 
- 
+
+
  WHAT should be a valid argument to `report`:
  @copydetails Simul::report
- 
+
  If `*` is specified instead of a file name, the report is sent to the standard output.
- 
+
  Examples:
- 
+
  @code
  report parameters parameters.cmo { append=0 }
  report fiber:length fibers.txt
  @endcode
- 
+
  Note that this command is disabled for `play`.
  */
 
@@ -830,17 +830,17 @@ void Parser::parse_report(std::istream & is)
 {
     std::string what = Tokenizer::get_token(is);
     std::string file = Tokenizer::get_token(is);
-    
+
     if ( file.empty() )
         throw InvalidSyntax("missing/invalid file name after 'report'");
-    
+
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
-    
+
     if ( do_write || file == "*" )
     {
         execute_report(file, what, opt);
-        
+
         if ( opt.warnings(std::cerr) )
             StreamFunc::show_lines(std::cerr, is, spos, is.tellg());
     }
@@ -850,11 +850,11 @@ void Parser::parse_report(std::istream & is)
 
 /**
  Call custom function
- 
+
  @code
  call FUNCTION_NAME
  @endcode
- 
+
  FUNCTION_NAME should be custom?, where ? is a digit.
 
  \todo: propagate the arguments (do_set, do_new) to the custom commands
@@ -862,7 +862,7 @@ void Parser::parse_report(std::istream & is)
 void Parser::parse_call(std::istream & is)
 {
     std::string str = Tokenizer::get_token(is);
-    
+
     if ( str.empty() )
         throw InvalidSyntax("missing command name after 'call'");
 
@@ -890,22 +890,22 @@ void Parser::parse_call(std::istream & is)
 //------------------------------------------------------------------------------
 /**
  Repeat specified code.
- 
+
  @code
  repeat INTEGER { CODE }
  @endcode
- 
+
  */
 
 void Parser::parse_repeat(std::istream & is)
 {
     unsigned cnt = 1;
-    
+
     if ( ! Tokenizer::get_integer(is, cnt) )
         throw InvalidSyntax("missing number after 'repeat'");
 
     std::string code = Tokenizer::get_block(is, '{');
-    
+
     for ( unsigned int c = 0; c < cnt; ++c )
     {
         //it is best to use a fresh stream for each instance:
@@ -919,7 +919,7 @@ void Parser::parse_repeat(std::istream & is)
 
 /**
  Terminates execution
- 
+
  @code
  stop
  @endcode
@@ -927,10 +927,10 @@ void Parser::parse_repeat(std::istream & is)
 void Parser::parse_stop(std::istream & is)
 {
     std::string str = Tokenizer::get_token(is);
-    
+
     if ( str.empty() )
         throw Exception("halting program at command 'stop'");
-    
+
     else if ( str == "if" )
     {
         str = Tokenizer::get_token(is);
@@ -950,9 +950,9 @@ void Parser::parse_stop(std::istream & is)
     PARAMETERS
  }
  @endcode
- 
+
  Essential commands:
- 
+
  Command        |   Action
  ---------------|---------------------------------------------------------
  `set`          | Create a new Property, and set parameter values
@@ -964,9 +964,9 @@ void Parser::parse_stop(std::istream & is)
  `write`        | export formatted data with selected object properties
  `import`       | Import Objects from trajectory file
  `export`       | Export all Objects to file, with their coordinates
- 
+
  Other commands:
- 
+
  Command        |   Action
  ---------------|---------------------------------------------------------
  `mark`         | Mark objects
@@ -974,13 +974,13 @@ void Parser::parse_stop(std::istream & is)
  `stop`         | Stop program
  `cut`          | Cut Fibers
  `call`         | Call a custom function
- 
+
  */
 void Parser::parse(std::istream & is, std::string const& msg)
 {
     std::streampos fpos;
     std::string tok;
-    
+
     try {
         while ( is.good() )
         {
@@ -990,8 +990,8 @@ void Parser::parse(std::istream & is, std::string const& msg)
                 tok = Tokenizer::get_token(is);
                 if ( is.fail() ) return;
             } while ( tok[0] == '\n' );
-            
-            
+
+
             // skip matlab-style comments
             if ( tok[0] == '%' )
             {
@@ -1020,12 +1020,12 @@ void Parser::parse(std::istream & is, std::string const& msg)
                 }
             }
 #endif
-            
+
 #if ( VERBOSE_PARSER > 8 )
             std::cerr << "COMMAND |" << tok << "| " << std::endl;
             StreamFunc::show_line(std::cout, is, is.tellg());
 #endif
-            
+
             if ( tok == "set" )
                 parse_set(is);
             else if ( tok == "change" )
@@ -1061,7 +1061,7 @@ void Parser::parse(std::istream & is, std::string const& msg)
             else {
                 throw InvalidSyntax("unexpected token `"+tok+"'");
             }
-            
+
             hold();
         }
     }
@@ -1078,14 +1078,14 @@ void Parser::parse(std::istream & is, std::string const& msg)
 
 void Parser::readConfig(std::string const& file)
 {
-    std::ifstream is(file.c_str());
-    
+    std::ifstream is(file.c_str(), std::ifstream::in);
+
     if ( ! is.good() )
     {
         std::ostringstream oss;
         if ( file == "config.cym" )
             oss << "You must specify a config file" << std::endl;
-        else       
+        else
             oss << "Could not open config file `" << file << "'" << std::endl;
         throw InvalidIO(oss.str());
     }
@@ -1095,8 +1095,6 @@ void Parser::readConfig(std::string const& file)
     std::cerr << "  set=" << do_set << "  change=" << do_change << "  new=" << do_new;
     std::cerr << "  run=" << do_run << "  write=" << do_write << std::endl;
 #endif
-    
+
     parse(is, "while reading `"+file+"'");
 }
-
-

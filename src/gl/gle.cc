@@ -46,7 +46,7 @@ void gle::gleAlignX(const Vector2 & v)
 }
 
 //-----------------------------------------------------------------------
-/** 
+/**
 Graphical elements are aligned in 3D along Z and this function is used
 to rotate them in the XY plane for the 2D display.
 The rotation is chosen such that the Y face of the rotated object points
@@ -55,7 +55,7 @@ such that the upper half overwrites it and become the only visible part.
 The display is thus correct even if DEPTH_TEST is disabled.
 */
 void gle::gleAlignZ(const Vector2 & A, const Vector2 & B)
-{    
+{
     Vector2 D = B - A;
     GLfloat n = sqrt(D.XX*D.XX+D.YY*D.YY);
     if ( n < REAL_EPSILON ) return;
@@ -111,7 +111,7 @@ void gle::gleRotate(const Vector3 & v1, const Vector3 & v2, const Vector3 & v3, 
 }
 
 //-----------------------------------------------------------------------
-void gle::gleTransRotate(const Vector3 & v1, const Vector3 & v2, 
+void gle::gleTransRotate(const Vector3 & v1, const Vector3 & v2,
                          const Vector3 & v3, const Vector3 & vt)
 {
     //warning! this matrix is displayed transposed
@@ -211,7 +211,7 @@ void gle::glePentagon0()
     const GLfloat S1 = R * sinf(M_PI*0.1);
     const GLfloat C3 = R * cosf(M_PI*0.3);
     const GLfloat S3 = R * sinf(M_PI*0.3);
-    
+
     glVertex2f(  0,  1);
     glVertex2f(-C1,  S1);
     glVertex2f(-C3, -S3);
@@ -292,7 +292,7 @@ void gle::gleCircleL()
 {
     const GLfloat inc = M_PI / ( 4 * finesse );
     const GLfloat max = 2 * M_PI - 0.5 * inc;
-    
+
     glBegin(GL_LINE_LOOP);
     glNormal3f(1, 0, 0);
     glVertex2f(1, 0);
@@ -334,7 +334,7 @@ void gle::gleStar0()
     const GLfloat C3 = R * cosf(M_PI*0.3);
     const GLfloat S3 = R * sinf(M_PI*0.3);
     const GLfloat H = -0.6;
-    
+
     glVertex2f(    0,     R);
     glVertex2f( H*C3, -H*S3);
     glVertex2f(  -C1,    S1);
@@ -371,7 +371,7 @@ void gle::glePlusS()
 {
     const GLfloat R = 1.1;
     const GLfloat C = 0.4;
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f(0, 0, 1);
     glVertex2f( R,  C);
@@ -401,7 +401,7 @@ void gle::glePlusL()
 {
     const GLfloat R = 1.2;
     const GLfloat C = 0.6;
-    
+
     glBegin(GL_LINE_LOOP);
     glNormal3f(0, 0, 1);
     glVertex2f( C,  R);
@@ -444,7 +444,7 @@ void gle::gleTubeZ(GLfloat za, GLfloat ra, gle_color ca, GLfloat zb, GLfloat rb,
 {
     const GLfloat inc = M_PI / finesse;
     const GLfloat max = 2 * M_PI + 0.5 * inc;
-    
+
     glBegin(GL_TRIANGLE_STRIP);
     GLfloat ang = 0;
     while ( ang < max )
@@ -452,7 +452,7 @@ void gle::gleTubeZ(GLfloat za, GLfloat ra, gle_color ca, GLfloat zb, GLfloat rb,
         cb.color();
         glNormal3f(cosf(ang), sinf(ang), 0);
         glVertex3f(rb*cosf(ang), rb*sinf(ang), zb);
-        
+
         ca.color();
         glNormal3f(cosf(ang), sinf(ang), 0);
         glVertex3f(ra*cosf(ang), ra*sinf(ang), za);
@@ -525,7 +525,7 @@ void gle::gleArrowedBand(GLfloat width)
 {
     const int fin = 8 * finesse;
     GLfloat w = 0.5 * width;
-    
+
     glBegin(GL_TRIANGLES);
     glVertex3f(1, 0,-w);
     glVertex3f(1, 0, w);
@@ -534,7 +534,7 @@ void gle::gleArrowedBand(GLfloat width)
         GLfloat ang = ii * 2 * M_PI / (GLfloat) fin;
         GLfloat c = cosf(ang);
         GLfloat s = sinf(ang);
-        
+
         glNormal3f(c, s, 0);
         glVertex3f(c, s, 0);
         glVertex3f(c, s, w);
@@ -570,7 +570,7 @@ void gle::gleIcosahedron1()
 {
     const GLfloat tau=0.8506508084;      /* t=(1+sqrt(5))/2, tau=t/sqrt(1+t^2)  */
     const GLfloat one=0.5257311121;      /* one=1/sqrt(1+t^2) , unit sphere     */
-    
+
     /* Twelve vertices of icosahedron on unit sphere */
     GLfloat pts[] = {
         +tau,  one,    0 , // 0
@@ -585,17 +585,17 @@ void gle::gleIcosahedron1()
         0   , -tau, -one , // 9
         0   , -tau,  one , // 10
         0   ,  tau, -one };// 11
-    
+
     /* The faces are ordered with increasing Z */
     glBegin(GL_TRIANGLES);
     icoFace(pts+3*5, pts+3*6,  pts+3*9);
     icoFace(pts+3*5, pts+3*11, pts+3*6);
-    
+
     icoFace(pts+3*6, pts+3*3,  pts+3*9);
     icoFace(pts+3*2, pts+3*11, pts+3*5);
     icoFace(pts+3*1, pts+3*5,  pts+3*9);
     icoFace(pts+3*0, pts+3*6,  pts+3*11);
-    
+
     icoFace(pts+3*0, pts+3*3,  pts+3*6);
     icoFace(pts+3*1, pts+3*2,  pts+3*5);
 
@@ -606,12 +606,12 @@ void gle::gleIcosahedron1()
 
     icoFace(pts+3*0, pts+3*4,  pts+3*3);
     icoFace(pts+3*1, pts+3*7,  pts+3*2);
-    
+
     icoFace(pts+3*0, pts+3*8,  pts+3*4);
     icoFace(pts+3*1, pts+3*10, pts+3*7);
     icoFace(pts+3*3, pts+3*4,  pts+3*10);
     icoFace(pts+3*7, pts+3*8,  pts+3*2);
-     
+
     icoFace(pts+3*4, pts+3*8,  pts+3*7);
     icoFace(pts+3*4, pts+3*7,  pts+3*10);
     glEnd();
@@ -623,7 +623,7 @@ void gle::gleCylinderH()
     const GLfloat inc = M_PI / finesse;
     const GLfloat max = 2 * M_PI + 0.5 * inc;
 
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f( 0, 0, -1 );
     glVertex3f( 0, 0, -1 );
@@ -645,7 +645,7 @@ void gle::gleCylinderH()
         ang += inc;
     }
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f( 0, 0, 1 );
     glVertex3f( 0, 0, 0 );
@@ -663,8 +663,8 @@ void gle::gleCone1()
 {
     const GLfloat inc = M_PI / finesse;
     const GLfloat max = 2 * M_PI + 0.5 * inc;
-    
-    
+
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f( 0, 0, -1 );
     glVertex3f( 0, 0, -1 );
@@ -675,7 +675,7 @@ void gle::gleCone1()
         ang += inc;
     }
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f( 0, 0, 1 );
     glVertex3f( 0, 0, 2 );
@@ -695,8 +695,8 @@ void gle::gleArrowTail1()
 {
     const GLfloat inc = M_PI / finesse;
     const GLfloat max = 2 * M_PI + 0.5 * inc;
-    
-    
+
+
     GLfloat cn = 1.f/sqrt(2);
 
     glBegin(GL_TRIANGLE_FAN);
@@ -710,7 +710,7 @@ void gle::gleArrowTail1()
         ang += inc;
     }
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_STRIP);
     ang = 0;
     while ( ang < max )
@@ -754,7 +754,7 @@ void gle::gleArrowTail2()
     glVertex3f(  1,  0,  0.5 );
     glVertex3f(  0,  0,  1.5 );
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f(  0, +1, 0 );
     glVertex3f( rc, rs, -0.5 );
@@ -770,7 +770,7 @@ void gle::gleArrowTail2()
     glVertex3f(  d,  t,  0.5 );
     glVertex3f(  d,  t, -1.5 );
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f(  t, c, 0 );
     glVertex3f( -r, 0, -0.5 );
@@ -786,7 +786,7 @@ void gle::gleArrowTail2()
     glVertex3f(  d,  s,  0.5 );
     glVertex3f(  0,  0,  1.5 );
     glEnd();
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glNormal3f(  t, d, 0 );
     glVertex3f( -r, 0, -0.5 );
@@ -794,7 +794,7 @@ void gle::gleArrowTail2()
     glVertex3f(  d, s,  0.5 );
     glVertex3f(  d, s, -1.5 );
     glEnd();
-    
+
     // closing the bottom gaps
     glBegin(GL_TRIANGLES);
     glNormal3f(  c,  t, -1 );
@@ -806,7 +806,7 @@ void gle::gleArrowTail2()
     glVertex3f( -r,  0, -0.5 );
     glVertex3f( rc, rt, -0.5 );
     glVertex3f(  d,  t, -1.5 );
-    
+
     glNormal3f( -1,  0, -1 );
     glVertex3f( rc, rt, -0.5 );
     glVertex3f( rc, rs, -0.5 );
@@ -871,7 +871,7 @@ void gle::initializeDL()
     if ( dlist == 0 )
     {
         dlist = glGenLists(15);
-        
+
         makeDisplayList(dlist+0, gleCircleL);
         makeDisplayList(dlist+1, gleCircleS);
         makeDisplayList(dlist+2, gleSphere1);
@@ -929,7 +929,7 @@ void gle::gleRevolution(GLfloat (*radius)(GLfloat))
 {
     GLfloat r0, z0, z1=0, r1=radius(z1), dr, dn;
     GLfloat dz = 0.25 / (GLfloat) finesse;
-    
+
     GLfloat s[2*finesse+1], c[2*finesse+1];
     for ( int ii = 0; ii <= 2*finesse; ++ii )
     {
@@ -937,18 +937,18 @@ void gle::gleRevolution(GLfloat (*radius)(GLfloat))
         c[ii] = cosf(ang);
         s[ii] = sinf(ang);
     }
-    
+
     for ( int jj = 0; jj <= 4*finesse; ++jj )
     {
         z0 = z1;
         r0 = r1;
         z1 = jj * dz;
         r1 = radius(z1);
-        
+
         dr = ( r1 - r0 ) / dz;
         dn = 1.0 / sqrt( 1 + dr * dr );
         dr = dr*dn;
-        
+
         glBegin(GL_TRIANGLE_STRIP);
         for ( int ii = 0; ii <= 2*finesse; ++ii )
         {
@@ -1253,10 +1253,10 @@ void gle::gleDumbbell(const Vector2 & a, const Vector2 & b, real diameter)
 
     Vector2 x = ( b - a ).normalized(H);
     Vector2 y = x.orthogonal(X);
-    
+
     glPushMatrix();
     gleTranslate(a);
-    
+
     // this is an hexagon centered around 'a':
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(0,0);
@@ -1268,7 +1268,7 @@ void gle::gleDumbbell(const Vector2 & a, const Vector2 & b, real diameter)
     gleVertex(x-y);
     gleVertex(x+y);
     glEnd();
-    
+
     // a band from 'a' to 'b'
     glBegin(GL_TRIANGLE_FAN);
     gleVertex(+y+x);
@@ -1276,7 +1276,7 @@ void gle::gleDumbbell(const Vector2 & a, const Vector2 & b, real diameter)
     gleVertex(b-a-y-x);
     gleVertex(b-a+y-x);
     glEnd();
-    
+
     // an hexagon centered around 'b'
     gleTranslate(b-a);
     glBegin(GL_TRIANGLE_FAN);
@@ -1289,7 +1289,7 @@ void gle::gleDumbbell(const Vector2 & a, const Vector2 & b, real diameter)
     gleVertex(x-y);
     gleVertex(x+y);
     glEnd();
-    
+
     glPopMatrix();
 }
 
@@ -1390,7 +1390,7 @@ void gle::gleArrowTail(const Vector2 & center, const Vector2 & dir, const real s
     GLfloat cy = center.YY - 1.5 * dy;
     GLfloat ex = cx + 2 * dx;
     GLfloat ey = cy + 2 * dy;
-    
+
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f( cx+dx, cy+dy );
     glVertex2f( cx+dy, cy-dx );
@@ -1508,10 +1508,10 @@ int gle::gleComputeTextSize(const char text[], void* font, int& lines)
 void gle::gleDrawText(const char text[], void* font, GLfloat vshift)
 {
     assert_true(font);
-    
+
     GLfloat ori[4], pos[4];
     glGetFloatv(GL_CURRENT_RASTER_POSITION, ori);
-    
+
     for (const char* p = text; *p; ++p)
     {
         if ( *p == '\n' )
@@ -1531,7 +1531,7 @@ void gle::gleDrawText(const char text[], void* font, GLfloat vshift)
  set the current raster position to `w`
  */
 void gle::gleDrawText(const Vector3& vec, const char text[], void* font)
-{    
+{
     assert_true(font);
     glPushAttrib(GL_LIGHTING_BIT|GL_CURRENT_BIT);
     glDisable(GL_LIGHTING);
@@ -1541,7 +1541,7 @@ void gle::gleDrawText(const Vector3& vec, const char text[], void* font)
 }
 
 void gle::gleDrawText(const Vector1& w, const char text[], void* font)
-{    
+{
     gleDrawText(Vector3(w.XX, 0, 0 ), text, font);
 }
 
@@ -1555,12 +1555,12 @@ void gle::gleDrawText(const Vector2& w, const char text[], void* font)
 /**
  The text is displayed in the current color.
  A background rectangle is displayed only if `bcol` is visible.
- 
+
  @code
  glColor3f(1,1,1);
  gleDisplayText(fKeyString, GLUT_BITMAP_8_BY_13, 0x0, 1);
  @endcode
- 
+
  Possible values for `position`:
  - 0: bottom-left, text going up
  - 1: bottom-right, text going up
@@ -1568,7 +1568,7 @@ void gle::gleDrawText(const Vector2& w, const char text[], void* font)
  - 3: top-left, text going down
  - 4: center, text going down
  .
- 
+
  Note: width and height are the current size of the viewport (window)
  */
 void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
@@ -1576,7 +1576,7 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
 {
     assert_true( width > 0 );
     assert_true( height > 0 );
-    
+
     int lineHeight = gleLineHeight(font);
     int textWidth = 0;
     int nblines = 1;
@@ -1620,13 +1620,13 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
             lineHeight *= -1;
         } break;
     }
-    
+
     //set pixel coordinate system:
-    
+
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
-    
+
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
@@ -1634,10 +1634,10 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
 
     glRasterPos2i(0, 0);
     glBitmap(0, 0, 0, 0, px, py, 0);
-    
+
     glPushAttrib(GL_LIGHTING_BIT|GL_CURRENT_BIT);
     glDisable(GL_LIGHTING);
-    
+
     if ( bcol.visible() )
     {
         GLfloat col[4] = { 1 };
@@ -1652,13 +1652,13 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
             bt = x;
         }
 
-        int rect[4] = { px-rd, bt, px+textWidth+rd, tp+1.75*rd };
+        int rect[4] = { px-rd, bt, px+textWidth+rd, static_cast<int>(tp+1.75*rd) };
 
         bcol.color();
         glBegin(GL_TRIANGLE_FAN);
         gleNiceRectangle(rect, 4);
         glEnd();
-        
+
         glColor4fv(col);
 
         glLineWidth(1);
@@ -1666,7 +1666,7 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
         gleNiceRectangle(rect, 4);
         glEnd();
     }
-    
+
     gleDrawText(text, font, lineHeight);
 
     glPopMatrix();
@@ -1681,17 +1681,17 @@ void gle::gleDisplayText(const char text[], void* font, const gle_color bcol,
 
 /**
  Draw an array of pixels using GL_TRIANGLE_STRIP
- 
+
  The array rgba[] should ( nbc * width * height ) bytes,
  containing nbc-components (eg. RGBA) per pixel and
  stored by columns:
- 
+
  @code
  color(i,j) = rgba[ nbc*(i+height*j) ]
  0 <= i < height
  0 <= j < width
  @endcode
- 
+
  `pos` is the position of the top-left corner
  `dx` is the direction of the width
  `dy` is the direction of the height
@@ -1708,7 +1708,7 @@ void gle::gleDrawPixels(int width, int height, int nbc, GLubyte rgba[], Vector2 
 
     Vector2 left, right;
     GLubyte * col = rgba;
-    
+
     for ( int jj = 0; jj < width; ++jj )
     {
         left  = pos + dx * jj;
@@ -1730,7 +1730,7 @@ void gle::gleDrawPixels(int width, int height, int nbc, GLubyte rgba[], Vector2 
             glEnd();
         }
     }
-    
+
     glPopAttrib();
 }
 
@@ -1739,7 +1739,7 @@ void gle::gleDrawPixels(int width, int height, int nbc, GLubyte rgba[], Vector2 
 
 /**
  rectangle should be specified as [ left, bottom, right, top ]
- 
+
  The rectangle will be drawn counter-clockwise
 */
 void gle::gleRectangle(const int rect[4])
@@ -1779,11 +1779,11 @@ void gle::gleDrawRectangle(const int rect[4], int width, int height)
     glPushAttrib(GL_ENABLE_BIT);
     glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
-    
+
     glBegin(GL_LINE_LOOP);
     gleRectangle(rect);
     glEnd();
-    
+
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
@@ -1800,9 +1800,9 @@ void gle::gleDrawResizeBox(const gle_color rgb, int width, int height)
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    
+
     glOrtho(width, 0, 0, height, 0, 1 );
-    
+
     //draw lines at 45 degrees
     rgb.color();
     glBegin(GL_LINES);
@@ -1811,7 +1811,7 @@ void gle::gleDrawResizeBox(const gle_color rgb, int width, int height)
     glVertex2i( 8,   1 );    glVertex2i( 1,   8 );
     glVertex2i( 4,   1 );    glVertex2i( 1,   4 );
     glEnd();
-    
+
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
@@ -1822,15 +1822,15 @@ void gle::gleDrawResizeBox(const gle_color rgb, int width, int height)
 void gle::gleDrawAxes(const GLfloat S, int dim)
 {
     const GLfloat R = S * 0.1;
-    
+
     glMatrixMode(GL_MODELVIEW);
-    
+
     for( int ii=0; ii<dim; ++ii)
     {
         glPushMatrix();
         switch( ii )
         {
-            case 0: 
+            case 0:
                 glColor3f(1, 0, 0);
                 glRotatef(+90, 0, 1, 0);
                 break;
@@ -1852,7 +1852,7 @@ void gle::gleDrawAxes(const GLfloat S, int dim)
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'X'+ii);
         glPopMatrix();
     }
-    
+
     // display a white ball at the origin
     glColor3f(1, 1, 1);
     glPushMatrix();
@@ -1875,4 +1875,3 @@ void gle::gleReportErrors(FILE * out, const char* msg)
         glError = glGetError();
     }
 }
-

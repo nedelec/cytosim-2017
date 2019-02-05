@@ -1,17 +1,18 @@
 // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 /*
- 
+
  Francois Nedelec, Nov. 2003,  nedelec@embl.de
  To compile on mac-osx:
  g++ test_opengl.cc -framework GLUT -framework openGL
  On Linux:
  g++ test_opengl.cc -L/usr/X11R6/lib -lglut -lGL -lGLU -lXt -lX11 -lXi
- 
+
  */
 
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
+#include <cstring>
 
 #ifdef __APPLE__
   #include <OpenGL/gl.h>
@@ -20,7 +21,7 @@
   #include <AGL/agl.h>
 #else
   #include <GL/glew.h>
-  #include <GL/glext.h>
+  //#include <GL/glext.h>
   #include <GL/glut.h>
 #endif
 
@@ -51,7 +52,7 @@ void printCaps()
     printf("transparency %i - blend %i - fog %i - depth %i - clamp %i",
            transparency, int(blend), int(fog), int(depth), int(clamp));
 
-    
+
     GLint point_smooth, line_smooth, multisample;
     glGetIntegerv( GL_POINT_SMOOTH,   &point_smooth );
     glGetIntegerv( GL_LINE_SMOOTH,    &line_smooth );
@@ -88,7 +89,7 @@ void processNormalKey(unsigned char c, int x, int y)
         case 's':
             delay *= 2;
             return;
-            
+
         case ']':
             linewidth += 0.5;
             return;
@@ -96,7 +97,7 @@ void processNormalKey(unsigned char c, int x, int y)
             if ( linewidth > 1 )
                 linewidth -= 0.5;
             return;
-            
+
         case 'c':
             flip_cap( GL_DEPTH_CLAMP );
             break;
@@ -121,12 +122,12 @@ void processNormalKey(unsigned char c, int x, int y)
         case 't':
             transparency = !transparency;
             break;
-            
+
         case 27:
         case 'q':
             exit(EXIT_SUCCESS);
     }
-    
+
     printCaps();
 }
 
@@ -135,11 +136,11 @@ void processNormalKey(unsigned char c, int x, int y)
 void reshaped(int ww, int wh)
 {
     glViewport(0, 0, ww, wh);
-    
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     double ratio = ww / double( wh );
-    
+
     if ( ratio > 1 )
         glOrtho(-range, range, -range/ratio, range/ratio, 1, 4);
     else
@@ -152,15 +153,15 @@ void initGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glEnable(GL_DEPTH_TEST);
-    
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
     //glEnable(GL_POINT_SMOOTH);
     //glEnable(GL_LINE_SMOOTH);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    
+
     glEnable(GL_FOG);
     glFogi(GL_FOG_MODE, GL_LINEAR);
     glFogf(GL_FOG_START, 0 );
@@ -182,12 +183,12 @@ void setView(GLfloat angle)
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
+
     setView(angle);
     glLineWidth(linewidth);
     glColor3f(1.0, 1.0, 1.0);
     glutWireCube(1.35);
-    
+
     glPointSize(32.0);
     glBegin(GL_POINTS);
     glColor3f(1.0, 1.0, 1.0);   glVertex3f(0.0, 0.0, 0.0);
@@ -195,7 +196,7 @@ void display()
     glColor3f(0.0, 1.0, 0.0);   glVertex3f(0.0, 1.0, 0.0);
     glColor3f(0.0, 0.0, 1.0);   glVertex3f(0.0, 0.0, 1.0);
     glEnd();
-    
+
     if ( transparency )
     {
         glColor4f(0.5, 0.5, 0.5, 0.35);
@@ -213,7 +214,7 @@ void display()
         glColor3f(0.5, 0.5, 0.5);
         glutSolidSphere(1, 32, 32);
     }
-    
+
     glutSwapBuffers();
     glutReportErrors();
 }
@@ -237,7 +238,7 @@ void print_str(const char * name, GLenum cap)
 
 void print_cap(const char * name, GLenum cap)
 {
-    GLint b[10]; 
+    GLint b[10];
     glGetIntegerv(cap, b);
     printf("%s = %i\n", name, (int)b[0]);
 }
@@ -247,13 +248,13 @@ void printInfo()
     print_str("VENDOR  ", GL_VENDOR);
     print_str("RENDERER", GL_RENDERER);
     print_str("VERSION ", GL_VERSION);
-    
+
 #ifdef __APPLE__
-    
+
     GLint minor, major;
     aglGetVersion(&major, &minor);
     printf("AGL VERSION %i.%i\n", int(major), int(minor));
-    
+
 #endif
 
     print_cap("GL_MAX_CLIP_PLANES", GL_MAX_CLIP_PLANES);
@@ -274,13 +275,13 @@ void printInfo()
     printf("Current mode possible %i\n",   glutGet(GLUT_DISPLAY_MODE_POSSIBLE));
     printf("Overlay possible %i\n",        glutLayerGet(GLUT_OVERLAY_POSSIBLE));
 #endif
-    
+
     //anti-aliasing of points and lines:
     printf("GL_POINT_SMOOTH enabled: %i\n", glIsEnabled(GL_POINT_SMOOTH));
     GLfloat s[2];
     glGetFloatv(GL_SMOOTH_POINT_SIZE_RANGE, s);
     printf("GL_SMOOTH_POINT_SIZE_RANGE: %.2f - %.2f\n", s[0],s[1]);
-    
+
     printf("GL_LINE_SMOOTH enabled: %i\n", glIsEnabled(GL_LINE_SMOOTH));
     glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, s);
     printf("GL_SMOOTH_LINE_WIDTH_RANGE: %.2f - %.2f\n", s[0], s[1]);
@@ -310,7 +311,7 @@ int main(int argc, char* argv[])
     glutInitDisplayString("double rgba depth samples~8");
     glutInitWindowSize(512, 512);
     glutCreateWindow(argv[0]);
-    
+
     //testglut -e reports some OpenGL info:
     if ( argc > 1 )
     {
@@ -325,16 +326,16 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
         }
     }
-    
+
     glutDisplayFunc(display);
     glutReshapeFunc(reshaped);
     glutTimerFunc(50, timerFunction, glutGetWindow());
     glutKeyboardFunc(processNormalKey);
-    
+
     initGL();
-    
+
     glutReportErrors();
     glutMainLoop();
-    
+
     return EXIT_SUCCESS;
 }

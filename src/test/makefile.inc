@@ -39,7 +39,7 @@ test_blas: test_blas.cc random.o SFMT.o backtrace.o
 	$(DONE)
 vpath test_blas bin
 
-test_param: test_param.cc glossary.o tokenizer.o stream_func.o exceptions.o backtrace.o
+test_param: test_param.cc glossary.o tokenizer.o stream_func.o exceptions.o backtrace.o filepath.o
 	$(TEST_MAKE)
 	$(DONE)
 vpath test_param bin
@@ -49,7 +49,7 @@ test_quartic: test_quartic.cc quartic.o random.o SFMT.o backtrace.o
 	$(DONE)
 vpath test_quartic bin
 
-test_quaternion: test_quaternion.cc libcytomath.a SFMT.o libcytobase.a 
+test_quaternion: test_quaternion.cc libcytomath.a SFMT.o libcytobase.a
 	$(TEST_MAKE)
 	$(DONE)
 vpath test_quaternion bin
@@ -59,7 +59,7 @@ test_random: test_random.cc random.o SFMT.o exceptions.o filewrapper.o messages.
 	$(DONE)
 vpath test_random bin
 
-test_simd: test_simd.cc tictoc.o 
+test_simd: test_simd.cc tictoc.o
 	$(COMPILE) -Isrc/base src/base/tictoc.cc $< -o bin/test_simd
 	$(DONE)
 vpath test_simd bin
@@ -99,7 +99,7 @@ test_glut: test_glut.cc
 	$(CXX) $^ $(LINKGL) -o bin/$@
 vpath test_glut bin
 
-test_glapp: test_glapp.cc libcytogl.a libcytobase.a libcytomath.a 
+test_glapp: test_glapp.cc libcytogl.a libcytobase.a libcytomath.a
 	$(TEST_MAKE_GL)
 vpath test_glapp bin
 
@@ -107,11 +107,11 @@ test_sphere: test_sphere.cc libcytogl.a libcytomath.a libcytobase.a
 	$(TEST_MAKE_GL)
 vpath test_sphere bin
 
-test_rasterizer: test_rasterizer.cc rasterizerGL.o libcytomath.a libcytogl.a libcytobase.a 
+test_rasterizer: test_rasterizer.cc rasterizerGL.o libcytomath.a libcytogl.a libcytobase.a
 	$(TEST_MAKE_GL)
 vpath test_rasterizer bin
 
-test_space: test_space.cc libcytospace.a libcytosim.a libcytomath.a libcytogl.a libcytobase.a 
+test_space: test_space.cc libcytospace.a libcytosim.a libcytomath.a libcytogl.a libcytobase.a
 	$(TEST_MAKE_GL)
 vpath test_space bin
 
@@ -122,5 +122,3 @@ vpath test_grid bin
 test_solve: test_solve.cc libcytomath.a libcytobase.a
 	$(TEST_MAKE_GL)
 vpath test_solve bin
-
-

@@ -9,7 +9,7 @@ OBJ_HANDS := hand.o hand_prop.o\
              cutter.o cutter_prop.o\
              rescuer.o rescuer_prop.o\
              mighty.o mighty_prop.o\
-         
+
 OBJ_FIBERS := fiber_naked.o fiber.o rigid_fiber.o fiber_prop.o fiber_set.o\
               dynamic_fiber.o dynamic_fiber_prop.o\
               classic_fiber.o classic_fiber_prop.o\
@@ -38,7 +38,7 @@ OBJ_SIM := movable.o mecable.o point_set.o\
            meca.o simul_prop.o fiber_grid.o point_grid.o\
            field.o field_prop.o field_set.o space_set.o\
            simul.o interface.o parser.o\
-        
+
 
 OBJ_CYTOSIM:=$(OBJ_SIM) $(OBJ_HANDS) $(OBJ_FIBERS) $(OBJ_SINGLES) $(OBJ_COUPLES) $(OBJ_ORGANIZERS)
 
@@ -122,4 +122,3 @@ $(OBJ_CYTOSIM_2D): %2D.o: %.cc %.h | build
 
 $(OBJ_CYTOSIM_3D): %3D.o: %.cc %.h | build
 	$(COMPILE) -c -DDIM=3 $(INC_SIM) $< -o build/$@
-
