@@ -40,7 +40,7 @@ set(SIM_SRC_DIR
 set(TEST_SRC_DIR "${CMAKE_SOURCE_DIR}/src/test")
 set(TOOLS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/tools")
 
-# Use this to link against the Cytosim
+# Use this to link against the Cytosim Libraries
 set(CYTOSIM_LIBRARIES
 	"${SIM_LIB_TARGET}"
 	"${SPACES_LIB_TARGET}"
