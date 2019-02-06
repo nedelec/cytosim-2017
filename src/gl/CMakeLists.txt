@@ -1,15 +1,15 @@
 set(SOURCES_GL
-	"${CMAKE_SOURCE_DIR}/src/gl/gle.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/gle_color_int.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/gle_color_float.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/gle_color.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/gle_color_list.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/glapp_prop.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/view.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/view_prop.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/glapp.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/saveimage.cc"
-	"${CMAKE_SOURCE_DIR}/src/gl/offscreen.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/gle.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/gle_color_int.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/gle_color_float.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/gle_color.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/gle_color_list.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/glapp_prop.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/view.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/view_prop.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/glapp.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/saveimage.cc"
+	"${PROJECT_SOURCE_DIR}/src/gl/offscreen.cc"
 )
 
 add_library(${GL_LIB_TARGET} STATIC ${SOURCES_GL})

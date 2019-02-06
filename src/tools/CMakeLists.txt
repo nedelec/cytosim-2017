@@ -18,7 +18,7 @@ set(TOOL_LIBS
 )
 
 set(TOOL_OBJS
-	"${CMAKE_BINARY_DIR}/src/play/CMakeFiles/play.dir/frame_reader.cc.o"
+	"${PROJECT_BINARY_DIR}/src/play/CMakeFiles/play.dir/frame_reader.cc.o"
 )
 
 set(TOOL_LIST
@@ -33,7 +33,7 @@ set(TOOL_LIST
 
 # Build the Tools
 foreach(TOOL_NAME ${TOOL_LIST})
-	add_executable("${TOOL_NAME}" ${TOOL_OBJS} "${CMAKE_SOURCE_DIR}/src/tools/${TOOL_NAME}.cc")
+	add_executable("${TOOL_NAME}" ${TOOL_OBJS} "${PROJECT_SOURCE_DIR}/src/tools/${TOOL_NAME}.cc")
 	set_source_files_properties(
 		${TOOL_OBJS}
 		PROPERTIES
@@ -45,18 +45,18 @@ foreach(TOOL_NAME ${TOOL_LIST})
 endforeach()
 
 set(READER_OBJS
-	"${CMAKE_BINARY_DIR}/src/play/CMakeFiles/play.dir/frame_reader.cc.o"
+	"${PROJECT_BINARY_DIR}/src/play/CMakeFiles/play.dir/frame_reader.cc.o"
 )
 
 set(SOURCES_frame_readerVB
-	"${CMAKE_SOURCE_DIR}/src/play/frame_reader.h"
-	"${CMAKE_SOURCE_DIR}/src/play/frame_reader.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/frame_reader.h"
+	"${PROJECT_SOURCE_DIR}/src/play/frame_reader.cc"
 )
 add_library(frame_readerVB ${SOURCES_frame_readerVB})
 target_include_directories(frame_readerVB PUBLIC "${TOOL_INCLUDES}")
 target_compile_definitions(frame_readerVB PUBLIC -DVERBOSE_READER)
 
-add_executable("reader" "${CMAKE_SOURCE_DIR}/src/tools/reader.cc")
+add_executable("reader" "${PROJECT_SOURCE_DIR}/src/tools/reader.cc")
 target_link_libraries(reader PUBLIC
 	"${TOOL_LIBS}"
 	"frame_readerVB"

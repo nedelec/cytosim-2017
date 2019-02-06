@@ -1,16 +1,16 @@
 set(SOURCES_PLAY
-	"${CMAKE_SOURCE_DIR}/src/play/fiber_disp.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/line_disp.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/point_disp.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/display_prop.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/display.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/display1.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/display2.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/display3.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/sim_thread.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/frame_reader.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/play_prop.cc"
-	"${CMAKE_SOURCE_DIR}/src/play/play.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/fiber_disp.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/line_disp.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/point_disp.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/display_prop.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/display.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/display1.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/display2.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/display3.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/sim_thread.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/frame_reader.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/play_prop.cc"
+	"${PROJECT_SOURCE_DIR}/src/play/play.cc"
 )
 
 if(BUILD_PLAY_EXECUTABLE)

@@ -17,19 +17,19 @@ set(TEST_LIBS
 )
 
 set(TEST_OBJS
-	"${CMAKE_BINARY_DIR}/src/math/CMakeFiles/${MATH_LIB_TARGET}.dir/random.cc.o"
-	"${CMAKE_BINARY_DIR}/src/SFMT/CMakeFiles/${SFMT_LIB_TARGET}.dir/SFMT.c.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/exceptions.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/filewrapper.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/messages.cc.o"
-	"${CMAKE_BINARY_DIR}/src/math/CMakeFiles/${MATH_LIB_TARGET}.dir/smath.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/vecprint.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/backtrace.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/tictoc.cc.o"
-	"${CMAKE_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/filepath.cc.o"
+	"${PROJECT_BINARY_DIR}/src/math/CMakeFiles/${MATH_LIB_TARGET}.dir/random.cc.o"
+	"${PROJECT_BINARY_DIR}/src/SFMT/CMakeFiles/${SFMT_LIB_TARGET}.dir/SFMT.c.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/exceptions.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/filewrapper.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/messages.cc.o"
+	"${PROJECT_BINARY_DIR}/src/math/CMakeFiles/${MATH_LIB_TARGET}.dir/smath.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/vecprint.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/backtrace.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/tictoc.cc.o"
+	"${PROJECT_BINARY_DIR}/src/base/CMakeFiles/${BASE_LIB_TARGET}.dir/filepath.cc.o"
 )
 
-set(TEST_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src/test/")
+set(TEST_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src/test/")
 
 set(TEST_LIST
 	#"test" # Test is a reserved word in CMake 3.10.x
@@ -46,7 +46,7 @@ set(TEST_LIST
 )
 
 foreach(TEST_NAME ${TEST_LIST})
-	add_executable("${TEST_NAME}" ${TEST_OBJS} "${CMAKE_SOURCE_DIR}/src/test/${TEST_NAME}.cc")
+	add_executable("${TEST_NAME}" ${TEST_OBJS} "${PROJECT_SOURCE_DIR}/src/test/${TEST_NAME}.cc")
 	set_source_files_properties(
 		${TEST_OBJS}
 		PROPERTIES
@@ -71,7 +71,7 @@ set(TEST_GL_LIBS
 )
 
 set(GL_TEST_LIST
-	"test_opengl"
+	#"test_opengl" #Currently experiencing an issue with glext.h on Linux
 	"test_glut"
 	"test_glapp"
 	"test_sphere"
@@ -82,7 +82,7 @@ set(GL_TEST_LIST
 )
 
 foreach(TEST_NAME ${GL_TEST_LIST})
-	add_executable(${TEST_NAME} "${CMAKE_SOURCE_DIR}/src/test/${TEST_NAME}.cc")
+	add_executable(${TEST_NAME} "${PROJECT_SOURCE_DIR}/src/test/${TEST_NAME}.cc")
 	target_include_directories(${TEST_NAME} PUBLIC "${TEST_INCLUDES}")
 	target_link_libraries(${TEST_NAME} PUBLIC "${TEST_GL_LIBS}")
 endforeach()

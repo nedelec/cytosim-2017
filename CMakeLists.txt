@@ -4,11 +4,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_BUILD_TYPE Debug)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
 set(TARGET "cytosim")
+project(${TARGET} C CXX)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+
 
 set(DIMENSION 2)
 add_definitions(-DDIM=${DIMENSION})
@@ -22,36 +24,23 @@ if(BUILD_CYTOSIM_TOOLS)
 	set(BUILD_PLAY_EXECUTABLE ON)
 endif()
 
-set(BASE_SRC_DIR "${CMAKE_SOURCE_DIR}/src/base")
-set(DOC_SRC_DIR "${CMAKE_SOURCE_DIR}/src/doc")
-set(GL_SRC_DIR "${CMAKE_SOURCE_DIR}/src/gl")
-set(MATH_SRC_DIR "${CMAKE_SOURCE_DIR}/src/math")
-set(PLAY_SRC_DIR "${CMAKE_SOURCE_DIR}/src/play")
-set(SFMT_SRC_DIR "${CMAKE_SOURCE_DIR}/src/SFMT")
+set(BASE_SRC_DIR "${PROJECT_SOURCE_DIR}/src/base")
+set(DOC_SRC_DIR "${PROJECT_SOURCE_DIR}/src/doc")
+set(GL_SRC_DIR "${PROJECT_SOURCE_DIR}/src/gl")
+set(MATH_SRC_DIR "${PROJECT_SOURCE_DIR}/src/math")
+set(PLAY_SRC_DIR "${PROJECT_SOURCE_DIR}/src/play")
+set(SFMT_SRC_DIR "${PROJECT_SOURCE_DIR}/src/SFMT")
 set(SIM_SRC_DIR
-"${CMAKE_SOURCE_DIR}/src/sim"
-"${CMAKE_SOURCE_DIR}/src/sim/fibers"
-"${CMAKE_SOURCE_DIR}/src/sim/hands"
-"${CMAKE_SOURCE_DIR}/src/sim/singles"
-"${CMAKE_SOURCE_DIR}/src/sim/couples"
-"${CMAKE_SOURCE_DIR}/src/sim/organizers"
-"${CMAKE_SOURCE_DIR}/src/sim/spaces"
+"${PROJECT_SOURCE_DIR}/src/sim"
+"${PROJECT_SOURCE_DIR}/src/sim/fibers"
+"${PROJECT_SOURCE_DIR}/src/sim/hands"
+"${PROJECT_SOURCE_DIR}/src/sim/singles"
+"${PROJECT_SOURCE_DIR}/src/sim/couples"
+"${PROJECT_SOURCE_DIR}/src/sim/organizers"
+"${PROJECT_SOURCE_DIR}/src/sim/spaces"
 )
-set(TEST_SRC_DIR "${CMAKE_SOURCE_DIR}/src/test")
-set(TOOLS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/tools")
-
-# Use this to link against the Cytosim Libraries
-set(CYTOSIM_LIBRARIES
-	"${SIM_LIB_TARGET}"
-	"${SPACES_LIB_TARGET}"
-	"${MATH_LIB_TARGET}"
-	"${BASE_LIB_TARGET}"
-	"${LAPACK_LIB}"
-	"${BLAS_LIB}"
-	Threads::Threads
-)
-
-project(${TARGET} C CXX)
+set(TEST_SRC_DIR "${PROJECT_SOURCE_DIR}/src/test")
+set(TOOLS_SRC_DIR "${PROJECT_SOURCE_DIR}/src/tools")
 
 set(CYTOSIM_EXE_TARGET "sim")
 set(PLAY_EXE_TARGET "play")
@@ -63,6 +52,18 @@ set(SPACES_GL_LIB_TARGET "cytospace${DIMENSION}DGL")
 set(GL_LIB_TARGET "cytogl")
 set(SFMT_LIB_TARGET "sfmt")
 set(TOOL_LIB_TARGET "cytotools")
+
+# Use this to link against the Cytosim Libraries
+set(CYTOSIM_LIBRARIES
+	"${SIM_LIB_TARGET}"
+	"${SPACES_LIB_TARGET}"
+	"${MATH_LIB_TARGET}"
+	"${BASE_LIB_TARGET}"
+	"${LAPACK_LIB}"
+	"${BLAS_LIB}"
+	Threads::Threads
+	PARENT_SCOPE
+)
 
 find_library(LAPACK_LIB lapack REQUIRED)
 if(LAPACK_LIB)
@@ -85,34 +86,38 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-if(UNIX AND NOT APPLE)
-	message("Building for Linux")
-	find_package(GLUT)
-	find_package(OpenGL)
-	find_package(GLU)
-	find_package(Xt)
-	find_package(X11)
-	find_package(GLEW)
-
-	set(OPENGL_LIBS
-		glut
-		OpenGL::GL
-		GLU
-		Xt
-		X11
-		GLEW
-	)
-elseif(UNIX AND APPLE)
-	message("Building for Mac")
-
-	set(OPENGL_LIBS
-		"-framework Accelerate"
-		"-framework GLUT"
-		"-framework OpenGL"
-		"-framework AGL"
-	)
-else()
+if(NOT UNIX)
 	message(FATAL_ERROR "CMake File currently only setup to build on Linux and Mac")
+endif()
+
+if(BUILD_PLAY_EXECUTABLE OR BUILD_CYTOSIM_TESTS OR BUILD_CYTOSIM_TOOLS)
+	if(UNIX AND NOT APPLE)
+		message("Building for Linux")
+		find_package(GLUT)
+		find_package(OpenGL)
+		find_package(GLU)
+		find_package(Xt)
+		find_package(X11)
+		find_package(GLEW)
+
+		set(OPENGL_LIBS
+			glut
+			OpenGL::GL
+			GLU
+			Xt
+			X11
+			GLEW
+		)
+	elseif(UNIX AND APPLE)
+		message("Building for Mac")
+
+		set(OPENGL_LIBS
+			"-framework Accelerate"
+			"-framework GLUT"
+			"-framework OpenGL"
+			"-framework AGL"
+		)
+	endif()
 endif()
 
 set(ALIGN_FLAGS "-malign-double -falign-loops -falign-jumps -falign-functions")
@@ -143,6 +148,6 @@ else()
 	message(FATAL_ERROR "Unrecognized compiler used: ${CMAKE_CXX_COMPILER_ID}")
 endif()
 
-file(COPY ${CMAKE_SOURCE_DIR}/cym DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${PROJECT_SOURCE_DIR}/cym DESTINATION ${PROJECT_BINARY_DIR})
 add_definitions("-finline-functions ${ALIGN_FLAGS} ${FAST_FLAGS}")
 add_subdirectory("src")
