@@ -48,6 +48,12 @@ public:
     /// project point on the closest edge of the Space
     void       project(const real point[], real proj[]) const;
     
+    /// apply a force directed towards the edge of the Space
+    void       setInteraction(Vector const& pos, PointExact const&, Meca &, real stiff) const;
+    
+    /// apply a force directed towards the edge of the Space
+    void       setInteraction(Vector const& pos, PointExact const&, real rad, Meca &, real stiff) const;
+
     
     /// the i-th direction of peripodicity
     Vector     period(int d)  const;
