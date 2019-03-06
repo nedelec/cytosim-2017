@@ -8,6 +8,7 @@
 
 void BeadProp::clear()
 {
+    drag              = -1;
     viscosity         = -1;
     steric            = 0;
     
@@ -23,6 +24,7 @@ void BeadProp::clear()
 void BeadProp::read(Glossary& glos)
 {
     glos.set(steric,         "steric");
+    glos.set(drag,           "drag");
     glos.set(viscosity,      "viscosity");
     
     glos.set(confine,        "confine",
@@ -67,6 +69,7 @@ void BeadProp::complete(SimulProp const* sp, PropertyList* plist)
 
 void BeadProp::write_data(std::ostream & os) const
 {
+    if ( drag > 0 )  write_param(os, "drag", drag);
     write_param(os, "viscosity", viscosity);
     write_param(os, "steric",    steric);
     write_param(os, "confine",   confine, confine_stiff, confine_space);
