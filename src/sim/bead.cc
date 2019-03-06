@@ -128,7 +128,7 @@ void Bead::setDragCoefficient()
     if ( prop->drag > 0 )
     {
         paDrag = prop->drag;
-        std::clog << "Bead `" << prop->name() << "' (radius " << paRadius << ") has drag " << paDrag << std::endl;
+        //std::clog << "Bead `" << prop->name() << "' (radius " << paRadius << ") has drag " << paDrag << std::endl;
     }
     else
     {

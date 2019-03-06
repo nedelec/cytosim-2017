@@ -223,7 +223,7 @@ void HandProp::checkStiffness(real stiff, real len, real mul, real kT) const
     real dis = binding_range - len;
     real en = ( stiff * dis * dis ) / kT;
     
-    if ( en > 10.0 )
+    if ( en > 10.0 && binding_rate > 0 )
     {
         std::ostringstream oss;
         oss << "hand `" << name() << "' overcomes high energy when binding:" << std::endl;
