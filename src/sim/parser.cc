@@ -837,7 +837,7 @@ void Parser::parse_report(std::istream & is)
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
-    if ( do_write || file == "*" )
+    if ( do_run && ( do_write || file == "*" ))
     {
         execute_report(file, what, opt);
         
