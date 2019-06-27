@@ -1,5 +1,9 @@
 # Cytosim
 
+**This is an older version of Cytosim.** Please go to:
+
+	https://gitlab.com/f.nedelec/cytosim
+
 ## Description
 Cytosim is a cytoskeleton simulation engine written in C++ working on Mac OS, GNU/Linux and Windows (with Cygwin).
 
