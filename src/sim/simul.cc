@@ -274,7 +274,7 @@ void Simul::add(Object * w)
 }
 
 
-int Simul::add(ObjectList objs)
+int Simul::add(ObjectList const& objs)
 {
     int cnt = 0;
     //std::cerr << " Simul::add("<< objs.size() <<" objects):" << std::endl;
@@ -300,7 +300,7 @@ void Simul::remove(Object * w)
 }
 
 
-void Simul::remove(ObjectList objs)
+void Simul::remove(ObjectList const& objs)
 {
     //std::cerr << " Simul::remove("<< objs.size() <<" objects):" << std::endl;
     for ( Object ** oi = objs.begin(); oi < objs.end(); ++oi )
@@ -320,7 +320,7 @@ void Simul::erase(Object * w)
 }
 
 
-void Simul::erase(ObjectList objs)
+void Simul::erase(ObjectList const& objs)
 {
     //std::cerr << " Simul::erase("<< objs.size() <<" objects):" << std::endl;
     for ( Object ** oi = objs.begin(); oi < objs.end(); ++oi )
@@ -335,7 +335,7 @@ void Simul::erase(ObjectList objs)
 }
 
 
-void Simul::mark(ObjectList objs, int mrk)
+void Simul::mark(ObjectList const& objs, int mrk)
 {
     //std::cerr << " Simul::erase("<< objs.size() <<" objects):" << std::endl;
     for ( Object ** oi = objs.begin(); oi < objs.end(); ++oi )

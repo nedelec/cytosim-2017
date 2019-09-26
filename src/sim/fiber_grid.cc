@@ -412,7 +412,7 @@ void FiberGrid::testAttach(FILE * out, const Vector pos, Fiber * start, HandProp
         }
     }
     
-    const int targets = hits.size();
+    const size_t targets = hits.size();
     
     if ( targets == 0 )
     {
@@ -421,8 +421,8 @@ void FiberGrid::testAttach(FILE * out, const Vector pos, Fiber * start, HandProp
     }
     
     //call tryTyAttach NB times to check to which rods the Hand binds:
-    const unsigned int NB = (int)ceil( 100 * targets / hp->binding_rate_dt );
-    for ( unsigned int n = 0; n < NB; ++n )
+    const size_t NB = (int)ceil( 100 * targets / hp->binding_rate_dt );
+    for ( size_t n = 0; n < NB; ++n )
     {
         if ( tryToAttach(pos, ha) )
         {
@@ -452,8 +452,8 @@ void FiberGrid::testAttach(FILE * out, const Vector pos, Fiber * start, HandProp
     {
         // print a summary of all targets:
         fprintf(out, "testAttach\n");
-        fprintf(out, "   %i target(s) within %.3f um\n", targets, hp->binding_range);
-        fprintf(out, "   %i trials\n", NB);
+        fprintf(out, "   %lu target(s) within %.3f um\n", targets, hp->binding_range);
+        fprintf(out, "   %lu trials\n", NB);
         real avg = NB * hp->binding_rate_dt / targets;
         fprintf(out, "   binding_prob = %.2f, expected_hits / target = %.3f\n", hp->binding_rate_dt, avg);
 

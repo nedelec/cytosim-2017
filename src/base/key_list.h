@@ -154,10 +154,10 @@ public:
     }
     
     /// number of entries
-    unsigned int size()                     const { return map.size(); }
+    size_t size()                       const { return map.size(); }
     
     /// return n-th entry
-    const key_value & operator[](int n)     const { return map[n]; }
+    const key_value & operator[](int n) const { return map[n]; }
     
     /// add new entry (k, v)
     void push_back(key_type const& k, val_type v) { map.push_back(key_value(k, v)); }

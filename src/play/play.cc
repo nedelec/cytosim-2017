@@ -40,7 +40,7 @@ void splash(std::ostream & os = std::cout)
 void info(std::ostream & os = std::cout)
 {
     os << "www.cytosim.org - play" << endl;
-    os << " GIT version " << endl;
+    os << " https://github.com/nedelec/cytosim" << endl;
     os << " Compiled at "<<__TIME__<< " on " <<__DATE__<< endl;
     os << " Precision: " << sizeof(real) << " bytes,  epsilon = " << REAL_EPSILON << endl;
     
@@ -151,12 +151,12 @@ int main(int argc, char* argv[])
     if ( glos.use_key("movie") )
         off_screen = OFFSCREEN_MOVIE;
 
-    std::string dir;
     // change working directory if specified:
-    if ( glos.set(dir, "dir") )
+    std::string dir;
+    if ( glos.set(dir, "directory") )
     {
         FilePath::change_dir(dir);
-        //std::cerr << "Cytosim changed directory to " << FilePath::get_dir() << std::endl;
+        //std::clog << "Cytosim working directory is " << FilePath::get_cwd() << '\n';
     }
 
     glApp::build();

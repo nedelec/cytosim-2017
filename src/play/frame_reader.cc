@@ -110,7 +110,7 @@ void FrameReader::savePos(int frm, const fpos_t& pos, int s)
     
     if ( inx >= framePos.size() )
     {
-        unsigned int i = framePos.size();
+        size_t i = framePos.size();
         framePos.resize(inx+1);
         while ( i <= inx )
             framePos[i++].status = 0;

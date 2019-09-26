@@ -2,6 +2,7 @@
 
 #include "filepath.h"
 #include <sys/param.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <libgen.h>
 #include <unistd.h>
@@ -16,6 +17,14 @@ std::string FilePath::get_dir()
     return cwd;
 }
 
+
+bool FilePath::is_dir(const char path[])
+{
+    struct stat s;
+    if ( 0 == stat(path, &s) )
+        return S_ISDIR(s.st_mode);
+    return false;
+}
 
 int FilePath::change_dir(std::string const& wd)
 {
@@ -60,7 +69,7 @@ std::string FilePath::full_name(std::string const& dir, std::string const& file)
         std::string res = dir + file;
         
         //remove trailling '/' if present
-        const int x = res.size()-1;
+        const long x = res.size() - 1;
         if ( 0 <= x  &&  res[x] == '/' )
             res[x] = '\0';
         

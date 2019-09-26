@@ -177,7 +177,7 @@ public:
     bool         empty()   const { return mTerms.empty(); }
 
     /// number of keys
-    unsigned     nb_keys() const { return mTerms.size(); }
+    size_t       nb_keys() const { return mTerms.size(); }
     
     /// return true if key is present, even if no value was set
     bool         has_key(key_type const&);
@@ -195,7 +195,7 @@ public:
     Glossary     extract(key_type const&);
 
     /// return number of values associated with a key
-    unsigned     nb_values(key_type const&);
+    size_t       nb_values(key_type const&);
     
     /// gives a pointer to the values corresponding to a key, or null if the key is not present
     rec_type *   values(key_type const&);
@@ -373,7 +373,7 @@ public:
         char const* str = val.c_str();
         char * end;
         
-        int i = strtol(str, &end, 10);
+        long i = strtol(str, &end, 10);
         if ( end > str && 0 == not_space(end) )
             return 2 + ( i < 0 );
         

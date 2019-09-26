@@ -31,10 +31,6 @@ namespace TicToc
     
     /// number of micro-second since midnight
     long    milli_seconds_today();
- 
-    
-    /// CPU time in short format, `buf` must be   
-    clock_t processor_time(char * buf, size_t buf_size, clock_t, double& sum);
     
     /// call to start timer
     void    tic();

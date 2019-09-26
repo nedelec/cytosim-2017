@@ -109,22 +109,22 @@ public:
     void      add(Object *);
 
     /// link Objects
-    int       add(ObjectList);
+    int       add(ObjectList const&);
 
     /// unlink Object
     void      remove(Object *);
 
     /// unlink Objects
-    void      remove(ObjectList);
+    void      remove(ObjectList const&);
     
     /// unlink and delete object
     void      erase(Object *);
     
     /// unlink and delete all objects in list
-    void      erase(ObjectList);
+    void      erase(ObjectList const&);
 
     /// mark objects in list
-    static void mark(ObjectList, int);
+    static void mark(ObjectList const&, int);
 
     /// erase simulation world (all sub-lists and variables)
     void      erase();
@@ -359,6 +359,8 @@ public:
     /// print info on doubly bound Couples 
     void      reportCoupleLink(std::ostream&, std::string const&) const;
     
+    /// print numbers of different types of link made by each couple
+    void    reportCoupleType(std::ostream&, std::string const&) const;
     
     /// print state of Singles
     void      reportSingle(std::ostream&) const;

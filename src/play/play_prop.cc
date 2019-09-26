@@ -8,7 +8,7 @@
 void PlayProp::clear()
 {
     frame        = 0;
-    dir          = 0;
+    play         = 0;
     loop         = 0;
     period       = 1;
     delay        = 32;
@@ -42,7 +42,7 @@ void PlayProp::clear()
 void PlayProp::read(Glossary& glos)
 {
     glos.set(frame,        "frame");
-    glos.set(dir,          "dir");
+    glos.set(play,         "play");
     glos.set(loop,         "loop");
     glos.set(period,       "period");
     glos.set(delay,        "delay");
@@ -75,7 +75,7 @@ void PlayProp::read(Glossary& glos)
 void PlayProp::write_data(std::ostream & os) const
 {
     write_param(os, "frame",  frame);
-    write_param(os, "dir",    dir);
+    write_param(os, "play",   play);
     write_param(os, "loop",   loop);
     write_param(os, "period", period);
     write_param(os, "delay",  delay);

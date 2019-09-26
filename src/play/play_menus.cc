@@ -459,7 +459,7 @@ void processMenuExport(int item)
     {
         case 0:   return;
         case 1:   saveImage(PP.image_index++);  return;
-        case 2:   PP.dir = PLAY_FORWARD_WRITE;  return;
+        case 2:   PP.play = PLAY_FORWARD_WRITE;  return;
         
         case 3:   saveMagnifiedImage(2, PP.poster_index++);   return;
         case 4:   saveMagnifiedImage(3, PP.poster_index++);   return;

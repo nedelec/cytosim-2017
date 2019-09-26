@@ -147,16 +147,18 @@ Fiber* FiberProp::newFiber(Glossary& opt) const
     // initialize state of the ends
     KeyList<int> keys("white",  STATE_WHITE,
                       "green",  STATE_GREEN,
+                      "grow",   STATE_GREEN,
+                      "shrink", STATE_RED,
                       "yellow", STATE_YELLOW,
                       "orange", STATE_ORANGE,
                       "red",    STATE_RED);
     
     int s = STATE_WHITE;
     
-    if ( opt.set(s, "plus_end_state") || opt.set(s, "end_state", keys) )
+    if ( opt.set(s, "plus_end", keys) || opt.set(s, "plus_end_state", keys) || opt.set(s, "end_state", keys) )
         fib->setDynamicState(PLUS_END, s);
     
-    if ( opt.set(s, "minus_end_state") || opt.set(s, "end_state", keys, 1) )
+    if ( opt.set(s, "minus_end", keys) || opt.set(s, "minus_end_state", keys) || opt.set(s, "end_state", keys, 1) )
         fib->setDynamicState(MINUS_END, s);
     
     return fib;

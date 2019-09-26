@@ -12,7 +12,7 @@ int number;
 int main(int argc, char* argv[])
 {
     glos.readFile("config.cym");
-    printf("%u keys:\n", glos.nb_keys());
+    printf("%lu keys:\n", glos.nb_keys());
     glos.write(std::cout);
     
     glos.set(number, "number");

@@ -22,7 +22,7 @@ void Player::previousFrame()
         if ( PP.loop )
             simThread.readFrame(-1);
         else
-            PP.dir = PLAY_STOP;
+            PP.play = PLAY_STOP;
     }
     PP.frame = simThread.frame();
 }
@@ -42,7 +42,7 @@ void Player::nextFrame()
             else
             {
                 flashText("end-of-file\n");
-                PP.dir = PLAY_STOP;
+                PP.play = PLAY_STOP;
             }
         }
         
@@ -52,37 +52,32 @@ void Player::nextFrame()
     {
         flashText("Error:\n %s", e.what());
         if ( simThread.eof() )
-            PP.dir = PLAY_STOP;
+            PP.play = PLAY_STOP;
     }
 }
 
 //------------------------------------------------------------------------------
 #pragma mark Commands
 
-
-void Player::reset()
+void Player::rewind()
 {
     if ( simThread.goodFile() )
     {
+        PP.play = PLAY_STOP;
         simThread.readFrame(0);
-        PP.dir = PLAY_STOP;
-    }
-    else
-    {
-        simThread.stop();
-        restart();
+        glApp::postRedisplay();
     }
 }
 
 
 void Player::startForward()
 {
-    if ( PP.dir!=PLAY_FORWARD  &&  PP.dir!=PLAY_FORWARD_WRITE  &&  !PP.live )
+    if ( PP.play!=PLAY_FORWARD  &&  PP.play!=PLAY_FORWARD_WRITE  &&  !PP.live )
     {
         //rewind if the end of the file was reached:
         if ( simThread.eof() )
             simThread.readFrame(0);
-        PP.dir = PLAY_FORWARD;
+        PP.play = PLAY_FORWARD;
     }
     else
     {
@@ -106,13 +101,13 @@ void Player::startForward()
 
 void Player::startBackward()
 {
-    if ( PP.dir != PLAY_REVERSE )
+    if ( PP.play != PLAY_REVERSE )
     {
         if ( simThread.frame() == 0 )
             readFrame(-1);
         else
             flashText("Play reverse");
-        PP.dir = PLAY_REVERSE;
+        PP.play = PLAY_REVERSE;
     }
     else
     {
@@ -127,14 +122,14 @@ void Player::step()
 {
     simThread.release();
     PP.live = 0;
-    PP.dir = PLAY_STOP;
+    PP.play = PLAY_STOP;
 }
 
 
 void Player::stop()
 {
     glApp::displayFunc(displayLive);
-    PP.dir = PLAY_STOP;
+    PP.play = PLAY_STOP;
     PP.live = 0;
 }
 
@@ -142,11 +137,11 @@ void Player::stop()
 void Player::restart()
 {
     try {
-        
+        simThread.stop();
         simThread.clear();
         dproperties.erase();
         FDisp = 0;
-        
+
         simThread.start();
         PP.live = 1;
     }
@@ -162,7 +157,7 @@ void Player::startstop()
         PP.live = 0;
     else if ( simThread.goodFile() )
     {
-        if ( PP.dir == PLAY_STOP )
+        if ( PP.play == PLAY_STOP )
             startForward();
         else
             stop();
@@ -268,7 +263,7 @@ void Player::timer(const int value)
     }
     else
     {        
-        switch( PP.dir )
+        switch( PP.play )
         {
             default:
             case PLAY_STOP:
@@ -295,7 +290,7 @@ void Player::timer(const int value)
          Register the next timer callback
          in idle mode, we use a long time-interval
          */
-        if ( PP.dir == PLAY_STOP )
+        if ( PP.play == PLAY_STOP )
             glutTimerFunc(100, timer, 1);
         else
             glutTimerFunc(PP.delay, timer, 2);

@@ -1,8 +1,7 @@
 # // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-#---------------- MACHINE = {mac, centos, ubuntu, cluster, cygwin}
-MACHINE := ubuntu
+MACHINE := auto
 
 #---------------- COMPILER = {gcc, icc, clang}
 COMPILER := gcc
@@ -40,6 +39,24 @@ HAS_MKL := 1
 
 HAS_PNG := 0
 
+#-------------------------------------------------------------------------------
+#---------------------------  Platform Detection  ------------------------------
+#-------------------------------------------------------------------------------
+
+ifeq ($(MACHINE), auto)
+
+    ifeq ($(shell uname), Darwin)
+       MACHINE := mac
+    else ifeq ($(shell uname), Linux)
+       MACHINE := linux
+    else ifeq ($(shell uname -o), Cygwin)
+       MACHINE := cygwin
+    else
+       $(error Unknown platform)
+    endif
+
+endif
+
 #------------------------------------------------------------------------------------
 #---------------------------  Compiler Specifications  ------------------------------
 #------------------------------------------------------------------------------------
@@ -52,9 +69,9 @@ WARN    := -Wall -Wno-unknown-pragmas # -Wno-unused
 
 
 ifeq ($(MACHINE),mac)
-    MAKELIB := libtool -static -o
+    LIBTOOL := libtool -static -o
 else
-    MAKELIB := ar rcs
+    LIBTOOL := ar rcs
 endif
 
 
@@ -83,7 +100,7 @@ else ifeq ($(COMPILER),icc)
 
 else ifeq ($(COMPILER),clang)
 
-    CXX      := c++ -ffinite-math-only -ftrapping-math -Wfatal-errors #-mmacosx-version-min=10.6
+    CXX      := c++ -ffinite-math-only -ftrapping-math -Wfatal-errors #-mmacosx-version-min=10.10
     FAST     := -O3 -ffast-math -funroll-loops #-floop-optimize2 -msse3
     FAST     := -O3 -ffast-math -funroll-loops
     DEBUG    := -g3 -ggdb
@@ -95,86 +112,49 @@ endif
 #------------------------------------- Linux ----------------------------------------
 #------------------------------------------------------------------------------------
 
-ifeq ($(MACHINE),cluster)
+ifeq ($(MACHINE),linux)
 
-    MKL_PATH := /opt/intel/mkl/lib/intel64
-
-    FlagsD := -O0 $(DEBUG) $(WARN)
-    FlagsP := $(FAST) $(ALIGN) -O0 -fno-inline -pg
-    FlagsC := -O0 -fprofile-arcs -ftest-coverage
-    FlagsF := $(FAST) $(ALIGN) -finline-functions
-    
-    ### self-compiled BLAS/LAPACK fortran library:
-    # this works on the new cluster (64 bit, gcc 4.1 or higher)
-    #LINK  := -static -L/g/nedelec/opt/netlib/linux_em64t -llapack -lblas -lgfortran
-      
-    ### 64bit Linux distribution, 2011 (distribution on EMBL cluster)
-    # ln -sf /usr/lib64/liblapack.so.3 /usr/lib64/liblapack.so
-    # ln -sf /usr/lib64/libblas.so.3 /usr/lib64/libblas.so
-    LINK   := /usr/lib64/liblapack.so.3 /usr/lib64/libblas.so.3 -L/usr/lib64 -lpthread
-    
-    # linkage options for programs using graphics:
-    #LINKGL: =-L/usr/lib -L/usr/lib64 -lglut -lGL -lGLU -lXt -lX11
-
-endif
-
-
-ifeq ($(MACHINE),linux-centos)
-
-    ### 64bit Centos 5.8 March 2012
+    ### Linux options
     FlagsD := -O0 $(DEBUG) $(WARN)
     FlagsP := -O0 -fno-inline -pg $(ALIGN) $(FAST)
     FlagsC := -O0 -fprofile-arcs -ftest-coverage
     FlagsF := -O3 -finline-functions $(ALIGN) $(FAST)
 
-    ### Needs
-    # blas:   yum install blas-devel
-    # lapack: yum install lapack-devel
-    LINK = -L/usr/lib64 -llapack -lblas -lpthread
-    LINK = /usr/lib64/liblapack.so.3 /usr/lib64/libblas.so.3 -lpthread
-    
-    ### linkage options for programs using graphics:
-    ### Needs
-    ### freglut: yum install freeglut-devel
-    ### libXi:   yum install libXi-devel
-    ### libXmu:  yum install libXmu-devel
-    ###  check for correct library yourlibname.so otherwise give full path 	
-    LINKGL := -L/usr/lib64 -lglut -lGL -lGLU -lXt -lX11
-
-
-    ifneq ($(HAS_PNG), 0)
-      
-        LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
-        ING_PNG :=
-    
+    ## select 64 or 32 bit libraries:
+    ifeq ($(shell uname -m),x86_64)
+         USRLIB := /usr/lib64
+    else
+         USRLIB := /usr/lib
     endif
 
-endif
-
-
-ifeq ($(MACHINE),ubuntu)
-	
-	MKLDIR := /opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64
-    FlagsD := -O0 $(DEBUG) $(WARN)
-    FlagsP := -O0 -fno-inline -pg $(ALIGN) $(FAST)
-    FlagsC := -O0 -fprofile-arcs -ftest-coverage
-    FlagsF := -O3 -finline-functions $(ALIGN) $(FAST)
-
+    ### For 64bit Centos 5.8 March 2012:
+    # Centos  blas: yum install blas-devel
+    # Centos  lapack: yum install lapack-devel
     ### 64bit Linux distribution Ubuntu 12.04 LTS, 2012
-    ## needs : apt-get install libblas.dev
-    ## needs : apt-get install liblapack.dev
-    LINK:= -L/usr/lib /usr/lib/libblas.so /usr/lib/liblapack.so -lpthread
+    # Ubuntu   blas : apt-get install libblas.dev
+    # Ubuntu lapack : apt-get install liblapack.dev
 
-    ### needs freglut: apt-get install freeglut3-dev
-    ### needs libXi:   apt-get install libXi-dev
-    ### needs libXmu:  apt-get install libXmu-dev
-    ###  check for correct library 
-    LINKGL:= -L/usr/lib -lglut -lGL -lGLU -lXt -lX11
+    #### Choose dynamic linking:
+    LINK:= -L$(USRLIB) -llapack -lblas -lpthread
+    #### ...  or static linking:
+    LINK:= -L$(USRLIB) $(USRLIB)/libblas.so $(USRLIB)/liblapack.so -lpthread
 
+    ### Install libraries needed for graphical executables:
+    # Centos freglut: yum install freeglut-devel
+    # Centos libXi:   yum install libXi-devel
+    # Centos libXmu:  yum install libXmu-devel
+
+    # Ubuntu freglut: apt-get install freeglut3-dev
+    # Ubuntu libXi:   apt-get install libXi-dev
+    # Ubuntu libXmu:  apt-get install libXmu-dev
+
+    ### linkage options for programs using graphics:
+    #   check for correct library libname.so otherwise give full path
+    LINKGL:= -L$(USRLIB) -lglut -lGL -lGLU -lXt -lX11 -lGLEW
 
     ifneq ($(HAS_PNG), 0)
 
-        LIB_PNG :=/usr/lib/libpng.a /usr/lib/libz.a
+        LIB_PNG := $(USRLIB)/libpng.a $(USRLIB)/libz.a
         ING_PNG :=
 
     endif
@@ -244,7 +224,7 @@ ifeq ($(MACHINE),cygwin)
     ifneq ($(HAS_PNG), 0)
     
         LIB_PNG := /lib/libpng.dll.a /lib/libz.a
-        LIB_PNG := /usr/lib/libpng.a /usr/lib/libz.a
+        LIB_PNG := /usr/lib/libpng.dll.a /usr/lib/libz.a
         ING_PNG :=
     
     endif

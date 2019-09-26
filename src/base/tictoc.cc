@@ -89,19 +89,6 @@ long TicToc::milli_seconds_today()
 #pragma mark CPU time
 
 
-/**
- This calls the C-library function clock()
- */
-clock_t TicToc::processor_time(char * buf, size_t buf_size, clock_t old, double& sum)
-{
-    clock_t now = clock();
-    double ms = ( now - old ) * 1000.0 / CLOCKS_PER_SEC;
-    sum += ms / 1000.0;
-    snprintf(buf, buf_size, "CPU %8.0fms, %10.0fs", ms, sum);
-    return now;
-}
-
-
 #if ( 1 )
 
 struct timeval tic_t;

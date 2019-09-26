@@ -47,7 +47,7 @@ Property* FiberSet::newProperty(const std::string& kd, const std::string& nm, Gl
                 return new ClassicFiberProp(nm);
             else if ( a == "dynamic" )
                 return new DynamicFiberProp(nm);
-            else if ( a == "treadmill" )
+            else if ( a == "treadmill" || a == "grow" )
                 return new TreadmillingFiberProp(nm);
             else if ( a == "none" )
                 return new FiberProp(nm);

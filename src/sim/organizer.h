@@ -43,7 +43,7 @@ public:
     //--------------------------------------------------------------------------
 
     /// number of objects currently organized
-    unsigned int          nbOrganized() const  { return objs.size(); }
+    size_t                nbOrganized() const  { return objs.size(); }
     
     /// return Mecable at index \a n
     Mecable *             organized(unsigned int n) const { assert_true(n<objs.size()); return objs[n]; }

@@ -31,7 +31,16 @@ public:
      @{
      */
     
-    
+    /// drag of the bead, defining how easy it is to move the bead ( force = drag * speed )
+    /**
+     If `drag` is not specified, its value is calculated using Stokes' law,
+     using the effective viscosity:
+     
+         drag = 6 * M_PI * viscosity * radius;
+
+     */
+    real          drag;
+
     /// effective viscosity (if not specified, simul:viscosity is used)
     real          viscosity;
     

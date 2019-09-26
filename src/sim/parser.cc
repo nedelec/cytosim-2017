@@ -327,11 +327,8 @@ void Parser::parse_new(std::istream & is)
         {
             name = kind;
             kind = pp->kind();
-            // we report here an error, but...
-            throw InvalidSyntax("did you mean `new "+kind+" "+name+"' ?");
-            // ...we could however have just given a warning:
-            std::cerr << "Assuming you meant `"<< kind << " " << name << "'\n";
-            StreamFunc::show_line(std::cerr, is, is.tellg());
+            //std::cerr << "Assuming you meant `"<< kind << " " << name << "'\n";
+            //StreamFunc::show_line(std::cerr, is, is.tellg());
         }
     }
     
@@ -849,7 +846,7 @@ void Parser::parse_report(std::istream & is)
     std::string blok = Tokenizer::get_block(is, '{');
     Glossary opt(blok);
     
-    if ( do_write || file == "*" )
+    if ( do_run && ( do_write || file == "*" ))
     {
         execute_report(file, what, opt);
         

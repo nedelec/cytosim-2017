@@ -125,17 +125,25 @@ real Bead::addBrownianForces(real* rhs, real sc) const
  */
 void Bead::setDragCoefficient()
 {
-    paDrag = 6 * M_PI * prop->viscosity * paRadius;
-#if ( 0 )
-    static bool virgin = true;
-    if ( paRadius > 0  &&  virgin )
+    if ( prop->drag > 0 )
     {
-        std::cerr << "bead     radius   = " << paRadius << std::endl;
-        std::cerr << "         drag     = " << paDrag << std::endl;
-        std::cerr << "         mobility = " << 1.0/paDrag << std::endl;
-        virgin = false;
+        paDrag = prop->drag;
+        //std::clog << "Bead `" << prop->name() << "' (radius " << paRadius << ") has drag " << paDrag << std::endl;
     }
+    else
+    {
+        paDrag = 6 * M_PI * prop->viscosity * paRadius;
+#if ( 0 )
+        static bool virgin = true;
+        if ( paRadius > 0  &&  virgin )
+        {
+            std::clog << "Bead `" << prop->name() << "' (radius " << paRadius << ") has:";
+            std::clog << "         drag     = " << paDrag << std::endl;
+            std::clog << "         mobility = " << 1.0/paDrag << std::endl;
+            virgin = false;
+        }
 #endif
+    }
 }
 
 

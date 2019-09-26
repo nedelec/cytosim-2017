@@ -3,6 +3,8 @@
 #include "dim.h"
 #include "space_strip.h"
 #include "exceptions.h"
+#include "point_exact.h"
+#include "meca.h"
 
 
 SpaceStrip::SpaceStrip(const SpaceProp* p)
@@ -118,6 +120,33 @@ void SpaceStrip::project( const real point[], real proj[] ) const
 }
 
 #endif
+
+void SpaceStrip::setInteraction(Vector const& pos, PointExact const& pe, Meca & meca, real stiff) const
+{
+    Matrix::index_type inx = DIM-1 + DIM * pe.matIndex();
+    
+    meca.mC(inx, inx) -= stiff;
+
+#if ( DIM == 2 )
+    meca.base(inx) += stiff * std::copysign(length(1), pos.YY);
+#elif ( DIM > 2 )
+    meca.base(inx) += stiff * std::copysign(length(2), pos.ZZ);
+#endif
+}
+
+
+void SpaceStrip::setInteraction(Vector const& pos, PointExact const& pe, real rad, Meca & meca, real stiff) const
+{
+    Matrix::index_type inx = DIM-1 + DIM * pe.matIndex();
+    
+    meca.mC(inx, inx) -= stiff;
+
+#if ( DIM == 2 )
+    meca.base(inx) += stiff * std::copysign(length(1)-rad, pos.YY);
+#elif ( DIM > 2 )
+    meca.base(inx) += stiff * std::copysign(length(2)-rad, pos.ZZ);
+#endif
+}
 
 //------------------------------------------------------------------------------
 #pragma mark -

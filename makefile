@@ -15,7 +15,11 @@ ifeq ($(Flags$(MODE)),)
    $(error No compiler-options defined for $$(MACHINE)=$(MACHINE) in mode $(MODE))
 endif
 
-CXXFLAGS := $(CXX) $(Flags$(MODE))
+#command to compile:
+COMPILE := $(CXX) $(Flags$(MODE))
+
+#command to make a library:
+MAKELIB = $(LIBTOOL) build/$@ $(addprefix build/, $(notdir $^))
 
 #-----------------prepare some useful variables---------------------------------
 
@@ -62,7 +66,7 @@ include src/play/makefile.inc
 # Attention: Mersenne-Twister is coded in C-language,
 # and we must provide this with '-x c' to the compiler:
 SFMT.o: SFMT.c SFMT.h
-	$(CXXFLAGS) -x c -DNDEBUG -DSFMT_MEXP=19937 -c $< -o build/$@
+	$(COMPILE) -x c -DNDEBUG -DSFMT_MEXP=19937 -c $< -o build/$@
 
 
 .PHONY: all

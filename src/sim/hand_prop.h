@@ -12,6 +12,18 @@ class PointDisp;
 class Hand;
 class HandMonitor;
 
+
+/**
+ Enables detachment rate that are different if Hands are near the Fiber end.
+ 
+ Implementation done by Jamie-Li Rickman for:
+ "Determinants of polar versus nematic organization in networks
+ of dynamic microtubules and mitotic motors" published in 2018
+ By J. Roostalu, J. Rickman, C. Thomas, F. Nedelec and T. Surrey
+ */
+#define NEW_END_DEPENDENT_DETACHMENT 0
+
+
 /// Property for Hand
 /**
  @ingroup Properties
@@ -78,6 +90,11 @@ public:
      (see @ref Stochastic)
      */
     real         unbinding_rate;
+
+#if NEW_END_DEPENDENT_DETACHMENT
+    /// rate of detachment, once the motor has reached the end of a fiber
+    real         unbinding_rate_end;
+#endif
     
     
     /// characteristic force of unbinding (also known as \c unbinding[1])
@@ -150,6 +167,11 @@ public:
     
     /// unbinding_rate_dt = unbinding_rate * time_step;
     real   unbinding_rate_dt;
+    
+#if NEW_END_DEPENDENT_DETACHMENT
+    /// unbinding_rate_end_dt = unbinding_rate_end * time_step;
+    real   unbinding_rate_end_dt;
+#endif
     
     /// the display parameters for this category of Hand
     PointDisp  * disp;
