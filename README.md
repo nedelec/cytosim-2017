@@ -1,6 +1,6 @@
 # OLDER Cytosim
 
-**This is an older version of Cytosim.** Please go to:
+**This is an older version of Cytosim.** Further development is hosted on [Gitlab](https://gitlab.com/f.nedelec/cytosim):
 
 	https://gitlab.com/f.nedelec/cytosim
 
