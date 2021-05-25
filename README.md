@@ -1,6 +1,7 @@
-# OLDER Cytosim
+# OBSOLETE Cytosim
 
-**This is an older version of Cytosim.** Since mid 2019, further development is hosted on [Gitlab](https://gitlab.com/f.nedelec/cytosim):
+**This is a deprecated version of Cytosim that should not be used.**  
+Since mid 2019, further development is hosted on [Gitlab](https://gitlab.com/f.nedelec/cytosim):
 
 	https://gitlab.com/f.nedelec/cytosim
 
@@ -55,6 +56,8 @@ This will generate an html folder in the root directory.
 You can now open `html/index.html` in a browser.
 
 ## Installation and compilation
+
+**Please, do not use this outdated version**
 
 In the documentation, you will find a module describing how to compile Cytosim. On Mac OS X and Linux this should be straightforward if you are familiar with compilation in general. On Windows, we suggest that you compile within Cygwin. For more information, please check src/doc/compile.dox.
 
