@@ -1,9 +1,9 @@
 # OBSOLETE Cytosim
 
-**This is a deprecated version of Cytosim that should not be used.**  
-Since mid 2019, further development is hosted on [Gitlab](https://gitlab.com/f.nedelec/cytosim):
+**This is a deprecated version of Cytosim. Please use the more up-to-date code**  
+ hosted on [Gitlab](https://gitlab.com/f-nedelec/cytosim):
 
-	https://gitlab.com/f.nedelec/cytosim
+	https://gitlab.com/f-nedelec/cytosim
 
 ## Description
 Cytosim is a cytoskeleton simulation engine written in C++ working on Mac OS, GNU/Linux and Windows (with Cygwin).
