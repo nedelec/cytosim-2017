@@ -2,7 +2,7 @@
 
 #ifndef CLASSIC_FIBER_PROP
 #define CLASSIC_FIBER_PROP
-
+#define NEW_CATASTROPHE_OUTSIDE
 #include "fiber_prop.h"
 
 
@@ -99,7 +99,9 @@ public:
     real    catastrophe_length;
     
 #endif
-
+#ifdef NEW_CATASTROPHE_OUTSIDE
+    real catastrophe_outside;
+#endif
     /// @}
     //------------------ derived variables below ----------------
     

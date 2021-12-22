@@ -1,7 +1,6 @@
 # // Cytosim was created by Francois Nedelec. Copyright 2007-2017 EMBL.
 
 
-#---------------- MACHINE = {mac, linux, cygwin, auto}
 MACHINE := auto
 
 #---------------- COMPILER = {gcc, icc, clang}
@@ -21,7 +20,7 @@ MODE := F
 #     HAS_MKL = 2 for static linking
 # otherwise, use HAS_MKL = 0;
 
-HAS_MKL := 0
+HAS_MKL := 1
 
 #---------------- PNG image export support
 # `libpng` needs to be installed to save PNG images:
@@ -244,15 +243,15 @@ MKL_EXT := _lp64
 
 
 ifeq ($(HAS_MKL),1)
-
-    # sequential dynamic linking:
-    MKL_LIBS := -lmkl_intel$(MKL_EXT) -lmkl_sequential -lmkl_core
+# sequential dynamic linking:
+    MKLLIB := -lmkl_intel_lp64 -lmkl_sequential -lmkl_core
     
     # threaded dynamic linking:
-    #MKL_LIBS := -lmkl_intel$(MKL_EXT) -lmkl_intel_thread -lmkl_core -liomp5
+    #MKLLIB := -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
     # modify the linking command:
-    LINK := -L$(MKL_PATH) $(MKL_LIBS) -lpthread    
+    LINK := -L$(MKLDIR) $(MKLLIB) -lpthread
+    
 
 endif
 

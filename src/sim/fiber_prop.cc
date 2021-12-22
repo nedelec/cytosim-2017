@@ -204,6 +204,11 @@ void FiberProp::clear()
     total_length        = 0;
     free_polymer        = 1;
     time_step           = 0;
+    
+    #if NEW_COLINEAR_FORCE
+        colinear_force=0;
+        colinear_power=1.0;
+    #endif
 }
 
 //------------------------------------------------------------------------------
@@ -220,6 +225,12 @@ void FiberProp::read(Glossary& glos)
     glos.set(binding_key,       "binding_key");
     glos.set(rigidity,          "rigidity");
     glos.set(segmentation,      "segmentation");
+    
+    
+    #if NEW_COLINEAR_FORCE
+        glos.set(colinear_force,    "colinear_force");
+        glos.set(colinear_power,    "colinear_force",1);
+    #endif
     
     glos.set(confine,           "confine",
              KeyList<Confinement>("none",      CONFINE_NOT,
@@ -300,6 +311,11 @@ void FiberProp::complete(SimulProp const* sp, PropertyList* plist)
     if ( hydrodynamic_radius[1] <= 0 )
         throw InvalidParameter("fiber:hydrodynamic_radius[1] must be > 0");
 
+     #if NEW_COLINEAR_FORCE
+         if ( colinear_power <= 0 )
+              throw InvalidParameter("fiber:colinear_power must be > 0");
+    #endif
+    
 #if ( 0 )
     //print some information on the 'stiffness' of the matrix
     Fiber fib(this);

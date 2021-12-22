@@ -166,7 +166,9 @@ void Simul::report0(std::ostream& out, std::string const& arg, Glossary& opt) co
     {
         if ( who.empty() )
             return reportSolid(out);
-        throw InvalidSyntax("I only know `solid'");
+        else if (who == "attachment" || who =="attach")
+            return reportSolidAttach(out);
+        throw InvalidSyntax("I only know `solid' : attach");
     }
     if ( what == "space" )
     {
@@ -852,6 +854,22 @@ void Simul::reportSolid(std::ostream& out) const
             modulo->fold(pos);
             out << "   " << pos;
         }
+        out << std::endl;
+    }
+}
+
+
+/**
+ Export force on attached Solids
+ */
+void Simul::reportSolidAttach(std::ostream& out) const
+{
+    out << "% class id position_centroid, force" << std::endl;
+    for ( Solid * obj=solids.first(); obj; obj=obj->next() )
+    {
+        write(out, obj);
+        out << "   " << obj->centroid();
+        out << "   " << obj->getForces();
         out << std::endl;
     }
 }

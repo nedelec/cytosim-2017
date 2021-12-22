@@ -189,6 +189,8 @@ public:
     void  addPureForce(PointExact const&, Vector const& force);
     /// Add a constant force at a PointInterpolated
     void  addPureForce(PointInterpolated const&, Vector const& force);
+    /// Add a constant force at a point at index
+    void  addPureForce(index_type const, Vector const& force);
     /// Add a torque to a segment
     void  addPureTorque(PointInterpolated const&, Torque const& torque);
     /// Add a torque to constrain the segment in given direction

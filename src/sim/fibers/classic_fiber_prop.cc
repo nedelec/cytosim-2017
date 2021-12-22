@@ -10,7 +10,6 @@
 #include "exceptions.h"
 #include "glossary.h"
 
-
 Fiber* ClassicFiberProp::newFiber() const
 {
     return new ClassicFiber(this);
@@ -33,6 +32,10 @@ void ClassicFiberProp::clear()
 #ifdef NEW_LENGTH_DEPENDENT_CATASTROPHE
     catastrophe_length  = 0;
 #endif
+    
+#ifdef NEW_CATASTROPHE_OUTSIDE
+    catastrophe_outside=0;
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -50,7 +53,9 @@ void ClassicFiberProp::read(Glossary& glos)
 #ifdef NEW_LENGTH_DEPENDENT_CATASTROPHE
     glos.set(catastrophe_length,       "catastrophe_length");
 #endif
-
+#ifdef NEW_CATASTROPHE_OUTSIDE
+    glos.set(catastrophe_outside,      "catastrophe_outside");
+#endif
 #ifdef BACKWARD_COMPATIBILITY
     
     int d = 0;

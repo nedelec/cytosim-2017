@@ -344,6 +344,9 @@ public:
     /// print Solid positions
     void      reportSolid(std::ostream&) const;
     
+     /// print Solid attachment forces
+    void      reportSolidAttach(std::ostream&) const;
+    
     /// print state of Couples
     void      reportCouple(std::ostream&) const;
     

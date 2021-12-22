@@ -82,7 +82,12 @@ private:
     /// second momentum of the reference shape
     real           soShapeSqr;
     
+    // attachment force    
+    mutable Vector force_attach;
+    
 public:
+    /// returns attachment force
+    Vector getForces() const {return force_attach;}
     
     /// allocate memory to hold 'size' points
     virtual unsigned int allocatePoints(unsigned int size);
@@ -119,7 +124,7 @@ public:
     /// add contribution of Brownian forces
     real        addBrownianForces(real* rhs, real sc) const;
     
-    /// monte-carlo step
+    /// monte-carlo or langevin step
     void        step();
     
     //--------------------------------------------------------------------------

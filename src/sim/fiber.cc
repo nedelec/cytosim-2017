@@ -463,6 +463,25 @@ void Fiber::prepareMecable()
 
 void Fiber::setInteractions(Meca & meca) const
 {
+    #if NEW_COLINEAR_FORCE
+    /*
+     add a force acting parallel to the filament propportional to length^p
+     A force proportional to the length of the segments * absissa^(p-1) is applied
+     on the model-points.
+     */
+    if ( prop->colinear_force )
+    {
+        Matrix::index_type inx = DIM * matIndex();
+        real s = 0.5 * prop->colinear_power * prop->colinear_force * segmentation();
+        for ( unsigned pp = 0; pp < nbSegments(); ++pp )
+        {
+            Vector f = s * pow(abscissaP(pp),prop->colinear_power-1.0) * dirPoint(pp) ;
+            meca.addPureForce(inx+DIM*pp    , f);
+            meca.addPureForce(inx+DIM*pp+DIM, f);
+        }
+    }
+    #endif
+    
     switch ( prop->confine )
     {
         case CONFINE_NOT:

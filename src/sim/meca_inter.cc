@@ -155,6 +155,19 @@ void Meca::addPureForce(const PointInterpolated & pti, const Vector & force)
 #endif
 }
 
+void Meca::addPureForce(const index_type inx, const Vector & force)
+{
+    
+    vBAS[inx  ] +=  force.XX;
+    
+#if ( DIM > 1 )
+    vBAS[inx+1] += force.YY;
+#endif
+#if ( DIM > 2 )
+    vBAS[inx+2] += force.ZZ;
+#endif
+}
+
 
 //==============================================================================
 #pragma mark -
